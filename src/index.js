@@ -4,12 +4,19 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import { CategoryProvider } from "./context/CategoryContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <CategoryProvider>
+        <Navbar />
+        <App />
+        <Footer />
+      </CategoryProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

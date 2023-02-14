@@ -7,6 +7,8 @@ import Shop from './pages/Shop';
 import UserAccount from './pages/UserAccount';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import SubCategory from './pages/SubCategory';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path='/useraccount' element={ <UserAccount/> } />
         <Route path='/cart' element={ <Cart/> } />
         <Route path='/checkout' element={ <Checkout/> } />
+        <Route path='/privacypolicy' element={ <PrivacyPolicy/> } />
+        <Route path='/:id' element={ <SubCategory/> } />
       </Routes>
     </div>
   );
