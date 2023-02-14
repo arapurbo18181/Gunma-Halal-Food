@@ -1,26 +1,26 @@
 import React from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useCategory } from '../context/CategoryContext'
 
 const SubCategory = () => {
 
-    const {ItemCategory} = useCategory();
-    console.log(ItemCategory)
+    const {ItemCategory, setProductsFromCategory} = useCategory();
 
-    const params = useParams()
-    console.log(params)
+    const params = useParams();
 
   return (
     <section>
+    {/* //! Header */}
         <h2>{params.id}</h2>
         <div className='grid grid-cols-4'>
+        {/* //! Sub-categories */}
           {
             ItemCategory.map(item=>{
               return(
-                <div>
+                <Link to={`/product-category/${params.id}/${item.cat}`} onClick={()=>setProductsFromCategory(item.product)} >
                   <img src={item.img} />
                   {item.cat}
-                </div>
+                </Link>
               )
             })
           }

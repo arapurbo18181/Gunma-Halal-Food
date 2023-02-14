@@ -9,6 +9,7 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import SubCategory from './pages/SubCategory';
+import ProductsOfSubCategory from './pages/ProductsOfSubCategory';
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
         <Route path='/cart' element={ <Cart/> } />
         <Route path='/checkout' element={ <Checkout/> } />
         <Route path='/privacypolicy' element={ <PrivacyPolicy/> } />
-        <Route path='/:id' element={ <SubCategory/> } />
+        <Route path='/product-category/:id' element={ <SubCategory/> } />
+        <Route path='/product-category/:id/:id' element={ <ProductsOfSubCategory/> } />
       </Routes>
     </div>
   );

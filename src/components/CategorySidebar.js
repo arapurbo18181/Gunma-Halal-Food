@@ -7,13 +7,15 @@ const CategorySidebar = () => {
 
   return (
     <section>
+    {/* //! Header */}
       <h2 className="text-2xl">Categories</h2>
       <div className="flex flex-col justify-start items-start">
+        {/* //! All Categories */}
         {categories.map((item) => {
           return (
             <Link
               onClick={() => setItemCategory(item.sub_cat)}
-              to={`/${item.category}`}
+              to={`/product-category/${item.category}`}
             >
               {item.category}
             </Link>

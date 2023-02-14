@@ -29,6 +29,7 @@ const Hero = () => {
 
   return (
     <section className='w-[90%] h-full py-10'>
+    {/* //! Main Slider */}
         <Slider {...settings}>
             {
                 sliderImage.map(slide=>{
