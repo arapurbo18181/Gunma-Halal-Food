@@ -7,16 +7,19 @@ import { BrowserRouter } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { CategoryProvider } from "./context/CategoryContext";
+import { CartProvider } from "./context/CartContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <CategoryProvider>
-        <Navbar />
-        <App />
-        <Footer />
-      </CategoryProvider>
+      <CartProvider>
+        <CategoryProvider>
+          <Navbar />
+          <App />
+          <Footer />
+        </CategoryProvider>
+      </CartProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+.slick-prev:before, .slick-next:before {
+  font-family: 'slick';
+  font-size: 80px !important;
+  line-height: 1;
+  opacity: .75;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: black !important;
+}
+
+.slick-prev{
+  z-index:1 !important;
+  left: 10px !important;
+}
+.slick-prev, .slick-next {
+  font-size: 0;
+  line-height: 0;
+  position: absolute;
+  top: 60% !important;
+  display: block;
+  width: 20px !important;
+  height: 20px !important;
+  padding: 0;
+  transform: translate(0, -400%) !important;
+  cursor: pointer;
+  color: transparent;
+  border: none;
+  outline: none;
+  background: transparent;
+  right: 70px !important;
+}
+

@@ -27,8 +27,10 @@ const Hero = () => {
         autoplay: true
       };
 
+
+
   return (
-    <section className='w-[90%] h-full py-10'>
+    <section className='w-full h-full'>
     {/* //! Main Slider */}
         <Slider {...settings}>
             {
