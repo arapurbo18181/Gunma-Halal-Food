@@ -27,7 +27,7 @@ export const CategoryProvider = ({children}) => {
 
     const categories = [
         {
-            category: "cooking",
+            category: "Cooking",
             img: Category1,
             sub_cat:[
                 {
@@ -35,16 +35,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat1,
                     product: [
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "basmatiRice1"
                         },
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "basmatiRice1"
                         },
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "basmatiRice1"
                         },
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "basmatiRice1"
                         },
                     ]
                 },
@@ -53,16 +57,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat2,
                     product: [
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -71,16 +79,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat3,
                     product: [
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -89,16 +101,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat4,
                     product: [
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -113,16 +129,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat5,
                     product: [
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -131,16 +151,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat6,
                     product: [
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -149,23 +173,27 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat7,
                     product: [
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                     ]
                 }
             ]
         },
         {
-            category: "cooking",
+            category: "Cooking",
             img: Category1,
             sub_cat:[
                 {
@@ -173,16 +201,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat1,
                     product: [
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "rice1"
                         },
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "rice1"
                         },
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "rice1"
                         },
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -191,16 +223,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat2,
                     product: [
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -209,16 +245,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat3,
                     product: [
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -227,16 +267,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat4,
                     product: [
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -251,16 +295,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat5,
                     product: [
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -269,16 +317,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat6,
                     product: [
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -287,23 +339,27 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat7,
                     product: [
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                     ]
                 }
             ]
         },
         {
-            category: "cooking",
+            category: "Cooking",
             img: Category1,
             sub_cat:[
                 {
@@ -311,16 +367,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat1,
                     product: [
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "rice1"
                         },
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "rice1"
                         },
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "rice1"
                         },
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -329,16 +389,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat2,
                     product: [
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -347,16 +411,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat3,
                     product: [
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -365,16 +433,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat4,
                     product: [
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -389,16 +461,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat5,
                     product: [
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -407,16 +483,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat6,
                     product: [
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -425,23 +505,27 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat7,
                     product: [
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                     ]
                 }
             ]
         },
         {
-            category: "cooking",
+            category: "Cooking",
             img: Category1,
             sub_cat:[
                 {
@@ -449,16 +533,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat1,
                     product: [
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "rice1"
                         },
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "rice1"
                         },
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "rice1"
                         },
                         {
-                            img: basmatiRice1
+                            img: basmatiRice1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -467,16 +555,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat2,
                     product: [
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                         {
-                            img: rice1
+                            img: rice1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -485,16 +577,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat3,
                     product: [
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                         {
-                            img: atta1
+                            img: atta1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -503,16 +599,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat4,
                     product: [
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                         {
-                            img: lentil1
+                            img: lentil1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -527,16 +627,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat5,
                     product: [
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                         {
-                            img: chicken1
+                            img: chicken1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -545,16 +649,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat6,
                     product: [
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                         {
-                            img: beef1
+                            img: beef1,
+                            title: "rice1"
                         },
                     ]
                 },
@@ -563,16 +671,20 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat7,
                     product: [
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                         {
-                            img: mutton1
+                            img: mutton1,
+                            title: "rice1"
                         },
                     ]
                 }

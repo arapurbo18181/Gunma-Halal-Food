@@ -30,7 +30,7 @@ const Hero = () => {
 
 
   return (
-    <section className='w-full h-full'>
+    <section className='w-[1100px] h-full mt-5'>
     {/* //! Main Slider */}
         <Slider {...settings}>
             {

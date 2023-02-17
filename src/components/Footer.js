@@ -12,9 +12,9 @@ import Logo from "../images/logo.png";
 const year = new Date().getFullYear();
 
 const Footer = () => (
-  <footer className="mt-44 bg-gray-100">
-    <div className="container mx-auto divide-y-2 divide-gray-300">
-      <div className="flex justify-center space-x-24 py-32">
+  <footer className="mt-44 flex justify-end items-start">
+    <div className="container mr-20 divide-y-2 divide-gray-300 w-[1000px]">
+      <div className="flex justify-center space-x-20 py-32">
         {/*//! Branding  */}
         <div className="flex flex-col space-y-8">
           {" "}
