@@ -2,6 +2,7 @@ import React from "react";
 import Categories from "../components/Categories";
 import CategorySidebar from "../components/CategorySidebar";
 import Hero from "../components/Hero";
+import Footer from "../components/Footer"
 
 const Home = () => {
   return (
@@ -11,9 +12,10 @@ const Home = () => {
           <div className="block w-[380px]"></div>
           <CategorySidebar />
         </div>
-        <div className="flex flex-col justify-start items-start">
+        <div className="flex flex-col justify-start items-end">
           <Hero />
           <Categories />
+          <Footer/>
         </div>
       </div>
     </section>

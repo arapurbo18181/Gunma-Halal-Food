@@ -10,6 +10,9 @@ import Checkout from './pages/Checkout';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import SubCategory from './pages/SubCategory';
 import ProductsOfSubCategory from './pages/ProductsOfSubCategory';
+import ViewProduct from './pages/ViewProduct';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
         <Route path='/privacypolicy' element={ <PrivacyPolicy/> } />
         <Route path='/product-category/:id' element={ <SubCategory/> } />
         <Route path='/product-category/:id/:id' element={ <ProductsOfSubCategory/> } />
+        <Route path='/product/:id' element={ <ViewProduct/> } />
+        <Route path='/login' element={ <Login/> } />
+        <Route path='/signup' element={ <Signup/> } />
       </Routes>
     </div>
   );

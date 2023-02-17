@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useCategory } from "../context/CategoryContext";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import Searchbar from "./Searchbar";
 
 const CategorySidebar = () => {
   const { setItemCategory, categories, setProductsFromCategory } =
@@ -12,7 +13,8 @@ const CategorySidebar = () => {
 
   return (
     <section className="border-r px-2 overflow-y-auto fixed">
-      <div className="w-[340px] pr-3 pt-4 h-[85vh]">
+      <div className="w-[340px] pr-3 pt-4 h-[92vh]">
+      <Searchbar/>
       <h1 className="text-3xl font-bold text-center text-gray-700 my-4">
         <span className="underline decoration-emerald-500 underline-offset-8">
           Ca

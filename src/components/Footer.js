@@ -12,7 +12,7 @@ import Logo from "../images/logo.png";
 const year = new Date().getFullYear();
 
 const Footer = () => (
-  <footer className="mt-44 flex justify-end items-start">
+  <footer className="mt-32 flex justify-end items-start">
     <div className="container mr-20 divide-y-2 divide-gray-300 w-[1000px]">
       <div className="flex justify-center space-x-20 py-32">
         {/*//! Branding  */}
@@ -102,7 +102,7 @@ const Footer = () => (
 
       <div className="flex justify-between py-8">
         <h4 className="text-sm font-semibold tracking-wide text-gray-500">
-          All Rights Reserved &copy; Gunma Hala Food {year}
+          All Rights Reserved &copy; Gunma Halal Food {year}
         </h4>
       </div>
     </div>

@@ -24,6 +24,7 @@ export const CategoryProvider = ({children}) => {
 
     const [ItemCategory, setItemCategory] = useState([]);
     const [ProductsFromCategory, setProductsFromCategory] = useState([]);
+    const [ShowProduct, setShowProduct] = useState();
 
     const categories = [
         {
@@ -693,7 +694,7 @@ export const CategoryProvider = ({children}) => {
     ]
 
     return(
-        <CategoryContext.Provider value={{ItemCategory, setItemCategory, categories, ProductsFromCategory, setProductsFromCategory}}>
+        <CategoryContext.Provider value={{ItemCategory, setItemCategory, categories, ProductsFromCategory, setProductsFromCategory, ShowProduct, setShowProduct}}>
             {children}
         </CategoryContext.Provider>
     )

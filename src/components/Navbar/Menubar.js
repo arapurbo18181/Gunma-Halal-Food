@@ -26,7 +26,7 @@ const menu = [
 
 const Menubar = () => {
   return (
-    <section className='w-full flex justify-center items-center space-x-10 px-6 py-2'>
+    <section className='w-full flex justify-center items-center space-x-10 px-6'>
         {
             menu.map(item=>{
                 return (

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import CategorySidebar from "../components/CategorySidebar";
+import Footer from "../components/Footer";
 import { useCategory } from "../context/CategoryContext";
 
 const SubCategory = () => {
@@ -38,6 +39,7 @@ const SubCategory = () => {
               );
             })}
           </div>
+          <Footer/>
         </div>
       </div>
     </section>
