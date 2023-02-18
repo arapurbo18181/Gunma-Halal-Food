@@ -14,8 +14,6 @@ const sliderImage = [
     }
 ]
 
-console.log(sliderImage)
-
 const Hero = () => {
 
     const settings = {

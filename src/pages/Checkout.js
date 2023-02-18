@@ -1,13 +1,9 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import CartItem from "../components/CartItem";
 
 const Checkout = () => {
-  const navigate = useNavigate();
-  
-
   // const handleSubmit = (e) =>{
   //   e.preventDefault();
   //   addProductsForOrder()
@@ -35,9 +31,9 @@ const Checkout = () => {
           <div className="flex justify-start items-center">
             <div className="flex flex-col items-start my-4 w-full">
               <label htmlFor="email">Name</label>
-              <input 
-              // onChange={e=>setInfo({...Info ,myName:e.target.value})} 
-              // value={Info.myName}
+              <input
+                // onChange={e=>setInfo({...Info ,myName:e.target.value})}
+                // value={Info.myName}
                 className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
                 type="text"
                 name="name"
@@ -48,9 +44,9 @@ const Checkout = () => {
             </div>
             <div className="flex flex-col items-start my-4 w-full ml-4">
               <label htmlFor="email">Email</label>
-              <input 
-              // onChange={e=>setInfo({...Info ,email:e.target.value})} 
-              // value={Info.email}
+              <input
+                // onChange={e=>setInfo({...Info ,email:e.target.value})}
+                // value={Info.email}
                 className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
                 type="email"
                 name="email"
@@ -62,9 +58,9 @@ const Checkout = () => {
           </div>
           <div className="flex flex-col items-start my-4">
             <label htmlFor="address">Address</label>
-            <textarea 
-            // onChange={e=>setInfo({...Info ,address:e.target.value})} 
-            // value={Info.address}
+            <textarea
+              // onChange={e=>setInfo({...Info ,address:e.target.value})}
+              // value={Info.address}
               className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
               type="text"
               name="address"
@@ -77,9 +73,9 @@ const Checkout = () => {
           <div className="flex justify-start items-center">
             <div className="flex flex-col items-start my-4 w-full">
               <label htmlFor="phone">Phone</label>
-              <input 
-              // onChange={e=>setInfo({...Info ,phoneNumber: parseInt(e.target.value)})} 
-              // value={Info.phoneNumber}
+              <input
+                // onChange={e=>setInfo({...Info ,phoneNumber: parseInt(e.target.value)})}
+                // value={Info.phoneNumber}
                 className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
                 type="number"
                 name="phone"
@@ -90,9 +86,9 @@ const Checkout = () => {
             </div>
             <div className="flex flex-col items-start my-4 w-full ml-4">
               <label htmlFor="city">City</label>
-              <input 
-              // onChange={e=>setInfo({...Info ,city:e.target.value})} 
-              // value={Info.city}
+              <input
+                // onChange={e=>setInfo({...Info ,city:e.target.value})}
+                // value={Info.city}
                 className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
                 type="text"
                 name="city"
@@ -105,9 +101,9 @@ const Checkout = () => {
           <div className="flex justify-start items-center">
             <div className="flex flex-col items-start my-4 w-full">
               <label htmlFor="district">District</label>
-              <input 
-              // onChange={e=>setInfo({...Info ,district:e.target.value})} 
-              // value={Info.district}
+              <input
+                // onChange={e=>setInfo({...Info ,district:e.target.value})}
+                // value={Info.district}
                 className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
                 type="text"
                 name="district"
@@ -118,9 +114,9 @@ const Checkout = () => {
             </div>
             <div className="flex flex-col items-start my-4 w-full ml-4">
               <label htmlFor="postcode">Post Code</label>
-              <input 
-              // onChange={e=>setInfo({...Info ,postCode:parseInt(e.target.value)})} 
-              // value={Info.postCode}
+              <input
+                // onChange={e=>setInfo({...Info ,postCode:parseInt(e.target.value)})}
+                // value={Info.postCode}
                 className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
                 type="number"
                 name="postcode"
@@ -135,17 +131,16 @@ const Checkout = () => {
               Make Payment
             </button>
             <span className="mx-5 mt-2">Or</span>
-            <button 
-            // onClick={handleSubmit} 
-            className="w-full bg-emerald-500 px-2 sm:px-4 text-white py-2 rounded-full hover:bg-emerald-600 transition-all duration-300">
+            <button
+              // onClick={handleSubmit}
+              className="w-full bg-emerald-500 px-2 sm:px-4 text-white py-2 rounded-full hover:bg-emerald-600 transition-all duration-300"
+            >
               Cash On Delivery
             </button>
           </div>
         </div>
       </form>
-      <div>
-        <CartItem/>
-      </div>
+      <div></div>
     </section>
   );
 };

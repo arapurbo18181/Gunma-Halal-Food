@@ -7,7 +7,7 @@ import Menubar from "./Menubar";
 import { Link } from "react-router-dom";
 
 const Topbar = () => {
-  const { ToggleSidebar, setToggleSidebar } = useCart();
+  const { ToggleSidebar, setToggleSidebar, TotalAmount } = useCart();
 
   return (
     <section className="flex justify-between space-x-5 items-center px-6">
@@ -29,7 +29,7 @@ const Topbar = () => {
             onClick={() => setToggleSidebar(!ToggleSidebar)}
             className="cursor-pointer text-3xl"
           />
-          <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-emerald-500 flex justify-center items-center text-sm text-white">0</div>
+          <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-emerald-500 flex justify-center items-center text-sm text-white"> {TotalAmount} </div>
         </div>
       </div>
     </section>

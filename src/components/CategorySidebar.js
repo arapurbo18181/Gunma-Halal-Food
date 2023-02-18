@@ -6,10 +6,8 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Searchbar from "./Searchbar";
 
 const CategorySidebar = () => {
-  const { setItemCategory, categories, setProductsFromCategory } =
-    useCategory();
+  const { setItemCategory, categories, setProductsFromCategory } = useCategory();
 
-  console.log(categories);
 
   return (
     <section className="border-r px-2 overflow-y-auto fixed">

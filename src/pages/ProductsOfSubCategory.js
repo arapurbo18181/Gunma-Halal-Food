@@ -1,13 +1,14 @@
 import React from "react";
-import { Link, useLoaderData, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CategorySidebar from "../components/CategorySidebar";
 import { useCategory } from "../context/CategoryContext";
 import { BsPlusLg } from 'react-icons/bs';
 import Footer from "../components/Footer";
+import { useCart } from "../context/CartContext";
 
 const ProductsOfSubCategory = () => {
-  const { ProductsFromCategory, setShowProduct } = useCategory();
-  console.log(ProductsFromCategory);
+  const { ProductsFromCategory } = useCategory();
+  const { setShowProduct, addToCart } = useCart();
   const params = useParams();
 
   return (
@@ -27,14 +28,14 @@ const ProductsOfSubCategory = () => {
           <div className="grid grid-cols-4 gap-6">
             {ProductsFromCategory.map((item) => {
               return (
-                <Link to={`/product/${item.title}`} onClick={()=>setShowProduct(item)} className="px-4 py-4 border border-emerald-500 rounded-md hover:-translate-y-3 transition-all duration-500">
-                  <div className="overflow-hidden">
+                <div className="px-4 py-4 border border-emerald-500 rounded-md hover:-translate-y-3 transition-all duration-500">
+                  <Link className="overflow-hidden"to={`/product/${item.title}`} onClick={()=>setShowProduct(item)} >
                     <img
                       className="hover:scale-110 cursor-pointer transition-all duration-500"
                       src={item.img}
                       alt=""
                     />
-                  </div>
+                  </Link>
                   <div className="flex flex-col justify-between items-start my-2">
                     <h2 className="text-[1.5rem] font-bold"> {item.title} </h2>
                     <div className="flex justify-center items-center space-x-1">
@@ -46,10 +47,10 @@ const ProductsOfSubCategory = () => {
                         </h2>
                     </div>
                     <div className="w-full flex justify-center items-center my-2 ">
-                        <button className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-4 py-2 rounded-full cursor-pointer w-full"> <BsPlusLg/> <span>Add To Cart</span> </button>
+                        <button onClick={()=>addToCart(item)} className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-4 py-2 rounded-full cursor-pointer w-full"> <BsPlusLg/> <span>Add To Cart</span> </button>
                     </div>
                   </div>
-                </Link>
+                </div>
               );
             })}
           </div>

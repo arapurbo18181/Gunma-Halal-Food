@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { IoMdAdd, IoMdRemove } from "react-icons/io";
 import { useState } from "react";
-import Beef from "../images/beef.webp"
+import { useCart } from "../context/CartContext";
 
-const CartItem = ({ ...item }) => {
-  const [Url, setUrl] = useState();
+const CartItem = ({item}) => {
+  const {setShowProduct} = useCart();
 
   const minusProduct = () =>{
 
@@ -18,16 +17,17 @@ const CartItem = ({ ...item }) => {
   return (
     <div className="flex gap-x-4 py-2 lg:px-6 border-b border-gray-200 w-full font-light text-gray-500">
       <div className="w-full min-h-[150px] flex items-center gap-x-4">
-        <Link to={`/product`}>
-          <img className="max-w-[80px]" src={Beef} alt="" />
+        <Link to={`/product/${item.title}`} onClick={()=>setShowProduct(item)}>
+          <img className="max-w-[80px]" src={item.img} alt="" />
         </Link>
         <div className="w-full flex justify-between">
           <div className="flex flex-col justify-between mb-2">
             <Link
-              to={`/product`}
+              to={`/product/${item.title}`}
+              onClick={()=>setShowProduct(item)}
               className="text-base font-medium max-w-[240px] text-primary hover:underline"
             >
-              BEEF <span className="text-black">x2</span>
+              {item.title} <span className="text-black"> x{item.amount} </span>
             </Link>
             <div>
                 dgsdgsergsed
