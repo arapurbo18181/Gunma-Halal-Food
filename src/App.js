@@ -13,6 +13,7 @@ import ProductsOfSubCategory from './pages/ProductsOfSubCategory';
 import ViewProduct from './pages/ViewProduct';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Wishlist from './pages/Wishlist';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path='/product/:id' element={ <ViewProduct/> } />
         <Route path='/login' element={ <Login/> } />
         <Route path='/signup' element={ <Signup/> } />
+        <Route path='/wishlist' element={ <Wishlist/> } />
       </Routes>
     </div>
   );

@@ -2,10 +2,11 @@ import React from "react";
 import CategorySidebar from "../components/CategorySidebar";
 import { useCart } from "../context/CartContext";
 import { BsPlusLg } from "react-icons/bs";
+import { BsSuitHeart } from 'react-icons/bs';
 import Footer from "../components/Footer";
 
 const ViewProduct = () => {
-  const { ShowProduct, addToCart } = useCart();
+  const { ShowProduct, addToCart, addToWishlist } = useCart();
 
   return (
     <section className="flex justify-center items-start w-full">
@@ -35,7 +36,19 @@ const ViewProduct = () => {
                   <h2 className="text-base text-gray-400 line-through">৳300</h2>
                 </div>
                 <div className="w-full flex justify-center items-center my-2 ">
-                  <button onClick={()=>addToCart(ShowProduct)} className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-4 py-2 rounded-full cursor-pointer w-full">
+                  <button
+                    onClick={() => addToWishlist(ShowProduct)}
+                    className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-4 py-2 rounded-full cursor-pointer w-full"
+                  >
+                    {" "}
+                    <BsSuitHeart /> <span>Add To Wishlist</span>{" "}
+                  </button>
+                </div>
+                <div className="w-full flex justify-center items-center my-2 ">
+                  <button
+                    onClick={() => addToCart(ShowProduct)}
+                    className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-4 py-2 rounded-full cursor-pointer w-full"
+                  >
                     {" "}
                     <BsPlusLg /> <span>Add To Cart</span>{" "}
                   </button>
