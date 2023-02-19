@@ -10,8 +10,8 @@ const CategorySidebar = () => {
 
 
   return (
-    <section className="border-r px-2 overflow-y-auto fixed">
-      <div className="w-[340px] pr-3 pt-4 h-[92vh]">
+    <section className="border-r px-2 overflow-y-auto fixed transition-all duration-500">
+      <div className="w-[280px] pr-3 pt-4 h-[92vh]">
       <Searchbar/>
       <h1 className="text-3xl font-bold text-center text-gray-700 my-4">
         <span className="underline decoration-emerald-500 underline-offset-8">

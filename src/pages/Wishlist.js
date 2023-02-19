@@ -9,7 +9,6 @@ import { useCart } from '../context/CartContext';
 const Wishlist = () => {
 
   const {Wishlist, setShowProduct, addToCart, removeFromWishlist} = useCart();
-
   return (
 
     <section className="flex justify-center items-start w-full">
@@ -47,7 +46,11 @@ const Wishlist = () => {
                         </h2>
                     </div>
                     <div className="w-full flex justify-center items-center my-2 ">
-                        <button onClick={()=>removeFromWishlist(item)} className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-4 py-2 rounded-full cursor-pointer w-full"> <BsTrash/> <span>Remove From Wishlist</span> </button>
+                        <button 
+                        onClick={()=>{
+                          removeFromWishlist(item)
+                        }} 
+                        className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-4 py-2 rounded-full cursor-pointer w-full"> <BsTrash/> <span>Remove From Wishlist</span> </button>
                     </div>
                     <div className="w-full flex justify-center items-center my-2 ">
                         <button onClick={()=>addToCart(item)} className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-4 py-2 rounded-full cursor-pointer w-full"> <BsPlusLg/> <span>Add To Cart</span> </button>

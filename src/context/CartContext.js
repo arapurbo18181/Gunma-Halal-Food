@@ -62,8 +62,7 @@ export const CartProvider = ({ children }) => {
   const decreaseFromCart = (item) => {
     const updated = Cart.map((elem) => {
       if (item.img === elem.img) {
-        if (elem.amount === 0) {
-        //   removeFromCart(elem);
+        if (elem.amount === 1) {
           return elem
         } else {
           elem.amount -= 1;
