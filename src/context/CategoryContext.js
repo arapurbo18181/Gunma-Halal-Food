@@ -35,19 +35,23 @@ export const CategoryProvider = ({children}) => {
                     img: SubCat1,
                     product: [
                         {
+                            id: 0,
                             img: basmatiRice1,
                             title: "basmatiRice1"
                         },
                         {
-                            img: basmatiRice1,
+                            id: 1,
+                            img: rice1,
                             title: "basmatiRice1"
                         },
                         {
-                            img: basmatiRice1,
+                            id: 2,
+                            img: atta1,
                             title: "basmatiRice1"
                         },
                         {
-                            img: basmatiRice1,
+                            id: 3,
+                            img: mutton1,
                             title: "basmatiRice1"
                         },
                     ]
