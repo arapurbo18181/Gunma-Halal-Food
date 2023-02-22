@@ -12,8 +12,6 @@ const SubCategoryProducts = ({ item }) => {
     addToCart,
     addToWishlist,
     CartCoordinate,
-    ImgCoordinate,
-    setImgCoordinate,
   } = useCart();
   const myRef = useRef();
   const [isAddedToCart, setIsAddedToCart] = useState(false);
@@ -21,26 +19,16 @@ const SubCategoryProducts = ({ item }) => {
   const [AnimationCoodinate, setAnimationCoodinate] = useState({});
   const pos = UseScrollPosition();
 
-  useEffect(() => {
-    setImgCoordinate({
-      x: myRef.current.offsetLeft,
-      y: myRef.current.offsetTop - pos,
-    });
-  }, [pos]);
 
   const handleClick = (item) => {
-    setImgCoordinate({
-      x: myRef.current.offsetLeft,
-      y: myRef.current.offsetTop - pos,
-    });
-    addToCart(item);
     setCount(item.id);
-    const setX = (CartCoordinate.x - ImgCoordinate.x) - 48
-    const setY = (CartCoordinate.y - ImgCoordinate.y) - 30
+    const setX = (CartCoordinate.x - myRef.current.offsetLeft) - 48
+    const setY = (CartCoordinate.y - (myRef.current.offsetTop - pos)) - 50
     setAnimationCoodinate({ x: setX, y: setY });
-    console.log(CartCoordinate, ImgCoordinate, AnimationCoodinate, setX, setY);
+    console.log(CartCoordinate, AnimationCoodinate, setX, setY);
     setIsAddedToCart(true);
     setTimeout(() => {
+      addToCart(item);
       setIsAddedToCart(false);
     }, 2000);
   }
@@ -49,6 +37,7 @@ const SubCategoryProducts = ({ item }) => {
     hidden: {
       opacity: 1,
       scale: 1,
+      zIndex: 1,
       x: 0,
       y: 0,
     },
@@ -57,16 +46,13 @@ const SubCategoryProducts = ({ item }) => {
       scale: 0.5,
       x: AnimationCoodinate.x,
       y: AnimationCoodinate.y,
+      zIndex: 100,
       transition: {
         duration: 2,
         ease: "easeInOut",
       },
     },
   };
-
-//   const imgvar = useMemo(() => {
-
-//   }, [AnimationCoodinate]);
 
   return (
     <div
@@ -75,7 +61,7 @@ const SubCategoryProducts = ({ item }) => {
     >
       <div>
         <Link
-          className="overflow-hidden relative -z-50"
+          className="overflow-hidden relative"
           to={`/product/${item.title}`}
           onClick={() => setShowProduct(item)}
         >
@@ -86,7 +72,8 @@ const SubCategoryProducts = ({ item }) => {
           />
           {item.id === Count && isAddedToCart && (
             <motion.div
-              className="absolute top-0 z-[999]"
+              className={`absolute top-0`}
+              id="animation"
               variants={imageVariants}
               initial="hidden"
               animate="visible"
@@ -94,7 +81,7 @@ const SubCategoryProducts = ({ item }) => {
               <img
                 src={item.img}
                 alt=""
-                className={`w-28 h-28 rounded-full animate-fly-to-cart`}
+                className={`w-28 h-28 rounded-full`}
               />
             </motion.div>
           )}

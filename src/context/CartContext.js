@@ -12,7 +12,6 @@ export const CartProvider = ({ children }) => {
   const [Wishlist, setWishlist] = useState([]);
   const [ShowProduct, setShowProduct] = useState();
   const [CartCoordinate, setCartCoordinate] = useState({});
-  const [ImgCoordinate, setImgCoordinate] = useState({});
 
   useEffect(() => {
     const amount = Cart.reduce((accumulator, currItem) => {
@@ -117,8 +116,6 @@ export const CartProvider = ({ children }) => {
         removeFromWishlist,
         CartCoordinate,
         setCartCoordinate,
-        ImgCoordinate,
-        setImgCoordinate
       }}
     >
       {children}

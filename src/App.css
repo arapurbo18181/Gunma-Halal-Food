@@ -84,8 +84,9 @@
 }
 
 .animate-fly-to-cart {
-  animation-name: fly-to-cart;
+  /* animation-name: fly-to-cart;
   animation-duration: 3s;
   animation-timing-function: ease-in-out;
-  animation-fill-mode: forwards;
+  animation-fill-mode: forwards; */
+  z-index: 999;
 }
