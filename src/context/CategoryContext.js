@@ -54,6 +54,11 @@ export const CategoryProvider = ({children}) => {
                             img: mutton1,
                             title: "basmatiRice1"
                         },
+                        {
+                            id: 4,
+                            img: mutton1,
+                            title: "basmatiRice1"
+                        },
                     ]
                 },
                 {
