@@ -15,13 +15,17 @@ import lentil1 from "../images/lentil1.jpg"
 import chicken1 from "../images/chicken1.png"
 import beef1 from "../images/beef1.png"
 import mutton1 from "../images/mutton1.jpg"
+import mutton300 from "../images/mutton300.jpg"
+import basmatiRice300 from "../images/basmatiRice300.jpg"
+import rice300 from "../images/rice300.jpg"
+import atta300 from "../images/atta300.jpg"
 
 const CategoryContext = createContext();
 
 export const useCategory = () => useContext(CategoryContext)
 
 export const CategoryProvider = ({children}) => {
-
+    const [Toggle, setToggle] = useState(false);
     const [ItemCategory, setItemCategory] = useState([]);
     const [ProductsFromCategory, setProductsFromCategory] = useState([]);
 
@@ -37,26 +41,31 @@ export const CategoryProvider = ({children}) => {
                         {
                             id: 0,
                             img: basmatiRice1,
+                            img1: basmatiRice300,
                             title: "basmatiRice1"
                         },
                         {
                             id: 1,
                             img: rice1,
+                            img1: rice300,
                             title: "basmatiRice1"
                         },
                         {
                             id: 2,
                             img: atta1,
+                            img1: atta300,
                             title: "basmatiRice1"
                         },
                         {
                             id: 3,
                             img: mutton1,
+                            im1: mutton300,
                             title: "basmatiRice1"
                         },
                         {
                             id: 4,
                             img: mutton1,
+                            img1: mutton300,
                             title: "basmatiRice1"
                         },
                     ]
@@ -701,8 +710,12 @@ export const CategoryProvider = ({children}) => {
         },
     ]
 
+    const toggleNav = () => {
+        setToggle(!Toggle);
+      };
+
     return(
-        <CategoryContext.Provider value={{ItemCategory, setItemCategory, categories, ProductsFromCategory, setProductsFromCategory,}}>
+        <CategoryContext.Provider value={{ItemCategory, setItemCategory, categories, ProductsFromCategory, setProductsFromCategory, Toggle, setToggle, toggleNav}}>
             {children}
         </CategoryContext.Provider>
     )
