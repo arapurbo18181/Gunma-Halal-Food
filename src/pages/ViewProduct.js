@@ -4,7 +4,6 @@ import { useCart } from "../context/CartContext";
 import { BsPlusLg } from "react-icons/bs";
 import { BsSuitHeart } from "react-icons/bs";
 import Footer from "../components/Footer";
-import ReactImageMagnify from "react-image-magnify";
 
 const ViewProduct = () => {
   const { ShowProduct, addToCart, addToWishlist } = useCart();

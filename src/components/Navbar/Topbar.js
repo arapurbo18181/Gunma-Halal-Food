@@ -30,7 +30,7 @@ const Topbar = () => {
   return (
     <section className="flex justify-center space-x-5 items-center px-6">
       {/* //! Main Logo */}
-      <Link to={"/"} className="max-w-[200px] min-w-[100px]">
+      <Link to={"/"} className="max-w-[200px] w-[200px] md:min-w-[100px]">
         <img src={Logo} alt="Main Logo" />
       </Link>
       
@@ -44,14 +44,14 @@ const Topbar = () => {
         <FaBars onClick={toggleNav} className="cursor-pointer text-2xl mt-1" />{" "}
       </div>
         <Link
-          className="flex-1 text-xl font-semibold hover:-translate-y-1 transition-all duration-300"
+          className="hidden xl:block flex-1 text-xl font-semibold hover:-translate-y-1 transition-all duration-300"
           to={"/login"}
         >
           {" "}
           Login{" "}
         </Link>
         <Link
-          className="flex-1 text-xl font-semibold hover:-translate-y-1 transition-all duration-300"
+          className="hidden xl:block flex-1 text-xl font-semibold hover:-translate-y-1 transition-all duration-300"
           to={"/signup"}
         >
           {" "}
@@ -59,13 +59,13 @@ const Topbar = () => {
         </Link>
         <Link
           to={"/useraccount"}
-          className="flex-1 hover:-translate-y-1 transition-all duration-300"
+          className="hidden xl:block flex-1 hover:-translate-y-1 transition-all duration-300"
         >
           <VscAccount className="cursor-pointer text-3xl" />
         </Link>
         <Link
           to={"/wishlist"}
-          className="flex-1 relative hover:-translate-y-1 transition-all duration-300"
+          className="hidden xl:block flex-1 relative hover:-translate-y-1 transition-all duration-300"
         >
           <BsSuitHeart className="cursor-pointer text-3xl" />
           <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-emerald-500 flex justify-center items-center text-sm text-white">

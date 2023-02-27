@@ -27,6 +27,45 @@ const menu = [
   },
 ];
 
+const menuForMobile = [
+  {
+    menu: "Home",
+    page: "/",
+  },
+  {
+    menu: "About Us",
+    page: "/about",
+  },
+  {
+    menu: "Shop",
+    page: "/shop",
+  },
+  {
+    menu: "Contact",
+    page: "/contact",
+  },
+  {
+    menu: "Privacy Policy",
+    page: "/privacypolicy",
+  },
+  {
+    menu: "Login",
+    page: "/login",
+  },
+  {
+    menu: "SignUp",
+    page: "/signup",
+  },
+  {
+    menu: "My Account",
+    page: "/useraccount",
+  },
+  {
+    menu: "My Wishlist",
+    page: "/wishlist",
+  },
+];
+
 const Menubar = () => {
     const {Toggle, setToggle, toggleNav} = useCategory();
 
@@ -66,7 +105,7 @@ const Menubar = () => {
         </div>
         {/* //! Menu For Mobile */}
         <div className="flex flex-col justify-start items-center w-full space-y-3">
-          {menu.map((item) => {
+          {menuForMobile.map((item) => {
             return (
               <Link
                 to={item.page}
