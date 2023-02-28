@@ -12,22 +12,18 @@ export default function UserAccount() {
   const { ToggleUserMenu, setToggleUserMenu } = useUser();
   return (
     <div className="w-full px-2 py-16 sm:px-0 flex justify-center items-center">
-      <div className="w-[1440px]">
+      <div className="container">
         <UserToprbar />
-        <div className="flex justify-start items-start">
-          <UserSidebar />
-          {
-            ToggleUserMenu === 0 && <UserDashboard/>
-          }
-          {
-            ToggleUserMenu === 1 && <UserProfile/>
-          }
-          {
-            ToggleUserMenu === 2 && <UserOrders/>
-          }
-          {
-            ToggleUserMenu === 3 && <UserSettings/>
-          }
+        <div className="flex flex-col xl:flex-row justify-start items-start">
+          <div>
+            <UserSidebar />
+          </div>
+          <div>
+            {ToggleUserMenu === 0 && <UserDashboard />}
+            {ToggleUserMenu === 1 && <UserProfile />}
+            {ToggleUserMenu === 2 && <UserOrders />}
+            {ToggleUserMenu === 3 && <UserSettings />}
+          </div>
         </div>
       </div>
     </div>

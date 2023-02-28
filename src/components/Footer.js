@@ -12,11 +12,11 @@ import Logo from "../images/logo.png";
 const year = new Date().getFullYear();
 
 const Footer = () => (
-  <footer className="mt-32 flex justify-end items-start">
-    <div className="container mr-20 divide-y-2 divide-gray-300 w-[1000px]">
-      <div className="flex justify-center space-x-20 py-32">
+  <footer className="mt-32 flex justify-center items-start mx-4">
+    <div className="container xl:w-[900px] divide-y-2 divide-gray-300">
+      <div className="flex flex-col justify-start items-start space-y-10 md:flex-row md:justify-center md:items-start md:space-x-10 py-32">
         {/*//! Branding  */}
-        <div className="flex flex-col space-y-8">
+        <div className="flex flex-col space-y-8 w-full">
           {" "}
           <div className="w-[200px]">
             <img src={Logo} alt="Main Logo" />
@@ -44,7 +44,7 @@ const Footer = () => (
         </div>
 
         {/*//! Contact Info  */}
-        <div className="flex flex-col space-y-8">
+        <div className="flex flex-col justify-start items-start space-y-8">
           <h1 className="text-2xl font-bold text-gray-700">
             <span className="underline decoration-emerald-500 underline-offset-8">
               Co

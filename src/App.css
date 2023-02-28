@@ -39,7 +39,7 @@
 
 .slick-prev:before, .slick-next:before {
   font-family: 'slick';
-  font-size: 80px !important;
+  font-size: 40px !important;
   line-height: 1;
   opacity: .75;
   color: white;
@@ -61,37 +61,12 @@
   width: 20px !important;
   height: 20px !important;
   padding: 0;
-  transform: translate(0, -400%) !important;
+  transform: translate(0, -200%) !important;
   cursor: pointer;
   color: transparent;
   border: none;
   outline: none;
   background: transparent;
-  right: 70px !important;
+  right: 30px !important;
   opacity: 0.5;
-}
-
-@keyframes fly-to-cart {
-  0% {
-    transform: scale(1.5);
-  }
-  /* 50% {
-    transform: scale(1.5);
-  } */
-  100% {
-    transform: translate(0, 0) scale(0.2);
-  }
-}
-
-.animate-fly-to-cart {
-  /* animation-name: fly-to-cart;
-  animation-duration: 3s;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: forwards; */
-  z-index: 999;
-}
-
-.image {
-  width: 200px;
-  height: 200px;
 }

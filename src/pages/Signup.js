@@ -13,7 +13,7 @@ const Signup = () => {
     <section className="bg-[#f9fafb] w-[100%] h-[90vh] flex justify-center items-center">
       <form
         onSubmit={signUp}
-        className="w-[500px] h-[500px] bg-white drop-shadow-2xl rounded-lg border border-emerald-300"
+        className="w-[500px] h-[500px] bg-white drop-shadow-2xl rounded-lg border border-emerald-300 container"
       >
         <div className="flex justify-center my-5 text-4xl font-bold">
           <h1>Sign Up</h1>

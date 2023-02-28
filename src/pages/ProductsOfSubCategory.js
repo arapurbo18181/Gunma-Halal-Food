@@ -42,23 +42,21 @@ const ProductsOfSubCategory = () => {
 
   return (
     <section className="flex justify-center items-start w-full">
-      <div className="flex justify-start items-start w-[1440px]">
-        <div className="-mt-4 w-[380px]">
+      <div className="flex justify-center items-center xl:items-start container">
+        <div className="hidden xl:block -mt-4 w-[280px]">
           <div className="block w-[380px]"></div>
           <CategorySidebar />
         </div>
-        <div>
+        <div className="px-2">
           <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-14">
             <span className="underline decoration-emerald-500 underline-offset-8">
               {params.id.slice(0, 2)}
             </span>
             {params.id.slice(2)}
           </h2>
-          <div className="grid grid-cols-4 gap-6">
+          <div className="">
             <div className="fixed right-3 z-50" ref={myRef}>
-              <div
-                className="cart relative flex-1 hover:-translate-y-1 transition-all duration-300"
-              >
+              <div className="cart relative flex-1 hover:-translate-y-1 transition-all duration-300">
                 <AiOutlineShoppingCart
                   onClick={() => setToggleSidebar(!ToggleSidebar)}
                   className="cursor-pointer text-5xl"
@@ -69,9 +67,11 @@ const ProductsOfSubCategory = () => {
                 </div>
               </div>
             </div>
-            {ProductsFromCategory.map((item) => {
-              return <SubCategoryProducts item={item} />;
-            })}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
+              {ProductsFromCategory.map((item) => {
+                return <SubCategoryProducts item={item} />;
+              })}
+            </div>
           </div>
           <Footer />
         </div>

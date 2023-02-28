@@ -1,4 +1,5 @@
 import React from 'react'
+import Footer from '../components/Footer'
 
 const Contact = () => {
   return (
@@ -62,6 +63,7 @@ const Contact = () => {
       </div>
     </div>
   </div>
+  <Footer/>
 </section>
   )
 }

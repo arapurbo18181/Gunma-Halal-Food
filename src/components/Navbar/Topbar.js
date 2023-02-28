@@ -1,26 +1,20 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import Logo from "../../images/logo.png";
 import { VscAccount } from "react-icons/vsc";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineBars } from "react-icons/ai";
 import { BsSuitHeart } from "react-icons/bs";
 import { useCart } from "../../context/CartContext";
 import Menubar from "./Menubar";
 import { Link } from "react-router-dom";
-import Searchbar from "../Searchbar";
 import { FaBars } from "react-icons/fa";
 import { useCategory } from "../../context/CategoryContext";
 
 const Topbar = () => {
   const {
-    ToggleSidebar,
-    setToggleSidebar,
-    TotalAmount,
     TotalWishlist,
-    CartCoordinate,
-    setCartCoordinate,
   } = useCart();
 
-  const {toggleNav} = useCategory()
+  const {toggleNav, toggleCat} = useCategory()
 
   // const shoppingCart = document.getElementsByClassName("cart");
   // console.log(shoppingCart)
@@ -29,9 +23,14 @@ const Topbar = () => {
 
   return (
     <section className="flex justify-center space-x-5 items-center px-6">
+    {/* //! Category bar for mobile */}
+    <div className="xl:hidden flex justify-center items-center">
+      {" "}
+      <AiOutlineBars onClick={toggleCat} className="cursor-pointer text-base sm:text-xl md:text-2xl mt-1" />{" "}
+    </div>
       {/* //! Main Logo */}
-      <Link to={"/"} className="max-w-[200px] w-[200px] md:min-w-[100px]">
-        <img src={Logo} alt="Main Logo" />
+      <Link to={"/"} className="max-w-[300px] w-[300px] md:min-w-[100px]">
+        <img className="min-w-full" src={Logo} alt="Main Logo" />
       </Link>
       
       {/* //! Menu Bar */}
@@ -41,7 +40,7 @@ const Topbar = () => {
       {/* //! Menubar for mobile */}
       <div className="xl:hidden flex justify-center items-center">
         {" "}
-        <FaBars onClick={toggleNav} className="cursor-pointer text-2xl mt-1" />{" "}
+        <FaBars onClick={toggleNav} className="cursor-pointer text-base sm:text-xl md:text-2xl mt-1" />{" "}
       </div>
         <Link
           className="hidden xl:block flex-1 text-xl font-semibold hover:-translate-y-1 transition-all duration-300"

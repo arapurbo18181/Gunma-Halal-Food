@@ -67,32 +67,31 @@ const menuForMobile = [
 ];
 
 const Menubar = () => {
-    const {Toggle, setToggle, toggleNav} = useCategory();
-
-
+  const { Toggle, setToggle, toggleNav } = useCategory();
 
   return (
-    <section className="w-full flex justify-center items-center space-x-6">
-      {/* //! Menu for pc */}
-      <div className="w-full hidden xl:flex justify-center items-center space-x-10 px-6">
-        {menu.map((item) => {
-          return (
-            <Link
-              to={item.page}
-              className="xl:text-lg 2xl:text-xl focus:border-b py-2 px-4 bg-emerald-600 text-white border-2 border-emerald-600 hover:bg-white hover:text-black transition-all duration-500 rounded-md"
-            >
-              {item.menu}
-            </Link>
-          );
-        })}
+    <section className="w-full flex justify-center items-center">
+      <div className="w-full flex justify-center items-center space-x-6">
+        {/* //! Menu for pc */}
+        <div className="w-full hidden xl:flex justify-center items-center space-x-10 px-6">
+          {menu.map((item) => {
+            return (
+              <Link
+                to={item.page}
+                className="xl:text-base 2xl:text-xl focus:border-b py-2 px-4 bg-emerald-600 text-white border-2 border-emerald-600 hover:bg-white hover:text-black transition-all duration-500 rounded-md"
+              >
+                {item.menu}
+              </Link>
+            );
+          })}
+        </div>
+        {/* //! Search bar */}
+        <div className="block xl:hidden mt-1">
+          <Searchbar />
+        </div>
       </div>
-      {/* //! Search bar */}
-      <div className="block xl:hidden">
-        <Searchbar />
-      </div>
-
       <div
-        className={`h-[99vh] flex justify-center items-start pt-32 bg-white absolute top-0 right-0 left-0 bottom-0 z-40 ${
+        className={`h-[100vh] flex justify-center items-start pt-32 bg-white absolute top-0 right-0 left-0 bottom-0 z-40 ${
           Toggle ? "-translate-y-0" : "-translate-y-full"
         } transition-all duration-500`}
       >

@@ -22,20 +22,46 @@ const Hero = () => {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: true
+        autoplay: true,
+        responsive: [
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                infinite: true,
+                dots: true
+              }
+            },
+            {
+              breakpoint: 600,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                initialSlide: 1
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }
+          ]
       };
 
 
 
   return (
-    <section className='w-[1100px] h-full mt-5'>
+    <section className='container xl:w-[900px] h-full mt-5'>
     {/* //! Main Slider */}
         <Slider {...settings}>
             {
                 sliderImage.map(slide=>{
                     return(
-                        <div>
-                            <img src={slide.img} />
+                        <div className='w-full'>
+                            <img className='w-full' src={slide.img} />
                         </div>
                     )
                 })

@@ -12,8 +12,8 @@ const Wishlist = () => {
   return (
 
     <section className="flex justify-center items-start w-full">
-      <div className="flex justify-start items-start w-[1440px]">
-        <div className="-mt-4 w-[380px]">
+      <div className="flex justify-center items-center xl:items-start container">
+        <div className="hidden xl:block -mt-4 w-[280px]">
           <div className="block w-[380px]"></div>
           <CategorySidebar />
         </div>
@@ -24,10 +24,10 @@ const Wishlist = () => {
             </span>
             sh List
           </h2>
-          <div className="grid grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
             {Wishlist.map((item) => {
               return (
-                <div className="px-4 py-4 border border-emerald-500 rounded-md hover:-translate-y-3 transition-all duration-500">
+                <div className="px-4 py-4 border shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500">
                   <Link className="overflow-hidden"to={`/product/${item.title}`} onClick={()=>setShowProduct(item)} >
                     <img
                       className="hover:scale-110 cursor-pointer transition-all duration-500"

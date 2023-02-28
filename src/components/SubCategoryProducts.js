@@ -57,7 +57,7 @@ const SubCategoryProducts = ({ item }) => {
   return (
     <div
       ref={myRef}
-      className="px-4 py-4 border border-emerald-500 rounded-md hover:-translate-y-3 transition-all duration-500"
+      className="px-4 py-4 shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 w-[80vw] md:w-full"
     >
       <div>
         <Link
