@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import Category1 from "../images/cooking.png";
 import Category2 from "../images/MeatFish.png";
 import SubCat1 from "../images/basmati.jpg";
@@ -715,8 +715,18 @@ export const CategoryProvider = ({ children }) => {
     setToggle(!Toggle);
   };
 
+  useEffect(() => {
+    console.log(ToggleCategory)
+  }, [])
+  
+
   const toggleCat = () => {
-    setToggleCategory(!ToggleCategory);
+    if (ToggleCategory === true) {
+      setToggleCategory(false);
+    }else{
+      setToggleCategory(true);
+    }
+    console.log(ToggleCategory)
   };
 
   return (
