@@ -54,7 +54,7 @@ const Hero = () => {
 
 
   return (
-    <section className='container xl:w-[900px] h-full mt-5'>
+    <section className='container xl:w-[100%] h-full mt-5'>
     {/* //! Main Slider */}
         <Slider {...settings}>
             {
