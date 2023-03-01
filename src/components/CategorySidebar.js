@@ -6,7 +6,7 @@ const CategorySidebar = () => {
 
 
   return (
-    <section className="overflow-y-auto fixed left-0 transition-all duration-500">
+    <section className="overflow-y-auto left-0 transition-all duration-500">
       <div className="w-[250px] px-2 pt-4 h-[92vh]">
       <Searchbar/>
       <h1 className="text-3xl font-bold text-center text-gray-700 my-4">

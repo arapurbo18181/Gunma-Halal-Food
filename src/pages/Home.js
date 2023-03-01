@@ -7,18 +7,16 @@ import Footer from "../components/Footer";
 const Home = () => {
   return (
     <section className="flex flex-col justify-center items-start w-full">
-      <div className="flex">
-      <div className="hidden xl:block -mt-4 w-[250px]">
-          {/* <div className="block w-[320px]"></div> */}
-        <CategorySidebar />
+      <div className="container flex">
+        <div className="hidden xl:block -mt-4 ">
+          <CategorySidebar />
         </div>
-        <Hero />
-      </div>
-      <div className="flex justify-center items-center xl:items-start container">
-
-        <div className="flex flex-col justify-start items-end w-full xl:w-[900px]">
-          <Categories />
-          <Footer />
+        <div className="flex flex-col">
+          <Hero />
+          <div className="container flex flex-col justify-start items-center w-full">
+            <Categories />
+            <Footer />
+          </div>
         </div>
       </div>
     </section>
