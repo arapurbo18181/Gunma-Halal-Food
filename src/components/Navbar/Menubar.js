@@ -72,22 +72,22 @@ const Menubar = () => {
   return (
     <section className="w-full flex justify-center items-center">
       <div className="w-full flex justify-center items-center space-x-6">
+        {/* //! Search bar */}
+        <div className="mt-1 xl:mt-0">
+          <Searchbar />
+        </div>
         {/* //! Menu for pc */}
         <div className="w-full hidden xl:flex justify-center items-center space-x-10 px-6">
           {menu.map((item) => {
             return (
               <Link
                 to={item.page}
-                className="xl:text-base 2xl:text-xl focus:border-b py-2 px-4 bg-emerald-600 text-white border-2 border-emerald-600 hover:bg-white hover:text-black transition-all duration-500 rounded-md"
+                className="text-xl font-semibold hover:-translate-y-1 transition-all duration-300"
               >
                 {item.menu}
               </Link>
             );
           })}
-        </div>
-        {/* //! Search bar */}
-        <div className="block xl:hidden mt-1">
-          <Searchbar />
         </div>
       </div>
       <div

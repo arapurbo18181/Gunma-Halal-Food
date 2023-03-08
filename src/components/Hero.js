@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -51,10 +51,18 @@ const Hero = () => {
           ]
       };
 
+      // const [WidthForSlider, setWidthForSlider] = useState();
 
+      // useEffect(() => {
+      //   setWidthForSlider(window.innerWidth - 500);
+      //   console.log(window.innerWidth);
+      // }, [])
+
+      // console.log(WidthForSlider);
+      
 
   return (
-    <section className='w-screen xl:container h-full mt-5'>
+    <section className={`w-[98.9vw] xl:w-[84.95vw] h-full`}>
     {/* //! Main Slider */}
         <Slider {...settings}>
             {

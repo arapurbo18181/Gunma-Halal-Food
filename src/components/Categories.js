@@ -6,7 +6,7 @@ const Categories = () => {
   const { setItemCategory, categories } = useCategory();
 
   return (
-    <div className="container xl:w-[900px]">
+    <div className="container">
       {/* //! Top Categories */}
 
       <h1 className="text-3xl font-bold text-gray-700 mt-8 mb-4 mx-4">

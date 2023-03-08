@@ -16,11 +16,6 @@ const Topbar = () => {
 
   const {toggleNav, toggleCat} = useCategory()
 
-  // const shoppingCart = document.getElementsByClassName("cart");
-  // console.log(shoppingCart)
-  // const xCoordinate = shoppingCart.getBoundingClientRect();
-  // console.log(xCoordinate)
-
   return (
     <section className="flex justify-center space-x-5 items-center px-6">
     {/* //! Category bar for mobile */}

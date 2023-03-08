@@ -42,12 +42,11 @@ const ProductsOfSubCategory = () => {
 
   return (
     <section className="flex justify-center items-start w-full">
-      <div className="flex justify-center items-center xl:items-start container">
-        <div className="hidden xl:block -mt-4 w-[280px]">
-          <div className="block w-[380px]"></div>
+      <div className="flex justify-start items-center w-[100%] xl:items-start space-x-5">
+        <div className="hidden w-[14vw] sticky left-0 top-28 xl:block -mt-4">
           <CategorySidebar />
         </div>
-        <div className="px-2">
+        <div className="">
           <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-14">
             <span className="underline decoration-emerald-500 underline-offset-8">
               {params.id.slice(0, 2)}
@@ -67,7 +66,7 @@ const ProductsOfSubCategory = () => {
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-[100%] place-items-center">
               {ProductsFromCategory.map((item) => {
                 return <SubCategoryProducts item={item} />;
               })}
