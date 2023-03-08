@@ -11,7 +11,7 @@ const Searchbar = () => {
           placeholder="Search"
         />
 
-        <button type="submit" className="absolute h-full right-2 xl:right-4 cursor-pointer">
+        <button onClick={(e)=>e.preventDefault()} type="submit" className="absolute h-full right-2 xl:right-4 cursor-pointer">
           <FiSearch className="text-sm sm:text-lg md:text-2xl text-emerald-500" />
         </button>
       </form>
