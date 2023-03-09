@@ -46,7 +46,7 @@ const ProductsOfSubCategory = () => {
         <div className="hidden w-[14vw] sticky left-0 top-28 xl:block -mt-4">
           <CategorySidebar />
         </div>
-        <div className="">
+        <div className="w-full">
           <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-14">
             <span className="underline decoration-emerald-500 underline-offset-8">
               {params.id.slice(0, 2)}
