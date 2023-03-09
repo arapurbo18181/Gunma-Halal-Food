@@ -15,6 +15,9 @@ const sliderImage = [
   {
     img: "https://jssors8.azureedge.net/demos/image-slider/img/px-beach-daylight-fun-1430675-image.jpg",
   },
+  {
+    img: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8&w=1000&q=80",
+  },
 ];
 
 const Hero = () => {
@@ -68,8 +71,8 @@ const Hero = () => {
       <Slider {...settings}>
         {sliderImage.map((slide) => {
           return (
-            <div className="w-full">
-                <img className="w-full" src={slide.img} />
+            <div className="w-full h-[25vh] md:h-[40vh] lg:h-[50vh] xl:h-[60vh]">
+                <img className="h-full w-full object-cover" src={slide.img} />
             </div>
           );
         })}
