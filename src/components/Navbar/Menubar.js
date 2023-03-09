@@ -21,10 +21,6 @@ const menu = [
     menu: "Contact",
     page: "/contact",
   },
-  {
-    menu: "Privacy Policy",
-    page: "/privacypolicy",
-  },
 ];
 
 const menuForMobile = [
@@ -73,16 +69,16 @@ const Menubar = () => {
     <section className="w-full flex justify-center items-center">
       <div className="w-full flex justify-center items-center space-x-6">
         {/* //! Search bar */}
-        <div className="mt-1 xl:mt-0">
+        <div className="hidden xl:block flex-1 mt-1 xl:mt-0">
           <Searchbar />
         </div>
         {/* //! Menu for pc */}
-        <div className="w-full hidden xl:flex justify-center items-center space-x-10 px-6">
+        <div className="flex-1 w-full hidden xl:flex justify-center items-center space-x-10 px-6">
           {menu.map((item) => {
             return (
               <Link
                 to={item.page}
-                className="text-xl font-semibold hover:-translate-y-1 transition-all duration-300"
+                className="text-base font-semibold hover:-translate-y-1 transition-all duration-300"
               >
                 {item.menu}
               </Link>

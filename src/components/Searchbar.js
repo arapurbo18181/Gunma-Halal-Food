@@ -7,7 +7,7 @@ const Searchbar = () => {
       <form className="relative flex w-[120px] sm:w-full items-center justify-center rounded-xl drop-shadow-md xl:mt-5">
         <input
           type="text"
-          className="w-full rounded-xl bg-gray-100 pl-3 pr-6 py-0.5 sm:py-1 md:py-2 xl:py-4 text-sm sm:text-lg placeholder-gray-700 outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 xl:w-full"
+          className="w-full rounded-xl bg-gray-100 pl-3 pr-6 py-0.5 sm:py-1 md:py-2 xl:py-2 text-sm sm:text-lg placeholder-gray-700 outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 xl:w-full"
           placeholder="Search"
         />
 
