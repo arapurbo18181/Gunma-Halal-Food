@@ -61,7 +61,7 @@ const SubCategoryProducts = ({ item }) => {
           onClick={() => setShowProduct(item)}
         >
           <img
-            className="cursor-pointer w-[100px]"
+            className="cursor-pointer w-[100px] -z-10"
             src={item.img}
             alt=""
           />
