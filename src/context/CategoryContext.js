@@ -712,12 +712,17 @@ export const CategoryProvider = ({ children }) => {
   ];
 
   const toggleNav = () => {
-    setToggle(!Toggle);
+    if (Toggle === true) {
+      setToggle(false);
+    }else{
+      setToggle(true);
+    }
   };
 
   useEffect(() => {
-    console.log(ToggleCategory)
-  }, [])
+    console.log(Toggle)
+    // console.log(ToggleCategory)
+  }, [Toggle, ToggleCategory])
   
 
   const toggleCat = () => {
@@ -726,7 +731,6 @@ export const CategoryProvider = ({ children }) => {
     }else{
       setToggleCategory(true);
     }
-    console.log(ToggleCategory)
   };
 
   return (

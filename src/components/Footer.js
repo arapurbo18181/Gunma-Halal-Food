@@ -108,10 +108,10 @@ const Footer = () => (
   //   </div>
   // </footer>
   <footer class="text-gray-600 body-font">
-    <div class="px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
+    <div class="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
       <div class="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
-        <div className="w-[200px] bg-gray-100">
-          <img src={Logo} alt="Main Logo" />
+        <div className="w-full bg-gray-100 px-2 py-1 rounded-xl">
+          <img src={Logo} alt="Main Logo" className="" />
         </div>
         <p class="mt-2 text-sm text-gray-500">
           Fresh groceries delivered straight to your door, shop now and save

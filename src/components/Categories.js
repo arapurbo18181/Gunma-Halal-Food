@@ -24,10 +24,10 @@ const Categories = () => {
               onClick={() => setItemCategory(item.sub_cat)}
               className="flex flex-col justify-center items-center"
             >
-              <div className="overflow-hidden">
+              <div className="overflow-hidden w-full flex justify-center items-center">
                 <img
                   src={item.img}
-                  className="hover:scale-110 transition-all duration-500"
+                  className="hover:scale-110 transition-all duration-500 w-6/12 md:w-8/12 xl:w-10/12"
                 />
               </div>
               <h3 className="text-xl"> {item.category} </h3>

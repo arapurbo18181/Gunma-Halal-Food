@@ -70,3 +70,9 @@
   right: 30px !important;
   opacity: 0.5;
 }
+
+@media screen and (max-width: 768px) {
+  .slick-prev, .slick-next {
+    display: none !important;
+  }
+}

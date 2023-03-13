@@ -8,36 +8,10 @@ import Footer from "../components/Footer";
 import { useCart } from "../context/CartContext";
 import { motion } from "framer-motion";
 import SubCategoryProducts from "../components/SubCategoryProducts";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import CartButton from "../components/CartButton";
 
 const ProductsOfSubCategory = () => {
   const { ProductsFromCategory } = useCategory();
-  const myRef = useRef();
-
-  const {
-    setShowProduct,
-    addToCart,
-    addToWishlist,
-    CartCoordinate,
-    ImgCoordinate,
-    setImgCoordinate,
-    ToggleSidebar,
-    setToggleSidebar,
-    TotalAmount,
-    TotalWishlist,
-    setCartCoordinate,
-  } = useCart();
-
-  useEffect(() => {
-    setCartCoordinate({
-      x: myRef.current.offsetLeft,
-      y: myRef.current.offsetTop,
-    });
-  }, []);
-
-  useEffect(() => {
-    console.log(CartCoordinate);
-  }, [CartCoordinate]);
   const params = useParams();
 
   return (
@@ -54,18 +28,7 @@ const ProductsOfSubCategory = () => {
             {params.id.slice(2)}
           </h2>
           <div className="">
-            <div className="fixed right-3 z-50" ref={myRef}>
-              <div className="cart relative flex-1 hover:-translate-y-1 transition-all duration-300">
-                <AiOutlineShoppingCart
-                  onClick={() => setToggleSidebar(!ToggleSidebar)}
-                  className="cursor-pointer text-5xl"
-                />
-                <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-emerald-500 flex justify-center items-center text-sm text-white">
-                  {" "}
-                  {TotalAmount}{" "}
-                </div>
-              </div>
-            </div>
+          <CartButton/>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-[100%] place-items-center">
               {ProductsFromCategory.map((item) => {
                 return <SubCategoryProducts item={item} />;

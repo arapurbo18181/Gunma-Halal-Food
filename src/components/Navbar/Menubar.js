@@ -87,7 +87,7 @@ const Menubar = () => {
         </div>
       </div>
       <div
-        className={`h-[100vh] flex justify-center items-start pt-32 bg-white absolute top-0 right-0 left-0 bottom-0 z-40 ${
+        className={`h-[100vh] flex justify-center items-start pt-24 bg-white absolute top-0 right-0 left-0 bottom-0 z-40 ${
           Toggle ? "-translate-y-0" : "-translate-y-full"
         } transition-all duration-500`}
       >
@@ -100,6 +100,9 @@ const Menubar = () => {
         </div>
         {/* //! Menu For Mobile */}
         <div className="flex flex-col justify-start items-center w-full space-y-3">
+        <div className="w-6/12">
+          <Searchbar/>
+        </div>
           {menuForMobile.map((item) => {
             return (
               <Link

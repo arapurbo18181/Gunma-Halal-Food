@@ -5,6 +5,7 @@ import { BsTrash } from "react-icons/bs";
 import CategorySidebar from "../components/CategorySidebar";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import CartButton from "../components/CartButton";
 
 const Wishlist = () => {
   const { Wishlist, setShowProduct, addToCart, removeFromWishlist } = useCart();
@@ -14,7 +15,7 @@ const Wishlist = () => {
         <div className="hidden w-[14vw] sticky left-0 top-28 xl:block -mt-4">
           <CategorySidebar />
         </div>
-        <div>
+        <div className="w-full">
           <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-14">
             <span className="underline decoration-emerald-500 underline-offset-8">
               Wi
@@ -22,6 +23,7 @@ const Wishlist = () => {
             sh List
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-[100%] place-items-center">
+          <CartButton/>
             {Wishlist.map((item) => {
               return (
                 <div className="px-4 py-4 border shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 max-w-[220px] max-h-[300px]">

@@ -17,7 +17,7 @@ const SubCategoryProducts = ({ item }) => {
 
   const handleClick = (item) => {
     setCount(item.id);
-    const setX = CartCoordinate.x - myRef.current.offsetLeft - 90;
+    const setX = CartCoordinate.x - myRef.current.offsetLeft - 95;
     const setY = CartCoordinate.y - (myRef.current.offsetTop - pos) - 50;
     setAnimationCoodinate({ x: setX, y: setY });
     console.log(CartCoordinate, AnimationCoodinate, setX, setY);

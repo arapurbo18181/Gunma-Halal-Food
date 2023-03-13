@@ -19,7 +19,7 @@ const Topbar = () => {
       {/* //! Category bar for mobile */}
       <div className="xl:hidden flex justify-center items-center">
         {" "}
-        <AiOutlineBars
+        <FaBars
           onClick={toggleCat}
           className="cursor-pointer text-xl md:text-2xl mt-1"
         />{" "}
@@ -32,7 +32,7 @@ const Topbar = () => {
       </div>
 
       {/* //! Menu Bar */}
-      <div className="hidden xl:block xl:w-full">
+      <div className="xl:block xl:w-full">
         <Menubar />
       </div>
       {/* //! Account and Cart */}
@@ -40,7 +40,7 @@ const Topbar = () => {
         {/* //! Menubar for mobile */}
         <div className="xl:hidden flex justify-center items-center">
           {" "}
-          <FaBars
+          <AiOutlineBars
             onClick={toggleNav}
             className="cursor-pointer text-xl md:text-2xl mt-1"
           />{" "}
