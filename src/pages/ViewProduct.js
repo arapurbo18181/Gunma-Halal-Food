@@ -5,11 +5,22 @@ import { BsPlusLg } from "react-icons/bs";
 import { BsSuitHeart } from "react-icons/bs";
 import Footer from "../components/Footer";
 import CartButton from "../components/CartButton";
-
+import { IoMdAdd, IoMdClose, IoMdRemove } from "react-icons/io";
+import ProductTopbar from "../components/ProductTopbar";
+import ProductDescription from "../components/ProductDescription";
+import ProductReviews from "../components/ProductReviews";
+import { useProduct } from "../context/ProductContext";
+import { Rate } from "antd";
 const ViewProduct = () => {
-  const { ShowProduct, addToCart, addToWishlist } = useCart();
+  const { productTopbar, ToggleProductTopbar, setToggleTopbar } = useProduct();
+  const {
+    ShowProduct,
+    addToCart,
+    addToWishlist,
+    removeFromCart,
+    decreaseFromCart,
+  } = useCart();
   const myRef = useRef();
-  const [ClassList, setClassList] = useState();
 
   const handleMouse = (e) => {
     const p = e.clientX - myRef.current.offsetLeft;
@@ -48,7 +59,7 @@ const ViewProduct = () => {
         <div className="hidden w-[14vw] sticky left-0 top-28 xl:block -mt-4">
           <CategorySidebar />
         </div>
-        <div>
+        <div className="w-full">
           <div className="h-[80vh] w-[100%] flex justify-center items-center">
             <div className="flex flex-col md:flex-row justify-center items-start w-full xl:w-[70vw]">
               <CartButton />
@@ -83,6 +94,16 @@ const ViewProduct = () => {
                   {" "}
                   {ShowProduct.title}{" "}
                 </h2>
+                <div>
+                  <Rate
+                    defaultValue={4.5}
+                    disabled
+                    onChange={(value) => console.log(value)}
+                    allowHalf
+                    style={{ color: "red" }}
+                    allowClear={false}
+                  />
+                </div>
                 <p className="text-xs md:text-sm xl:text-base">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Aliquid cumque consequatur recusandae dolorem pariatur in nam
@@ -92,27 +113,57 @@ const ViewProduct = () => {
                   <h2 className="text-2xl font-bold text-red-500">৳250</h2>
                   <h2 className="text-base text-gray-400 line-through">৳300</h2>
                 </div>
-                <div className="flex justify-center items-center space-x-2">
-                  <div className="w-full flex justify-center items-center my-2 ">
-                    <button
-                      onClick={() => addToWishlist(ShowProduct)}
-                      className="flex justify-center items-center text-xs md:text-sm xl:text-base space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-2 py-1 xl:px-4 xl:py-2 rounded-full cursor-pointer w-full"
+
+                <div className="flex justify-start items-center space-x-2">
+                  {/* //! plus minus product */}
+                  <div className="flex w-20 items-center h-10 text-primary font-medium">
+                    <div
+                      onClick={() => decreaseFromCart(ShowProduct)}
+                      className="flex-1 flex justify-center items-center cursor-pointer h-full border-l border-t border-b rounded-l-full hover:bg-red-500 hover:text-white transition-all duration-300"
                     >
+                      <IoMdRemove />
+                    </div>
+                    <div className="h-full flex justify-center items-center px-2 border">
                       {" "}
-                      <BsSuitHeart /> <span>Wishlist</span>{" "}
-                    </button>
+                      {/* {ShowProduct.amount}{" "} */}1
+                    </div>
+                    <div
+                      onClick={() => addToCart(ShowProduct)}
+                      className="flex-1 h-full flex justify-center items-center cursor-pointer border-r border-t border-b rounded-r-full hover:bg-red-500 hover:text-white transition-all duration-300"
+                    >
+                      <IoMdAdd />
+                    </div>
                   </div>
-                  <div className="w-full flex justify-center items-center my-2 ">
+                  {/* //! Add to Cart Button */}
+                  <div className="flex justify-center items-center my-2 ">
                     <button
                       onClick={() => addToCart(ShowProduct)}
-                      className="flex justify-center items-center text-xs md:text-sm xl:text-base space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-2 py-1 xl:px-4 xl:py-2 rounded-full cursor-pointer w-full"
+                      className="flex justify-center items-center text-xs md:text-sm xl:text-base space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-2 py-1 xl:px-4 xl:py-2 cursor-pointer w-full"
                     >
                       {" "}
                       <BsPlusLg /> <span>Cart</span>{" "}
                     </button>
                   </div>
                 </div>
+                <div
+                  onClick={() => addToWishlist(ShowProduct)}
+                  className="flex justify-start items-center space-x-2 cursor-pointer hover:-translate-y-1 transition-all duration-300 w-fit"
+                >
+                  <div className="text-base mt-0.5">
+                    <BsSuitHeart />
+                  </div>
+                  <div className="text-base">Wishlist</div>
+                </div>
               </div>
+            </div>
+          </div>
+          <div className="w-full flex flex-col justify-center items-center">
+            <div>
+              <ProductTopbar />
+            </div>
+            <div className="w-full">
+              {ToggleProductTopbar === 0 && <ProductDescription />}
+              {ToggleProductTopbar === 1 && <ProductReviews />}
             </div>
           </div>
           <Footer />

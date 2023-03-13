@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import { CategoryProvider } from "./context/CategoryContext";
 import { CartProvider } from "./context/CartContext";
 import { UserProvider } from "./context/UserContext";
+import { ProductProvider } from "./context/ProductContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,8 +17,10 @@ root.render(
       <CartProvider>
         <CategoryProvider>
           <UserProvider>
-            <Navbar />
-            <App />
+            <ProductProvider>
+              <Navbar />
+              <App />
+            </ProductProvider>
           </UserProvider>
         </CategoryProvider>
       </CartProvider>
