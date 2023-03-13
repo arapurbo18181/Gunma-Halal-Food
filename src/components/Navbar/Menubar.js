@@ -88,7 +88,7 @@ const Menubar = () => {
       </div>
       <div
         className={`h-[100vh] flex justify-center items-start pt-24 bg-white absolute top-0 right-0 left-0 bottom-0 z-40 ${
-          Toggle ? "-translate-y-0" : "-translate-y-full"
+          Toggle ? "-translate-y-0" : "-translate-y-[150%]"
         } transition-all duration-500`}
       >
         {/* //! Mobile menu close button */}
