@@ -31,7 +31,7 @@ const CartButton = () => {
         console.log(CartCoordinate);
       }, [CartCoordinate]);
   return (
-    <div className="fixed right-3 top-36 z-50" ref={myRef}>
+    <div className="fixed right-3 top-36 z-30" ref={myRef}>
     <div className="cart relative flex-1 hover:-translate-y-1 transition-all duration-300">
       <AiOutlineShoppingCart
         onClick={() => setToggleSidebar(!ToggleSidebar)}
