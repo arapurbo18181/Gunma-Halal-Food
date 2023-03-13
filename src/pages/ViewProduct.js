@@ -50,16 +50,16 @@ const ViewProduct = () => {
         </div>
         <div>
           <div className="h-[80vh] w-[100%] flex justify-center items-center">
-            <div className="flex justify-center items-start w-[70vw]">
-            <CartButton/>
+            <div className="flex flex-col md:flex-row justify-center items-start w-full xl:w-[70vw]">
+              <CartButton />
               <div
-                /*onMouseLeave={leaveMouse} onMouseMove={handleMouse}*/ className="flex-1 overflow-hidden relative w-[70vw] h-[80vh]"
+                /*onMouseLeave={leaveMouse} onMouseMove={handleMouse}*/ className="flex-1 flex justify-center items-center overflow-hidden relative w-full"
               >
                 <img
                   ref={myRef}
                   /*onMouseEnter={handleMouse} */ src={ShowProduct.img}
                   alt=""
-                  className={`transition-all duration-500 absolute top-0 left-0 pointer-events-none`}
+                  className={`transition-all duration-500 w-7/12 md:w-full`}
                 />
                 {/* <ReactImageMagnify
                   {...{
@@ -79,11 +79,11 @@ const ViewProduct = () => {
                 /> */}
               </div>
               <div className="h-[500px] flex-1 flex flex-col justify-center space-y-4">
-                <h2 className="text-[1.5rem] font-bold">
+                <h2 className="text-base md:text-lg xl:text-xl font-bold">
                   {" "}
                   {ShowProduct.title}{" "}
                 </h2>
-                <p>
+                <p className="text-xs md:text-sm xl:text-base">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Aliquid cumque consequatur recusandae dolorem pariatur in nam
                   officiis, cum temporibus doloremque?
@@ -96,19 +96,19 @@ const ViewProduct = () => {
                   <div className="w-full flex justify-center items-center my-2 ">
                     <button
                       onClick={() => addToWishlist(ShowProduct)}
-                      className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-4 py-2 rounded-full cursor-pointer w-full"
+                      className="flex justify-center items-center text-xs md:text-sm xl:text-base space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-2 py-1 xl:px-4 xl:py-2 rounded-full cursor-pointer w-full"
                     >
                       {" "}
-                      <BsSuitHeart /> <span>Add To Wishlist</span>{" "}
+                      <BsSuitHeart /> <span>Wishlist</span>{" "}
                     </button>
                   </div>
                   <div className="w-full flex justify-center items-center my-2 ">
                     <button
                       onClick={() => addToCart(ShowProduct)}
-                      className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-4 py-2 rounded-full cursor-pointer w-full"
+                      className="flex justify-center items-center text-xs md:text-sm xl:text-base space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-2 py-1 xl:px-4 xl:py-2 rounded-full cursor-pointer w-full"
                     >
                       {" "}
-                      <BsPlusLg /> <span>Add To Cart</span>{" "}
+                      <BsPlusLg /> <span>Cart</span>{" "}
                     </button>
                   </div>
                 </div>
