@@ -88,7 +88,7 @@ const SubCategoryProducts = ({ item }) => {
           <div className="w-full flex justify-center items-center my-2 ">
             <button
               onClick={() => addToWishlist(item)}
-              className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-3 py-1 rounded-full cursor-pointer w-full text-sm"
+              className="flex justify-center items-center space-x-2 bg-red-500 hover:bg-red-600 transition-all duration-300 text-white px-3 py-1 rounded-full cursor-pointer w-full text-sm"
             >
               {" "}
               <BsSuitHeart /> <span>Wishlist</span>{" "}
@@ -97,7 +97,7 @@ const SubCategoryProducts = ({ item }) => {
           <div className="w-full flex justify-center items-center my-2 ">
             <button
               onClick={() => handleClick(item)}
-              className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-3 py-1 rounded-full cursor-pointer w-full text-sm"
+              className="flex justify-center items-center space-x-2 bg-red-500 hover:bg-red-600 transition-all duration-300 text-white px-3 py-1 rounded-full cursor-pointer w-full text-sm"
             >
               {" "}
               <BsPlusLg /> <span>Cart</span>{" "}

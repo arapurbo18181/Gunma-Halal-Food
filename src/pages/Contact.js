@@ -26,7 +26,7 @@ const Contact = () => {
                     id="name"
                     name="name"
                     placeholder="Enter Your Name"
-                    className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+                    className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                   />
                 </div>
               </div>
@@ -43,7 +43,7 @@ const Contact = () => {
                     id="email"
                     name="email"
                     placeholder="Enter Your Email"
-                    className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+                    className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                   />
                 </div>
               </div>
@@ -59,17 +59,17 @@ const Contact = () => {
                     id="message"
                     name="message"
                     placeholder="Enter Your Message"
-                    className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+                    className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                   ></textarea>
                 </div>
               </div>
               <div className="p-2 w-full">
-                <button className="flex mx-auto text-white bg-emerald-500 border-0 py-2 px-8 focus:outline-none hover:bg-emerald-600 rounded text-lg transition-all duration-300">
+                <button className="flex mx-auto text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg transition-all duration-300">
                   Send
                 </button>
               </div>
               <div className="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
-                <a className="text-emerald-500">example@email.com</a>
+                <a className="text-red-500">example@email.com</a>
                 <p className="leading-normal my-5">
                   Uttara, Dhaka
                   <br /> 1230

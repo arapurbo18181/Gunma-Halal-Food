@@ -12,7 +12,7 @@ const Login = () => {
     <section className="bg-[#f9fafb] w-[100%] h-[90vh] flex justify-center items-center">
     <form
       onSubmit={login}
-      className="w-[500px] h-[500px] bg-white drop-shadow-2xl rounded-lg border border-emerald-300 container"
+      className="w-[500px] h-[500px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container"
     >
       <div className="flex justify-center my-5 text-4xl font-bold">
         <h1>Log In</h1>
@@ -23,7 +23,7 @@ const Login = () => {
           <input
             onChange={(e) => setEmail(e.target.value)}
             value={Email}
-            className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+            className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
             type="email"
             name="email"
             placeholder="Enter Your Email"
@@ -36,7 +36,7 @@ const Login = () => {
           <input
             onChange={(e) => setPassword(e.target.value)}
             value={Password}
-            className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+            className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
             type="password"
             name="password"
             placeholder="Enter Your Password"
@@ -48,7 +48,7 @@ const Login = () => {
           <h2 className="cursor-pointer">Forgot Your Password?</h2>
         </div>
         <div className="w-full flex justify-center my-4">
-          <button className="w-full bg-emerald-500 text-white py-2 rounded-full hover:bg-emerald-600 transition-all duration-300">
+          <button className="w-full bg-red-500 text-white py-2 rounded-full hover:bg-red-600 transition-all duration-300">
             Log In
           </button>
         </div>

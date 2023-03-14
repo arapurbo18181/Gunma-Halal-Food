@@ -26,7 +26,7 @@ const ProductReviews = () => {
         <div className="flex flex-col items-start my-4 w-full">
           <label htmlFor="address">Your Review</label>
           <textarea
-            className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+            className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
             type="text"
             name="review"
             placeholder="Enter Your Review"
@@ -38,7 +38,7 @@ const ProductReviews = () => {
           <div className="flex flex-col items-start my-4 w-full">
             <label htmlFor="email">Name</label>
             <input
-              className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+              className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
               type="text"
               name="name"
               placeholder="Enter Your Name"
@@ -49,7 +49,7 @@ const ProductReviews = () => {
           <div className="flex flex-col items-start my-4 w-full ml-4">
             <label htmlFor="email">Email</label>
             <input
-              className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+              className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
               type="email"
               name="email"
               placeholder="Enter Your Email"
@@ -59,7 +59,7 @@ const ProductReviews = () => {
           </div>
         </div>
         <div className="w-full flex text-sm sm:text-xl justify-center my-4">
-          <button className="w-1/3 bg-emerald-500 px-2 sm:px-4 text-white py-2 rounded-full hover:bg-emerald-600 transition-all duration-300">
+          <button className="w-1/3 bg-red-500 px-2 sm:px-4 text-white py-2 rounded-full hover:bg-red-600 transition-all duration-300">
             Submit
           </button>
         </div>

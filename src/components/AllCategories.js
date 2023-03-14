@@ -24,14 +24,15 @@ const AllCategories = () => {
 
   return (
     <div>
-      <div className="mx-auto w-full max-w-md rounded-2xl bg-gray-100 p-2 space-y-2">
+      <div className="mx-auto w-full max-w-md rounded-2xl bg-red- p-2 space-y-2">
         {categories.map((item) => {
           return (
-            <Disclosure>
+            <Disclosure className="transition-all duration-300">
               {({ open }) => (
                 <>
-                  <Disclosure.Button className="flex w-full justify-between rounded-lg bg-emerald-100 px-4 py-2 text-left text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring focus-visible:ring-emerald-500 focus-visible:ring-opacity-75">
+                  <Disclosure.Button className="flex w-full justify-between bg-white hover:bg-red-600 px-4 py-2 text-left text-sm hover:text-base font-medium text-black hover:text-white focus:outline-none focus-visible:ring focus-visible:ring-red-500 focus-visible:ring-opacity-75 transition-all duration-300">
                     <Link
+                    className=""
                       to={`/product-category/${item.category}`}
                       onClick={() => handleCat(item.sub_cat)}
                     >
@@ -41,13 +42,14 @@ const AllCategories = () => {
                     <ChevronDownIcon
                       className={`${
                         open ? "rotate-180 transform" : ""
-                      } h-5 w-5 text-emerald-500`}
+                      } h-5 w-5 text-white-500`}
                     />
                   </Disclosure.Button>
                   {item.sub_cat.map((elem) => {
                     return (
-                      <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-emerald-900">
+                      <Disclosure.Panel className="flex justify-center items-center text-sm hover:text-base text-black hover:text-white hover:bg-red-500 transition-all duration-300 w-full">
                         <Link
+                          className="w-full px-4 py-2"
                           to={`/product-category/${item.category}/${elem.cat}`}
                           onClick={() => handleSubCat(elem.product)}
                         >

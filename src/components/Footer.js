@@ -29,15 +29,15 @@ const Footer = () => (
   //           <div className="flex space-x-6">
   //             <FaFacebookSquare
   //               size={40}
-  //               className="text-emerald-500 transition-all duration-300 hover:text-emerald-600"
+  //               className="text-red-500 transition-all duration-300 hover:text-red-600"
   //             />
   //             <FaInstagramSquare
   //               size={40}
-  //               className="text-emerald-500 transition-all duration-300 hover:text-emerald-600"
+  //               className="text-red-500 transition-all duration-300 hover:text-red-600"
   //             />
   //             <FaTwitterSquare
   //               size={40}
-  //               className="text-emerald-500 transition-all duration-300 hover:text-emerald-600"
+  //               className="text-red-500 transition-all duration-300 hover:text-red-600"
   //             />
   //           </div>
   //         </div>
@@ -46,22 +46,22 @@ const Footer = () => (
   //       {/*//! Contact Info  */}
   //       <div className="flex flex-1 flex-col justify-start items-start space-y-8">
   //         <h1 className="text-2xl font-bold text-gray-700">
-  //           <span className="underline decoration-emerald-500 underline-offset-8">
+  //           <span className="underline decoration-red-500 underline-offset-8">
   //             Co
   //           </span>
   //           ntact Info
   //         </h1>
   //         <div className="flex flex-col space-y-2">
   //           <p className="flex space-x-4 text-lg">
-  //             <FaPhone size={20} className="text-emerald-500" />{" "}
+  //             <FaPhone size={20} className="text-red-500" />{" "}
   //             <span>+880 123 456 789</span>
   //           </p>
   //           <p className="flex space-x-4 text-lg">
-  //             <FaEnvelope size={20} className="text-emerald-500" />
+  //             <FaEnvelope size={20} className="text-red-500" />
   //             <span>gunmahalalfood@gmail.com</span>
   //           </p>
   //           <p className="flex space-x-4 text-lg">
-  //             <MdLocationOn size={20} className="text-emerald-500" />{" "}
+  //             <MdLocationOn size={20} className="text-red-500" />{" "}
   //             <span>Tokyo, Japan</span>
   //           </p>
   //         </div>
@@ -70,7 +70,7 @@ const Footer = () => (
   //       {/*//! Company */}
   //       <div className="flex flex-1 flex-col space-y-8">
   //         <h1 className="text-2xl font-bold text-gray-700">
-  //           <span className="underline decoration-emerald-500 underline-offset-8">
+  //           <span className="underline decoration-red-500 underline-offset-8">
   //             Co
   //           </span>
   //           mpany
@@ -86,7 +86,7 @@ const Footer = () => (
   //       {/*//! Quick Links*/}
   //       <div className="flex flex-1 flex-col space-y-8">
   //         <h1 className="text-2xl font-bold text-gray-700">
-  //           <span className="underline decoration-emerald-500 underline-offset-8">
+  //           <span className="underline decoration-red-500 underline-offset-8">
   //             Qu
   //           </span>
   //           ick Links
@@ -121,7 +121,7 @@ const Footer = () => (
       <div class="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
         <div class="lg:w-1/4 md:w-1/2 w-full px-4">
         <h2 class="title-font font-semibold text-gray-900 tracking-widest text-base mb-3">
-          <span className="underline decoration-emerald-500 underline-offset-8">
+          <span className="underline decoration-red-500 underline-offset-8">
               Co
             </span>
             ntact Info
@@ -143,7 +143,7 @@ const Footer = () => (
         </div>
         <div class="lg:w-1/4 md:w-1/2 w-full px-4">
         <h2 class="title-font font-semibold text-gray-900 tracking-widest text-base mb-3">
-          <span className="underline decoration-emerald-500 underline-offset-8">
+          <span className="underline decoration-red-500 underline-offset-8">
               Co
             </span>
             mpany
@@ -165,7 +165,7 @@ const Footer = () => (
         </div>
         <div class="lg:w-1/4 md:w-1/2 w-full px-4">
           <h2 class="title-font font-semibold text-gray-900 tracking-widest text-base mb-3">
-          <span className="underline decoration-emerald-500 underline-offset-8">
+          <span className="underline decoration-red-500 underline-offset-8">
               Co
             </span>
             ntact Info
@@ -187,7 +187,7 @@ const Footer = () => (
         </div>
         <div class="lg:w-1/4 md:w-1/2 w-full px-4">
           <h2 class="title-font font-semibold text-gray-900 tracking-widest text-base mb-3">
-            <span className="underline decoration-emerald-500 underline-offset-8">
+            <span className="underline decoration-red-500 underline-offset-8">
               Qu
             </span>
             ick Links

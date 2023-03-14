@@ -12,7 +12,7 @@ const Cart = () => {
         <h1 className="text-3xl font-bold">Your Cart ({TotalAmount})</h1>
       </div>
       <div className="w-full px-7 lg:px-40">
-        <div className="flex justify-between items-center bg-emerald-500 text-white px-4 rounded py-2 my-4">
+        <div className="flex justify-between items-center bg-red-500 text-white px-4 rounded py-2 my-4">
           <div>Product</div>
           <div>Quantity</div>
           <div>Subtotal</div>
@@ -24,14 +24,14 @@ const Cart = () => {
 
           
         </div>
-        <div className="w-full h-[1px] bg-emerald-500 mt-4"></div>
+        <div className="w-full h-[1px] bg-red-500 mt-4"></div>
         
         
         <div className='flex justify-between items-center w-full mt-5'>
           <div className='uppercase font-semibold'>
             <span className='mr-2'> Total: </span> $ {parseFloat(0).toFixed(2)}
           </div>
-          <div onClick={clearCart} className='cursor-pointer py-4 bg-emerald-500 text-white w-12 h-12 flex justify-center items-center text-xl'>
+          <div onClick={clearCart} className='cursor-pointer py-4 bg-red-500 text-white w-12 h-12 flex justify-center items-center text-xl'>
             <FiTrash2 />
           </div>
         </div>

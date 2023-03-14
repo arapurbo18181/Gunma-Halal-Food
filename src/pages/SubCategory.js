@@ -17,7 +17,7 @@ const SubCategory = () => {
         </div>
         <div className="px-2 w-full">
           <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-8">
-            <span className="underline decoration-emerald-500 underline-offset-8">
+            <span className="underline decoration-red-500 underline-offset-8">
               {params.id.slice(0, 2)}
             </span>
             {params.id.slice(2)}

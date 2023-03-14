@@ -16,7 +16,8 @@ const Home = () => {
           <div className="flex justify-start items-center w-full">
             <Hero />
           </div>
-          <div className="flex justify-center items-center w-full">
+          <div className="flex flex-col justify-center items-center w-full">
+            <Categories />
             <Categories />
           </div>
           <Footer />

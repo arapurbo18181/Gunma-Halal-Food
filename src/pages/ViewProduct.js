@@ -138,7 +138,7 @@ const ViewProduct = () => {
                   <div className="flex justify-center items-center my-2 ">
                     <button
                       onClick={() => addToCart(ShowProduct)}
-                      className="flex justify-center items-center text-xs md:text-sm xl:text-base space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-2 py-1 xl:px-4 xl:py-2 cursor-pointer w-full"
+                      className="flex justify-center items-center text-xs md:text-sm xl:text-base space-x-2 bg-red-500 hover:bg-red-600 transition-all duration-300 text-white px-2 py-1 xl:px-4 xl:py-2 cursor-pointer w-full"
                     >
                       {" "}
                       <BsPlusLg /> <span>Cart</span>{" "}

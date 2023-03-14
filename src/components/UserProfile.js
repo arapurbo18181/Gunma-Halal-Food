@@ -26,7 +26,7 @@ const UserProfile = () => {
               <input
                 // onChange={e=>setInfo({...Info ,myName:e.target.value})}
                 // value={Info.myName}
-                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                 type="file"
                 name="image"
                 id="image"
@@ -39,7 +39,7 @@ const UserProfile = () => {
               <input
                 // onChange={e=>setInfo({...Info ,myName:e.target.value})}
                 // value={Info.myName}
-                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                 type="text"
                 name="name"
                 placeholder="Enter Your Name"
@@ -52,7 +52,7 @@ const UserProfile = () => {
               <input
                 // onChange={e=>setInfo({...Info ,email:e.target.value})}
                 // value={Info.email}
-                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                 type="email"
                 name="email"
                 placeholder="Enter Your Email"
@@ -66,7 +66,7 @@ const UserProfile = () => {
             <textarea
               // onChange={e=>setInfo({...Info ,address:e.target.value})}
               // value={Info.address}
-              className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+              className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
               type="text"
               name="address"
               placeholder="Enter Your Address"
@@ -81,7 +81,7 @@ const UserProfile = () => {
               <input
                 // onChange={e=>setInfo({...Info ,phoneNumber: parseInt(e.target.value)})}
                 // value={Info.phoneNumber}
-                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                 type="number"
                 name="phone"
                 placeholder="Enter Your phone number"
@@ -94,7 +94,7 @@ const UserProfile = () => {
               <input
                 // onChange={e=>setInfo({...Info ,city:e.target.value})}
                 // value={Info.city}
-                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                 type="text"
                 name="city"
                 placeholder="Enter Your city"
@@ -109,7 +109,7 @@ const UserProfile = () => {
               <input
                 // onChange={e=>setInfo({...Info ,district:e.target.value})}
                 // value={Info.district}
-                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                 type="text"
                 name="district"
                 placeholder="Enter Your district"
@@ -122,7 +122,7 @@ const UserProfile = () => {
               <input
                 // onChange={e=>setInfo({...Info ,postCode:parseInt(e.target.value)})}
                 // value={Info.postCode}
-                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                 type="number"
                 name="postcode"
                 placeholder="Enter Your postcode"
@@ -134,7 +134,7 @@ const UserProfile = () => {
           <div className="w-full flex text-sm sm:text-xl justify-center my-4">
             <button
               // onClick={handleSubmit}
-              className="w-full bg-emerald-500 px-2 sm:px-4 text-white py-2 rounded-full hover:bg-emerald-600 transition-all duration-300"
+              className="w-full bg-red-500 px-2 sm:px-4 text-white py-2 rounded-full hover:bg-red-600 transition-all duration-300"
             >
               Submit
             </button>

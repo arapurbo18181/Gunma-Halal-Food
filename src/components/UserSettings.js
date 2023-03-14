@@ -11,7 +11,7 @@ const UserSettings = () => {
           <div className="flex flex-col items-start my-4">
             <label htmlFor="email">Old Password</label>
             <input
-              className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+              className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
               type="password"
               name="password"
               placeholder="Old Password"
@@ -22,7 +22,7 @@ const UserSettings = () => {
           <div className="flex flex-col items-start my-4">
             <label htmlFor="email">New Password</label>
             <input
-              className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+              className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
               type="password"
               name="new password"
               placeholder="New Password"
@@ -33,7 +33,7 @@ const UserSettings = () => {
           <div className="flex flex-col items-start my-4">
             <label htmlFor="passsword">Confirm Password</label>
             <input
-              className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-emerald-500 my-1 shadow-inner"
+              className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
               type="password"
               name="confirm password"
               placeholder="Confirm Password"
@@ -42,7 +42,7 @@ const UserSettings = () => {
             />
           </div>
           <div className="w-full flex justify-center my-4">
-            <button className="w-full bg-emerald-500 text-white py-2 rounded-full hover:bg-emerald-600 transition-all duration-300">
+            <button className="w-full bg-red-500 text-white py-2 rounded-full hover:bg-red-600 transition-all duration-300">
               Submit
             </button>
           </div>

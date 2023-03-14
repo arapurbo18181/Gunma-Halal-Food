@@ -37,7 +37,7 @@ const CartButton = () => {
         onClick={() => setToggleSidebar(!ToggleSidebar)}
         className="cursor-pointer text-5xl"
       />
-      <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-emerald-500 flex justify-center items-center text-sm text-white">
+      <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-500 flex justify-center items-center text-sm text-white">
         {" "}
         {TotalAmount}{" "}
       </div>

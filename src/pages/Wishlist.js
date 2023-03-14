@@ -17,7 +17,7 @@ const Wishlist = () => {
         </div>
         <div className="w-full">
           <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-14">
-            <span className="underline decoration-emerald-500 underline-offset-8">
+            <span className="underline decoration-red-500 underline-offset-8">
               Wi
             </span>
             sh List
@@ -52,7 +52,7 @@ const Wishlist = () => {
                           onClick={() => {
                             removeFromWishlist(item);
                           }}
-                          className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-3 py-1 rounded-full cursor-pointer w-full text-sm"
+                          className="flex justify-center items-center space-x-2 bg-red-500 hover:bg-red-600 transition-all duration-300 text-white px-3 py-1 rounded-full cursor-pointer w-full text-sm"
                         >
                           {" "}
                           <BsTrash /> <span>Remove</span>{" "}
@@ -61,7 +61,7 @@ const Wishlist = () => {
                       <div className="w-full flex justify-center items-center my-2 ">
                         <button
                           onClick={() => addToCart(item)}
-                          className="flex justify-center items-center space-x-2 bg-emerald-500 hover:bg-emerald-600 transition-all duration-300 text-white px-3 py-1 rounded-full cursor-pointer w-full text-sm"
+                          className="flex justify-center items-center space-x-2 bg-red-500 hover:bg-red-600 transition-all duration-300 text-white px-3 py-1 rounded-full cursor-pointer w-full text-sm"
                         >
                           {" "}
                           <BsPlusLg /> <span>Cart</span>{" "}

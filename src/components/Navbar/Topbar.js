@@ -70,7 +70,7 @@ const Topbar = () => {
           className="hidden xl:block flex-1 relative hover:-translate-y-1 transition-all duration-300"
         >
           <BsSuitHeart className="cursor-pointer text-xl" />
-          <div className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-emerald-500 flex justify-center items-center text-xs text-white">
+          <div className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-red-500 flex justify-center items-center text-xs text-white">
             {" "}
             {TotalWishlist}{" "}
           </div>

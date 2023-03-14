@@ -10,7 +10,7 @@ const Categories = () => {
       {/* //! Top Categories */}
 
       <h1 className="text-3xl font-bold text-gray-700 mt-8 mb-4 mx-4">
-        <span className="underline decoration-emerald-500 underline-offset-8">
+        <span className="underline decoration-red-500 underline-offset-8">
           To
         </span>
         p{" "}
