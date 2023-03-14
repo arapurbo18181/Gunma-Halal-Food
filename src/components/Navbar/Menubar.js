@@ -100,9 +100,6 @@ const Menubar = () => {
         </div>
         {/* //! Menu For Mobile */}
         <div className="flex flex-col justify-start items-center w-full space-y-3">
-        <div className="w-6/12">
-          <Searchbar/>
-        </div>
           {menuForMobile.map((item) => {
             return (
               <Link

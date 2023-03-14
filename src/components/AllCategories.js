@@ -24,7 +24,7 @@ const AllCategories = () => {
 
   return (
     <div>
-      <div className="mx-auto w-full max-w-md rounded-2xl bg-red- p-2 space-y-2">
+      <div className="mx-auto w-full max-w-md rounded-2xl p-2 space-y-0 xl:space-y-2 grid grid-cols-2 xl:grid-cols-none">
         {categories.map((item) => {
           return (
             <Disclosure className="transition-all duration-300">
@@ -47,7 +47,7 @@ const AllCategories = () => {
                   </Disclosure.Button>
                   {item.sub_cat.map((elem) => {
                     return (
-                      <Disclosure.Panel className="flex justify-center items-center text-sm hover:text-base text-black hover:text-white hover:bg-red-500 transition-all duration-300 w-full">
+                      <Disclosure.Panel  className="flex justify-center items-center text-sm hover:text-base text-black hover:text-white hover:bg-red-500 transition-all duration-300 w-full">
                         <Link
                           className="w-full px-4 py-2"
                           to={`/product-category/${item.category}/${elem.cat}`}

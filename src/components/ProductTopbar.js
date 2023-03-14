@@ -11,8 +11,8 @@ const ProductTopbar = () => {
             onClick={() => setToggleTopbar(item.id)}
             className={`${
                 ToggleProductTopbar === i
-                ? "bg-white text-black border border-red-500 rounded w-full py-2 text-sm md:text-base xl:text-xl px-4"
-                : "bg-gradient-to-t w-full py-2 from-red-500 to-red-200 text-sm md:text-base xl:text-xl border border-red-500 px-4"
+                ? "bg-white text-black border-t-2 border-t-red-500 shadow-inner w-full py-2 text-sm md:text-base xl:text-xl px-4 transition-all duration-100 ease-in-out"
+                : "bg-gradient-to-t w-full py-2 text-sm md:text-base xl:text-xl drop-shadow-2xl px-4 transition-all duration-100 ease-in-out"
             }`}
           >
             {item.tag}
