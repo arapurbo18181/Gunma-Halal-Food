@@ -6,6 +6,7 @@ import { BsSuitHeart } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { UseScrollPosition } from "./Hooks/UseScollPosition";
 import { IoMdAdd, IoMdClose, IoMdRemove } from "react-icons/io";
+import { UseScrollPositionX } from "./Hooks/useScrollPositionX";
 
 const SubCategoryProducts = ({ item }) => {
   const { setShowProduct, addToCart, addToWishlist, CartCoordinate } =
@@ -14,12 +15,14 @@ const SubCategoryProducts = ({ item }) => {
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const [Count, setCount] = useState();
   const [AnimationCoodinate, setAnimationCoodinate] = useState({});
-  const pos = UseScrollPosition();
+  const posY = UseScrollPosition();
+  const posX = UseScrollPositionX();
+  console.log(posX)
 
   const handleClick = (item) => {
     setCount(item.id);
-    const setX = CartCoordinate.x - myRef.current.offsetLeft - 95;
-    const setY = CartCoordinate.y - (myRef.current.offsetTop - pos) - 50;
+    const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 95;
+    const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 50;
     setAnimationCoodinate({ x: setX, y: setY });
     console.log(CartCoordinate, AnimationCoodinate, setX, setY);
     setIsAddedToCart(true);
@@ -53,7 +56,7 @@ const SubCategoryProducts = ({ item }) => {
   return (
     <div
       ref={myRef}
-      className="px-4 py-4 shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 w-[40vw] md:w-full max-w-[220px] max-h-[300px]"
+      className="px-4 py-4 shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[300px]"
     >
       <div className="">
         <Link

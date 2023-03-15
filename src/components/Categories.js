@@ -16,13 +16,13 @@ const Categories = () => {
         p{" "}
         Categories
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-2">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-2 ">
         {categories.map((item) => {
           return (
             <Link
               to={`/product-category/${item.category}`}
               onClick={() => setItemCategory(item.sub_cat)}
-              className="flex flex-col justify-center items-center"
+              className="flex flex-col justify-center items-center w-[45vw] md:w-full max-w-[300px] "
             >
               <div className="overflow-hidden w-full flex justify-center items-center">
                 <img
@@ -30,7 +30,7 @@ const Categories = () => {
                   className="hover:scale-110 transition-all duration-500 w-6/12 md:w-8/12 xl:w-10/12"
                 />
               </div>
-              <h3 className="text-xl"> {item.category} </h3>
+              <h3 className="text-sm sm:text-base md:text-xl"> {item.category} </h3>
             </Link>
           );
         })}

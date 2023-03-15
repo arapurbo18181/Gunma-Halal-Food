@@ -30,6 +30,69 @@ export const CategoryProvider = ({ children }) => {
   const [ItemCategory, setItemCategory] = useState([]);
   const [ProductsFromCategory, setProductsFromCategory] = useState([]);
 
+  const product = [
+    {
+      id: 0,
+      img: basmatiRice1,
+      img1: basmatiRice300,
+      title: "basmatiRice1",
+    },
+    {
+      id: 1,
+      img: rice1,
+      img1: rice300,
+      title: "basmatiRice1",
+    },
+    {
+      id: 2,
+      img: atta1,
+      img1: atta300,
+      title: "basmatiRice1",
+    },
+    {
+      id: 3,
+      img: mutton1,
+      im1: mutton300,
+      title: "basmatiRice1",
+    },
+    {
+      id: 4,
+      img: mutton1,
+      img1: mutton300,
+      title: "basmatiRice1",
+    },
+    {
+      id: 5,
+      img: basmatiRice1,
+      img1: basmatiRice300,
+      title: "basmatiRice1",
+    },
+    {
+      id: 6,
+      img: rice1,
+      img1: rice300,
+      title: "basmatiRice1",
+    },
+    {
+      id: 7,
+      img: atta1,
+      img1: atta300,
+      title: "basmatiRice1",
+    },
+    {
+      id: 8,
+      img: mutton1,
+      im1: mutton300,
+      title: "basmatiRice1",
+    },
+    {
+      id: 9,
+      img: mutton1,
+      img1: mutton300,
+      title: "basmatiRice1",
+    },
+  ]
+
   const categories = [
     {
       id: 0,
@@ -755,6 +818,7 @@ export const CategoryProvider = ({ children }) => {
         ToggleCategory,
         setToggleCategory,
         toggleCat,
+        product
       }}
     >
       {children}

@@ -4,6 +4,10 @@ import CategorySidebar from "../components/CategorySidebar";
 import Hero from "../components/Hero";
 import Footer from "../components/Footer";
 import Searchbar from "../components/Searchbar";
+import LatestProducts from "../components/LatestProducts";
+import CartButton from "../components/CartButton";
+import TopRatedProducts from "../components/TopRatedProducts";
+import HomeBanner from "../components/HomeBanner";
 
 const Home = () => {
   return (
@@ -15,10 +19,13 @@ const Home = () => {
         <div className="flex flex-col justify-start xl:w-[84.95vw]">
           <div className="flex justify-start items-center w-full">
             <Hero />
+            <CartButton/>
           </div>
           <div className="flex flex-col justify-center items-center w-full">
             <Categories />
-            <Categories />
+            <LatestProducts/>
+            <TopRatedProducts/>
+            <HomeBanner/>
           </div>
           <Footer />
         </div>
