@@ -85,27 +85,18 @@ const SubCategoryProducts = ({ item }) => {
           <h2 className="text-lg font-bold text-red-500">৳250</h2>
           <h2 className="text-sm text-gray-400 line-through">৳300</h2>
         </div>
-        <div className="flex justify-between items-center w-[100%] mt-2">
-          {/* <div className="w-full flex justify-center items-center my-2 ">
-            <button
-              onClick={() => addToWishlist(item)}
-              className="flex justify-center items-center space-x-2 bg-red-500 hover:bg-red-600 transition-all duration-300 text-white px-3 py-1 rounded-full cursor-pointer w-full text-sm"
-            >
-              {" "}
-              <BsSuitHeart /> <span>Wishlist</span>{" "}
-            </button>
-          </div> */}
+        <div className="flex justify-between items-center w-[100%] mt-2 h-[2vh]">
 
           <div
             // onClick={() => decreaseFromCart(ShowProduct)}
-            className="flex-1 flex justify-center items-center cursor-pointer h-full border-red-600 border-l border-t border-b px-1 py-1.5 active:bg-white active:text-black hover:bg-red-500 hover:text-white text-xs md:text-sm transition-all duration-300"
+            className="flex-1 flex justify-center items-center cursor-pointer h-full w-full border-red-600 border px-1 py-3 active:bg-white active:text-black hover:bg-red-500 hover:text-white text-xs md:text-sm transition-all duration-300"
           >
             <IoMdRemove />
           </div>
-          <div className="w-full flex justify-center items-center">
+          <div className="w-full flex justify-center h-full items-center">
             <button
               onClick={() => handleClick(item)}
-              className="flex h-full justify-center items-center space-x-2 border-t border-b md:border-none border-red-600 bg-red-500 hover:bg-red-600 transition-all duration-300 text-white px-3 py-1 cursor-pointer w-full text-xs md:text-sm"
+              className="flex-1 flex h-full justify-center items-center border border-red-600 px-1 py-3 active:bg-white active:text-black bg-red-500 hover:bg-red-600 transition-all duration-300 text-white cursor-pointer w-full text-xs md:text-sm"
             >
               
               <h2>0 in Bag</h2>
@@ -114,7 +105,7 @@ const SubCategoryProducts = ({ item }) => {
 
           <div
             // onClick={() => addToCart(ShowProduct)}
-            className="flex-1 h-full flex justify-center items-center cursor-pointer border-red-600 border-r border-t border-b px-1 py-1.5  active:bg-white active:text-black hover:bg-red-500 hover:text-white transition-all duration-300 text-xs md:text-sm"
+            className="flex-1 h-full flex justify-center items-center cursor-pointer border-red-600 border px-1 py-3  active:bg-white active:text-black hover:bg-red-500 hover:text-white transition-all duration-300 text-xs md:text-sm"
           >
             <IoMdAdd />
           </div>

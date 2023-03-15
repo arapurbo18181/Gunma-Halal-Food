@@ -59,8 +59,8 @@ const ViewProduct = () => {
         <div className="hidden w-[14vw] sticky left-0 top-28 xl:block -mt-4">
           <CategorySidebar />
         </div>
-        <div className="w-full divide-y-2">
-          <div className="h-[80vh] w-[100%] flex justify-center items-center">
+        <div className="w-full divide-y-2 space-y-5">
+          <div className="h-full w-[100%] flex justify-center items-center">
             <div className="flex flex-col md:flex-row justify-center items-start w-full xl:w-[70vw]">
               <CartButton />
               <div

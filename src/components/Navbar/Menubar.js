@@ -52,14 +52,6 @@ const menuForMobile = [
     menu: "SignUp",
     page: "/signup",
   },
-  {
-    menu: "My Account",
-    page: "/useraccount",
-  },
-  {
-    menu: "My Wishlist",
-    page: "/wishlist",
-  },
 ];
 
 const Menubar = () => {
@@ -68,12 +60,12 @@ const Menubar = () => {
   return (
     <section className="w-full flex justify-center items-center">
       <div className="w-full flex justify-center items-center space-x-6">
-        {/* //! Search bar */}
-        <div className="hidden xl:block flex-1 mt-1 xl:mt-0">
-          <Searchbar />
-        </div>
         {/* //! Menu for pc */}
         <div className="flex-1 w-full hidden xl:flex justify-center items-center space-x-10 px-6">
+          {/* //! Search bar */}
+          <div className="hidden xl:block flex-1">
+            <Searchbar />
+          </div>
           {menu.map((item) => {
             return (
               <Link

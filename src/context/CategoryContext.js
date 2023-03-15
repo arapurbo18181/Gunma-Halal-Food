@@ -32,6 +32,7 @@ export const CategoryProvider = ({ children }) => {
 
   const categories = [
     {
+      id: 0,
       category: "Cooking",
       img: Category1,
       sub_cat: [
@@ -140,6 +141,7 @@ export const CategoryProvider = ({ children }) => {
       ],
     },
     {
+      id: 1,
       category: "Meat & Fish",
       img: Category2,
       sub_cat: [
@@ -212,6 +214,7 @@ export const CategoryProvider = ({ children }) => {
       ],
     },
     {
+      id: 2,
       category: "Cooking",
       img: Category1,
       sub_cat: [
@@ -306,6 +309,7 @@ export const CategoryProvider = ({ children }) => {
       ],
     },
     {
+      id: 3,
       category: "Meat & Fish",
       img: Category2,
       sub_cat: [
@@ -378,6 +382,7 @@ export const CategoryProvider = ({ children }) => {
       ],
     },
     {
+      id: 4,
       category: "Cooking",
       img: Category1,
       sub_cat: [
@@ -472,6 +477,7 @@ export const CategoryProvider = ({ children }) => {
       ],
     },
     {
+      id: 5,
       category: "Meat & Fish",
       img: Category2,
       sub_cat: [
@@ -544,6 +550,7 @@ export const CategoryProvider = ({ children }) => {
       ],
     },
     {
+      id: 6,
       category: "Cooking",
       img: Category1,
       sub_cat: [
@@ -638,6 +645,7 @@ export const CategoryProvider = ({ children }) => {
       ],
     },
     {
+      id: 7,
       category: "Meat & Fish",
       img: Category2,
       sub_cat: [

@@ -2,6 +2,7 @@ import React from "react";
 import AllCategoriesSidebar from "../AllCategoriesSidebar";
 import CartSidebar from "../CartSidebar";
 import Searchbar from "../Searchbar";
+import BottomMenu from "./BottomMenu";
 import Menubar from "./Menubar";
 import Topbar from "./Topbar";
 
@@ -11,6 +12,9 @@ const Navbar = () => {
       <Topbar />
       <div className="mx-4 mt-2 xl:hidden">
         <Searchbar/>
+      </div>
+      <div>
+        <BottomMenu/>
       </div>
       <CartSidebar />
 
