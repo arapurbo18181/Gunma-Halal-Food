@@ -7,28 +7,34 @@ import { Link } from "react-router-dom";
 import { UseScrollPosition } from "./Hooks/UseScollPosition";
 import { IoMdAdd, IoMdClose, IoMdRemove } from "react-icons/io";
 import { UseScrollPositionX } from "./Hooks/useScrollPositionX";
+import { useProduct } from "../context/ProductContext";
 
 const SubCategoryProducts = ({ item }) => {
-  const { setShowProduct, addToCart, addToWishlist, CartCoordinate } =
-    useCart();
+  const { setShowProduct, addToCart, addToWishlist, CartCoordinate } = useCart();
+  const { MyRef, setMyRef, myRefForFlyToCart } = useProduct();
   const myRef = useRef();
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const [Count, setCount] = useState();
   const [AnimationCoodinate, setAnimationCoodinate] = useState({});
   const posY = UseScrollPosition();
   const posX = UseScrollPositionX();
-  console.log(posX)
 
-  const handleClick = (item) => {
+  useEffect(() => {
+  }, [window.innerWidth])
+  
+
+  const handleClick = async (item) => {
+    // setMyRef(true);
     setCount(item.id);
-    const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 95;
-    const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 50;
+    const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 90;
+    const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 35;
     setAnimationCoodinate({ x: setX, y: setY });
     console.log(CartCoordinate, AnimationCoodinate, setX, setY);
     setIsAddedToCart(true);
     setTimeout(() => {
       addToCart(item);
       setIsAddedToCart(false);
+      // setMyRef(false);
     }, 2000);
   };
 
@@ -77,7 +83,11 @@ const SubCategoryProducts = ({ item }) => {
               initial="hidden"
               animate="visible"
             >
-              <img src={item.img} alt="" className={`w-28 h-28 rounded-full`} />
+              <img
+                src={item.img}
+                alt=""
+                className={`w-28 h-28 rounded-full z-50`}
+              />
             </motion.div>
           )}
         </Link>
@@ -89,7 +99,6 @@ const SubCategoryProducts = ({ item }) => {
           <h2 className="text-sm text-gray-400 line-through">৳300</h2>
         </div>
         <div className="flex justify-between items-center w-[100%] mt-2 h-[2vh]">
-
           <div
             // onClick={() => decreaseFromCart(ShowProduct)}
             className="flex-1 flex justify-center items-center cursor-pointer h-full w-full border-red-600 border px-1 py-3 active:bg-white active:text-black hover:bg-red-500 hover:text-white text-xs md:text-sm transition-all duration-300"
@@ -101,7 +110,6 @@ const SubCategoryProducts = ({ item }) => {
               onClick={() => handleClick(item)}
               className="flex-1 flex h-full justify-center items-center border border-red-600 px-1 py-3 active:bg-white active:text-black bg-red-500 hover:bg-red-600 transition-all duration-300 text-white cursor-pointer w-full text-xs md:text-sm"
             >
-              
               <h2>0 in Bag</h2>
             </button>
           </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
@@ -9,8 +9,10 @@ import { CategoryProvider } from "./context/CategoryContext";
 import { CartProvider } from "./context/CartContext";
 import { UserProvider } from "./context/UserContext";
 import { ProductProvider } from "./context/ProductContext";
+import BreadCrumbs from "./components/BreadCrumbs";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -18,7 +20,6 @@ root.render(
         <CategoryProvider>
           <UserProvider>
             <ProductProvider>
-              <Navbar />
               <App />
             </ProductProvider>
           </UserProvider>

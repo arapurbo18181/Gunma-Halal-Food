@@ -9,10 +9,18 @@ import { useCart } from "../context/CartContext";
 import { motion } from "framer-motion";
 import SubCategoryProducts from "../components/SubCategoryProducts";
 import CartButton from "../components/CartButton";
+import Loaders from "../components/Loaders";
 
 const ProductsOfSubCategory = () => {
-  const { ProductsFromCategory } = useCategory();
+  const [Loader, setLoader] = useState(true);
+  const { ProductsFromCategory, SubCatImage } = useCategory();
   const params = useParams();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoader(false);
+    }, 1000);
+  }, []);
 
   return (
     <section className="flex justify-center items-start w-full">
@@ -21,18 +29,27 @@ const ProductsOfSubCategory = () => {
           <CategorySidebar />
         </div>
         <div className="w-full">
+          <div className="h-[30vh] overflow-hidden ">
+            <img className="hover:scale-110 transition-all duration-300 object-cover" src={SubCatImage} alt="" />
+          </div>
           <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-14">
             <span className="underline decoration-red-500 underline-offset-8">
               {params.id.slice(0, 2)}
             </span>
             {params.id.slice(2)}
           </h2>
-          <div className="">
           <CartButton/>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-[100%] place-items-center">
-              {ProductsFromCategory.map((item) => {
+          <div className="">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 ">
+            {Loader ? (
+                <div className="w-[80vw] flex justify-center items-center">
+                  <Loaders width={"100%"} height={"full"} />
+                </div>
+              ) : (
+              ProductsFromCategory.map((item) => {
                 return <SubCategoryProducts item={item} />;
-              })}
+              })
+              )}
             </div>
           </div>
           <Footer />

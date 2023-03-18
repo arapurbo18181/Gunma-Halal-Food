@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useCategory } from "../context/CategoryContext";
+import CateBanner from "../images/cat-banner.webp";
 
 const Categories = () => {
-  const { setItemCategory, categories } = useCategory();
+  const { setItemCategory, categories, CatImage, setCatImage } = useCategory();
 
   return (
     <div className="container">
@@ -21,7 +22,10 @@ const Categories = () => {
           return (
             <Link
               to={`/product-category/${item.category}`}
-              onClick={() => setItemCategory(item.sub_cat)}
+              onClick={() => {
+                setItemCategory(item.sub_cat)
+                setCatImage(CateBanner);
+                }}
               className="flex flex-col justify-center items-center w-[45vw] md:w-full max-w-[300px] "
             >
               <div className="overflow-hidden w-full flex justify-center items-center">

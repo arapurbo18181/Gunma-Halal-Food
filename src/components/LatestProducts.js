@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useCategory } from "../context/CategoryContext";
 import SubCategoryProducts from "./SubCategoryProducts";
 import Slider from "react-slick";
@@ -7,44 +7,14 @@ import "slick-carousel/slick/slick-theme.css";
 import CartButton from "./CartButton";
 import { AiOutlineLeft } from "react-icons/ai";
 import { AiOutlineRight } from "react-icons/ai";
+import { useProduct } from "../context/ProductContext";
 
 const LatestProducts = () => {
-  // const settings = {
-  //   dots: true,
-  //   infinite: true,
-  //   speed: 500,
-  //   slidesToShow: 5,
-  //   slidesToScroll: 1,
-  //   autoplay: true,
-  //   responsive: [
-  //     {
-  //       breakpoint: 1024,
-  //       settings: {
-  //         slidesToShow: 4,
-  //         slidesToScroll: 1,
-  //         infinite: true,
-  //         dots: true,
-  //       },
-  //     },
-  //     {
-  //       breakpoint: 600,
-  //       settings: {
-  //         slidesToShow: 3,
-  //         slidesToScroll: 1,
-  //         initialSlide: 1,
-  //       },
-  //     },
-  //     {
-  //       breakpoint: 480,
-  //       settings: {
-  //         slidesToShow: 2,
-  //         slidesToScroll: 1,
-  //       },
-  //     },
-  //   ],
-  // };
   const { product } = useCategory();
-  console.log(product);
+  const {MyRef, setMyRef, myRefForFlyToCart} = useProduct();
+  
+
+
 
   const scrollLeft = () => {
     document.getElementById("carousol").scrollLeft -= 400;
@@ -64,27 +34,29 @@ const LatestProducts = () => {
           est Products
         </h1>
       </div>
-      <div
-        onClick={scrollLeft}
-        className="absolute top-[150%] left-[15%] text-3xl border rounded-full bg-white drop-shadow-lg bottom-40 cursor-pointer"
-      >
-        <AiOutlineLeft />
+      <div className="relative flex justify-between">
+        <div
+          onClick={scrollLeft}
+          className="absolute top-28 left-0 text-3xl border z-30 bg-white drop-shadow-lg bottom-40 cursor-pointer"
+        >
+          <AiOutlineLeft />
+        </div>
+        <div
+          onClick={scrollRight}
+          className="absolute top-28 right-0 text-3xl border z-30 bg-white drop-shadow-lg bottom-40 cursor-pointer"
+        >
+          <AiOutlineRight />
+        </div>
       </div>
       <div
-        onClick={scrollRight}
-        className="absolute top-[150%] right-0 text-3xl border rounded-full bg-white drop-shadow-lg bottom-40 cursor-pointer"
-      >
-        <AiOutlineRight />
-      </div>
-      <div
+      ref={myRefForFlyToCart}
         id="carousol"
-        className="flex justify-start items-center w-[100%] overflow-visible overflow-x-auto space-x-4 scroll-smooth scrollbar-hide"
+        className={`flex justify-start items-center w-[100%] overflow-x-auto space-x-4 scroll-smooth scrollbar-hide`}
       >
-      
         {/* <Slider {...settings}> */}
         {product.map((item) => {
           return (
-            <div className="py-10 px-2 cursor-pointer overflow-visible">
+            <div className="px-5 py-5 cursor-pointer">
               <SubCategoryProducts item={item} />
             </div>
           );

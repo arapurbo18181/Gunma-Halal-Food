@@ -19,6 +19,7 @@ import mutton300 from "../images/mutton300.jpg";
 import basmatiRice300 from "../images/basmatiRice300.jpg";
 import rice300 from "../images/rice300.jpg";
 import atta300 from "../images/atta300.jpg";
+import CateBanner from "../images/cat-banner.webp";
 
 const CategoryContext = createContext();
 
@@ -29,6 +30,8 @@ export const CategoryProvider = ({ children }) => {
   const [ToggleCategory, setToggleCategory] = useState(false);
   const [ItemCategory, setItemCategory] = useState([]);
   const [ProductsFromCategory, setProductsFromCategory] = useState([]);
+  const [CatImage, setCatImage] = useState();
+  const [SubCatImage, setSubCatImage] = useState();
 
   const product = [
     {
@@ -96,6 +99,7 @@ export const CategoryProvider = ({ children }) => {
   const categories = [
     {
       id: 0,
+      banner: CateBanner,
       category: "Cooking",
       img: Category1,
       sub_cat: [
@@ -205,6 +209,7 @@ export const CategoryProvider = ({ children }) => {
     },
     {
       id: 1,
+      banner: CateBanner,
       category: "Meat & Fish",
       img: Category2,
       sub_cat: [
@@ -278,6 +283,7 @@ export const CategoryProvider = ({ children }) => {
     },
     {
       id: 2,
+      banner: CateBanner,
       category: "Cooking",
       img: Category1,
       sub_cat: [
@@ -373,6 +379,7 @@ export const CategoryProvider = ({ children }) => {
     },
     {
       id: 3,
+      banner: CateBanner,
       category: "Meat & Fish",
       img: Category2,
       sub_cat: [
@@ -446,6 +453,7 @@ export const CategoryProvider = ({ children }) => {
     },
     {
       id: 4,
+      banner: CateBanner,
       category: "Cooking",
       img: Category1,
       sub_cat: [
@@ -541,6 +549,7 @@ export const CategoryProvider = ({ children }) => {
     },
     {
       id: 5,
+      banner: CateBanner,
       category: "Meat & Fish",
       img: Category2,
       sub_cat: [
@@ -614,6 +623,7 @@ export const CategoryProvider = ({ children }) => {
     },
     {
       id: 6,
+      banner: CateBanner,
       category: "Cooking",
       img: Category1,
       sub_cat: [
@@ -709,6 +719,7 @@ export const CategoryProvider = ({ children }) => {
     },
     {
       id: 7,
+      banner: CateBanner,
       category: "Meat & Fish",
       img: Category2,
       sub_cat: [
@@ -818,7 +829,11 @@ export const CategoryProvider = ({ children }) => {
         ToggleCategory,
         setToggleCategory,
         toggleCat,
-        product
+        product, 
+        CatImage, 
+        setCatImage, 
+        SubCatImage, 
+        setSubCatImage
       }}
     >
       {children}

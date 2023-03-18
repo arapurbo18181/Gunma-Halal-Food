@@ -8,6 +8,7 @@ import LatestProducts from "../components/LatestProducts";
 import CartButton from "../components/CartButton";
 import TopRatedProducts from "../components/TopRatedProducts";
 import HomeBanner from "../components/HomeBanner";
+import TopSellingProducts from "../components/TopSellingProducts";
 
 const Home = () => {
   return (
@@ -23,9 +24,9 @@ const Home = () => {
           </div>
           <div className="flex flex-col justify-center items-center w-full">
             <Categories />
-            <LatestProducts/>
-            <TopRatedProducts/>
+            <TopSellingProducts/>
             <HomeBanner/>
+            <TopRatedProducts/>
           </div>
           <Footer />
         </div>
