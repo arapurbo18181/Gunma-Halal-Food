@@ -10,6 +10,7 @@ import { CartProvider } from "./context/CartContext";
 import { UserProvider } from "./context/UserContext";
 import { ProductProvider } from "./context/ProductContext";
 import BreadCrumbs from "./components/BreadCrumbs";
+import { ApiProvider } from "./context/ApiContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -20,7 +21,9 @@ root.render(
         <CategoryProvider>
           <UserProvider>
             <ProductProvider>
-              <App />
+              <ApiProvider>
+                <App />
+              </ApiProvider>
             </ProductProvider>
           </UserProvider>
         </CategoryProvider>

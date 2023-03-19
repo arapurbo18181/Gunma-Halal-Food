@@ -10,20 +10,24 @@ import { motion } from "framer-motion";
 import SubCategoryProducts from "../components/SubCategoryProducts";
 import CartButton from "../components/CartButton";
 import Loaders from "../components/Loaders";
+import { useApi } from "../context/ApiContext";
 
 const ProductsOfSubCategory = () => {
-  const [Loader, setLoader] = useState(true);
+  const [Loader, setLoader] = useState(false);
   const { ProductsFromCategory, SubCatImage } = useCategory();
+  const {SubCatProductsApi, SubCatProIsApi} = useApi()
   const params = useParams();
+  console.log(params);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoader(false);
-    }, 1000);
+    // setTimeout(() => {
+    //   setLoader(false);
+    // }, 1000);
   }, []);
 
   return (
-    <section className="flex justify-center items-start w-full">
+    <>
+{ SubCatProIsApi ? <section className="flex justify-center items-start w-full">
       <div className="flex justify-start items-center w-[100%] xl:items-start space-x-5">
         <div className="hidden w-[14vw] sticky left-0 top-28 xl:block -mt-4">
           <CategorySidebar />
@@ -46,7 +50,7 @@ const ProductsOfSubCategory = () => {
                   <Loaders width={"100%"} height={"full"} />
                 </div>
               ) : (
-              ProductsFromCategory.map((item) => {
+                SubCatProductsApi.map((item) => {
                 return <SubCategoryProducts item={item} />;
               })
               )}
@@ -55,7 +59,8 @@ const ProductsOfSubCategory = () => {
           <Footer />
         </div>
       </div>
-    </section>
+    </section>: ""}
+    </>
   );
 };
 

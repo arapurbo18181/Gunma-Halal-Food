@@ -1,9 +1,12 @@
 import React from 'react'
+import { useApi } from '../context/ApiContext';
 import { useCategory } from "../context/CategoryContext";
 import SubCategoryProducts from "./SubCategoryProducts";
 
 const TopRatedProducts = () => {
   const { product } = useCategory();
+  const {ProductsApi} = useApi();
+  console.log(ProductsApi)
   return (
     <div className="container">
       <div className="mx-4 my-10">
@@ -15,7 +18,7 @@ const TopRatedProducts = () => {
         </h1>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-[100%] ">
-        {product.map((item) => {
+        {ProductsApi.map((item) => {
           return <SubCategoryProducts item={item} />;
         })}
       </div>

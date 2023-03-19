@@ -66,13 +66,13 @@ const SubCategoryProducts = ({ item }) => {
     >
       <div className="">
         <Link
-          className="relative flex justify-center items-center hover:scale-110 transition-all duration-500"
-          to={`/product/${item.title}`}
+          className="relative flex justify-center items-center transition-all duration-500"
+          to={`/product/${item.slug}`}
           onClick={() => setShowProduct(item)}
         >
           <img
-            className="cursor-pointer w-[100px] -z-10"
-            src={item.img}
+            className="cursor-pointer w-full -z-10"
+            src={`http://localhost:8000/images/product_images/large/${item.image}`}
             alt=""
           />
           {item.id === Count && isAddedToCart && (
@@ -84,7 +84,7 @@ const SubCategoryProducts = ({ item }) => {
               animate="visible"
             >
               <img
-                src={item.img}
+                src={`http://localhost:8000/images/product_images/large/${item.image}`}
                 alt=""
                 className={`w-28 h-28 rounded-full z-50`}
               />
@@ -93,10 +93,10 @@ const SubCategoryProducts = ({ item }) => {
         </Link>
       </div>
       <div className="flex flex-col justify-between items-start my-2">
-        <h2 className="text-[1rem] font-bold"> {item.title} </h2>
+        <h2 className="text-[0.8rem] font-bold"> {item.name} </h2>
         <div className="flex justify-center items-center space-x-1">
-          <h2 className="text-lg font-bold text-red-500">৳250</h2>
-          <h2 className="text-sm text-gray-400 line-through">৳300</h2>
+          <h2 className="text-lg font-bold text-red-500">৳{item.price}</h2>
+          <h2 className="text-sm text-gray-400 line-through">৳3000</h2>
         </div>
         <div className="flex justify-between items-center w-[100%] mt-2 h-[2vh]">
           <div

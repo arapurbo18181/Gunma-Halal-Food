@@ -1,9 +1,9 @@
 import React from "react";
 import Searchbar from "./Searchbar";
 import AllCategories from "./AllCategories";
+import { useApi } from "../context/ApiContext";
 
 const CategorySidebar = () => {
-
 
   return (
     <section className="overflow-y-auto scrollbar-hide left-0 transition-all duration-500 w-[14vw] h-[89vh]">

@@ -28,7 +28,7 @@ const CartButton = () => {
       }, []);
 
       useEffect(() => {
-        console.log(CartCoordinate);
+        // console.log(CartCoordinate);
       }, [CartCoordinate]);
   return (
     <div onClick={() => setToggleSidebar(!ToggleSidebar)} className="fixed right-0 top-36 z-30 flex justify-center items-center hover:-translate-y-1 transition-all duration-300 bg-gray-700 h-16 w-12 cursor-pointer" ref={myRef}>

@@ -96,6 +96,122 @@ export const CategoryProvider = ({ children }) => {
     },
   ]
 
+  const cate1 = [
+    {
+      banner: CateBanner,
+      category: {
+        id: 0,
+        banner: CateBanner,
+        category: "Cooking",
+        img: Category1,
+        sub_cat: [
+          {
+            cat: "Basmati Rice",
+            img: SubCat1,
+            product: [
+              {
+                id: 0,
+                img: basmatiRice1,
+                img1: basmatiRice300,
+                title: "basmatiRice1",
+              },
+              {
+                id: 1,
+                img: rice1,
+                img1: rice300,
+                title: "basmatiRice1",
+              },
+              {
+                id: 2,
+                img: atta1,
+                img1: atta300,
+                title: "basmatiRice1",
+              },
+              {
+                id: 3,
+                img: mutton1,
+                im1: mutton300,
+                title: "basmatiRice1",
+              },
+              {
+                id: 4,
+                img: mutton1,
+                img1: mutton300,
+                title: "basmatiRice1",
+              },
+            ],
+          },
+          {
+            cat: "Rice",
+            img: SubCat2,
+            product: [
+              {
+                img: rice1,
+                title: "rice1",
+              },
+              {
+                img: rice1,
+                title: "rice1",
+              },
+              {
+                img: rice1,
+                title: "rice1",
+              },
+              {
+                img: rice1,
+                title: "rice1",
+              },
+            ],
+          },
+          {
+            cat: "Flour",
+            img: SubCat3,
+            product: [
+              {
+                img: atta1,
+                title: "rice1",
+              },
+              {
+                img: atta1,
+                title: "rice1",
+              },
+              {
+                img: atta1,
+                title: "rice1",
+              },
+              {
+                img: atta1,
+                title: "rice1",
+              },
+            ],
+          },
+          {
+            cat: "Lentil",
+            img: SubCat4,
+            product: [
+              {
+                img: lentil1,
+                title: "rice1",
+              },
+              {
+                img: lentil1,
+                title: "rice1",
+              },
+              {
+                img: lentil1,
+                title: "rice1",
+              },
+              {
+                img: lentil1,
+                title: "rice1",
+              },
+            ],
+          },
+        ],
+      }
+    }
+  ]
+
   const categories = [
     {
       id: 0,
@@ -802,7 +918,7 @@ export const CategoryProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log(Toggle)
+    // console.log(Toggle)
     // console.log(ToggleCategory)
   }, [Toggle, ToggleCategory])
   

@@ -3,10 +3,14 @@ import { Link } from "react-router-dom";
 import { useCategory } from "../context/CategoryContext";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { useApi } from "../context/ApiContext";
 
 const AllCategories = () => {
+  const {CategoryApi, setCategoryApi, CategorySlug, getProducts} = useApi();
+
   const { setItemCategory, categories, setProductsFromCategory, toggleCat } =
-    useCategory();
+  useCategory();
+  console.log(CategoryApi);
 
   const handleCat = (cat) => {
     setItemCategory(cat);
@@ -25,7 +29,7 @@ const AllCategories = () => {
   return (
     <div>
       <div className="mx-auto w-full max-w-md rounded-2xl p-2 space-y-0 xl:space-y-2">
-        {categories.map((item) => {
+        {CategoryApi.map((item) => {
           return (
             <Disclosure className="transition-all duration-300">
               {({ open }) => (
@@ -33,11 +37,11 @@ const AllCategories = () => {
                   <Disclosure.Button className="flex w-full justify-between bg-white hover:bg-red-600 px-4 py-2 text-left text-sm hover:text-base font-medium text-black hover:text-white focus:outline-none focus-visible:ring focus-visible:ring-red-500 focus-visible:ring-opacity-75 transition-all duration-300">
                     <Link
                     className=""
-                      to={`/product-category/${item.category}`}
-                      onClick={() => handleCat(item.sub_cat)}
+                      to={`/product-category/${item.slug}`}
+                      onClick={() => handleCat(item.sub_category)}
                     >
                       {" "}
-                      {item.category}{" "}
+                      {item.name}{" "}
                     </Link>
                     <ChevronDownIcon
                       className={`${
@@ -45,16 +49,16 @@ const AllCategories = () => {
                       } h-5 w-5 text-white-500`}
                     />
                   </Disclosure.Button>
-                  {item.sub_cat.map((elem) => {
+                  {item.sub_category.map((elem) => {
                     return (
                       <Disclosure.Panel  className="flex justify-center items-center text-sm hover:text-base text-black hover:text-white hover:bg-red-500 transition-all duration-300 w-full">
                         <Link
                           className="w-full px-4 py-2"
-                          to={`/product-category/${item.category}/${elem.cat}`}
-                          onClick={() => handleSubCat(elem.product)}
+                          to={`/product-category/${item.slug}/${elem.slug}`}
+                          onClick={() => getProducts(item.slug, elem.slug)}
                         >
                           {" "}
-                          {elem.cat}{" "}
+                          {elem.name}{" "}
                         </Link>
                       </Disclosure.Panel>
                     );

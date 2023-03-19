@@ -3,20 +3,22 @@ import { Link, useParams } from "react-router-dom";
 import CategorySidebar from "../components/CategorySidebar";
 import Footer from "../components/Footer";
 import Loaders from "../components/Loaders";
+import { useApi } from "../context/ApiContext";
 import { useCategory } from "../context/CategoryContext";
 import SubCateBanner from "../images/subcat-banner.jpg";
 
 const SubCategory = () => {
-  const [Loader, setLoader] = useState(true);
+  const [Loader, setLoader] = useState(false);
   const { ItemCategory, setProductsFromCategory, CatImage,  setSubCatImage } = useCategory();
   console.log(ItemCategory);
+  const {CategorySlug, getProducts} = useApi();
 
   const params = useParams();
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoader(false);
-    }, 1000);
+    // setTimeout(() => {
+    //   setLoader(false);
+    // }, 1000);
   }, []);
 
   return (
@@ -45,20 +47,21 @@ const SubCategory = () => {
                 ItemCategory.map((item) => {
                   return (
                     <Link
-                      to={`/product-category/${params.id}/${item.cat}`}
+                      to={`/product-category/${params.id}/${item.slug}`}
                       onClick={() => {
-                        setProductsFromCategory(item.product)
-                        setSubCatImage(SubCateBanner)
+                        // setProductsFromCategory(item.product)
+                        // setSubCatImage(SubCateBanner)
+                        getProducts(params.id, item.slug);
                         }}
                       className="border shadow-[0_2px_6px_0px_rgb(180,180,180)] hover:-translate-y-3 transition-all duration-500 px-8 py-4 rounded-md max-w-[200px]"
                     >
                       <div className="overflow-hidden">
                         <img
                           className="w-full hover:scale-125 transition-all duration-500"
-                          src={item.img}
+                          src={item.image}
                         />
                       </div>
-                      <h2 className="text-center">{item.cat}</h2>
+                      <h2 className="text-center">{item.name}</h2>
                     </Link>
                   );
                 })
