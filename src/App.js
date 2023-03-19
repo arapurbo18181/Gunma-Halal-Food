@@ -23,16 +23,15 @@ import { useProduct } from "./context/ProductContext";
 import axios from "axios";
 import { useApi } from "./context/ApiContext";
 
-
 // axios.defaults.baseURL = "http://localhost:8000/"
-axios.defaults.headers.post["Content-Type"] = "application/json"
-axios.defaults.headers.post["Accept"] = "application/json"
+axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.post["Accept"] = "application/json";
 axios.defaults.withCredentials = true;
 
 function App() {
-  const {progress, setProgress} = useProduct();
-  const {IsApi} = useApi()
-  const [Loader, setLoader] = useState(false);
+  const { progress, setProgress } = useProduct();
+  const { IsApi } = useApi();
+  const [Loader, setLoader] = useState(true);
 
   useEffect(() => {
     // setLoader(true);
@@ -43,21 +42,8 @@ function App() {
 
   return (
     <>
-    { IsApi ?    
-
-    <div className="">
-      {Loader ? (
-        <div className="w-full h-[90vh] flex justify-center items-center">
-          <RingLoader
-            color={"#FF380D"}
-            loading={Loader}
-            size={150}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
-        </div>
-      ) : (
-        <>
+      {IsApi ? (
+        <div className="">
           <LoadingBar
             color="#FF2D00"
             progress={progress}
@@ -84,11 +70,8 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/wishlist" element={<Wishlist />} />
           </Routes>
-        </>
-      )}
-    </div>
-
-        :
+        </div>
+      ) : (
         <div className="w-full h-[90vh] flex justify-center items-center">
           <RingLoader
             color={"#FF380D"}
@@ -98,7 +81,7 @@ function App() {
             data-testid="loader"
           />
         </div>
-    }
+      )}
     </>
   );
 }
