@@ -14,7 +14,10 @@ export const CartProvider = ({ children }) => {
   const [ShowProduct, setShowProduct] = useState();
   const [CartCoordinate, setCartCoordinate] = useState({});
   const [CountToAddToCart, setCountToAddToCart] = useState(0);
-  const [PostDataForCart, setPostDataForCart] = useState();
+  const [PostDataForCart, setPostDataForCart] = useState({
+    id: "",
+    quantity: ""
+  });
 
   useEffect(() => {
     const amount = Cart.reduce((accumulator, currItem) => {
@@ -33,16 +36,18 @@ export const CartProvider = ({ children }) => {
   const addToCart = async (product) => {
     const newItem = { ...product, amount: CountToAddToCart };
     console.log(newItem);
-    const data = [
-      {
+    // setPostDataForCart({...PostDataForCart, id:newItem.id, quantity: newItem.amount})
+    const data = {
         id: newItem.id,
         quantity: newItem.amount,
-      },
-    ];
+    }
+
+    const jsonData = JSON.stringify(data)
+    console.log(jsonData)
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios.post(`/api/add-to-cart`, data).then((res) => {
-        console.log(res);
+        console.log(res.data);
       });
     });
 

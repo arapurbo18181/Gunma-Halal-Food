@@ -4,11 +4,11 @@ import { useProduct } from "../context/ProductContext";
 
 const Signup = () => {
 
-  const {Register, setRegister} = useProduct();
+  const {Register, setRegister} = useProduct({});
 
   const signUp = (e) => {
     e.persist();
-    setRegister({ ...Register, [e.target.name]: [e.target.value] });
+    setRegister({ ...Register, [e.target.name]: e.target.value });
   };
   // useEffect(() => {
   //   // axios.get('/sanctum/csrf-cookie').then(response => {
@@ -39,11 +39,13 @@ const Signup = () => {
       email: Register.email,
       password: Register.password,
     };
-    console.log(data);
+    // console.log(Register)
+    const sendData = JSON.stringify(Register);
+    // console.log(sendData)
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`http://localhost:8000/api/add-to-cart`, data).then((res) => {
+      axios.post(`http://localhost:8000/api/add-to-cart`, sendData ).then((res) => {
 
-        console.log(res.data)
+        console.log(res)
         // if (res.status === 200) {
         // }else{
         //   setRegister({...Register, error_list: res.data.validation_erros});
