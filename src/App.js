@@ -23,7 +23,7 @@ import { useProduct } from "./context/ProductContext";
 import axios from "axios";
 import { useApi } from "./context/ApiContext";
 
-// axios.defaults.baseURL = "http://localhost:8000/"
+axios.defaults.baseURL = "http://localhost:8000/"
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.post["Accept"] = "application/json";
 axios.defaults.withCredentials = true;

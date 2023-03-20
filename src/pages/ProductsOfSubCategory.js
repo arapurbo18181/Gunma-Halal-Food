@@ -15,9 +15,9 @@ import { useApi } from "../context/ApiContext";
 const ProductsOfSubCategory = () => {
   const [Loader, setLoader] = useState(false);
   const { ProductsFromCategory, SubCatImage } = useCategory();
-  const {SubCatProductsApi, SubCatProIsApi} = useApi()
+  const {SubCatProductsApi, SubCatProIsApi, SubCatname, BreadCrumbs, setBreadCrumbs} = useApi()
   const params = useParams();
-  console.log(params);
+  // console.log(SubCatProductsApi);
 
   useEffect(() => {
     // setTimeout(() => {
@@ -38,9 +38,9 @@ const ProductsOfSubCategory = () => {
           </div>
           <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-14">
             <span className="underline decoration-red-500 underline-offset-8">
-              {params.id.slice(0, 2)}
+              {SubCatname.slice(0, 2)}
             </span>
-            {params.id.slice(2)}
+            {SubCatname.slice(2)}
           </h2>
           <CartButton/>
           <div className="">

@@ -6,7 +6,7 @@ import SubCategoryProducts from "./SubCategoryProducts";
 const TopRatedProducts = () => {
   const { product } = useCategory();
   const {ProductsApi} = useApi();
-  console.log(ProductsApi)
+  // console.log(ProductsApi)
   return (
     <div className="container">
       <div className="mx-4 my-10">

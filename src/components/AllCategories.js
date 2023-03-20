@@ -6,11 +6,22 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useApi } from "../context/ApiContext";
 
 const AllCategories = () => {
-  const {CategoryApi, setCategoryApi, CategorySlug, getProducts} = useApi();
+  const {
+    CategoryApi,
+    setCategoryApi,
+    CategorySlug,
+    getProducts,
+    SubCatname,
+    setSubCatname,
+    Catname,
+    setCatname,
+    BreadCrumbs,
+    setBreadCrumbs,
+  } = useApi();
 
   const { setItemCategory, categories, setProductsFromCategory, toggleCat } =
-  useCategory();
-  console.log(CategoryApi);
+    useCategory();
+  // console.log(CategoryApi);
 
   const handleCat = (cat) => {
     setItemCategory(cat);
@@ -36,9 +47,13 @@ const AllCategories = () => {
                 <>
                   <Disclosure.Button className="flex w-full justify-between bg-white hover:bg-red-600 px-4 py-2 text-left text-sm hover:text-base font-medium text-black hover:text-white focus:outline-none focus-visible:ring focus-visible:ring-red-500 focus-visible:ring-opacity-75 transition-all duration-300">
                     <Link
-                    className=""
+                      className=""
                       to={`/product-category/${item.slug}`}
-                      onClick={() => handleCat(item.sub_category)}
+                      onClick={() => {
+                        handleCat(item.sub_category);
+                        setCatname(item.name);
+                        setBreadCrumbs([item.name]);
+                      }}
                     >
                       {" "}
                       {item.name}{" "}
@@ -51,11 +66,18 @@ const AllCategories = () => {
                   </Disclosure.Button>
                   {item.sub_category.map((elem) => {
                     return (
-                      <Disclosure.Panel  className="flex justify-center items-center text-sm hover:text-base text-black hover:text-white hover:bg-red-500 transition-all duration-300 w-full">
+                      <Disclosure.Panel className="flex justify-center items-center text-sm hover:text-base text-black hover:text-white hover:bg-red-500 transition-all duration-300 w-full">
                         <Link
                           className="w-full px-4 py-2"
                           to={`/product-category/${item.slug}/${elem.slug}`}
-                          onClick={() => getProducts(item.slug, elem.slug)}
+                          onClick={() => {
+                            getProducts(item.slug, elem.slug);
+                            setSubCatname(elem.name);
+                            setBreadCrumbs([
+                              item.name,
+                              elem.name,
+                            ]);
+                          }}
                         >
                           {" "}
                           {elem.name}{" "}

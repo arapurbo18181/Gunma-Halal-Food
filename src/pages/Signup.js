@@ -10,25 +10,25 @@ const Signup = () => {
     e.persist();
     setRegister({ ...Register, [e.target.name]: [e.target.value] });
   };
-  useEffect(() => {
-    // axios.get('/sanctum/csrf-cookie').then(response => {
-      axios.get(`http://localhost:8000/api/`).then((res) => {
+  // useEffect(() => {
+  //   // axios.get('/sanctum/csrf-cookie').then(response => {
+  //     axios.get(`http://localhost:8000/api/`).then((res) => {
     
-        console.log(res.data)
-      //   // if (res.status === 200) {
-      //   // }else{
-      //   //   setRegister({...Register, error_list: res.data.validation_erros});
-      //   // }
+  //       console.log(res.data)
+  //     //   // if (res.status === 200) {
+  //     //   // }else{
+  //     //   //   setRegister({...Register, error_list: res.data.validation_erros});
+  //     //   // }
     
-      });
-      // const data = async ()=> {
-      //   await fetch("http://localhost:8000/api/").then(res=>res.json()).then(data=>{console.log(data)})
-      // }
-      // data();
-  // });
-    // axios.get("/sanctum/csrf-cookie").then((response) => {
-    // });
-  }, [])
+  //     });
+  //     // const data = async ()=> {
+  //     //   await fetch("http://localhost:8000/api/").then(res=>res.json()).then(data=>{console.log(data)})
+  //     // }
+  //     // data();
+  // // });
+  //   // axios.get("/sanctum/csrf-cookie").then((response) => {
+  //   // });
+  // }, [])
   
 
   const registerSubmit = (e) => {
@@ -39,14 +39,15 @@ const Signup = () => {
       email: Register.email,
       password: Register.password,
     };
+    console.log(data);
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.get(`http://localhost:8000/api/`).then((res) => {
+      axios.post(`http://localhost:8000/api/add-to-cart`, data).then((res) => {
 
         console.log(res.data)
-        if (res.status === 200) {
-        }else{
-          setRegister({...Register, error_list: res.data.validation_erros});
-        }
+        // if (res.status === 200) {
+        // }else{
+        //   setRegister({...Register, error_list: res.data.validation_erros});
+        // }
 
       });
     });

@@ -8,16 +8,19 @@ import { UseScrollPosition } from "./Hooks/UseScollPosition";
 import { IoMdAdd, IoMdClose, IoMdRemove } from "react-icons/io";
 import { UseScrollPositionX } from "./Hooks/useScrollPositionX";
 import { useProduct } from "../context/ProductContext";
+import { useApi } from "../context/ApiContext";
 
 const SubCategoryProducts = ({ item }) => {
-  const { setShowProduct, addToCart, addToWishlist, CartCoordinate } = useCart();
+  const { setShowProduct, addToCart, addToWishlist, CartCoordinate, CountToAddToCart, setCountToAddToCart } = useCart();
   const { MyRef, setMyRef, myRefForFlyToCart } = useProduct();
+  const {BreadCrumbs, setBreadCrumbs} = useApi()
   const myRef = useRef();
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const [Count, setCount] = useState();
   const [AnimationCoodinate, setAnimationCoodinate] = useState({});
   const posY = UseScrollPosition();
   const posX = UseScrollPositionX();
+  // console.log(item)
 
   useEffect(() => {
   }, [window.innerWidth])
@@ -68,7 +71,10 @@ const SubCategoryProducts = ({ item }) => {
         <Link
           className="relative flex justify-center items-center transition-all duration-500"
           to={`/product/${item.slug}`}
-          onClick={() => setShowProduct(item)}
+          onClick={() => {
+            setShowProduct(item)
+            setBreadCrumbs([...BreadCrumbs, item.name])
+            }}
         >
           <img
             className="cursor-pointer w-full -z-10"
@@ -100,7 +106,7 @@ const SubCategoryProducts = ({ item }) => {
         </div>
         <div className="flex justify-between items-center w-[100%] mt-2 h-[2vh]">
           <div
-            // onClick={() => decreaseFromCart(ShowProduct)}
+            onClick={() => setCountToAddToCart(CountToAddToCart + 1)}
             className="flex-1 flex justify-center items-center cursor-pointer h-full w-full border-red-600 border px-1 py-3 active:bg-white active:text-black hover:bg-red-500 hover:text-white text-xs md:text-sm transition-all duration-300"
           >
             <IoMdRemove />
@@ -110,12 +116,12 @@ const SubCategoryProducts = ({ item }) => {
               onClick={() => handleClick(item)}
               className="flex-1 flex h-full justify-center items-center border border-red-600 px-1 py-3 active:bg-white active:text-black bg-red-500 hover:bg-red-600 transition-all duration-300 text-white cursor-pointer w-full text-xs md:text-sm"
             >
-              <h2>0 in Bag</h2>
+              <h2>{CountToAddToCart} in Bag</h2>
             </button>
           </div>
 
           <div
-            // onClick={() => addToCart(ShowProduct)}
+            onClick={() => setCountToAddToCart(CountToAddToCart + 1)}
             className="flex-1 h-full flex justify-center items-center cursor-pointer border-red-600 border px-1 py-3  active:bg-white active:text-black hover:bg-red-500 hover:text-white transition-all duration-300 text-xs md:text-sm"
           >
             <IoMdAdd />

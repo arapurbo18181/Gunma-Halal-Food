@@ -1,17 +1,24 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useApi } from "../context/ApiContext";
 
 const BreadCrumbs = () => {
   const location = useLocation();
+  const {BreadCrumbs, setBreadCrumbs} = useApi()
   // console.log(location);
 
   let currentLink = ``;
+
+
+  // console.log(BreadCrumbs)
 
   const crumbs = location.pathname
     .split("/")
     .filter((crumb) => crumb !== "")
     .map((crumb) => {
       currentLink += `/${crumb}`;
+
+  
 
       return (
         <li key={crumb}>

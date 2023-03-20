@@ -11,10 +11,13 @@ export const ApiProvider = ({ children }) => {
   const [SubCatProductsApi, setSubCatProductsApi] = useState();
   const [IsApi, setIsApi] = useState(false);
   const [SubCatProIsApi, setSubCatProIsApi] = useState(false);
+  const [SubCatname, setSubCatname] = useState();
+  const [Catname, setCatname] = useState();
+  const [BreadCrumbs, setBreadCrumbs] = useState([]);
 
   useEffect(() => {
     const getdata = async () => {
-      await axios.get(`http://localhost:8000/api/`).then((res) => {
+      await axios.get(`/api/`).then((res) => {
         // console.log(res.data);
         setCategoryApi(res.data.categories);
         setProductsApi(res.data.products);
@@ -26,8 +29,7 @@ export const ApiProvider = ({ children }) => {
 
 
   const getProducts = async (category, sub_category) =>{
-    await axios.get(`http://localhost:8000/api/${category}/${sub_category}`).then((res) => {
-          console.log(res.data.products);
+    await axios.get(`/api/${category}/${sub_category}`).then((res) => {
           setSubCatProductsApi(res.data.products);
       });
   }
@@ -48,7 +50,7 @@ export const ApiProvider = ({ children }) => {
   }, [SubCatProductsApi])
   
   return (
-    <ApiContext.Provider value={{ CategoryApi, setCategoryApi, IsApi, ProductsApi, getProducts, SubCatProductsApi, SubCatProIsApi }}>
+    <ApiContext.Provider value={{ CategoryApi, setCategoryApi, IsApi, ProductsApi, getProducts, SubCatProductsApi, SubCatProIsApi, SubCatname, setSubCatname, Catname, setCatname, BreadCrumbs, setBreadCrumbs }}>
       {children}
     </ApiContext.Provider>
   );

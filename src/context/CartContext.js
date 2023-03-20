@@ -1,8 +1,9 @@
+import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const CartContext = createContext();
 
-export const  useCart = () => useContext(CartContext);
+export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
   const [ToggleSidebar, setToggleSidebar] = useState(false);
@@ -12,6 +13,8 @@ export const CartProvider = ({ children }) => {
   const [Wishlist, setWishlist] = useState([]);
   const [ShowProduct, setShowProduct] = useState();
   const [CartCoordinate, setCartCoordinate] = useState({});
+  const [CountToAddToCart, setCountToAddToCart] = useState(0);
+  const [PostDataForCart, setPostDataForCart] = useState();
 
   useEffect(() => {
     const amount = Cart.reduce((accumulator, currItem) => {
@@ -21,15 +24,28 @@ export const CartProvider = ({ children }) => {
   }, [Cart]);
 
   useEffect(() => {
-    const amount = Wishlist.reduce((accumulator, currItem)=>{
-      return accumulator += 1
-    }, 0)
-    setTotalWishlist(amount)
-  }, [Wishlist])
-  
+    const amount = Wishlist.reduce((accumulator, currItem) => {
+      return (accumulator += 1);
+    }, 0);
+    setTotalWishlist(amount);
+  }, [Wishlist]);
 
-  const addToCart = (product) => {
-    const newItem = { ...product, amount: 1 };
+  const addToCart = async (product) => {
+    const newItem = { ...product, amount: CountToAddToCart };
+    console.log(newItem);
+    const data = [
+      {
+        id: newItem.id,
+        quantity: newItem.amount,
+      },
+    ];
+
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.post(`/api/add-to-cart`, data).then((res) => {
+        console.log(res);
+      });
+    });
+
     const exist = Cart.find((item) => {
       return product.img === item.img;
     });
@@ -64,7 +80,7 @@ export const CartProvider = ({ children }) => {
     const updated = Cart.map((elem) => {
       if (item.img === elem.img) {
         if (elem.amount === 1) {
-          return elem
+          return elem;
         } else {
           elem.amount -= 1;
           return elem;
@@ -76,24 +92,23 @@ export const CartProvider = ({ children }) => {
     setCart(updated);
   };
 
-  const addToWishlist = (item) =>{
-    const newWish = Wishlist.find(elem=>{
-        return elem.img === item.img
+  const addToWishlist = (item) => {
+    const newWish = Wishlist.find((elem) => {
+      return elem.img === item.img;
     });
     if (newWish) {
-        alert("You already have this item on your wishlist");
-    }else{
-        setWishlist([...Wishlist, item]);
+      alert("You already have this item on your wishlist");
+    } else {
+      setWishlist([...Wishlist, item]);
     }
-  }
+  };
 
-  const removeFromWishlist = (item) =>{
-    const updated = Wishlist.filter(elem=>{
+  const removeFromWishlist = (item) => {
+    const updated = Wishlist.filter((elem) => {
       return elem.img !== item.img;
     });
     setWishlist(updated);
-  }
-  
+  };
 
   return (
     <CartContext.Provider
@@ -116,6 +131,8 @@ export const CartProvider = ({ children }) => {
         removeFromWishlist,
         CartCoordinate,
         setCartCoordinate,
+        CountToAddToCart,
+        setCountToAddToCart,
       }}
     >
       {children}

@@ -10,8 +10,8 @@ import SubCateBanner from "../images/subcat-banner.jpg";
 const SubCategory = () => {
   const [Loader, setLoader] = useState(false);
   const { ItemCategory, setProductsFromCategory, CatImage,  setSubCatImage } = useCategory();
-  console.log(ItemCategory);
-  const {CategorySlug, getProducts} = useApi();
+  // console.log(ItemCategory);
+  const {CategorySlug, getProducts, SubCatname, setSubCatname, Catname, BreadCrumbs, setBreadCrumbs} = useApi();
 
   const params = useParams();
 
@@ -34,9 +34,9 @@ const SubCategory = () => {
           </div>
             <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-8">
               <span className="underline decoration-red-500 underline-offset-8">
-                {params.id.slice(0, 2)}
+                {Catname.slice(0, 2)}
               </span>
-              {params.id.slice(2)}
+              {Catname.slice(2)}
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {Loader ? (
@@ -52,6 +52,8 @@ const SubCategory = () => {
                         // setProductsFromCategory(item.product)
                         // setSubCatImage(SubCateBanner)
                         getProducts(params.id, item.slug);
+                        setSubCatname(item.name)
+                        setBreadCrumbs([...BreadCrumbs, item.name])
                         }}
                       className="border shadow-[0_2px_6px_0px_rgb(180,180,180)] hover:-translate-y-3 transition-all duration-500 px-8 py-4 rounded-md max-w-[200px]"
                     >

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import Searchbar from "../Searchbar";
 import { useCategory } from "../../context/CategoryContext";
+import { useApi } from "../../context/ApiContext";
 
 const menu = [
   {
@@ -56,6 +57,7 @@ const menuForMobile = [
 
 const Menubar = () => {
   const { Toggle, setToggle, toggleNav } = useCategory();
+  const {BreadCrumbs, setBreadCrumbs} = useApi()
 
   return (
     <section className="w-full flex justify-center items-center">
@@ -70,6 +72,9 @@ const Menubar = () => {
             return (
               <Link
                 to={item.page}
+                onClick={()=>{
+                  item.menu === "Home" ?  setBreadCrumbs([])  : setBreadCrumbs([item.menu])
+                }}
                 className="text-base font-semibold hover:-translate-y-1 transition-all duration-300"
               >
                 {item.menu}
