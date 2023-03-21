@@ -7,13 +7,16 @@ export const useApi = () => useContext(ApiContext);
 
 export const ApiProvider = ({ children }) => {
   const [CategoryApi, setCategoryApi] = useState();
-  const [ProductsApi, setProductsApi] = useState();
+  const [ProductsApi, setProductsApi] = useState([]);
   const [SubCatProductsApi, setSubCatProductsApi] = useState();
   const [IsApi, setIsApi] = useState(false);
   const [SubCatProIsApi, setSubCatProIsApi] = useState(false);
   const [SubCatname, setSubCatname] = useState();
   const [Catname, setCatname] = useState();
   const [BreadCrumbs, setBreadCrumbs] = useState([]);
+  const [LargeImage] = useState("http://localhost:8000/images/product_images/large");
+  const [SmallImage] = useState("http://localhost:8000/images/product_images/small");
+  const [AllProducts, setAllProducts] = useState([]);
 
   useEffect(() => {
     const getdata = async () => {
@@ -25,6 +28,12 @@ export const ApiProvider = ({ children }) => {
     };
     getdata();
   },[]);
+
+  useEffect(() => {
+    setAllProducts(ProductsApi.map((item) => {
+      return {...item, quantity:0}
+    }));
+  }, [ProductsApi])
 
 
 
@@ -50,7 +59,7 @@ export const ApiProvider = ({ children }) => {
   }, [SubCatProductsApi])
   
   return (
-    <ApiContext.Provider value={{ CategoryApi, setCategoryApi, IsApi, ProductsApi, getProducts, SubCatProductsApi, SubCatProIsApi, SubCatname, setSubCatname, Catname, setCatname, BreadCrumbs, setBreadCrumbs }}>
+    <ApiContext.Provider value={{ CategoryApi, setCategoryApi, IsApi, ProductsApi, getProducts, SubCatProductsApi, SubCatProIsApi, SubCatname, setSubCatname, Catname, setCatname, BreadCrumbs, setBreadCrumbs, LargeImage, AllProducts, setAllProducts, SmallImage }}>
       {children}
     </ApiContext.Provider>
   );

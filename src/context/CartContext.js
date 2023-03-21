@@ -14,17 +14,17 @@ export const CartProvider = ({ children }) => {
   const [ShowProduct, setShowProduct] = useState();
   const [CartCoordinate, setCartCoordinate] = useState({});
   const [CountToAddToCart, setCountToAddToCart] = useState(0);
-  const [PostDataForCart, setPostDataForCart] = useState({
-    id: "",
-    quantity: ""
-  });
+  const [CartData, setCartData] = useState([]);
+  const [CountProductToAdd, setCountProductToAdd] = useState([]);
+  const [GetCartData, setGetCartData] = useState([]);
+  const [cart, setcart] = useState([]);
 
   useEffect(() => {
-    const amount = Cart.reduce((accumulator, currItem) => {
-      return accumulator + currItem.amount;
+    const amount = cart.reduce((accumulator, currItem) => {
+      return accumulator + currItem.quantity;
     }, 0);
     setTotalAmount(amount);
-  }, [Cart]);
+  }, [cart]);
 
   useEffect(() => {
     const amount = Wishlist.reduce((accumulator, currItem) => {
@@ -33,23 +33,33 @@ export const CartProvider = ({ children }) => {
     setTotalWishlist(amount);
   }, [Wishlist]);
 
-  const addToCart = async (product) => {
-    const newItem = { ...product, amount: CountToAddToCart };
-    console.log(newItem);
-    // setPostDataForCart({...PostDataForCart, id:newItem.id, quantity: newItem.amount})
-    const data = {
-        id: newItem.id,
-        quantity: newItem.amount,
+  useEffect(() => {
+    const getData = async () => {
+      await axios.get(`/api/`).then((res) => {
+        setGetCartData(res.data.user_cart);
+      });
     }
+    getData()
+  }, [CartData])
 
-    const jsonData = JSON.stringify(data)
-    console.log(jsonData)
+  const addToCart = async (product) => {
+    // const newItem = { ...product, amount: CountToAddToCart };
+    const data = {
+      product_id: product.id,
+      price: product.price,
+      quantity: product.quantity,
+    };
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios.post(`/api/add-to-cart`, data).then((res) => {
-        console.log(res.data);
+        console.log(res);
+        setCartData(res);
       });
     });
+
+
+    
+
 
     const exist = Cart.find((item) => {
       return product.img === item.img;
@@ -66,9 +76,16 @@ export const CartProvider = ({ children }) => {
       });
       setCart(updated);
     } else {
-      setCart([...Cart, newItem]);
+      // setCart([...Cart, newItem]);
     }
   };
+
+  useEffect(() => {
+    // CartData.map((elem) => {
+      // console.log(elem);
+      // console.log(elem.product[0]);
+    // });
+  }, [CartData]);
 
   const clearCart = () => {
     setCart([]);
@@ -138,6 +155,12 @@ export const CartProvider = ({ children }) => {
         setCartCoordinate,
         CountToAddToCart,
         setCountToAddToCart,
+        CountProductToAdd, 
+        setCountProductToAdd,
+        GetCartData,
+        CartData, 
+        cart, 
+        setcart
       }}
     >
       {children}

@@ -5,7 +5,7 @@ import SubCategoryProducts from "./SubCategoryProducts";
 
 const TopRatedProducts = () => {
   const { product } = useCategory();
-  const {ProductsApi} = useApi();
+  const {ProductsApi, AllProducts} = useApi();
   // console.log(ProductsApi)
   return (
     <div className="container">
@@ -18,7 +18,7 @@ const TopRatedProducts = () => {
         </h1>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-[100%] ">
-        {ProductsApi.map((item) => {
+        {AllProducts.map((item) => {
           return <SubCategoryProducts item={item} />;
         })}
       </div>

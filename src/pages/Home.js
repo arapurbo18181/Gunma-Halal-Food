@@ -14,7 +14,7 @@ const Home = () => {
   return (
     <section className="flex flex-col justify-center items-center">
       <div className="flex justify-start items-start">
-        <div className="hidden w-[14vw] sticky top-28 xl:block -mt-4">
+        <div className="hidden w-[14vw] sticky top-[5.5rem] xl:block -mt-4">
           <CategorySidebar />
         </div>
         <div className="flex flex-col justify-start xl:w-[84.95vw]">
