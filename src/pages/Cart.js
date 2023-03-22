@@ -5,9 +5,12 @@ import CartItemForViewCart from "../components/CartItemForViewCart";
 import { useCart } from "../context/CartContext";
 
 const Cart = () => {
-  const {Cart, TotalAmount, clearCart} = useCart();
+  const {Cart, TotalAmount, clearCart, cart, deleteAll} = useCart();
   return (
-    <section className="h-[100%] w-[100%] flex flex-col justify-center items-center">
+    <>
+    { 
+      cart ?
+      <section className="h-[100%] w-[100%] flex flex-col justify-center items-center">
       <div className="mb-4 underline underline-offset-8 mt-16">
         <h1 className="text-3xl font-bold">Your Cart ({TotalAmount})</h1>
       </div>
@@ -18,7 +21,7 @@ const Cart = () => {
           <div>Subtotal</div>
         </div>
         <div className="flex flex-col gap-y-2 h-[380px] justify-between overflow-y-auto overflow-x-hidden">
-          {Cart.map((item) => {
+          {cart.map((item) => {
            return <CartItemForViewCart item={item} />
           })}
 
@@ -31,7 +34,7 @@ const Cart = () => {
           <div className='uppercase font-semibold'>
             <span className='mr-2'> Total: </span> $ {parseFloat(0).toFixed(2)}
           </div>
-          <div onClick={clearCart} className='cursor-pointer py-4 bg-red-500 text-white w-12 h-12 flex justify-center items-center text-xl'>
+          <div onClick={deleteAll} className='cursor-pointer py-4 bg-red-500 text-white w-12 h-12 flex justify-center items-center text-xl'>
             <FiTrash2 />
           </div>
         </div>
@@ -39,7 +42,9 @@ const Cart = () => {
       <div className="my-4">
       <Link to={"/checkout"} className="bg-black flex p-4 justify-center items-center text-white w-full font-medium">Place Order</Link>
       </div>
-    </section>
+    </section> : ""
+    }
+    </>
   );
 };
 

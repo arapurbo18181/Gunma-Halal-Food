@@ -11,7 +11,7 @@ const CartSidebar = () => {
 
 
   useEffect(() => {
-    console.log(GetCartData);
+    // console.log(GetCartData);
     const datas = GetCartData.map((item) => {
       console.log(item);
       return {
@@ -25,13 +25,13 @@ const CartSidebar = () => {
         slug: item.product[0].slug,
       };
     });
-    console.log(datas);
+    // console.log(datas);
     setcart(datas);
   }, [GetCartData]);
 
-  if (cart) {
-    console.log(cart);
-  }
+  // if (cart) {
+  //   console.log(cart);
+  // }
 
   return (
     <>

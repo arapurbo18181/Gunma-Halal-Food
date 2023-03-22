@@ -12,6 +12,7 @@ import ProductReviews from "../components/ProductReviews";
 import { useProduct } from "../context/ProductContext";
 import { Rate } from "antd";
 import Loaders from "../components/Loaders";
+import { useApi } from "../context/ApiContext";
 const ViewProduct = () => {
   const [Loader, setLoader] = useState(true);
   const { productTopbar, ToggleProductTopbar, setToggleTopbar } = useProduct();
@@ -22,6 +23,7 @@ const ViewProduct = () => {
     removeFromCart,
     decreaseFromCart,
   } = useCart();
+  const {LargeImage} = useApi()
   const myRef = useRef();
 
   useEffect(() => {
@@ -60,11 +62,12 @@ const ViewProduct = () => {
     myRef.current.classList.add("scale-100");
     // setClassList("origin-center scale-100")
   };
+  console.log(ShowProduct)
 
   return (
     <section className="flex justify-center items-center w-full">
       <div className="flex justify-start items-center xl:items-start w-[100%] space-x-5">
-        <div className="hidden w-[14vw] sticky left-0 top-28 xl:block -mt-4">
+        <div className="hidden w-[14vw] sticky left-0 top-[4.6rem] xl:block -mt-4">
           <CategorySidebar />
         </div>
         {Loader ? (
@@ -74,14 +77,14 @@ const ViewProduct = () => {
         ) : (
           <div className="w-full divide-y-2 space-y-5">
             <div className="h-full w-[100%] flex justify-center items-center">
-              <div className="flex flex-col md:flex-row justify-center items-start w-full xl:w-[70vw]">
+              <div className="flex flex-col md:flex-row justify-center items-start w-full xl:w-[70vw] space-x-4">
                 <CartButton />
                 <div
                   /*onMouseLeave={leaveMouse} onMouseMove={handleMouse}*/ className="flex-1 flex justify-center items-center overflow-hidden relative w-full"
                 >
                   <img
                     ref={myRef}
-                    /*onMouseEnter={handleMouse} */ src={ShowProduct.img}
+                    /*onMouseEnter={handleMouse} */ src={`${LargeImage}/${ShowProduct.image}`}
                     alt=""
                     className={`transition-all duration-500 w-7/12 md:w-full`}
                   />
@@ -89,7 +92,7 @@ const ViewProduct = () => {
                 <div className="h-[500px] flex-1 flex flex-col justify-center space-y-4">
                   <h2 className="text-base md:text-lg xl:text-xl font-bold">
                     {" "}
-                    {ShowProduct.title}{" "}
+                    {ShowProduct.name}{" "}
                   </h2>
                   <div>
                     <Rate
@@ -107,9 +110,9 @@ const ViewProduct = () => {
                     nam officiis, cum temporibus doloremque?
                   </p>
                   <div className="flex justify-start items-center space-x-1">
-                    <h2 className="text-2xl font-bold text-red-500">৳250</h2>
+                    <h2 className="text-2xl font-bold text-red-500">৳{ShowProduct.discountedPrice}</h2>
                     <h2 className="text-base text-gray-400 line-through">
-                      ৳300
+                    {`${ShowProduct.discount === 0 ? "": `৳${ShowProduct.price}` }`}
                     </h2>
                   </div>
 

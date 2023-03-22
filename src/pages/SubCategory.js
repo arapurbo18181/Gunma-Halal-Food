@@ -25,7 +25,7 @@ const SubCategory = () => {
     <>
       <section className="flex justify-center items-start w-full">
         <div className="flex justify-start items-start w-[100%] space-x-5">
-          <div className="hidden w-[14vw] sticky top-28 left-0 xl:block -mt-4">
+          <div className="hidden w-[14vw] sticky top-[4.6rem] left-0 xl:block -mt-4">
             <CategorySidebar />
           </div>
           <div className="px-2 w-full">

@@ -38,15 +38,14 @@ export const CartProvider = ({ children }) => {
       await axios.get(`/api/`).then((res) => {
         setGetCartData(res.data.user_cart);
       });
-    }
-    getData()
-  }, [CartData])
+    };
+    getData();
+  }, [CartData]);
 
   const addToCart = async (product) => {
-    // const newItem = { ...product, amount: CountToAddToCart };
     const data = {
       product_id: product.id,
-      price: product.price,
+      price: product.discountedPrice,
       quantity: product.quantity,
     };
 
@@ -56,36 +55,26 @@ export const CartProvider = ({ children }) => {
         setCartData(res);
       });
     });
-
-
-    
-
-
-    const exist = Cart.find((item) => {
-      return product.img === item.img;
-    });
-
-    if (exist) {
-      const updated = Cart.map((item) => {
-        if (item.img === exist.img) {
-          item.amount += 1;
-          return item;
-        } else {
-          return item;
-        }
-      });
-      setCart(updated);
-    } else {
-      // setCart([...Cart, newItem]);
-    }
   };
 
   useEffect(() => {
-    // CartData.map((elem) => {
-      // console.log(elem);
-      // console.log(elem.product[0]);
-    // });
-  }, [CartData]);
+    // console.log(GetCartData);
+    const datas = GetCartData.map((item) => {
+      console.log(item);
+      return {
+        id: item.id,
+        price: item.price,
+        product_id: item.product_id,
+        quantity: item.quantity,
+        user_id: item.user_id,
+        image: item.product[0].image,
+        name: item.product[0].name,
+        slug: item.product[0].slug,
+      };
+    });
+    // console.log(datas);
+    setcart(datas);
+  }, [GetCartData]);
 
   const clearCart = () => {
     setCart([]);
@@ -132,6 +121,48 @@ export const CartProvider = ({ children }) => {
     setWishlist(updated);
   };
 
+  const deleteFromCart = (item) => {
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.post(`/api/delete-cart/${item.id}`, item.quantity).then((res) => {
+        setGetCartData(res.data.carts);
+      });
+    });
+  };
+
+  const increaseQuantity = (item) => {
+    const data = {
+      quantity: "plus",
+    };
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.post(`/api/update-cart/${item.id}`, data).then((res) => {
+        setGetCartData(res.data.carts);
+      });
+    });
+  };
+  const decreaseQuantity = (item) => {
+    if (item.quantity === 1) {
+      alert("You cann't decrease data");
+    } else {
+      const data = {
+        quantity: "minus",
+      };
+      axios.get("/sanctum/csrf-cookie").then((response) => {
+        axios.post(`/api/update-cart/${item.id}`, data).then((res) => {
+          setGetCartData(res.data.carts);
+        });
+      });
+    }
+  };
+
+  const deleteAll = () => {
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.delete(`/api/delete-cart-all/`).then((res) => {
+        setGetCartData(res.data.carts);
+        console.log(res)
+      });
+    });
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -155,12 +186,16 @@ export const CartProvider = ({ children }) => {
         setCartCoordinate,
         CountToAddToCart,
         setCountToAddToCart,
-        CountProductToAdd, 
+        CountProductToAdd,
         setCountProductToAdd,
         GetCartData,
-        CartData, 
-        cart, 
-        setcart
+        CartData,
+        cart,
+        setcart,
+        increaseQuantity,
+        deleteFromCart,
+        decreaseQuantity,
+        deleteAll
       }}
     >
       {children}

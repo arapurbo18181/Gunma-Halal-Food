@@ -1,71 +1,44 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useApi } from "../context/ApiContext";
 import { useProduct } from "../context/ProductContext";
 
 const Signup = () => {
-
-  const {Register, setRegister} = useProduct({});
+  const {
+    Register,
+    setRegister,
+    registerSubmit,
+    ValidationErrors,
+    ConfirmPassError,
+    IsConfirmError
+  } = useApi();
 
   const signUp = (e) => {
     e.persist();
     setRegister({ ...Register, [e.target.name]: e.target.value });
   };
-  // useEffect(() => {
-  //   // axios.get('/sanctum/csrf-cookie').then(response => {
-  //     axios.get(`http://localhost:8000/api/`).then((res) => {
-    
-  //       console.log(res.data)
-  //     //   // if (res.status === 200) {
-  //     //   // }else{
-  //     //   //   setRegister({...Register, error_list: res.data.validation_erros});
-  //     //   // }
-    
-  //     });
-  //     // const data = async ()=> {
-  //     //   await fetch("http://localhost:8000/api/").then(res=>res.json()).then(data=>{console.log(data)})
-  //     // }
-  //     // data();
-  // // });
-  //   // axios.get("/sanctum/csrf-cookie").then((response) => {
-  //   // });
-  // }, [])
-  
 
-  const registerSubmit = (e) => {
-    e.preventDefault();
-
-    const data = {
-      name: Register.name,
-      email: Register.email,
-      password: Register.password,
-    };
-    // console.log(Register)
-    const sendData = JSON.stringify(Register);
-    // console.log(sendData)
-    axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`http://localhost:8000/api/add-to-cart`, sendData ).then((res) => {
-
-        console.log(res)
-        // if (res.status === 200) {
-        // }else{
-        //   setRegister({...Register, error_list: res.data.validation_erros});
-        // }
-
-      });
-    });
-  };
   return (
     <section className="bg-[#f9fafb] w-[100%] h-[90vh] flex justify-center items-center">
       <form
         onSubmit={registerSubmit}
-        className="w-[500px] h-[500px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container"
+        className="w-[500px] h-[620px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container"
       >
-        <div className="flex justify-center my-5 text-4xl font-bold">
+        <div className="flex flex-col items-center justify-center my-5 text-4xl font-bold">
           <h1>Sign Up</h1>
         </div>
         <div className="px-10">
+          {ConfirmPassError && IsConfirmError ? (
+            <div className="bg-red-500 text-xl w-full text-center text-white py-4 rounded-md transition-all duration-500">
+              {ConfirmPassError}
+            </div>
+          ) : (
+            ""
+          )}
           <div className="flex flex-col items-start my-4">
-            <label htmlFor="email">Name</label>
+            <label htmlFor="email">
+              Name <span className="text-red-600">*</span>
+            </label>
             <input
               onChange={signUp}
               value={Register.name}
@@ -74,26 +47,42 @@ const Signup = () => {
               name="name"
               placeholder="Enter Your Name"
               id="name"
-              required
+              // required
             />
-            <span> {Register.error_list.name} </span>
-          </div> 
+            {ValidationErrors.name ? (
+              <small className="text-red-500 ml-2">
+                {ValidationErrors.name}
+              </small>
+            ) : (
+              ""
+            )}
+          </div>
           <div className="flex flex-col items-start my-4">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">
+              Email <span className="text-red-600">*</span>
+            </label>
             <input
               onChange={signUp}
               value={Register.email}
               className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
-              type="email"
+              // type="email"
               name="email"
               placeholder="Enter Your Email"
               id="email"
-              required
+              // required
             />
-            <span> {Register.error_list.email} </span>
+            {ValidationErrors.email ? (
+              <small className="text-red-500 ml-2">
+                {ValidationErrors.email}
+              </small>
+            ) : (
+              ""
+            )}
           </div>
           <div className="flex flex-col items-start my-4">
-            <label htmlFor="passsword">Password</label>
+            <label htmlFor="passsword">
+              Password <span className="text-red-600">*</span>
+            </label>
             <input
               onChange={signUp}
               value={Register.password}
@@ -102,12 +91,33 @@ const Signup = () => {
               name="password"
               placeholder="Enter Your Password"
               id="password"
-              required
+              // required
             />
-            <span> {Register.error_list.password} </span>
+            {ValidationErrors.password ? (
+              <small className="text-red-500 ml-2">
+                {ValidationErrors.password}
+              </small>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="flex flex-col items-start my-4">
+            <label htmlFor="passsword">
+              Confirm Password <span className="text-red-600">*</span>
+            </label>
+            <input
+              onChange={signUp}
+              value={Register.confirmPassword}
+              className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+              type="password"
+              name="confirmPassword"
+              placeholder="Enter Your Password"
+              id="password"
+              // required
+            />
           </div>
           <div className="w-full flex justify-center my-4">
-            <button className="w-full bg-red-500 text-white py-2 rounded-full hover:bg-red-600 transition-all duration-300">
+            <button className="w-full border border-red-500 text-red-500 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300">
               Sign Up
             </button>
           </div>

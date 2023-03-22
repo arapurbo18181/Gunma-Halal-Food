@@ -8,7 +8,7 @@ export const useApi = () => useContext(ApiContext);
 export const ApiProvider = ({ children }) => {
   const [CategoryApi, setCategoryApi] = useState();
   const [ProductsApi, setProductsApi] = useState([]);
-  const [SubCatProductsApi, setSubCatProductsApi] = useState();
+  const [SubCatProductsApi, setSubCatProductsApi] = useState([]);
   const [IsApi, setIsApi] = useState(false);
   const [SubCatProIsApi, setSubCatProIsApi] = useState(false);
   const [SubCatname, setSubCatname] = useState();
@@ -17,6 +17,81 @@ export const ApiProvider = ({ children }) => {
   const [LargeImage] = useState("http://localhost:8000/images/product_images/large");
   const [SmallImage] = useState("http://localhost:8000/images/product_images/small");
   const [AllProducts, setAllProducts] = useState([]);
+  const [SubProducts, setSubProducts] = useState([]);
+  const [Register, setRegister] = useState({});
+  const [Login, setLogin] = useState({});
+  const [ValidationErrors, setValidationErrors] = useState({});
+  const [ConfirmPassError, setConfirmPassError] = useState();
+  const [IsConfirmError, setIsConfirmError] = useState(false);
+  const [LoginError, setLoginError] = useState();
+  const [LoginValidationErrors, setLoginValidationErrors] = useState({})
+  const [IsLoginError, setIsLoginError] = useState(false);
+
+
+  useEffect(() => {
+    console.log(ValidationErrors)
+  }, [ValidationErrors])
+  useEffect(() => {
+    setTimeout(() => {
+      setIsConfirmError(false)
+    }, 5000);
+  }, [IsConfirmError])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoginError(false)
+    }, 5000);
+  }, [IsLoginError])
+  
+  
+
+  
+  const registerSubmit = (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: Register.name,
+      email: Register.email,
+      password: Register.password,
+      confirm_password: Register.confirmPassword
+    };
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.post(`/api/registration`, data ).then((res) => {
+        // console.log(res);
+        if (res.data.status === 204) {
+            setValidationErrors(res.data.errors);
+        }
+        if (res.data.status === 205) {
+          console.log(res.data.error_message);
+          setConfirmPassError(res.data.error_message);
+          setIsConfirmError(true);
+        }
+      });
+    });
+  };
+
+  const loginSubmit = (e) => {
+    e.preventDefault();
+
+    const data = {
+      email: Login.email,
+      password: Login.password,
+    };
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.post(`/api/login`, data ).then((res) => {
+        console.log(res);
+        if (res.data.status === 202) {
+          console.log(res.data.error_message)
+          setLoginError(res.data.error_message);
+          setIsLoginError(true);
+        }
+        if (res.data.status === 204) {
+          setLoginValidationErrors(res.data.errors);
+        }
+      });
+    });
+
+  }
 
   useEffect(() => {
     const getdata = async () => {
@@ -31,9 +106,15 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     setAllProducts(ProductsApi.map((item) => {
-      return {...item, quantity:0}
+      return {...item, quantity:0, discountedPrice: 0}
     }));
   }, [ProductsApi])
+
+  useEffect(() => {
+    setSubProducts(SubCatProductsApi.map((item) => {
+      return {...item, quantity:0, discountedPrice: 0}
+    }));
+  }, [SubCatProductsApi])
 
 
 
@@ -47,10 +128,10 @@ export const ApiProvider = ({ children }) => {
     if (CategoryApi && ProductsApi) {
         setIsApi(true)
     }
-    if (SubCatProductsApi) {
+    if (SubProducts) {
       setSubCatProIsApi(true)
     }
-  }, [CategoryApi, SubCatProductsApi])
+  }, [CategoryApi, SubProducts])
 
   useEffect(() => {
     if (SubCatProductsApi) {
@@ -59,7 +140,7 @@ export const ApiProvider = ({ children }) => {
   }, [SubCatProductsApi])
   
   return (
-    <ApiContext.Provider value={{ CategoryApi, setCategoryApi, IsApi, ProductsApi, getProducts, SubCatProductsApi, SubCatProIsApi, SubCatname, setSubCatname, Catname, setCatname, BreadCrumbs, setBreadCrumbs, LargeImage, AllProducts, setAllProducts, SmallImage }}>
+    <ApiContext.Provider value={{ CategoryApi, setCategoryApi, IsApi, ProductsApi, getProducts, SubCatProductsApi, SubCatProIsApi, SubCatname, setSubCatname, Catname, setCatname, BreadCrumbs, setBreadCrumbs, LargeImage, AllProducts, setAllProducts, SmallImage, SubProducts, Register, setRegister, registerSubmit, Login, setLogin, loginSubmit, ValidationErrors, ConfirmPassError, IsConfirmError, LoginError, IsLoginError, LoginValidationErrors }}>
       {children}
     </ApiContext.Provider>
   );

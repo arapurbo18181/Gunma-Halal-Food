@@ -29,12 +29,15 @@ const SubCategoryProducts = ({ item }) => {
     ProductsApi,
     AllProducts,
     setAllProducts,
+    SubProducts,
+    SubCatProIsApi,
   } = useApi();
   const myRef = useRef();
   const [Quantity, setQuantity] = useState(0);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const [Count, setCount] = useState();
   const [AnimationCoodinate, setAnimationCoodinate] = useState({});
+  const [NewPrice, setNewPrice] = useState();
   const posY = UseScrollPosition();
   const posX = UseScrollPositionX();
   // useEffect(() => {
@@ -42,29 +45,57 @@ const SubCategoryProducts = ({ item }) => {
   //     return {...item, amount:0}
   //   }));
   // }, [])
-  useEffect(() => {}, [AllProducts]);
+
 
   // setCountProductToAdd(item.id)
 
   const CountToAdd = (id) => {
-    AllProducts.map((elem) => {
-      if (elem.id === id) {
-        elem.quantity = elem.quantity + 1;
-        setQuantity(elem.quantity);
-      }
-    });
-  };
-
-  const CountToRemove = (id) => {
-    AllProducts.map((elem) => {
-      if (elem.id === id) {
-        if (elem.quantity === 0) {
-        } else {
-          elem.quantity = elem.quantity - 1;
+    if (SubCatProIsApi) {
+      SubProducts.map((elem) => {
+        if (elem.id === id) {
+          elem.quantity = elem.quantity + 1;
           setQuantity(elem.quantity);
         }
-      }
-    });
+      });
+    }
+    if (AllProducts) {
+      AllProducts.map((elem) => {
+        if (elem.id === id) {
+          elem.quantity = elem.quantity + 1;
+          setQuantity(elem.quantity);
+        }
+      });
+    }
+  };
+
+  if (item.discount) {
+    const discountedAmount = (item.price/100) * item.discount;
+    const newPrice = item.price - discountedAmount;
+    console.log(newPrice);
+  }
+
+  const CountToRemove = (id) => {
+    if (SubProducts) {
+      SubProducts.map((elem) => {
+        if (elem.id === id) {
+          if (elem.quantity === 0) {
+          } else {
+            elem.quantity = elem.quantity - 1;
+            setQuantity(elem.quantity);
+          }
+        }
+      });
+    } else {
+      AllProducts.map((elem) => {
+        if (elem.id === id) {
+          if (elem.quantity === 0) {
+          } else {
+            elem.quantity = elem.quantity - 1;
+            setQuantity(elem.quantity);
+          }
+        }
+      });
+    }
   };
 
   const handleClick = async (item) => {
@@ -78,7 +109,7 @@ const SubCategoryProducts = ({ item }) => {
     setTimeout(() => {
       addToCart(item);
       item.quantity = 0;
-      setQuantity(0)
+      setQuantity(0);
       setIsAddedToCart(false);
       // setMyRef(false);
     }, 2000);
@@ -105,9 +136,15 @@ const SubCategoryProducts = ({ item }) => {
     },
   };
 
+  useEffect(() => {
+    const discountedAmount = (item.price/100) * item.discount;
+    const newPrice = item.price - discountedAmount;
+    item.discountedPrice = newPrice;
+  }, [AllProducts, SubProducts]);
+
   return (
     <>
-      {AllProducts ? (
+      {AllProducts || SubProducts ? (
         <div
           ref={myRef}
           className="px-4 py-4 shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[300px]"
@@ -146,8 +183,8 @@ const SubCategoryProducts = ({ item }) => {
           <div className="flex flex-col justify-between items-start my-2">
             <h2 className="text-[0.8rem] font-bold"> {item.name} </h2>
             <div className="flex justify-center items-center space-x-1">
-              <h2 className="text-lg font-bold text-red-500">৳{item.price}</h2>
-              <h2 className="text-sm text-gray-400 line-through">৳3000</h2>
+              <h2 className="text-lg font-bold text-red-500">৳{item.discountedPrice}</h2>
+              <h2 className="text-sm text-gray-400 line-through">{`${item.discount === 0 ? "": `৳${item.price}` }`}</h2>
             </div>
             <div className="flex justify-between items-center w-[100%] mt-2 h-[2vh]">
               <div

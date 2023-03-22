@@ -4,9 +4,7 @@ import { useCategory } from "../context/CategoryContext";
 import SubCategoryProducts from "./SubCategoryProducts";
 
 const TopRatedProducts = () => {
-  const { product } = useCategory();
-  const {ProductsApi, AllProducts} = useApi();
-  // console.log(ProductsApi)
+  const {AllProducts} = useApi();
   return (
     <div className="container">
       <div className="mx-4 my-10">
