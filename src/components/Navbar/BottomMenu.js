@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
 import { BsSuitHeart } from "react-icons/bs";
-import { useCart } from "../../context/CartContext";
+import { useApi } from "../../context/ApiContext";
 
 const menuForMobile = [
   {
@@ -18,7 +18,7 @@ const menuForMobile = [
 ];
 
 const BottomMenu = () => {
-  const { TotalWishlist } = useCart();
+  const { TotalWishlist } = useApi();
   return (
     <div className="xl:hidden fixed bottom-0 left-0 right-0 bg-white z-30 py-2 border-t shadow-[0_15px_20px_10px_rgba(0,0,0,0.3)]">
       <div className="flex justify-center w-full">

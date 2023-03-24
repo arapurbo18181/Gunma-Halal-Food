@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useUser } from "../context/UserContext";
+import { useApi } from "../context/ApiContext";
 
 const UserProfile = () => {
-  const { UserImage, setUserImage } = useUser();
+  const { UserImage, setUserImage } = useApi();
   // const [Image, setImage] = useState();
 
   // const handleSubmit = (e) => {

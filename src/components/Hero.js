@@ -69,9 +69,9 @@ const Hero = () => {
     <section className={`w-[98.9vw] xl:w-[84.95vw]`}>
       {/* //! Main Slider */}
       <Slider {...settings}>
-        {sliderImage.map((slide) => {
+        {sliderImage.map((slide, index) => {
           return (
-            <div className="w-full h-[25vh] md:h-[40vh] lg:h-[50vh] xl:h-[60vh]">
+            <div key={index} className="w-full h-[25vh] md:h-[40vh] lg:h-[50vh] xl:h-[60vh]">
                 <img className="h-full w-full object-cover" src={slide.img} />
             </div>
           );

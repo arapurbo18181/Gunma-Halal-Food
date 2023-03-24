@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import CategorySidebar from "../components/CategorySidebar";
-import { useCart } from "../context/CartContext";
 import { BsPlusLg } from "react-icons/bs";
 import { BsSuitHeart } from "react-icons/bs";
 import Footer from "../components/Footer";
@@ -16,14 +15,12 @@ import { useApi } from "../context/ApiContext";
 const ViewProduct = () => {
   const [Loader, setLoader] = useState(true);
   const { productTopbar, ToggleProductTopbar, setToggleTopbar } = useProduct();
-  const {
+  const {LargeImage,
     ShowProduct,
     addToCart,
     addToWishlist,
     removeFromCart,
-    decreaseFromCart,
-  } = useCart();
-  const {LargeImage} = useApi()
+    decreaseFromCart,} = useApi()
   const myRef = useRef();
 
   useEffect(() => {

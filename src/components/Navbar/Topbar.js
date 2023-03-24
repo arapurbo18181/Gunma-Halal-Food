@@ -3,14 +3,14 @@ import Logo from "../../images/logo.png";
 import { VscAccount } from "react-icons/vsc";
 import { AiOutlineBars } from "react-icons/ai";
 import { BsSuitHeart } from "react-icons/bs";
-import { useCart } from "../../context/CartContext";
 import Menubar from "./Menubar";
 import { Link } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { useCategory } from "../../context/CategoryContext";
+import { useApi } from "../../context/ApiContext";
 
 const Topbar = () => {
-  const { TotalWishlist } = useCart();
+  const { TotalWishlist } = useApi();
 
   const { toggleNav, toggleCat } = useCategory();
 

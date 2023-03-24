@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { useUser } from '../context/UserContext'
+import { useApi } from '../context/ApiContext';
 
 const UserSidebar = () => {
-    const {UserMenu,ToggleUserMenu, setToggleUserMenu, UserImage} = useUser();
+    const {UserMenu,ToggleUserMenu, setToggleUserMenu, UserImage} = useApi();
   return (
     <section className='w-full flex xl:flex-col justify-center items-center xl:items-start space-x-2'>
         <div className='border flex-1 flex flex-col justify-center items-center space-y-2 h-[250px] w-full xl:w-[250px] py-2 px-2 bg-gradient-to-t from-emerald-800 to-emerald-300 '>

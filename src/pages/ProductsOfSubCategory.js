@@ -5,7 +5,6 @@ import { useCategory } from "../context/CategoryContext";
 import { BsPlusLg } from "react-icons/bs";
 import { BsSuitHeart } from "react-icons/bs";
 import Footer from "../components/Footer";
-import { useCart } from "../context/CartContext";
 import { motion } from "framer-motion";
 import SubCategoryProducts from "../components/SubCategoryProducts";
 import CartButton from "../components/CartButton";

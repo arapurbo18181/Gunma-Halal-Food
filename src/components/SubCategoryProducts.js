@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useCart } from "../context/CartContext";
 import { motion } from "framer-motion";
 import { BsPlusLg } from "react-icons/bs";
 import { BsSuitHeart } from "react-icons/bs";
@@ -11,16 +10,6 @@ import { useProduct } from "../context/ProductContext";
 import { useApi } from "../context/ApiContext";
 
 const SubCategoryProducts = ({ item }) => {
-  const {
-    setShowProduct,
-    addToCart,
-    addToWishlist,
-    CartCoordinate,
-    CountToAddToCart,
-    setCountToAddToCart,
-    CountProductToAdd,
-    setCountProductToAdd,
-  } = useCart();
   const { MyRef, setMyRef, myRefForFlyToCart } = useProduct();
   const {
     BreadCrumbs,
@@ -31,6 +20,14 @@ const SubCategoryProducts = ({ item }) => {
     setAllProducts,
     SubProducts,
     SubCatProIsApi,
+    setShowProduct,
+    addToCart,
+    addToWishlist,
+    CartCoordinate,
+    CountToAddToCart,
+    setCountToAddToCart,
+    CountProductToAdd,
+    setCountProductToAdd,
   } = useApi();
   const myRef = useRef();
   const [Quantity, setQuantity] = useState(0);
@@ -71,7 +68,6 @@ const SubCategoryProducts = ({ item }) => {
   if (item.discount) {
     const discountedAmount = (item.price/100) * item.discount;
     const newPrice = item.price - discountedAmount;
-    console.log(newPrice);
   }
 
   const CountToRemove = (id) => {
@@ -104,7 +100,7 @@ const SubCategoryProducts = ({ item }) => {
     const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 90;
     const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 35;
     setAnimationCoodinate({ x: setX, y: setY });
-    console.log(CartCoordinate, AnimationCoodinate, setX, setY);
+    // console.log(CartCoordinate, AnimationCoodinate, setX, setY);
     setIsAddedToCart(true);
     setTimeout(() => {
       addToCart(item);

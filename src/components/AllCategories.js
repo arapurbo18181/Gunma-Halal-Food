@@ -40,9 +40,9 @@ const AllCategories = () => {
   return (
     <div>
       <div className="mx-auto w-full max-w-md rounded-2xl p-2 space-y-0 xl:space-y-2">
-        {CategoryApi.map((item) => {
+        {CategoryApi.map((item, index) => {
           return (
-            <Disclosure className="transition-all duration-300">
+            <Disclosure key={index} className="transition-all duration-300">
               {({ open }) => (
                 <>
                   <Disclosure.Button className="flex w-full justify-between bg-slate-100 hover:bg-red-600 px-4 py-2 text-left text-sm hover:text-base font-medium text-black hover:text-white focus:outline-none focus-visible:ring focus-visible:ring-red-500 focus-visible:ring-opacity-75 transition-all duration-300">
@@ -64,9 +64,9 @@ const AllCategories = () => {
                       } h-5 w-5 text-white-500`}
                     />
                   </Disclosure.Button>
-                  {item.sub_category.map((elem) => {
+                  {item.sub_category.map((elem, index) => {
                     return (
-                      <Disclosure.Panel className="flex justify-center items-center text-sm hover:text-base text-black hover:text-white hover:bg-red-500 transition-all duration-300 w-full pl-4">
+                      <Disclosure.Panel key={index} className="flex justify-center items-center text-sm hover:text-base text-black hover:text-white hover:bg-red-500 transition-all duration-300 w-full pl-4">
                         <Link
                           className="w-full px-4 py-2"
                           to={`/product-category/${item.slug}/${elem.slug}`}

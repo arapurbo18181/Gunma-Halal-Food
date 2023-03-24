@@ -6,8 +6,6 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { CategoryProvider } from "./context/CategoryContext";
-import { CartProvider } from "./context/CartContext";
-import { UserProvider } from "./context/UserContext";
 import { ProductProvider } from "./context/ProductContext";
 import BreadCrumbs from "./components/BreadCrumbs";
 import { ApiProvider } from "./context/ApiContext";
@@ -17,17 +15,13 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <CartProvider>
         <CategoryProvider>
-          <UserProvider>
             <ProductProvider>
               <ApiProvider>
                 <App />
               </ApiProvider>
             </ProductProvider>
-          </UserProvider>
         </CategoryProvider>
-      </CartProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

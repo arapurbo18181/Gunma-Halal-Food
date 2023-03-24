@@ -4,11 +4,11 @@ import { BsPlusLg } from "react-icons/bs";
 import { BsTrash } from "react-icons/bs";
 import CategorySidebar from "../components/CategorySidebar";
 import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";
 import CartButton from "../components/CartButton";
+import { useApi } from "../context/ApiContext";
 
 const Wishlist = () => {
-  const { Wishlist, setShowProduct, addToCart, removeFromWishlist } = useCart();
+  const { Wishlist, setShowProduct, addToCart, removeFromWishlist } = useApi();
   return (
     <section className="flex justify-center items-start w-full">
       <div className="flex justify-start items-center xl:items-start w-[100%] space-x-5">

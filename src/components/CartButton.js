@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
-import { useCart } from '../context/CartContext';
 import { BsBagCheckFill } from "react-icons/bs";
+import { useApi } from '../context/ApiContext';
 
 
 const CartButton = () => {
@@ -18,7 +18,7 @@ const CartButton = () => {
         TotalAmount,
         TotalWishlist,
         setCartCoordinate,
-      } = useCart();
+      } = useApi();
 
       useEffect(() => {
         setCartCoordinate({

@@ -18,9 +18,10 @@ const Categories = () => {
         Categories
       </h1>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-2 ">
-        {categories.map((item) => {
+        {categories.map((item, index) => {
           return (
             <Link
+              key={index}
               to={`/product-category/${item.category}`}
               onClick={() => {
                 setItemCategory(item.sub_cat)

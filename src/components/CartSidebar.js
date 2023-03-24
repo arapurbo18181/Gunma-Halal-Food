@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IoMdArrowForward } from "react-icons/io";
 import { FiTrash2 } from "react-icons/fi";
-import { useCart } from "../context/CartContext";
 import CartItem from "./CartItem";
+import { useApi } from "../context/ApiContext";
 
 const CartSidebar = () => {
   const { ToggleSidebar, setToggleSidebar,  TotalAmount, GetCartData, cart, setcart } =
-    useCart();
+    useApi();
 
 
   useEffect(() => {
     // console.log(GetCartData);
     const datas = GetCartData.map((item) => {
-      console.log(item);
+      // console.log(item);
       return {
         id: item.id,
         price: item.price,
@@ -54,8 +54,8 @@ const CartSidebar = () => {
           </div>
         </div>
         <div className="flex flex-col gap-y-2 h-[430px] lg:h-640px overflow-y-auto overflow-x-hidden border-b">
-          {cart.map((item) => {
-            return <CartItem item={item} />;
+          {cart.map((item, index) => {
+            return <CartItem item={item} key={index} />;
           })}
         </div>
         <div className="flex flex-col gap-y-3 py-4 mt-4">

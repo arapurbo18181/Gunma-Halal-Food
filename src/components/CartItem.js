@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useCart } from "../context/CartContext";
 import { useApi } from "../context/ApiContext";
 
 const CartItem = ({item}) => {
-  const {setShowProduct} = useCart();
-  const {LargeImage, SmallImage} = useApi()
+  const {LargeImage, SmallImage,setShowProduct} = useApi()
 
   const minusProduct = () =>{
 

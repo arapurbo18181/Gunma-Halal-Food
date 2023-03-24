@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import {FiTrash2} from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import CartItemForViewCart from "../components/CartItemForViewCart";
-import { useCart } from "../context/CartContext";
+import { useApi } from "../context/ApiContext";
 
 const Cart = () => {
-  const {Cart, TotalAmount, clearCart, cart, deleteAll} = useCart();
+  const {Cart, TotalAmount, clearCart, cart, deleteAll} = useApi();
   return (
     <>
     { 

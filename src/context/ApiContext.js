@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ApiContext = createContext();
 
@@ -14,8 +15,12 @@ export const ApiProvider = ({ children }) => {
   const [SubCatname, setSubCatname] = useState();
   const [Catname, setCatname] = useState();
   const [BreadCrumbs, setBreadCrumbs] = useState([]);
-  const [LargeImage] = useState("http://localhost:8000/images/product_images/large");
-  const [SmallImage] = useState("http://localhost:8000/images/product_images/small");
+  const [LargeImage] = useState(
+    "http://localhost:8000/images/product_images/large"
+  );
+  const [SmallImage] = useState(
+    "http://localhost:8000/images/product_images/small"
+  );
   const [AllProducts, setAllProducts] = useState([]);
   const [SubProducts, setSubProducts] = useState([]);
   const [Register, setRegister] = useState({});
@@ -24,42 +29,278 @@ export const ApiProvider = ({ children }) => {
   const [ConfirmPassError, setConfirmPassError] = useState();
   const [IsConfirmError, setIsConfirmError] = useState(false);
   const [LoginError, setLoginError] = useState();
-  const [LoginValidationErrors, setLoginValidationErrors] = useState({})
+  const [LoginValidationErrors, setLoginValidationErrors] = useState({});
   const [IsLoginError, setIsLoginError] = useState(false);
+  const [Search, setSearch] = useState();
+  const [SearchProduct, setSearchProduct] = useState([]);
+  const [NewSearchProducts, setNewSearchProducts] = useState([]);
+  const [ToggleUserMenu, setToggleUserMenu] = useState(0);
+  const [UserImage, setUserImage] = useState();
+  const [ToggleSidebar, setToggleSidebar] = useState(false);
+  const [Cart, setCart] = useState([]);
+  const [TotalAmount, setTotalAmount] = useState(0);
+  const [TotalWishlist, setTotalWishlist] = useState(0);
+  const [Wishlist, setWishlist] = useState([]);
+  const [ShowProduct, setShowProduct] = useState();
+  const [CartCoordinate, setCartCoordinate] = useState({});
+  const [CountToAddToCart, setCountToAddToCart] = useState(0);
+  const [CartData, setCartData] = useState([]);
+  const [CountProductToAdd, setCountProductToAdd] = useState([]);
+  const [GetCartData, setGetCartData] = useState([]);
+  const [cart, setcart] = useState([]);
+  const [User, setUser] = useState(false);
+  const [UserId, setUserId] = useState();
+  const navigate = useNavigate();
 
+  const cards = [
+    {
+      id: 1,
+      amount: TotalAmount,
+      head: "Products",
+      body: "in Your Cart",
+    },
+    {
+      id: 2,
+      amount: TotalWishlist,
+      head: "Products",
+      body: "in Your Wishlist",
+    },
+    {
+      id: 3,
+      amount: 0,
+      head: "Products",
+      body: "You Ordered",
+    },
+    {
+      id: 4,
+      amount: 0,
+      head: "Points",
+      body: "in Your account",
+    },
+  ];
+  
+  const userAccount = [
+    {
+      id: 0,
+      tab: "Dashboard",
+    },
+    {
+      id: 1,
+      tab: "Profile",
+    },
+    {
+      id: 2,
+      tab: "Orders",
+    },
+    {
+      id: 3,
+      tab: "Change Password",
+    },
+  ];
+  const [UserMenu, setUserMenu] = useState(userAccount);
+  const [CardsForUserDashboard, setCardsForUserDashboard] = useState(cards);
 
   useEffect(() => {
-    console.log(ValidationErrors)
-  }, [ValidationErrors])
+    setCardsForUserDashboard(cards);
+  }, [TotalAmount, TotalWishlist]);
+
+  useEffect(() => {
+    const amount = cart.reduce((accumulator, currItem) => {
+      return accumulator + currItem.quantity;
+    }, 0);
+    setTotalAmount(amount);
+  }, [cart]);
+
+  useEffect(() => {
+    const amount = Wishlist.reduce((accumulator, currItem) => {
+      return (accumulator += 1);
+    }, 0);
+    setTotalWishlist(amount);
+  }, [Wishlist]);
+
+  useEffect(() => {
+    const getData = async () => {
+      await axios.get(`/api/`).then((res) => {
+        setGetCartData(res.data.user_cart);
+        // console.log(res);
+      });
+    };
+    getData();
+  }, [CartData]);
+
+  const logOut = async () => {
+    await axios.get(`/api/logout`).then((res) => {
+      // setGetCartData(res.data.user_cart);
+      console.log(res);
+      setUser(false);
+    });
+  };
+
+  const addToCart = async (product) => {
+    const data = {
+      product_id: product.id,
+      price: product.discountedPrice,
+      quantity: product.quantity,
+      user_id: UserId,
+    };
+
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.post(`/api/add-to-cart`, data).then((res) => {
+        console.log(res);
+        setCartData(res);
+      });
+    });
+  };
+
+  useEffect(() => {
+    // console.log(GetCartData);
+    const datas = GetCartData.map((item) => {
+      // console.log(item);
+      return {
+        id: item.id,
+        price: item.price,
+        product_id: item.product_id,
+        quantity: item.quantity,
+        user_id: item.user_id,
+        image: item.product[0].image,
+        name: item.product[0].name,
+        slug: item.product[0].slug,
+      };
+    });
+    // console.log(datas);
+    setcart(datas);
+  }, [GetCartData]);
+
+  const removeFromCart = (item) => {
+    const updated = Cart.filter((elem) => {
+      return elem != item;
+    });
+    setCart(updated);
+  };
+
+  const decreaseFromCart = (item) => {
+    const updated = Cart.map((elem) => {
+      if (item.img === elem.img) {
+        if (elem.amount === 1) {
+          return elem;
+        } else {
+          elem.amount -= 1;
+          return elem;
+        }
+      } else {
+        return elem;
+      }
+    });
+    setCart(updated);
+  };
+
+  const addToWishlist = (item) => {
+    const newWish = Wishlist.find((elem) => {
+      return elem.img === item.img;
+    });
+    if (newWish) {
+      alert("You already have this item on your wishlist");
+    } else {
+      setWishlist([...Wishlist, item]);
+    }
+  };
+
+  const removeFromWishlist = (item) => {
+    const updated = Wishlist.filter((elem) => {
+      return elem.img !== item.img;
+    });
+    setWishlist(updated);
+  };
+
+  const deleteFromCart = (item) => {
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.post(`/api/delete-cart/${item.id}`, item.quantity).then((res) => {
+        setGetCartData(res.data.carts);
+      });
+    });
+  };
+
+  const increaseQuantity = (item) => {
+    const data = {
+      quantity: "plus",
+    };
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.post(`/api/update-cart/${item.id}`, data).then((res) => {
+        setGetCartData(res.data.carts);
+      });
+    });
+  };
+  const decreaseQuantity = (item) => {
+    if (item.quantity === 1) {
+      alert("You cann't decrease data");
+    } else {
+      const data = {
+        quantity: "minus",
+      };
+      axios.get("/sanctum/csrf-cookie").then((response) => {
+        axios.post(`/api/update-cart/${item.id}`, data).then((res) => {
+          setGetCartData(res.data.carts);
+        });
+      });
+    }
+  };
+
+  const deleteAll = () => {
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.delete(`/api/delete-cart-all/`).then((res) => {
+        setGetCartData(res.data.carts);
+        console.log(res);
+      });
+    });
+  };
+
+  useEffect(() => {
+    // console.log(ValidationErrors)
+  }, [ValidationErrors]);
   useEffect(() => {
     setTimeout(() => {
-      setIsConfirmError(false)
+      setIsConfirmError(false);
     }, 5000);
-  }, [IsConfirmError])
+  }, [IsConfirmError]);
 
   useEffect(() => {
     setTimeout(() => {
-      setIsLoginError(false)
+      setIsLoginError(false);
     }, 5000);
-  }, [IsLoginError])
-  
-  
+  }, [IsLoginError]);
 
-  
+  useEffect(() => {
+    const getdata = async () => {
+      await axios.get(`/api/products/search/${Search}`).then((res) => {
+        // console.log(res.data);
+        setSearchProduct(
+          res.data.map((item) => {
+            return { ...item, discountedPrice: 0 };
+          })
+        );
+      });
+    };
+    getdata();
+  }, [Search]);
+
   const registerSubmit = (e) => {
     e.preventDefault();
-
     const data = {
       name: Register.name,
       email: Register.email,
       password: Register.password,
-      confirm_password: Register.confirmPassword
+      confirm_password: Register.confirmPassword,
     };
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/registration`, data ).then((res) => {
-        // console.log(res);
+      axios.post(`/api/registration`, data).then((res) => {
+        if (res.data.status === 200) {
+          console.log(res);
+          // setRegSuccessText(res.data.success_message);
+          navigate("/login");
+          alert(res.data.success_message);
+        }
         if (res.data.status === 204) {
-            setValidationErrors(res.data.errors);
+          setValidationErrors(res.data.errors);
         }
         if (res.data.status === 205) {
           console.log(res.data.error_message);
@@ -78,10 +319,17 @@ export const ApiProvider = ({ children }) => {
       password: Login.password,
     };
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/login`, data ).then((res) => {
-        console.log(res);
+      axios.post(`/api/login`, data).then((res) => {
+        if (res.data.status === 200) {
+          console.log(res);
+          setGetCartData(res.data.user_cart);
+          setUserId(res.data.user.id);
+          navigate("/");
+          alert(res.data.success_message);
+          setUser(true);
+        }
         if (res.data.status === 202) {
-          console.log(res.data.error_message)
+          console.log(res.data.error_message);
           setLoginError(res.data.error_message);
           setIsLoginError(true);
         }
@@ -90,8 +338,7 @@ export const ApiProvider = ({ children }) => {
         }
       });
     });
-
-  }
+  };
 
   useEffect(() => {
     const getdata = async () => {
@@ -102,45 +349,122 @@ export const ApiProvider = ({ children }) => {
       });
     };
     getdata();
-  },[]);
+  }, []);
 
   useEffect(() => {
-    setAllProducts(ProductsApi.map((item) => {
-      return {...item, quantity:0, discountedPrice: 0}
-    }));
-  }, [ProductsApi])
+    setAllProducts(
+      ProductsApi.map((item) => {
+        return { ...item, quantity: 0, discountedPrice: 0 };
+      })
+    );
+  }, [ProductsApi]);
 
   useEffect(() => {
-    setSubProducts(SubCatProductsApi.map((item) => {
-      return {...item, quantity:0, discountedPrice: 0}
-    }));
-  }, [SubCatProductsApi])
+    setSubProducts(
+      SubCatProductsApi.map((item) => {
+        return { ...item, quantity: 0, discountedPrice: 0 };
+      })
+    );
+  }, [SubCatProductsApi]);
 
-
-
-  const getProducts = async (category, sub_category) =>{
+  const getProducts = async (category, sub_category) => {
     await axios.get(`/api/${category}/${sub_category}`).then((res) => {
-          setSubCatProductsApi(res.data.products);
-      });
-  }
+      setSubCatProductsApi(res.data.products);
+    });
+  };
 
   useEffect(() => {
     if (CategoryApi && ProductsApi) {
-        setIsApi(true)
+      setIsApi(true);
     }
     if (SubProducts) {
-      setSubCatProIsApi(true)
+      setSubCatProIsApi(true);
     }
-  }, [CategoryApi, SubProducts])
+  }, [CategoryApi, SubProducts]);
 
   useEffect(() => {
     if (SubCatProductsApi) {
-      setSubCatProIsApi(true)
+      setSubCatProIsApi(true);
     }
-  }, [SubCatProductsApi])
-  
+  }, [SubCatProductsApi]);
+
   return (
-    <ApiContext.Provider value={{ CategoryApi, setCategoryApi, IsApi, ProductsApi, getProducts, SubCatProductsApi, SubCatProIsApi, SubCatname, setSubCatname, Catname, setCatname, BreadCrumbs, setBreadCrumbs, LargeImage, AllProducts, setAllProducts, SmallImage, SubProducts, Register, setRegister, registerSubmit, Login, setLogin, loginSubmit, ValidationErrors, ConfirmPassError, IsConfirmError, LoginError, IsLoginError, LoginValidationErrors }}>
+    <ApiContext.Provider
+      value={{
+        CategoryApi,
+        setCategoryApi,
+        IsApi,
+        ProductsApi,
+        getProducts,
+        SubCatProductsApi,
+        SubCatProIsApi,
+        SubCatname,
+        setSubCatname,
+        Catname,
+        setCatname,
+        BreadCrumbs,
+        setBreadCrumbs,
+        LargeImage,
+        AllProducts,
+        setAllProducts,
+        SmallImage,
+        SubProducts,
+        Register,
+        setRegister,
+        registerSubmit,
+        Login,
+        setLogin,
+        loginSubmit,
+        ValidationErrors,
+        ConfirmPassError,
+        IsConfirmError,
+        LoginError,
+        IsLoginError,
+        LoginValidationErrors,
+        Search,
+        setSearch,
+        SearchProduct,
+        setSearchProduct,
+        NewSearchProducts,
+        ToggleSidebar,
+        setToggleSidebar,
+        ShowProduct,
+        setShowProduct,
+        addToCart,
+        Cart,
+        TotalAmount,
+        removeFromCart,
+        decreaseFromCart,
+        TotalWishlist,
+        setTotalWishlist,
+        Wishlist,
+        addToWishlist,
+        removeFromWishlist,
+        removeFromWishlist,
+        CartCoordinate,
+        setCartCoordinate,
+        CountToAddToCart,
+        setCountToAddToCart,
+        CountProductToAdd,
+        setCountProductToAdd,
+        GetCartData,
+        CartData,
+        cart,
+        setcart,
+        increaseQuantity,
+        deleteFromCart,
+        decreaseQuantity,
+        deleteAll,
+        logOut,
+        UserId,
+        UserMenu,
+        ToggleUserMenu,
+        setToggleUserMenu,
+        CardsForUserDashboard,
+        UserImage,
+        setUserImage,
+      }}
+    >
       {children}
     </ApiContext.Provider>
   );

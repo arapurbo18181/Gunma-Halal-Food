@@ -68,9 +68,10 @@ const Menubar = () => {
           <div className="hidden xl:block flex-1">
             <Searchbar />
           </div>
-          {menu.map((item) => {
+          {menu.map((item, index) => {
             return (
               <Link
+                key={index}
                 to={item.page}
                 onClick={()=>{
                   item.menu === "Home" ?  setBreadCrumbs([])  : setBreadCrumbs([item.menu])
@@ -97,9 +98,10 @@ const Menubar = () => {
         </div>
         {/* //! Menu For Mobile */}
         <div className="flex flex-col justify-start items-center w-full space-y-3">
-          {menuForMobile.map((item) => {
+          {menuForMobile.map((item, index) => {
             return (
               <Link
+              key={index}
                 to={item.page}
                 onClick={toggleNav}
                 className="border-b w-full py-2 px-2 text-center h-full text-xl"
