@@ -17,6 +17,8 @@ const AllCategories = () => {
     setCatname,
     BreadCrumbs,
     setBreadCrumbs,
+    setCategorySlug,
+    setSubCategorySlug
   } = useApi();
 
   const { setItemCategory, categories, setProductsFromCategory, toggleCat } =
@@ -48,11 +50,11 @@ const AllCategories = () => {
                   <Disclosure.Button className="flex w-full justify-between bg-slate-100 hover:bg-red-600 px-4 py-2 text-left text-sm hover:text-base font-medium text-black hover:text-white focus:outline-none focus-visible:ring focus-visible:ring-red-500 focus-visible:ring-opacity-75 transition-all duration-300">
                     <Link
                       className=""
-                      to={`/product-category/${item.slug}`}
+                      to={`/${item.slug}`}
                       onClick={() => {
                         handleCat(item.sub_category);
                         setCatname(item.name);
-                        setBreadCrumbs([item.name]);
+                        setCategorySlug(item.slug);
                       }}
                     >
                       {" "}
@@ -69,14 +71,11 @@ const AllCategories = () => {
                       <Disclosure.Panel key={index} className="flex justify-center items-center text-sm hover:text-base text-black hover:text-white hover:bg-red-500 transition-all duration-300 w-full pl-4">
                         <Link
                           className="w-full px-4 py-2"
-                          to={`/product-category/${item.slug}/${elem.slug}`}
+                          to={`/${item.slug}/${elem.slug}`}
                           onClick={() => {
                             getProducts(item.slug, elem.slug);
                             setSubCatname(elem.name);
-                            setBreadCrumbs([
-                              item.name,
-                              elem.name,
-                            ]);
+                            setSubCategorySlug(elem.slug);
                           }}
                         >
                           {" "}

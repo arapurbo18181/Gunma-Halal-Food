@@ -17,7 +17,6 @@ import Wishlist from "./pages/Wishlist";
 import RingLoader from "react-spinners/RingLoader";
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import BreadCrumbs from "./components/BreadCrumbs";
 import LoadingBar from "react-top-loading-bar";
 import { useProduct } from "./context/ProductContext";
 import axios from "axios";
@@ -50,7 +49,6 @@ function App() {
             // onLoaderFinished={() => setProgress(0)}
           />
           <Navbar />
-          <BreadCrumbs />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
@@ -60,12 +58,12 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-            <Route path="/product-category/:id" element={<SubCategory />} />
+            <Route path="/:id" element={<SubCategory />} />
             <Route
-              path="/product-category/:id/:id"
+              path="/:id/:id"
               element={<ProductsOfSubCategory />}
             />
-            <Route path="/product/:id" element={<ViewProduct />} />
+            <Route path="/:id/:id/:id" element={<ViewProduct />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/wishlist" element={<Wishlist />} />

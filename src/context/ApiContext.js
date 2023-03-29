@@ -1,6 +1,9 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import GetCookies from "../components/Hooks/GetCookies";
+import SetCookies from "../components/Hooks/SetCookies";
 
 const ApiContext = createContext();
 
@@ -50,6 +53,16 @@ export const ApiProvider = ({ children }) => {
   const [cart, setcart] = useState([]);
   const [User, setUser] = useState(false);
   const [UserId, setUserId] = useState();
+  const [CategorySlug, setCategorySlug] = useState();
+  const [SubCategorySlug, setSubCategorySlug] = useState();
+
+  const [Toggle, setToggle] = useState(false);
+  const [ToggleCategory, setToggleCategory] = useState(false);
+  const [ItemCategory, setItemCategory] = useState([]);
+  const [ProductsFromCategory, setProductsFromCategory] = useState([]);
+  const [CatImage, setCatImage] = useState();
+  const [SubCatImage, setSubCatImage] = useState();
+  const [UserEmail, setUserEmail] = useState();
   const navigate = useNavigate();
 
   const cards = [
@@ -78,7 +91,7 @@ export const ApiProvider = ({ children }) => {
       body: "in Your account",
     },
   ];
-  
+
   const userAccount = [
     {
       id: 0,
@@ -99,6 +112,40 @@ export const ApiProvider = ({ children }) => {
   ];
   const [UserMenu, setUserMenu] = useState(userAccount);
   const [CardsForUserDashboard, setCardsForUserDashboard] = useState(cards);
+  const location = useLocation();
+  const params = useParams();
+
+  useEffect(() => {
+    if (GetCookies("cookies")) {
+      console.log(GetCookies("cookies"))
+    }else{
+      SetCookies("cookies", Math.random());
+      console.log(GetCookies("cookies"))
+    }
+  }, [])
+  
+
+  // useEffect(() => {
+  //   console.log(location);
+  //   const isLocation = location.pathname.slice(1).split("/");
+  //   console.log(isLocation);
+
+  //   console.log(CategoryApi);
+  //   if (CategoryApi) {
+  //     CategoryApi.map((item) => {
+  //       isLocation.map((elem) => {
+  //         console.log(elem)
+  //         console.log(item.slug)
+  //         if (elem === item.slug) {
+  //           console.log(elem)
+  //           setItemCategory(item.sub_category);
+  //         }
+  //       });
+  //     });
+  //   }
+
+  //   // console.log(params)
+  // }, [CategoryApi, location, params]);
 
   useEffect(() => {
     setCardsForUserDashboard(cards);
@@ -141,7 +188,6 @@ export const ApiProvider = ({ children }) => {
       product_id: product.id,
       price: product.discountedPrice,
       quantity: product.quantity,
-      user_id: UserId,
     };
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
@@ -173,7 +219,7 @@ export const ApiProvider = ({ children }) => {
 
   const removeFromCart = (item) => {
     const updated = Cart.filter((elem) => {
-      return elem != item;
+      return elem !== item;
     });
     setCart(updated);
   };
@@ -297,7 +343,9 @@ export const ApiProvider = ({ children }) => {
           console.log(res);
           // setRegSuccessText(res.data.success_message);
           navigate("/login");
-          alert(res.data.success_message);
+          Swal.fire("Success", res.data.success_message, "success");
+          // localStorage.setItem("auth_token", res.data.token);
+          // localStorage.setItem("auth_email", res.data.email);
         }
         if (res.data.status === 204) {
           setValidationErrors(res.data.errors);
@@ -321,14 +369,15 @@ export const ApiProvider = ({ children }) => {
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios.post(`/api/login`, data).then((res) => {
         if (res.data.status === 200) {
-          console.log(res);
-          setGetCartData(res.data.user_cart);
-          setUserId(res.data.user.id);
+          console.log(res.data);
+          setUserEmail(res.data.email);
+          // setGetCartData(res.data.user_cart);
+          // setUserId(res.data.user.id);
           navigate("/");
-          alert(res.data.success_message);
+          // alert(res.data.success_message);
           setUser(true);
         }
-        if (res.data.status === 202) {
+        if (res.data.status === 401) {
           console.log(res.data.error_message);
           setLoginError(res.data.error_message);
           setIsLoginError(true);
@@ -440,7 +489,6 @@ export const ApiProvider = ({ children }) => {
         Wishlist,
         addToWishlist,
         removeFromWishlist,
-        removeFromWishlist,
         CartCoordinate,
         setCartCoordinate,
         CountToAddToCart,
@@ -463,6 +511,24 @@ export const ApiProvider = ({ children }) => {
         CardsForUserDashboard,
         UserImage,
         setUserImage,
+        CategorySlug,
+        setCategorySlug,
+        SubCategorySlug,
+        setSubCategorySlug,
+        ItemCategory,
+        setItemCategory,
+        ProductsFromCategory,
+        setProductsFromCategory,
+        Toggle,
+        setToggle,
+        ToggleCategory,
+        setToggleCategory,
+        CatImage,
+        setCatImage,
+        SubCatImage,
+        setSubCatImage,
+        UserEmail,
+        User
       }}
     >
       {children}

@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import BreadCrumbs from "../components/BreadCrumbs";
 import CartItem from "../components/CartItem";
 
 const Checkout = () => {
@@ -22,6 +23,9 @@ const Checkout = () => {
   // }
 
   return (
+    <>
+    <BreadCrumbs name={"Checkout"} url={"checkout"} />
+   
     <section className="w-[100%] h-[100%] flex justify-center items-center">
       <form className="w-[1000px] h-[550px]">
         <div className="flex justify-center my-5 text-4xl font-bold">
@@ -142,6 +146,7 @@ const Checkout = () => {
       </form>
       <div></div>
     </section>
+    </>
   );
 };
 

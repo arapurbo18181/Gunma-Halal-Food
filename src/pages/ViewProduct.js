@@ -12,7 +12,9 @@ import { useProduct } from "../context/ProductContext";
 import { Rate } from "antd";
 import Loaders from "../components/Loaders";
 import { useApi } from "../context/ApiContext";
+import BreadCrumbs from "../components/BreadCrumbs";
 const ViewProduct = () => {
+  const [Quantity, setQuantity] = useState(0);
   const [Loader, setLoader] = useState(true);
   const { productTopbar, ToggleProductTopbar, setToggleTopbar } = useProduct();
   const {LargeImage,
@@ -59,10 +61,40 @@ const ViewProduct = () => {
     myRef.current.classList.add("scale-100");
     // setClassList("origin-center scale-100")
   };
-  console.log(ShowProduct)
+  // console.log(ShowProduct)
+
+  const CountToAdd = (id) => {
+    if (ShowProduct) {
+        if (ShowProduct.id === id) {
+          ShowProduct.quantity = ShowProduct.quantity + 1;
+          setQuantity(ShowProduct.quantity);
+        }
+    }
+  };
+
+  const CountToRemove = (id) => {
+    if (ShowProduct) {
+        if (ShowProduct.id === id) {
+          if (ShowProduct.quantity === 1) {
+          } else {
+            ShowProduct.quantity = ShowProduct.quantity - 1;
+            setQuantity(ShowProduct.quantity);
+          }
+        }
+    }
+  };
+
+  const handleClick = (item) => {
+    addToCart(item);
+    item.quantity = 0;
+    setQuantity(0);
+  } 
 
   return (
-    <section className="flex justify-center items-center w-full">
+    <>
+
+      <BreadCrumbs name={`${ShowProduct.sub_category.main_category.name}/${ShowProduct.sub_category.name}/${ShowProduct.name}`} url={`${ShowProduct.sub_category.main_category.slug}/${ShowProduct.sub_category.slug}/${ShowProduct.slug}`} />    
+    { ShowProduct ? <section className="flex justify-center items-center w-full">
       <div className="flex justify-start items-center xl:items-start w-[100%] space-x-5">
         <div className="hidden w-[14vw] sticky left-0 top-[4.6rem] xl:block -mt-4">
           <CategorySidebar />
@@ -117,17 +149,17 @@ const ViewProduct = () => {
                     {/* //! plus minus product */}
                     <div className="flex w-20 items-center h-10 text-primary font-medium">
                       <div
-                        onClick={() => decreaseFromCart(ShowProduct)}
+                        onClick={() => CountToRemove(ShowProduct.id)}
                         className="flex-1 flex justify-center items-center cursor-pointer h-full border-l border-t border-b rounded-l-full hover:bg-red-500 hover:text-white transition-all duration-300"
                       >
                         <IoMdRemove />
                       </div>
                       <div className="h-full flex justify-center items-center px-2 border">
                         {" "}
-                        {/* {ShowProduct.amount}{" "} */}1
+                        {Quantity}
                       </div>
                       <div
-                        onClick={() => addToCart(ShowProduct)}
+                        onClick={() =>CountToAdd(ShowProduct.id) }
                         className="flex-1 h-full flex justify-center items-center cursor-pointer border-r border-t border-b rounded-r-full hover:bg-red-500 hover:text-white transition-all duration-300"
                       >
                         <IoMdAdd />
@@ -136,7 +168,7 @@ const ViewProduct = () => {
                     {/* //! Add to Cart Button */}
                     <div className="flex justify-center items-center my-2 ">
                       <button
-                        onClick={() => addToCart(ShowProduct)}
+                        onClick={() => handleClick(ShowProduct) }
                         className="flex justify-center items-center text-xs md:text-sm xl:text-base space-x-2 bg-red-500 hover:bg-red-600 transition-all duration-300 text-white px-2 py-1 xl:px-4 xl:py-2 cursor-pointer w-full"
                       >
                         {" "}
@@ -169,7 +201,8 @@ const ViewProduct = () => {
           </div>
         )}
       </div>
-    </section>
+    </section> : "" }
+    </>
   );
 };
 

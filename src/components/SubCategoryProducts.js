@@ -10,6 +10,7 @@ import { useProduct } from "../context/ProductContext";
 import { useApi } from "../context/ApiContext";
 
 const SubCategoryProducts = ({ item }) => {
+  // console.log(item)
   const { MyRef, setMyRef, myRefForFlyToCart } = useProduct();
   const {
     BreadCrumbs,
@@ -64,11 +65,6 @@ const SubCategoryProducts = ({ item }) => {
       });
     }
   };
-
-  if (item.discount) {
-    const discountedAmount = (item.price/100) * item.discount;
-    const newPrice = item.price - discountedAmount;
-  }
 
   const CountToRemove = (id) => {
     if (SubProducts) {
@@ -132,15 +128,9 @@ const SubCategoryProducts = ({ item }) => {
     },
   };
 
-  useEffect(() => {
-    const discountedAmount = (item.price/100) * item.discount;
-    const newPrice = item.price - discountedAmount;
-    item.discountedPrice = newPrice;
-  }, [AllProducts, SubProducts]);
-
   return (
     <>
-      {AllProducts || SubProducts ? (
+      {(AllProducts || SubProducts) ? (
         <div
           ref={myRef}
           className="px-4 py-4 shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[300px]"
@@ -148,7 +138,7 @@ const SubCategoryProducts = ({ item }) => {
           <div className="">
             <Link
               className="relative flex justify-center items-center transition-all duration-500"
-              to={`/product/${item.slug}`}
+              to={`/${item.sub_category.main_category.slug}/${item.sub_category.slug}/${item.slug}`}
               onClick={() => {
                 setShowProduct(item);
                 setBreadCrumbs([...BreadCrumbs, item.name]);

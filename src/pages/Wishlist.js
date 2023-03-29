@@ -6,10 +6,14 @@ import CategorySidebar from "../components/CategorySidebar";
 import { Link } from "react-router-dom";
 import CartButton from "../components/CartButton";
 import { useApi } from "../context/ApiContext";
+import BreadCrumbs from "../components/BreadCrumbs";
 
 const Wishlist = () => {
   const { Wishlist, setShowProduct, addToCart, removeFromWishlist } = useApi();
   return (
+    <>
+
+    <BreadCrumbs name={"Wishlist"} url={"wishlist"} />
     <section className="flex justify-center items-start w-full">
       <div className="flex justify-start items-center xl:items-start w-[100%] space-x-5">
         <div className="hidden w-[14vw] sticky left-0 top-28 xl:block -mt-4">
@@ -24,9 +28,9 @@ const Wishlist = () => {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-[100%] place-items-center">
           <CartButton/>
-            {Wishlist.map((item) => {
+            {Wishlist.map((item, i) => {
               return (
-                <div className="px-4 py-4 border shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 max-w-[220px] max-h-[300px]">
+                <div key={i} className="px-4 py-4 border shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 max-w-[220px] max-h-[300px]">
                   <Link
                     className="flex justify-center items-center hover:scale-110 cursor-pointer transition-all duration-500"
                     to={`/product/${item.title}`}
@@ -77,6 +81,7 @@ const Wishlist = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

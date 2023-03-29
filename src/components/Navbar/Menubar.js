@@ -15,10 +15,6 @@ const menu = [
     page: "/about",
   },
   {
-    menu: "Shop",
-    page: "/shop",
-  },
-  {
     menu: "Contact",
     page: "/contact",
   },
@@ -32,10 +28,6 @@ const menuForMobile = [
   {
     menu: "About Us",
     page: "/about",
-  },
-  {
-    menu: "Shop",
-    page: "/shop",
   },
   {
     menu: "Contact",

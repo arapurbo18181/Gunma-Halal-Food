@@ -8,6 +8,7 @@ const ProductTopbar = () => {
       {productTopbar.map((item, i) => {
         return (
           <button
+          key={i}
             onClick={() => setToggleTopbar(item.id)}
             className={`${
                 ToggleProductTopbar === i

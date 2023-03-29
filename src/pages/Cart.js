@@ -3,11 +3,13 @@ import {FiTrash2} from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import CartItemForViewCart from "../components/CartItemForViewCart";
 import { useApi } from "../context/ApiContext";
+import BreadCrumbs from "../components/BreadCrumbs";
 
 const Cart = () => {
   const {Cart, TotalAmount, clearCart, cart, deleteAll} = useApi();
   return (
     <>
+    <BreadCrumbs name="Cart" url="cart" />
     { 
       cart ?
       <section className="h-[100%] w-[100%] flex flex-col justify-center items-center">
