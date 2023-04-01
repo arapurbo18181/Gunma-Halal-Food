@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import GetCookies from "../components/Hooks/GetCookies";
 import SetCookies from "../components/Hooks/SetCookies";
+import RemoveCookies from "../components/Hooks/RemoveCookies";
 
 const ApiContext = createContext();
 
@@ -115,37 +116,41 @@ export const ApiProvider = ({ children }) => {
   const location = useLocation();
   const params = useParams();
 
+  // useEffect(() => {
+  //   if (GetCookies("cookies")) {
+  //     console.log(GetCookies("cookies"))
+  //   }else{
+  //     SetCookies("cookies", Math.random() * 100000000);
+  //     console.log(GetCookies("cookies"))
+  //   }
+  // }, [])
+
+
   useEffect(() => {
+
     if (GetCookies("cookies")) {
       console.log(GetCookies("cookies"))
     }else{
-      SetCookies("cookies", Math.random());
+    
+    
+      const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      
+      function generateString(length) {
+          let result = ' ';
+          const charactersLength = characters.length;
+          for ( let i = 0; i < length; i++ ) {
+              result += characters.charAt(Math.floor(Math.random() * charactersLength));
+          }
+      
+          return result;
+      }
+      SetCookies("cookies", generateString(50));
       console.log(GetCookies("cookies"))
     }
+
+
+
   }, [])
-  
-
-  // useEffect(() => {
-  //   console.log(location);
-  //   const isLocation = location.pathname.slice(1).split("/");
-  //   console.log(isLocation);
-
-  //   console.log(CategoryApi);
-  //   if (CategoryApi) {
-  //     CategoryApi.map((item) => {
-  //       isLocation.map((elem) => {
-  //         console.log(elem)
-  //         console.log(item.slug)
-  //         if (elem === item.slug) {
-  //           console.log(elem)
-  //           setItemCategory(item.sub_category);
-  //         }
-  //       });
-  //     });
-  //   }
-
-  //   // console.log(params)
-  // }, [CategoryApi, location, params]);
 
   useEffect(() => {
     setCardsForUserDashboard(cards);
@@ -176,7 +181,7 @@ export const ApiProvider = ({ children }) => {
   }, [CartData]);
 
   const logOut = async () => {
-    await axios.get(`/api/logout`).then((res) => {
+    await axios.get(`/api/user/account/management/logout`).then((res) => {
       // setGetCartData(res.data.user_cart);
       console.log(res);
       setUser(false);
@@ -191,7 +196,7 @@ export const ApiProvider = ({ children }) => {
     };
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/add-to-cart`, data).then((res) => {
+      axios.post(`/api/user/cart/management/add-to-cart`, data).then((res) => {
         console.log(res);
         setCartData(res);
       });
@@ -260,7 +265,7 @@ export const ApiProvider = ({ children }) => {
 
   const deleteFromCart = (item) => {
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/delete-cart/${item.id}`, item.quantity).then((res) => {
+      axios.post(`/api/user/cart/management/delete-cart/${item.id}`, item.quantity).then((res) => {
         setGetCartData(res.data.carts);
       });
     });
@@ -271,7 +276,7 @@ export const ApiProvider = ({ children }) => {
       quantity: "plus",
     };
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/update-cart/${item.id}`, data).then((res) => {
+      axios.post(`/api/user/cart/management/update-cart/${item.id}`, data).then((res) => {
         setGetCartData(res.data.carts);
       });
     });
@@ -284,7 +289,7 @@ export const ApiProvider = ({ children }) => {
         quantity: "minus",
       };
       axios.get("/sanctum/csrf-cookie").then((response) => {
-        axios.post(`/api/update-cart/${item.id}`, data).then((res) => {
+        axios.post(`/api/user/cart/management/update-cart/${item.id}`, data).then((res) => {
           setGetCartData(res.data.carts);
         });
       });
@@ -293,7 +298,7 @@ export const ApiProvider = ({ children }) => {
 
   const deleteAll = () => {
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.delete(`/api/delete-cart-all/`).then((res) => {
+      axios.delete(`/api/user/cart/management/delete-cart-all/`).then((res) => {
         setGetCartData(res.data.carts);
         console.log(res);
       });
@@ -317,7 +322,7 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     const getdata = async () => {
-      await axios.get(`/api/products/search/${Search}`).then((res) => {
+      await axios.get(`/api/product/search/management/search/${Search}`).then((res) => {
         // console.log(res.data);
         setSearchProduct(
           res.data.map((item) => {
@@ -338,7 +343,7 @@ export const ApiProvider = ({ children }) => {
       confirm_password: Register.confirmPassword,
     };
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/registration`, data).then((res) => {
+      axios.post(`/api/user/account/management/registration`, data).then((res) => {
         if (res.data.status === 200) {
           console.log(res);
           // setRegSuccessText(res.data.success_message);
@@ -367,7 +372,7 @@ export const ApiProvider = ({ children }) => {
       password: Login.password,
     };
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/login`, data).then((res) => {
+      axios.post(`/api/user/account/management/login`, data).then((res) => {
         if (res.data.status === 200) {
           console.log(res.data);
           setUserEmail(res.data.email);
