@@ -29,10 +29,6 @@ const SubCategory = () => {
 
   const location = useLocation()
 
-  useEffect(() => {
-    // console.log(ItemCategory)
-  }, [ItemCategory]);
-
 
   useEffect(() => {
     setLoader(true);
@@ -51,9 +47,7 @@ const SubCategory = () => {
     <>
       {Loader ? (
         <>
-        {/* <div className="w-[90vw] h-[90vh] flex justify-center items-center"> */}
           <Loaders width={"100%"} height={"80vh"} />
-        {/* </div> */}
         </>
       ) : (
         <>
@@ -84,11 +78,6 @@ const SubCategory = () => {
                         key={index}
                         to={`/${Category.slug}/${item.slug}`}
                         onClick={() => {
-                          // setProductsFromCategory(item.product)
-                          // setSubCatImage(SubCateBanner)
-                          getProducts(params.id, item.slug);
-                          setSubCatname(item.name);
-                          setSubCategorySlug(item.slug);
                         }}
                         className="border shadow-[0_2px_6px_0px_rgb(180,180,180)] hover:-translate-y-3 transition-all duration-500 px-8 py-4 rounded-md max-w-[200px]"
                       >

@@ -62,6 +62,7 @@ export const ApiProvider = ({ children }) => {
   const [ItemCategory, setItemCategory] = useState([]);
   const [ProductsFromCategory, setProductsFromCategory] = useState([]);
   const [CatImage, setCatImage] = useState();
+  const [IsCart, setIsCart] = useState(false);
   const [SubCatImage, setSubCatImage] = useState();
   const [UserEmail, setUserEmail] = useState();
   const navigate = useNavigate();
@@ -116,41 +117,27 @@ export const ApiProvider = ({ children }) => {
   const location = useLocation();
   const params = useParams();
 
-  // useEffect(() => {
-  //   if (GetCookies("cookies")) {
-  //     console.log(GetCookies("cookies"))
-  //   }else{
-  //     SetCookies("cookies", Math.random() * 100000000);
-  //     console.log(GetCookies("cookies"))
-  //   }
-  // }, [])
-
-
   useEffect(() => {
-
     if (GetCookies("cookies")) {
-      console.log(GetCookies("cookies"))
-    }else{
-    
-    
-      const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      
+    } else {
+      const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
       function generateString(length) {
-          let result = ' ';
-          const charactersLength = characters.length;
-          for ( let i = 0; i < length; i++ ) {
-              result += characters.charAt(Math.floor(Math.random() * charactersLength));
-          }
-      
-          return result;
+        let result = " ";
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++) {
+          result += characters.charAt(
+            Math.floor(Math.random() * charactersLength)
+          );
+        }
+
+        return result;
       }
       SetCookies("cookies", generateString(50));
-      console.log(GetCookies("cookies"))
+      console.log(GetCookies("cookies"));
     }
-
-
-
-  }, [])
+  }, []);
 
   useEffect(() => {
     setCardsForUserDashboard(cards);
@@ -170,20 +157,9 @@ export const ApiProvider = ({ children }) => {
     setTotalWishlist(amount);
   }, [Wishlist]);
 
-  useEffect(() => {
-    const getData = async () => {
-      await axios.get(`/api/`).then((res) => {
-        setGetCartData(res.data.user_cart);
-        // console.log(res);
-      });
-    };
-    getData();
-  }, [CartData]);
-
   const logOut = async () => {
     await axios.get(`/api/user/account/management/logout`).then((res) => {
-      // setGetCartData(res.data.user_cart);
-      console.log(res);
+      navigate("/");
       setUser(false);
     });
   };
@@ -193,20 +169,24 @@ export const ApiProvider = ({ children }) => {
       product_id: product.id,
       price: product.discountedPrice,
       quantity: product.quantity,
+      cookie_id: GetCookies("cookies"),
     };
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/user/cart/management/add-to-cart`, data).then((res) => {
-        console.log(res);
-        setCartData(res);
-      });
+      axios
+        .post(`/api/user/cart/management/add-to-cart`, data)
+        .then((res) => {
+          console.log(res);
+          setIsCart(!IsCart);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
     });
   };
 
   useEffect(() => {
-    // console.log(GetCartData);
     const datas = GetCartData.map((item) => {
-      // console.log(item);
       return {
         id: item.id,
         price: item.price,
@@ -218,29 +198,12 @@ export const ApiProvider = ({ children }) => {
         slug: item.product[0].slug,
       };
     });
-    // console.log(datas);
     setcart(datas);
   }, [GetCartData]);
 
   const removeFromCart = (item) => {
     const updated = Cart.filter((elem) => {
       return elem !== item;
-    });
-    setCart(updated);
-  };
-
-  const decreaseFromCart = (item) => {
-    const updated = Cart.map((elem) => {
-      if (item.img === elem.img) {
-        if (elem.amount === 1) {
-          return elem;
-        } else {
-          elem.amount -= 1;
-          return elem;
-        }
-      } else {
-        return elem;
-      }
     });
     setCart(updated);
   };
@@ -256,18 +219,13 @@ export const ApiProvider = ({ children }) => {
     }
   };
 
-  const removeFromWishlist = (item) => {
-    const updated = Wishlist.filter((elem) => {
-      return elem.img !== item.img;
-    });
-    setWishlist(updated);
-  };
-
   const deleteFromCart = (item) => {
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/user/cart/management/delete-cart/${item.id}`, item.quantity).then((res) => {
-        setGetCartData(res.data.carts);
-      });
+      axios
+        .post(`/api/user/cart/management/delete-cart/${item.id}`, item.quantity)
+        .then((res) => {
+          setGetCartData(res.data.carts);
+        });
     });
   };
 
@@ -276,9 +234,11 @@ export const ApiProvider = ({ children }) => {
       quantity: "plus",
     };
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/user/cart/management/update-cart/${item.id}`, data).then((res) => {
-        setGetCartData(res.data.carts);
-      });
+      axios
+        .post(`/api/user/cart/management/update-cart/${item.id}`, data)
+        .then((res) => {
+          setGetCartData(res.data.carts);
+        });
     });
   };
   const decreaseQuantity = (item) => {
@@ -289,9 +249,11 @@ export const ApiProvider = ({ children }) => {
         quantity: "minus",
       };
       axios.get("/sanctum/csrf-cookie").then((response) => {
-        axios.post(`/api/user/cart/management/update-cart/${item.id}`, data).then((res) => {
-          setGetCartData(res.data.carts);
-        });
+        axios
+          .post(`/api/user/cart/management/update-cart/${item.id}`, data)
+          .then((res) => {
+            setGetCartData(res.data.carts);
+          });
       });
     }
   };
@@ -304,10 +266,6 @@ export const ApiProvider = ({ children }) => {
       });
     });
   };
-
-  useEffect(() => {
-    // console.log(ValidationErrors)
-  }, [ValidationErrors]);
   useEffect(() => {
     setTimeout(() => {
       setIsConfirmError(false);
@@ -322,14 +280,15 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     const getdata = async () => {
-      await axios.get(`/api/product/search/management/search/${Search}`).then((res) => {
-        // console.log(res.data);
-        setSearchProduct(
-          res.data.map((item) => {
-            return { ...item, discountedPrice: 0 };
-          })
-        );
-      });
+      await axios
+        .get(`/api/product/search/management/search/${Search}`)
+        .then((res) => {
+          setSearchProduct(
+            res.data.map((item) => {
+              return { ...item, discountedPrice: 0 };
+            })
+          );
+        });
     };
     getdata();
   }, [Search]);
@@ -343,24 +302,23 @@ export const ApiProvider = ({ children }) => {
       confirm_password: Register.confirmPassword,
     };
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/user/account/management/registration`, data).then((res) => {
-        if (res.data.status === 200) {
-          console.log(res);
-          // setRegSuccessText(res.data.success_message);
-          navigate("/login");
-          Swal.fire("Success", res.data.success_message, "success");
-          // localStorage.setItem("auth_token", res.data.token);
-          // localStorage.setItem("auth_email", res.data.email);
-        }
-        if (res.data.status === 204) {
-          setValidationErrors(res.data.errors);
-        }
-        if (res.data.status === 205) {
-          console.log(res.data.error_message);
-          setConfirmPassError(res.data.error_message);
-          setIsConfirmError(true);
-        }
-      });
+      axios
+        .post(`/api/user/account/management/registration`, data)
+        .then((res) => {
+          if (res.data.status === 200) {
+            console.log(res);
+            navigate("/login");
+            Swal.fire("Success", res.data.success_message, "success");
+          }
+          if (res.data.status === 204) {
+            setValidationErrors(res.data.errors);
+          }
+          if (res.data.status === 205) {
+            console.log(res.data.error_message);
+            setConfirmPassError(res.data.error_message);
+            setIsConfirmError(true);
+          }
+        });
     });
   };
 
@@ -370,17 +328,15 @@ export const ApiProvider = ({ children }) => {
     const data = {
       email: Login.email,
       password: Login.password,
+      cookie_id: GetCookies("cookies"),
     };
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios.post(`/api/user/account/management/login`, data).then((res) => {
         if (res.data.status === 200) {
-          console.log(res.data);
           setUserEmail(res.data.email);
-          // setGetCartData(res.data.user_cart);
-          // setUserId(res.data.user.id);
           navigate("/");
-          // alert(res.data.success_message);
-          setUser(true);
+          Swal.fire("Success", res.data.success_message, "success");
+          setUser(true)
         }
         if (res.data.status === 401) {
           console.log(res.data.error_message);
@@ -396,14 +352,31 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     const getdata = async () => {
-      await axios.get(`/api/`).then((res) => {
-        // console.log(res.data);
-        setCategoryApi(res.data.categories);
-        setProductsApi(res.data.products);
-      });
+      await axios
+        .get(`/api/get/index/all/info/${GetCookies("cookies")}`)
+        .then((res) => {
+          setCategoryApi(res.data.categories);
+          setProductsApi(res.data.products);
+        });
     };
     getdata();
   }, []);
+
+  useEffect(() => {
+    const getdata = async () => {
+      await axios
+        .get(`/api/get/index/all/info/${GetCookies("cookies")}`)
+        .then((res) => {
+          setGetCartData(res.data.user_cart);
+          if (res.data.email) {
+            setUser(true)
+          }else{
+            setUser(false)
+          }
+        });
+    };
+    getdata();
+  }, [IsCart, User]);
 
   useEffect(() => {
     setAllProducts(
@@ -488,12 +461,10 @@ export const ApiProvider = ({ children }) => {
         Cart,
         TotalAmount,
         removeFromCart,
-        decreaseFromCart,
         TotalWishlist,
         setTotalWishlist,
         Wishlist,
         addToWishlist,
-        removeFromWishlist,
         CartCoordinate,
         setCartCoordinate,
         CountToAddToCart,
@@ -533,7 +504,7 @@ export const ApiProvider = ({ children }) => {
         SubCatImage,
         setSubCatImage,
         UserEmail,
-        User
+        User,
       }}
     >
       {children}

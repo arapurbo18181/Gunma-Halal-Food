@@ -13,23 +13,53 @@ import { Rate } from "antd";
 import Loaders from "../components/Loaders";
 import { useApi } from "../context/ApiContext";
 import BreadCrumbs from "../components/BreadCrumbs";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 const ViewProduct = () => {
   const [Quantity, setQuantity] = useState(0);
   const [Loader, setLoader] = useState(true);
+  const [Product, setProduct] = useState();
+  const [CateName, setCateName] = useState();
+  const [CateSlug, setCateSlug] = useState();
+  const [SubCateName, setSubCateName] = useState();
+  const [SubCateSlug, setSubCateSlug] = useState();
   const { productTopbar, ToggleProductTopbar, setToggleTopbar } = useProduct();
-  const {LargeImage,
+  const {
+    LargeImage,
     ShowProduct,
     addToCart,
     addToWishlist,
     removeFromCart,
-    decreaseFromCart,} = useApi()
+    decreaseFromCart,
+  } = useApi();
   const myRef = useRef();
 
+  const location = useLocation();
+
   useEffect(() => {
-    setTimeout(() => {
-      setLoader(false);
-    }, 1000);
-  }, []);
+    setLoader(true);
+    const getdata = async () => {
+      await axios.get(`/api${location.pathname}`).then((res) => {
+        console.log(res.data.products[0]);
+        setCateName(res.data.products[0].sub_category.main_category.name);
+        setSubCateName(res.data.products[0].sub_category.name);
+        setCateSlug(res.data.products[0].sub_category.main_category.slug);
+        setSubCateSlug(res.data.products[0].sub_category.slug);
+        const discountedAmount =
+          (res.data.products[0].price / 100) * res.data.products[0].discount;
+        const newPrice = res.data.products[0].price - discountedAmount;
+        setProduct(
+          (res.data.products[0] = {
+            ...res.data.products[0],
+            quantity: 0,
+            discountedPrice: newPrice,
+          })
+        );
+        setLoader(false);
+      });
+    };
+    getdata();
+  }, [location]);
 
   const handleMouse = (e) => {
     const p = e.clientX - myRef.current.offsetLeft;
@@ -64,23 +94,23 @@ const ViewProduct = () => {
   // console.log(ShowProduct)
 
   const CountToAdd = (id) => {
-    if (ShowProduct) {
-        if (ShowProduct.id === id) {
-          ShowProduct.quantity = ShowProduct.quantity + 1;
-          setQuantity(ShowProduct.quantity);
-        }
+    if (Product) {
+      if (Product.id === id) {
+        Product.quantity = Product.quantity + 1;
+        setQuantity(Product.quantity);
+      }
     }
   };
 
   const CountToRemove = (id) => {
-    if (ShowProduct) {
-        if (ShowProduct.id === id) {
-          if (ShowProduct.quantity === 1) {
-          } else {
-            ShowProduct.quantity = ShowProduct.quantity - 1;
-            setQuantity(ShowProduct.quantity);
-          }
+    if (Product) {
+      if (Product.id === id) {
+        if (Product.quantity === 1) {
+        } else {
+          Product.quantity = Product.quantity - 1;
+          setQuantity(Product.quantity);
         }
+      }
     }
   };
 
@@ -88,120 +118,132 @@ const ViewProduct = () => {
     addToCart(item);
     item.quantity = 0;
     setQuantity(0);
-  } 
+  };
 
   return (
     <>
-
-      <BreadCrumbs name={`${ShowProduct.sub_category.main_category.name}/${ShowProduct.sub_category.name}/${ShowProduct.name}`} url={`${ShowProduct.sub_category.main_category.slug}/${ShowProduct.sub_category.slug}/${ShowProduct.slug}`} />    
-    { ShowProduct ? <section className="flex justify-center items-center w-full">
-      <div className="flex justify-start items-center xl:items-start w-[100%] space-x-5">
-        <div className="hidden w-[14vw] sticky left-0 top-[4.6rem] xl:block -mt-4">
-          <CategorySidebar />
-        </div>
-        {Loader ? (
-          <div className="w-[80vw] h-[80vh] flex justify-center items-center">
-            <Loaders width={"100%"} height={"full"} />
-          </div>
-        ) : (
-          <div className="w-full divide-y-2 space-y-5">
-            <div className="h-full w-[100%] flex justify-center items-center">
-              <div className="flex flex-col md:flex-row justify-center items-start w-full xl:w-[70vw] space-x-4">
-                <CartButton />
-                <div
-                  /*onMouseLeave={leaveMouse} onMouseMove={handleMouse}*/ className="flex-1 flex justify-center items-center overflow-hidden relative w-full"
-                >
-                  <img
-                    ref={myRef}
-                    /*onMouseEnter={handleMouse} */ src={`${LargeImage}/${ShowProduct.image}`}
-                    alt=""
-                    className={`transition-all duration-500 w-7/12 md:w-full`}
-                  />
+      {Loader ? (
+        <Loaders width={"100%"} height={"80vh"} />
+      ) : (
+        <>
+          <BreadCrumbs
+            name={`${CateName}/${SubCateName}/${Product.name}`}
+            url={`${CateSlug}/${SubCateSlug}/${Product.slug}`}
+          />
+          <section className="flex justify-center items-center w-full">
+            <div className="flex justify-start items-center xl:items-start w-[100%] space-x-5">
+              <div className="hidden w-[14vw] sticky left-0 top-[4.6rem] xl:block -mt-4">
+                <CategorySidebar />
+              </div>
+              {Loader ? (
+                <div className="w-[80vw] h-[80vh] flex justify-center items-center">
+                  <Loaders width={"100%"} height={"full"} />
                 </div>
-                <div className="h-[500px] flex-1 flex flex-col justify-center space-y-4">
-                  <h2 className="text-base md:text-lg xl:text-xl font-bold">
-                    {" "}
-                    {ShowProduct.name}{" "}
-                  </h2>
-                  <div>
-                    <Rate
-                      defaultValue={4.5}
-                      disabled
-                      onChange={(value) => console.log(value)}
-                      allowHalf
-                      style={{ color: "red" }}
-                      allowClear={false}
-                    />
-                  </div>
-                  <p className="text-xs md:text-sm xl:text-base">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Aliquid cumque consequatur recusandae dolorem pariatur in
-                    nam officiis, cum temporibus doloremque?
-                  </p>
-                  <div className="flex justify-start items-center space-x-1">
-                    <h2 className="text-2xl font-bold text-red-500">৳{ShowProduct.discountedPrice}</h2>
-                    <h2 className="text-base text-gray-400 line-through">
-                    {`${ShowProduct.discount === 0 ? "": `৳${ShowProduct.price}` }`}
-                    </h2>
-                  </div>
+              ) : (
+                <div className="w-full divide-y-2 space-y-5">
+                  <div className="h-full w-[100%] flex justify-center items-center">
+                    <div className="flex flex-col md:flex-row justify-center items-start w-full xl:w-[70vw] space-x-4">
+                      <CartButton />
+                      <div
+                        /*onMouseLeave={leaveMouse} onMouseMove={handleMouse}*/ className="flex-1 flex justify-center items-center overflow-hidden relative w-full"
+                      >
+                        <img
+                          ref={myRef}
+                          /*onMouseEnter={handleMouse} */ src={`${LargeImage}/${Product.image}`}
+                          alt=""
+                          className={`transition-all duration-500 w-7/12 md:w-full`}
+                        />
+                      </div>
+                      <div className="h-[500px] flex-1 flex flex-col justify-center space-y-4">
+                        <h2 className="text-base md:text-lg xl:text-xl font-bold">
+                          {" "}
+                          {Product.name}{" "}
+                        </h2>
+                        <div>
+                          <Rate
+                            defaultValue={4.5}
+                            disabled
+                            onChange={(value) => console.log(value)}
+                            allowHalf
+                            style={{ color: "red" }}
+                            allowClear={false}
+                          />
+                        </div>
+                        <p className="text-xs md:text-sm xl:text-base">
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Aliquid cumque consequatur recusandae dolorem
+                          pariatur in nam officiis, cum temporibus doloremque?
+                        </p>
+                        <div className="flex justify-start items-center space-x-1">
+                          <h2 className="text-2xl font-bold text-red-500">
+                            ৳{Product.discountedPrice}
+                          </h2>
+                          <h2 className="text-base text-gray-400 line-through">
+                            {`${
+                              Product.discount === 0 ? "" : `৳${Product.price}`
+                            }`}
+                          </h2>
+                        </div>
 
-                  <div className="flex justify-start items-center space-x-2">
-                    {/* //! plus minus product */}
-                    <div className="flex w-20 items-center h-10 text-primary font-medium">
-                      <div
-                        onClick={() => CountToRemove(ShowProduct.id)}
-                        className="flex-1 flex justify-center items-center cursor-pointer h-full border-l border-t border-b rounded-l-full hover:bg-red-500 hover:text-white transition-all duration-300"
-                      >
-                        <IoMdRemove />
+                        <div className="flex justify-start items-center space-x-2">
+                          {/* //! plus minus product */}
+                          <div className="flex w-20 items-center h-10 text-primary font-medium">
+                            <div
+                              onClick={() => CountToRemove(Product.id)}
+                              className="flex-1 flex justify-center items-center cursor-pointer h-full border-l border-t border-b rounded-l-full hover:bg-red-500 hover:text-white transition-all duration-300"
+                            >
+                              <IoMdRemove />
+                            </div>
+                            <div className="h-full flex justify-center items-center px-2 border">
+                              {" "}
+                              {Quantity}
+                            </div>
+                            <div
+                              onClick={() => CountToAdd(Product.id)}
+                              className="flex-1 h-full flex justify-center items-center cursor-pointer border-r border-t border-b rounded-r-full hover:bg-red-500 hover:text-white transition-all duration-300"
+                            >
+                              <IoMdAdd />
+                            </div>
+                          </div>
+                          {/* //! Add to Cart Button */}
+                          <div className="flex justify-center items-center my-2 ">
+                            <button
+                              onClick={() => handleClick(Product)}
+                              className="flex justify-center items-center text-xs md:text-sm xl:text-base space-x-2 bg-red-500 hover:bg-red-600 transition-all duration-300 text-white px-2 py-1 xl:px-4 xl:py-2 cursor-pointer w-full"
+                            >
+                              {" "}
+                              <BsPlusLg /> <span>Cart</span>{" "}
+                            </button>
+                          </div>
+                        </div>
+                        <div
+                          onClick={() => addToWishlist(ShowProduct)}
+                          className="flex justify-start items-center space-x-2 cursor-pointer hover:-translate-y-1 transition-all duration-300 w-fit"
+                        >
+                          <div className="text-base mt-0.5">
+                            <BsSuitHeart />
+                          </div>
+                          <div className="text-base">Wishlist</div>
+                        </div>
                       </div>
-                      <div className="h-full flex justify-center items-center px-2 border">
-                        {" "}
-                        {Quantity}
-                      </div>
-                      <div
-                        onClick={() =>CountToAdd(ShowProduct.id) }
-                        className="flex-1 h-full flex justify-center items-center cursor-pointer border-r border-t border-b rounded-r-full hover:bg-red-500 hover:text-white transition-all duration-300"
-                      >
-                        <IoMdAdd />
-                      </div>
-                    </div>
-                    {/* //! Add to Cart Button */}
-                    <div className="flex justify-center items-center my-2 ">
-                      <button
-                        onClick={() => handleClick(ShowProduct) }
-                        className="flex justify-center items-center text-xs md:text-sm xl:text-base space-x-2 bg-red-500 hover:bg-red-600 transition-all duration-300 text-white px-2 py-1 xl:px-4 xl:py-2 cursor-pointer w-full"
-                      >
-                        {" "}
-                        <BsPlusLg /> <span>Cart</span>{" "}
-                      </button>
                     </div>
                   </div>
-                  <div
-                    onClick={() => addToWishlist(ShowProduct)}
-                    className="flex justify-start items-center space-x-2 cursor-pointer hover:-translate-y-1 transition-all duration-300 w-fit"
-                  >
-                    <div className="text-base mt-0.5">
-                      <BsSuitHeart />
+                  <div className="w-full flex flex-col justify-center items-center">
+                    <div>
+                      <ProductTopbar />
                     </div>
-                    <div className="text-base">Wishlist</div>
+                    <div className="w-full">
+                      {ToggleProductTopbar === 0 && <ProductDescription />}
+                      {ToggleProductTopbar === 1 && <ProductReviews />}
+                    </div>
                   </div>
+                  <Footer />
                 </div>
-              </div>
+              )}
             </div>
-            <div className="w-full flex flex-col justify-center items-center">
-              <div>
-                <ProductTopbar />
-              </div>
-              <div className="w-full">
-                {ToggleProductTopbar === 0 && <ProductDescription />}
-                {ToggleProductTopbar === 1 && <ProductReviews />}
-              </div>
-            </div>
-            <Footer />
-          </div>
-        )}
-      </div>
-    </section> : "" }
+          </section>
+        </>
+      )}
     </>
   );
 };

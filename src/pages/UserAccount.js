@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiLogOut } from "react-icons/fi";
 import UserSidebar from "../components/UserSidebar";
 import UserToprbar from "../components/UserToprbar";
@@ -8,9 +8,20 @@ import UserOrders from "../components/UserOrders";
 import UserSettings from "../components/UserSettings";
 import { useApi } from "../context/ApiContext";
 import BreadCrumbs from "../components/BreadCrumbs";
+import { useNavigate } from "react-router-dom";
 
 export default function UserAccount() {
-  const { ToggleUserMenu, setToggleUserMenu } = useApi();
+  const { ToggleUserMenu, User } = useApi();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!User) {
+      console.log(User)
+      navigate("/")
+    }
+  }, [])
+
   return (
     <>
       <BreadCrumbs name={"User Account"} url={"useraccount"} />

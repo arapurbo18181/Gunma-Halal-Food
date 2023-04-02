@@ -100,8 +100,7 @@ const ProductsOfSubCategory = () => {
                       </div>
                     ) : (
                       SubCategoryProduct.map((item, index) => {
-                        const discountedAmount =
-                          (item.price / 100) * item.discount;
+                        const discountedAmount = (item.price / 100) * item.discount;
                         const newPrice = item.price - discountedAmount;
                         item.discountedPrice = newPrice;
                         return <SubCategoryProducts item={item} key={index} />;

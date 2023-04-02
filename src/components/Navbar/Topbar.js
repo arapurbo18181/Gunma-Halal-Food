@@ -10,7 +10,7 @@ import { useCategory } from "../../context/CategoryContext";
 import { useApi } from "../../context/ApiContext";
 
 const Topbar = () => {
-  const { TotalWishlist } = useApi();
+  const { TotalWishlist, User } = useApi();
 
   const { toggleNav, toggleCat } = useCategory();
 
@@ -45,26 +45,26 @@ const Topbar = () => {
             className="cursor-pointer text-xl md:text-2xl mt-1"
           />{" "}
         </div>
-        <Link
+        { !User && <Link
           className="hidden xl:block flex-1 text-base font-semibold hover:-translate-y-1 transition-all duration-300"
           to={"/login"}
         >
           {" "}
           Login{" "}
-        </Link>
-        <Link
+        </Link>}
+        { !User && <Link
           className="hidden xl:block flex-1 text-base font-semibold hover:-translate-y-1 transition-all duration-300"
           to={"/signup"}
         >
           {" "}
           SignUp{" "}
-        </Link>
-        <Link
+        </Link>}
+        { User && <Link
           to={"/useraccount"}
           className="hidden xl:block flex-1 hover:-translate-y-1 transition-all duration-300"
         >
           <VscAccount className="cursor-pointer text-xl" />
-        </Link>
+        </Link>}
         <Link
           to={"/wishlist"}
           className="hidden xl:block flex-1 relative hover:-translate-y-1 transition-all duration-300"
