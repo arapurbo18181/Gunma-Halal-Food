@@ -23,8 +23,8 @@ const Cart = () => {
           <div>Subtotal</div>
         </div>
         <div className="flex flex-col gap-y-2 h-[380px] justify-between overflow-y-auto overflow-x-hidden">
-          {cart.map((item) => {
-           return <CartItemForViewCart item={item} />
+          {cart.map((item, index) => {
+           return <CartItemForViewCart item={item} key={index} />
           })}
 
           

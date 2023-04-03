@@ -65,6 +65,12 @@ export const ApiProvider = ({ children }) => {
   const [IsCart, setIsCart] = useState(false);
   const [SubCatImage, setSubCatImage] = useState();
   const [UserEmail, setUserEmail] = useState();
+  const [Reviews, setReviews] = useState({
+    rating: 0,
+    review: "",
+  });
+  const [IsReview, setIsReview] = useState(false);
+  const [CartIncrease, setCartIncrease] = useState(false);
   const navigate = useNavigate();
 
   const cards = [
@@ -159,8 +165,12 @@ export const ApiProvider = ({ children }) => {
 
   const logOut = async () => {
     await axios.get(`/api/user/account/management/logout`).then((res) => {
-      navigate("/");
-      setUser(false);
+      console.log(res);
+      if (res.data.status === 200) {
+        navigate("/");
+        setUser(false);
+        Swal.fire("Success", res.data.success_message, "success");
+      }
     });
   };
 
@@ -185,22 +195,6 @@ export const ApiProvider = ({ children }) => {
     });
   };
 
-  useEffect(() => {
-    const datas = GetCartData.map((item) => {
-      return {
-        id: item.id,
-        price: item.price,
-        product_id: item.product_id,
-        quantity: item.quantity,
-        user_id: item.user_id,
-        image: item.product[0].image,
-        name: item.product[0].name,
-        slug: item.product[0].slug,
-      };
-    });
-    setcart(datas);
-  }, [GetCartData]);
-
   const removeFromCart = (item) => {
     const updated = Cart.filter((elem) => {
       return elem !== item;
@@ -224,7 +218,8 @@ export const ApiProvider = ({ children }) => {
       axios
         .post(`/api/user/cart/management/delete-cart/${item.id}`, item.quantity)
         .then((res) => {
-          setGetCartData(res.data.carts);
+          // setGetCartData(res.data.carts);
+          setIsCart(!IsCart);
         });
     });
   };
@@ -237,9 +232,11 @@ export const ApiProvider = ({ children }) => {
       axios
         .post(`/api/user/cart/management/update-cart/${item.id}`, data)
         .then((res) => {
-          setGetCartData(res.data.carts);
+          // setGetCartData(res.data.carts);
+          setIsCart(!IsCart);
         });
     });
+    
   };
   const decreaseQuantity = (item) => {
     if (item.quantity === 1) {
@@ -252,19 +249,26 @@ export const ApiProvider = ({ children }) => {
         axios
           .post(`/api/user/cart/management/update-cart/${item.id}`, data)
           .then((res) => {
-            setGetCartData(res.data.carts);
+            // setGetCartData(res.data.carts);
+          setIsCart(!IsCart);
           });
       });
     }
   };
 
   const deleteAll = () => {
+    const data = {
+      cookie_id: GetCookies("cookies"),
+    };
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.delete(`/api/user/cart/management/delete-cart-all/`).then((res) => {
-        setGetCartData(res.data.carts);
-        console.log(res);
-      });
+      axios
+        .post(`/api/user/cart/management/delete-cart-all/`, data)
+        .then((res) => {
+          setGetCartData(res.data.carts);
+          console.log(res);
+        });
     });
+    setIsCart(!IsCart);
   };
   useEffect(() => {
     setTimeout(() => {
@@ -336,7 +340,7 @@ export const ApiProvider = ({ children }) => {
           setUserEmail(res.data.email);
           navigate("/");
           Swal.fire("Success", res.data.success_message, "success");
-          setUser(true)
+          setUser(true);
         }
         if (res.data.status === 401) {
           console.log(res.data.error_message);
@@ -352,31 +356,84 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     const getdata = async () => {
+      // console.log(IsCart)
       await axios
         .get(`/api/get/index/all/info/${GetCookies("cookies")}`)
         .then((res) => {
-          setCategoryApi(res.data.categories);
-          setProductsApi(res.data.products);
-        });
-    };
-    getdata();
-  }, []);
-
-  useEffect(() => {
-    const getdata = async () => {
-      await axios
-        .get(`/api/get/index/all/info/${GetCookies("cookies")}`)
-        .then((res) => {
-          setGetCartData(res.data.user_cart);
-          if (res.data.email) {
-            setUser(true)
-          }else{
-            setUser(false)
+          if (res.data.status === 200) {
+            console.log(IsCart);
+            setCategoryApi(res.data.categories);
+            setProductsApi(res.data.products);
+            console.log(res);
+            const datas = res.data.user_cart.map((item) => {
+              return {
+                id: item.id,
+                price: item.price,
+                product_id: item.product_id,
+                quantity: item.quantity,
+                user_id: item.user_id,
+                image: item.product[0].image,
+                name: item.product[0].name,
+                slug: item.product[0].slug,
+              };
+            });
+            setcart(datas);
+            // setGetCartData(res.data.user_cart);
+            if (res.data.email) {
+              setUser(true);
+            } else {
+              setUser(false);
+            }
           }
         });
     };
     getdata();
-  }, [IsCart, User]);
+  }, [IsReview, IsCart, User]);
+
+  // useEffect(() => {
+  //   const datas = GetCartData.map((item) => {
+  //     return {
+  //       id: item.id,
+  //       price: item.price,
+  //       product_id: item.product_id,
+  //       quantity: item.quantity,
+  //       user_id: item.user_id,
+  //       image: item.product[0].image,
+  //       name: item.product[0].name,
+  //       slug: item.product[0].slug,
+  //     };
+  //   });
+  //   setcart(datas);
+  // }, [GetCartData]);
+
+  // useEffect(() => {
+  //   const getdata = async () => {
+  //     await axios
+  //       .get(`/api/get/index/all/info/${GetCookies("cookies")}`)
+  //       .then((res) => {
+  //         const datas = res.data.user_cart.map((item) => {
+  //           return {
+  //             id: item.id,
+  //             price: item.price,
+  //             product_id: item.product_id,
+  //             quantity: item.quantity,
+  //             user_id: item.user_id,
+  //             image: item.product[0].image,
+  //             name: item.product[0].name,
+  //             slug: item.product[0].slug,
+  //           };
+  //         });
+  //         setcart(datas);
+  //         // setGetCartData(res.data.user_cart);
+  //         if (res.data.email) {
+  //           setUser(true);
+  //         } else {
+  //           setUser(false);
+  //         }
+  //       });
+  //   };
+  //   getdata();
+  // }, [IsCart, User]);
 
   useEffect(() => {
     setAllProducts(
@@ -505,6 +562,12 @@ export const ApiProvider = ({ children }) => {
         setSubCatImage,
         UserEmail,
         User,
+        Reviews,
+        setReviews,
+        IsReview,
+        setIsReview,
+        IsCart,
+        setIsCart,
       }}
     >
       {children}

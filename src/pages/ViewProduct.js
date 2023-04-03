@@ -31,6 +31,7 @@ const ViewProduct = () => {
     addToWishlist,
     removeFromCart,
     decreaseFromCart,
+    IsReview
   } = useApi();
   const myRef = useRef();
 
@@ -40,17 +41,17 @@ const ViewProduct = () => {
     setLoader(true);
     const getdata = async () => {
       await axios.get(`/api${location.pathname}`).then((res) => {
-        console.log(res.data.products[0]);
-        setCateName(res.data.products[0].sub_category.main_category.name);
-        setSubCateName(res.data.products[0].sub_category.name);
-        setCateSlug(res.data.products[0].sub_category.main_category.slug);
-        setSubCateSlug(res.data.products[0].sub_category.slug);
+        console.log(res);
+        setCateName(res.data.product.sub_category.main_category.name);
+        setSubCateName(res.data.product.sub_category.name);
+        setCateSlug(res.data.product.sub_category.main_category.slug);
+        setSubCateSlug(res.data.product.sub_category.slug);
         const discountedAmount =
-          (res.data.products[0].price / 100) * res.data.products[0].discount;
-        const newPrice = res.data.products[0].price - discountedAmount;
+          (res.data.product.price / 100) * res.data.product.discount;
+        const newPrice = res.data.product.price - discountedAmount;
         setProduct(
-          (res.data.products[0] = {
-            ...res.data.products[0],
+          (res.data.product = {
+            ...res.data.product,
             quantity: 0,
             discountedPrice: newPrice,
           })
@@ -234,7 +235,7 @@ const ViewProduct = () => {
                     </div>
                     <div className="w-full">
                       {ToggleProductTopbar === 0 && <ProductDescription />}
-                      {ToggleProductTopbar === 1 && <ProductReviews />}
+                      {ToggleProductTopbar === 1 && <ProductReviews product={Product} />}
                     </div>
                   </div>
                   <Footer />
