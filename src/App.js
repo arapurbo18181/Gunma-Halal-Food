@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -21,8 +21,9 @@ import LoadingBar from "react-top-loading-bar";
 import { useProduct } from "./context/ProductContext";
 import axios from "axios";
 import { useApi } from "./context/ApiContext";
+import ErrorPage from "./pages/ErrorPage";
 
-axios.defaults.baseURL = "http://localhost:8000/"
+axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.post["Accept"] = "application/json";
 axios.defaults.withCredentials = true;
@@ -59,14 +60,13 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/:id" element={<SubCategory />} />
-            <Route
-              path="/:id/:id"
-              element={<ProductsOfSubCategory />}
-            />
+            <Route path="/:id/:id" element={<ProductsOfSubCategory />} />
             <Route path="/:id/:id/:id" element={<ViewProduct />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/error" element={<ErrorPage/>} />
+            <Route path="/*" element={<ErrorPage/>} />
           </Routes>
         </div>
       ) : (

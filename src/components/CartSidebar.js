@@ -6,7 +6,7 @@ import CartItem from "./CartItem";
 import { useApi } from "../context/ApiContext";
 
 const CartSidebar = () => {
-  const { ToggleSidebar, setToggleSidebar,  TotalAmount, GetCartData, cart, setcart } =
+  const { ToggleSidebar, setToggleSidebar,  TotalAmount, GetCartData, cart, setcart, TotalPrice } =
     useApi();
 
 
@@ -53,7 +53,7 @@ const CartSidebar = () => {
             <IoMdArrowForward className="text-2xl" />
           </div>
         </div>
-        <div className="flex flex-col gap-y-2 h-[430px] lg:h-640px overflow-y-auto overflow-x-hidden border-b">
+        <div className="flex flex-col gap-y-2 h-[50vh] lg:h-640px overflow-y-auto overflow-x-hidden border-b">
           {cart.map((item, index) => {
             return <CartItem item={item} key={index} />;
           })}
@@ -62,7 +62,7 @@ const CartSidebar = () => {
           <div className="flex justify-between items-center w-full">
             <div className="uppercase font-semibold">
               <span className="mr-2"> Total: </span> ${" "}
-              {parseFloat(0).toFixed(2)}
+              {parseFloat(TotalPrice).toFixed(2)}
             </div>
           </div>
           <Link

@@ -23,7 +23,7 @@ const SearchProducts = ({ item }) => {
             {item.name}{" "}
           </Link>
           <div className="flex justify-start items-center space-x-1">
-            <h2 className="text-lg font-bold text-red-500">
+            <h2 className="md:text-lg font-bold text-red-500">
               ৳{item.discountedPrice}
             </h2>
             <h2 className="text-sm text-gray-400 line-through">{`${

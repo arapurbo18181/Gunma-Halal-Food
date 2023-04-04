@@ -21,7 +21,7 @@ const Searchbar = () => {
             <h2>
               Search Results for: "<span className="font-bold">{Search}</span>"
             </h2>
-            <div className="max-h-[400px] overflow-y-auto w-full grid grid-cols-2 gap-7 px-2 py-4">
+            <div className="max-h-[400px] overflow-y-auto w-full grid grid-cols-1 md:grid-cols-2 gap-7 px-2 py-4">
               {SearchProduct.map((item) => {
                 const discountedAmount = (item.price / 100) * item.discount;
                 const newPrice = item.price - discountedAmount;

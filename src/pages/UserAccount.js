@@ -11,7 +11,7 @@ import BreadCrumbs from "../components/BreadCrumbs";
 import { useNavigate } from "react-router-dom";
 
 export default function UserAccount() {
-  const { ToggleUserMenu, User } = useApi();
+  const { ToggleUserMenu, User, UserData } = useApi();
 
   const navigate = useNavigate();
 

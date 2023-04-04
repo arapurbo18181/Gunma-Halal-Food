@@ -65,12 +65,14 @@ export const ApiProvider = ({ children }) => {
   const [IsCart, setIsCart] = useState(false);
   const [SubCatImage, setSubCatImage] = useState();
   const [UserEmail, setUserEmail] = useState();
+  const [TotalPrice, setTotalPrice] = useState();
   const [Reviews, setReviews] = useState({
     rating: 0,
     review: "",
   });
   const [IsReview, setIsReview] = useState(false);
-  const [CartIncrease, setCartIncrease] = useState(false);
+  const [UserData, setUserData] = useState();
+  const [IsPassword, setIsPassword] = useState();
   const navigate = useNavigate();
 
   const cards = [
@@ -157,6 +159,13 @@ export const ApiProvider = ({ children }) => {
   }, [cart]);
 
   useEffect(() => {
+    const amount = cart.reduce((accumulator, currItem) => {
+      return accumulator + currItem.quantity * currItem.price;
+    }, 0);
+    setTotalPrice(amount);
+  }, [cart]);
+
+  useEffect(() => {
     const amount = Wishlist.reduce((accumulator, currItem) => {
       return (accumulator += 1);
     }, 0);
@@ -203,21 +212,43 @@ export const ApiProvider = ({ children }) => {
   };
 
   const addToWishlist = (item) => {
-    const newWish = Wishlist.find((elem) => {
-      return elem.img === item.img;
+    const data = {
+      cookie_id: GetCookies("cookies"),
+      product_id: item.id,
+    };
+
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios
+        .post(`/api/user/wishlist/management/add-to-wishlist`, data)
+        .then((res) => {
+          console.log(res);
+          setIsCart(!IsCart)
+          // setWishlist();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     });
-    if (newWish) {
-      alert("You already have this item on your wishlist");
-    } else {
-      setWishlist([...Wishlist, item]);
-    }
   };
+
+  const removeFromWishlist = (item) => {
+      axios.get(`api/user/wishlist/management/delete-wishlist/${item.wishlist_id}`)
+        .then((res) => {
+          console.log(res);
+          setIsCart(!IsCart)
+          // setWishlist();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }
 
   const deleteFromCart = (item) => {
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/user/cart/management/delete-cart/${item.id}`, item.quantity)
+        .get(`/api/user/cart/management/delete-cart/${item.id}`)
         .then((res) => {
+          // console.log(res)
           // setGetCartData(res.data.carts);
           setIsCart(!IsCart);
         });
@@ -227,16 +258,16 @@ export const ApiProvider = ({ children }) => {
   const increaseQuantity = (item) => {
     const data = {
       quantity: "plus",
+      id: item.id
     };
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/user/cart/management/update-cart/${item.id}`, data)
+        .post(`/api/user/cart/management/update-cart`, data)
         .then((res) => {
           // setGetCartData(res.data.carts);
           setIsCart(!IsCart);
         });
     });
-    
   };
   const decreaseQuantity = (item) => {
     if (item.quantity === 1) {
@@ -250,7 +281,7 @@ export const ApiProvider = ({ children }) => {
           .post(`/api/user/cart/management/update-cart/${item.id}`, data)
           .then((res) => {
             // setGetCartData(res.data.carts);
-          setIsCart(!IsCart);
+            setIsCart(!IsCart);
           });
       });
     }
@@ -354,17 +385,47 @@ export const ApiProvider = ({ children }) => {
     });
   };
 
+  const checkPassword = async (value) => {
+    await axios
+    .get(`/api/user/account/management/check-password/${value}`)
+    .then((res) => {
+      console.log(res);
+      setIsPassword(res.data.message)
+    });
+  }
+
+  const changePassword = async (value) => {
+    console.log(value)
+    const data = {
+      old_password: value.oldPass,
+      new_password: value.newPass,
+      confirm_password: value.confPass,
+    }
+    await axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.post(`/api/user/account/management/change-password`, data ).then((res) => {
+        console.log(res);
+      });
+    });
+  }
+
   useEffect(() => {
     const getdata = async () => {
       // console.log(IsCart)
       await axios
         .get(`/api/get/index/all/info/${GetCookies("cookies")}`)
         .then((res) => {
+          console.log(res);
           if (res.data.status === 200) {
-            console.log(IsCart);
+            // console.log(IsCart);
             setCategoryApi(res.data.categories);
             setProductsApi(res.data.products);
-            console.log(res);
+            setUserData(res.data.user);
+            setWishlist(
+              res.data.wishlist.map((item) => {
+                return item.wishlist_product[0] = { ...item.wishlist_product[0], quantity: 0, discountedPrice: 0, wishlist_id: item.id };
+              })
+            );
+            // console.log(res);
             const datas = res.data.user_cart.map((item) => {
               return {
                 id: item.id,
@@ -568,6 +629,12 @@ export const ApiProvider = ({ children }) => {
         setIsReview,
         IsCart,
         setIsCart,
+        TotalPrice,
+        removeFromWishlist,
+        UserData,
+        checkPassword,
+        IsPassword,
+        changePassword
       }}
     >
       {children}

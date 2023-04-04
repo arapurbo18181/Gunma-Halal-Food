@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import CategorySidebar from "../components/CategorySidebar";
 import { useCategory } from "../context/CategoryContext";
 import { BsPlusLg } from "react-icons/bs";
@@ -40,23 +40,30 @@ const ProductsOfSubCategory = () => {
   }, []);
 
   const location = useLocation();
+  const navigate = useNavigate()
 
   useEffect(() => {
-    setLoader(true)
-    console.log(location)
+    setLoader(true);
+    console.log(location);
     const getdata = async () => {
       await axios.get(`/api${location.pathname}`).then((res) => {
-        setCateName(res.data.products[0].sub_category.main_category.name)
-        setSubCateName(res.data.products[0].sub_category.name)
-        setCateSlug(res.data.products[0].sub_category.main_category.slug)
-        setSubCateSlug(res.data.products[0].sub_category.slug)
-        setSubCategoryProduct(
-          res.data.products.map((item) => {
-            return { ...item, quantity: 0, discountedPrice: 0 };
-          })
-        );
-        setLoader(false)
-      });
+        if (res.data.status === 200) {
+          console.log(res);
+          setCateName(res.data.products[0].sub_category.main_category.name);
+          setSubCateName(res.data.products[0].sub_category.name);
+          setCateSlug(res.data.products[0].sub_category.main_category.slug);
+          setSubCateSlug(res.data.products[0].sub_category.slug);
+          setSubCategoryProduct(
+            res.data.products.map((item) => {
+              return { ...item, quantity: 0, discountedPrice: 0 };
+            })
+          );
+          setLoader(false);
+        }
+      }).catch(error=>{
+        console.log(error)
+        navigate("/error")
+      })
     };
     getdata();
   }, [location]);
@@ -67,10 +74,14 @@ const ProductsOfSubCategory = () => {
         <Loaders width={"100%"} height={"80vh"} />
       ) : (
         <>
-          { CateName && SubCateName ? <BreadCrumbs
-            name={`${CateName}/${SubCateName}`}
-            url={`${CateSlug}/${SubCateSlug}`}
-          /> : ""}
+          {CateName && SubCateName ? (
+            <BreadCrumbs
+              name={`${CateName}/${SubCateName}`}
+              url={`${CateSlug}/${SubCateSlug}`}
+            />
+          ) : (
+            ""
+          )}
 
           <section className="flex justify-center items-start w-full">
             <div className="flex justify-start items-center w-[100%] xl:items-start space-x-5">
@@ -87,9 +98,9 @@ const ProductsOfSubCategory = () => {
                 </div>
                 <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-14">
                   <span className="underline decoration-red-500 underline-offset-8">
-                    { SubCateName ? SubCateName.slice(0, 2) : ""}
+                    {SubCateName ? SubCateName.slice(0, 2) : ""}
                   </span>
-                  { SubCateName ? SubCateName.slice(2) : ""}
+                  {SubCateName ? SubCateName.slice(2) : ""}
                 </h2>
                 <CartButton />
                 <div className="">
@@ -100,7 +111,8 @@ const ProductsOfSubCategory = () => {
                       </div>
                     ) : (
                       SubCategoryProduct.map((item, index) => {
-                        const discountedAmount = (item.price / 100) * item.discount;
+                        const discountedAmount =
+                          (item.price / 100) * item.discount;
                         const newPrice = item.price - discountedAmount;
                         item.discountedPrice = newPrice;
                         return <SubCategoryProducts item={item} key={index} />;
@@ -113,8 +125,7 @@ const ProductsOfSubCategory = () => {
             </div>
           </section>
         </>
-      )
-      }
+      )}
     </>
   );
 };

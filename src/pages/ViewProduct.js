@@ -13,7 +13,7 @@ import { Rate } from "antd";
 import Loaders from "../components/Loaders";
 import { useApi } from "../context/ApiContext";
 import BreadCrumbs from "../components/BreadCrumbs";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 const ViewProduct = () => {
   const [Quantity, setQuantity] = useState(0);
@@ -31,33 +31,39 @@ const ViewProduct = () => {
     addToWishlist,
     removeFromCart,
     decreaseFromCart,
-    IsReview
+    IsReview,
   } = useApi();
   const myRef = useRef();
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoader(true);
     const getdata = async () => {
       await axios.get(`/api${location.pathname}`).then((res) => {
-        console.log(res);
-        setCateName(res.data.product.sub_category.main_category.name);
-        setSubCateName(res.data.product.sub_category.name);
-        setCateSlug(res.data.product.sub_category.main_category.slug);
-        setSubCateSlug(res.data.product.sub_category.slug);
-        const discountedAmount =
-          (res.data.product.price / 100) * res.data.product.discount;
-        const newPrice = res.data.product.price - discountedAmount;
-        setProduct(
-          (res.data.product = {
-            ...res.data.product,
-            quantity: 0,
-            discountedPrice: newPrice,
-          })
-        );
-        setLoader(false);
-      });
+        if (res.data.status === 200) {
+          console.log(res);
+          setCateName(res.data.product.sub_category.main_category.name);
+          setSubCateName(res.data.product.sub_category.name);
+          setCateSlug(res.data.product.sub_category.main_category.slug);
+          setSubCateSlug(res.data.product.sub_category.slug);
+          const discountedAmount =
+            (res.data.product.price / 100) * res.data.product.discount;
+          const newPrice = res.data.product.price - discountedAmount;
+          setProduct(
+            (res.data.product = {
+              ...res.data.product,
+              quantity: 0,
+              discountedPrice: newPrice,
+            })
+          );
+          setLoader(false);
+        }
+      }).catch(error=>{
+        console.log(error)
+        navigate("/error")
+      })
     };
     getdata();
   }, [location]);
@@ -218,7 +224,7 @@ const ViewProduct = () => {
                           </div>
                         </div>
                         <div
-                          onClick={() => addToWishlist(ShowProduct)}
+                          onClick={() => addToWishlist(Product)}
                           className="flex justify-start items-center space-x-2 cursor-pointer hover:-translate-y-1 transition-all duration-300 w-fit"
                         >
                           <div className="text-base mt-0.5">
@@ -235,7 +241,9 @@ const ViewProduct = () => {
                     </div>
                     <div className="w-full">
                       {ToggleProductTopbar === 0 && <ProductDescription />}
-                      {ToggleProductTopbar === 1 && <ProductReviews product={Product} />}
+                      {ToggleProductTopbar === 1 && (
+                        <ProductReviews product={Product} />
+                      )}
                     </div>
                   </div>
                   <Footer />

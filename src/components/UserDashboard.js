@@ -2,7 +2,7 @@ import React from "react";
 import { useApi } from "../context/ApiContext";
 
 const UserDashboard = () => {
-  const { CardsForUserDashboard } = useApi();
+  const { CardsForUserDashboard, UserData } = useApi();
   return (
     <section className="flex justify-start items-center xl:mx-4 w-[100%]">
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 place-items-center w-full">

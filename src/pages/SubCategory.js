@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 import CategorySidebar from "../components/CategorySidebar";
 import Footer from "../components/Footer";
 import Loaders from "../components/Loaders";
@@ -23,22 +23,27 @@ const SubCategory = () => {
     setBreadCrumbs,
     setSubCategorySlug,
   } = useApi();
+  const navigate = useNavigate()
 
   const params = useParams();
-  console.log(params);
+  // console.log(params);
 
-  const location = useLocation()
-
+  const location = useLocation();
 
   useEffect(() => {
     setLoader(true);
     const getdata = async () => {
       await axios.get(`/api/${params.id}`).then((res) => {
-        console.log(res.data.categories[0]);
-        setCategory(res.data.categories[0]);
-        setSubCategory(res.data.categories[0].sub_category);
-        setLoader(false);
-      });
+        console.log(res);
+        if (res.data.status === 200) {
+          setCategory(res.data.categories);
+          setSubCategory(res.data.categories.sub_category);
+          setLoader(false);
+        }
+      }).catch(error=>{
+        console.log(error)
+        navigate("/error");
+      })
     };
     getdata();
   }, [location]);
@@ -67,9 +72,9 @@ const SubCategory = () => {
                 </div>
                 <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-8">
                   <span className="underline decoration-red-500 underline-offset-8">
-                    { Category.name ? Category.name.slice(0, 2) : ""}
+                    {Category.name ? Category.name.slice(0, 2) : ""}
                   </span>
-                  { Category.name ? Category.name.slice(2) : ""}
+                  {Category.name ? Category.name.slice(2) : ""}
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                   {SubCategory.map((item, index) => {
@@ -77,8 +82,7 @@ const SubCategory = () => {
                       <Link
                         key={index}
                         to={`/${Category.slug}/${item.slug}`}
-                        onClick={() => {
-                        }}
+                        onClick={() => {}}
                         className="border shadow-[0_2px_6px_0px_rgb(180,180,180)] hover:-translate-y-3 transition-all duration-500 px-8 py-4 rounded-md max-w-[200px]"
                       >
                         <div className="overflow-hidden">
