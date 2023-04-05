@@ -3,21 +3,19 @@ import { Link } from "react-router-dom";
 import { IoMdAdd, IoMdClose, IoMdRemove } from "react-icons/io";
 import { useState } from "react";
 import { useApi } from "../context/ApiContext";
+import SmallLoader from "./SmallLoader";
 
 const CartItemForViewCart = ({ item }) => {
-  const {SmallImage, LargeImage, removeFromCart, addToCart, decreaseFromCart, increaseQuantity, deleteFromCart, decreaseQuantity, IsCart, setIsCart} = useApi();
-  const [Quantity, setQuantity] = useState(item.quantity);
+  const {SmallImage, LargeImage, removeFromCart, addToCart, decreaseFromCart, increaseQuantity, deleteFromCart, decreaseQuantity, IsCart, setIsCart, SmallLoading, setSmallLoading} = useApi();
 
   const increase = () => {
-    // setIsCart(!IsCart)
+    setSmallLoading(true)
     increaseQuantity(item);
-    setQuantity(Quantity + 1);
   }
 
   const decrease = () => {
-    // setIsCart(!IsCart)
+    setSmallLoading(true)
     decreaseQuantity(item)
-    setQuantity(Quantity - 1);
   }
 
   return (
@@ -45,6 +43,9 @@ const CartItemForViewCart = ({ item }) => {
           </div>
         </div>
         <div className="flex flex-1 justify-center w-full items-center h-full font-medium">
+          { SmallLoading ? 
+          <SmallLoader width={"100%"} height={"100%"} />
+          : 
           <div className="flex w-20 items-center h-10 border text-primary font-medium">
             <div
               onClick={decrease}
@@ -62,7 +63,7 @@ const CartItemForViewCart = ({ item }) => {
             >
               <IoMdAdd />
             </div>
-          </div>
+          </div>}
         </div>
         <div className="flex flex-1 justify-end items-center text-primary font-medium">
           {" "}

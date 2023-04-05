@@ -4,9 +4,19 @@ import { Link, useNavigate } from "react-router-dom";
 import CartItemForViewCart from "../components/CartItemForViewCart";
 import { useApi } from "../context/ApiContext";
 import BreadCrumbs from "../components/BreadCrumbs";
+import SmallLoader from "../components/SmallLoader";
+import Loaders from "../components/Loaders";
 
 const Cart = () => {
-  const { Cart, TotalAmount, clearCart, cart, deleteAll, TotalPrice } = useApi();
+  const {
+    Cart,
+    TotalAmount,
+    clearCart,
+    cart,
+    deleteAll,
+    TotalPrice,
+    SmallLoading,
+  } = useApi();
   // console.log(cart)
   return (
     <>
@@ -14,12 +24,13 @@ const Cart = () => {
       {cart ? (
         <>
           <section className="flex flex-col lg:flex-row justify-center items-center px-1 lg:px-20 lg:space-x-5 mb-20">
-            <div className="flex-[2] h-[100%] w-[100%] flex flex-col justify-center items-center">
-              <div className="mb-4 underline underline-offset-8 mt-16">
+            <div className="flex-[2] h-[100%] w-[100%] flex flex-col justify-center items-center mt-16">
+              <div className="mb-4 underline underline-offset-8">
                 <h1 className="text-3xl font-bold">
                   Your Cart ({TotalAmount})
                 </h1>
               </div>
+
               <div className="w-full">
                 <div className="flex justify-between items-center bg-red-500 text-white px-4 rounded py-2 my-4">
                   <div>Product</div>
@@ -27,9 +38,19 @@ const Cart = () => {
                   <div>Subtotal</div>
                 </div>
                 <div className="flex flex-col gap-y-2 h-[380px] justify-between overflow-y-auto overflow-x-hidden">
-                  {cart.map((item, index) => {
-                    return <CartItemForViewCart item={item} key={index} />;
-                  })}
+                  {SmallLoading ? (
+                    <SmallLoader width={"100%"} height={"50vh"} />
+                  ) : (
+                    <>
+                      {cart.map((item, index) => {
+                        return (
+                          <>
+                            <CartItemForViewCart item={item} key={index} />
+                          </>
+                        );
+                      })}
+                    </>
+                  )}
                 </div>
                 <div className="w-full h-[1px] bg-red-500 mt-4"></div>
 
@@ -57,11 +78,16 @@ const Cart = () => {
               </div>
               <div className="flex justify-between py-2 border-b border-gray-200 ">
                 <h3 className="font-semibold">Shipping</h3>
-                <h5 className="text-red-500 font-semibold">Calculate shipping</h5>
+                <h5 className="text-red-500 font-semibold">
+                  Calculate shipping
+                </h5>
               </div>
               <div className="flex justify-between py-2 border-b border-gray-200 ">
                 <h3 className="font-semibold">
-                  Tax <span className="font-normal text-sm">(estimated for japan)</span>{" "}
+                  Tax{" "}
+                  <span className="font-normal text-sm">
+                    (estimated for japan)
+                  </span>{" "}
                 </h3>
                 <h5 className="text-red-500 font-semibold">$453</h5>
               </div>

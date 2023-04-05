@@ -4,17 +4,14 @@ import { AiOutlineClose } from "react-icons/ai";
 import { SiVerizon } from "react-icons/si";
 
 const UserSettings = () => {
-  const [Password, setPassword] = useState({
-    oldPass: "",
-    newPass: "",
-    confPass: "",
-  });
-  const { checkPassword, IsPassword, changePassword } = useApi();
+
+  const { checkPassword, IsPassword, changePassword, ChangePassErrors, Password, setPassword } =
+    useApi();
 
   const handlePassword = (e) => {
     e.preventDefault();
     changePassword(Password);
-  }
+  };
 
   useEffect(() => {
     checkPassword(Password.oldPass);
@@ -29,22 +26,26 @@ const UserSettings = () => {
         <div className="px-10">
           <div className="flex flex-col items-start my-4">
             <div className="flex justify-center items-center space-x-3">
-              <label htmlFor="email">Old Password</label>
-              { Password.oldPass && <div>
-                {IsPassword === true ? (
-                  <span className="flex justify-center items-center space-x-1">
-                    {" "}
-                    <SiVerizon className="text-xl text-green-600" />  <span> Password
-                    matched </span>
-                  </span>
-                ) : (
-                  <span className="flex justify-center items-center space-x-1">
-                    {" "}
-                    <AiOutlineClose className="text-xl text-red-600" />  <span>Password
-                    doesn't match</span>
-                  </span>
-                )}
-              </div>}
+              <label htmlFor="email">
+                Old Password <span className="text-red-600">*</span>{" "}
+              </label>
+              {Password.oldPass && (
+                <div>
+                  {IsPassword === true ? (
+                    <span className="flex justify-center items-center space-x-1">
+                      {" "}
+                      <SiVerizon className="text-xl text-green-600" />{" "}
+                      <span> Password matched </span>
+                    </span>
+                  ) : (
+                    <span className="flex justify-center items-center space-x-1">
+                      {" "}
+                      <AiOutlineClose className="text-xl text-red-600" />{" "}
+                      <span>Password doesn't match</span>
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
             <input
               onChange={(e) =>
@@ -56,11 +57,23 @@ const UserSettings = () => {
               name="password"
               placeholder="Old Password"
               id="password"
-              required
+              // required
             />
+            <div>
+              {ChangePassErrors.old_password ? (
+                <span className="text-red-500 text-sm">
+                  {" "}
+                  {ChangePassErrors.old_password}{" "}
+                </span>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
           <div className="flex flex-col items-start my-4">
-            <label htmlFor="email">New Password</label>
+            <label htmlFor="email">
+              New Password <span className="text-red-600">*</span>{" "}
+            </label>
             <input
               onChange={(e) =>
                 setPassword({ ...Password, newPass: e.target.value })
@@ -71,11 +84,23 @@ const UserSettings = () => {
               name="new password"
               placeholder="New Password"
               id="new password"
-              required
+              // required
             />
+            <div>
+              {ChangePassErrors.new_password ? (
+                <span className="text-red-500 text-sm">
+                  {" "}
+                  {ChangePassErrors.new_password}{" "}
+                </span>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
           <div className="flex flex-col items-start my-4">
-            <label htmlFor="passsword">Confirm Password</label>
+            <label htmlFor="passsword">
+              Confirm Password <span className="text-red-600">*</span>{" "}
+            </label>
             <input
               onChange={(e) =>
                 setPassword({ ...Password, confPass: e.target.value })
@@ -86,11 +111,24 @@ const UserSettings = () => {
               name="confirm password"
               placeholder="Confirm Password"
               id="confirm password"
-              required
+              // required
             />
+            <div>
+              {ChangePassErrors.confirm_password ? (
+                <span className="text-red-500 text-sm">
+                  {" "}
+                  {ChangePassErrors.confirm_password}{" "}
+                </span>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
           <div className="w-full flex justify-center my-4">
-            <button onClick={handlePassword} className="w-full bg-red-500 text-white py-2 rounded-full hover:bg-red-600 transition-all duration-300">
+            <button
+              onClick={handlePassword}
+              className="w-full bg-red-500 text-white py-2 rounded-full hover:bg-red-600 transition-all duration-300"
+            >
               Submit
             </button>
           </div>

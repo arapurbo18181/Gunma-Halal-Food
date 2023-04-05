@@ -73,6 +73,13 @@ export const ApiProvider = ({ children }) => {
   const [IsReview, setIsReview] = useState(false);
   const [UserData, setUserData] = useState();
   const [IsPassword, setIsPassword] = useState();
+  const [ChangePassErrors, setChangePassErrors] = useState({});  
+  const [Password, setPassword] = useState({
+    oldPass: "",
+    newPass: "",
+    confPass: "",
+  });
+  const [SmallLoading, setSmallLoading] = useState(false);
   const navigate = useNavigate();
 
   const cards = [
@@ -222,7 +229,7 @@ export const ApiProvider = ({ children }) => {
         .post(`/api/user/wishlist/management/add-to-wishlist`, data)
         .then((res) => {
           console.log(res);
-          setIsCart(!IsCart)
+          setIsCart(!IsCart);
           // setWishlist();
         })
         .catch((error) => {
@@ -232,16 +239,17 @@ export const ApiProvider = ({ children }) => {
   };
 
   const removeFromWishlist = (item) => {
-      axios.get(`api/user/wishlist/management/delete-wishlist/${item.wishlist_id}`)
-        .then((res) => {
-          console.log(res);
-          setIsCart(!IsCart)
-          // setWishlist();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-  }
+    axios
+      .get(`api/user/wishlist/management/delete-wishlist/${item.wishlist_id}`)
+      .then((res) => {
+        console.log(res);
+        setIsCart(!IsCart);
+        // setWishlist();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const deleteFromCart = (item) => {
     axios.get("/sanctum/csrf-cookie").then((response) => {
@@ -258,15 +266,13 @@ export const ApiProvider = ({ children }) => {
   const increaseQuantity = (item) => {
     const data = {
       quantity: "plus",
-      id: item.id
+      id: item.id,
     };
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios
-        .post(`/api/user/cart/management/update-cart`, data)
-        .then((res) => {
-          // setGetCartData(res.data.carts);
-          setIsCart(!IsCart);
-        });
+      axios.post(`/api/user/cart/management/update-cart`, data).then((res) => {
+        // setGetCartData(res.data.carts);
+        setIsCart(!IsCart);
+      });
     });
   };
   const decreaseQuantity = (item) => {
@@ -275,10 +281,11 @@ export const ApiProvider = ({ children }) => {
     } else {
       const data = {
         quantity: "minus",
+        id: item.id,
       };
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
-          .post(`/api/user/cart/management/update-cart/${item.id}`, data)
+          .post(`/api/user/cart/management/update-cart`, data)
           .then((res) => {
             // setGetCartData(res.data.carts);
             setIsCart(!IsCart);
@@ -346,9 +353,11 @@ export const ApiProvider = ({ children }) => {
             Swal.fire("Success", res.data.success_message, "success");
           }
           if (res.data.status === 204) {
+            console.log(res)
             setValidationErrors(res.data.errors);
           }
           if (res.data.status === 205) {
+            console.log(res)
             console.log(res.data.error_message);
             setConfirmPassError(res.data.error_message);
             setIsConfirmError(true);
@@ -367,6 +376,7 @@ export const ApiProvider = ({ children }) => {
     };
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios.post(`/api/user/account/management/login`, data).then((res) => {
+        console.log(res)
         if (res.data.status === 200) {
           setUserEmail(res.data.email);
           navigate("/");
@@ -387,26 +397,39 @@ export const ApiProvider = ({ children }) => {
 
   const checkPassword = async (value) => {
     await axios
-    .get(`/api/user/account/management/check-password/${value}`)
-    .then((res) => {
-      console.log(res);
-      setIsPassword(res.data.message)
-    });
-  }
+      .get(`/api/user/account/management/check-password/${value}`)
+      .then((res) => {
+        console.log(res);
+        setIsPassword(res.data.message);
+      });
+  };
 
   const changePassword = async (value) => {
-    console.log(value)
+    console.log(value);
     const data = {
       old_password: value.oldPass,
       new_password: value.newPass,
       confirm_password: value.confPass,
-    }
+    };
     await axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/user/account/management/change-password`, data ).then((res) => {
-        console.log(res);
-      });
+      axios
+        .post(`/api/user/account/management/change-password`, data)
+        .then((res) => {
+          console.log(res);
+          if (res.data.status === 200) {
+            Swal.fire("success", res.data.message, "success")
+            setPassword({
+              oldPass: "",
+              newPass: "",
+              confPass: "",
+            })
+          }
+          if (res.data.status === 204) {
+            setChangePassErrors(res.data.errors);
+          }
+        });
     });
-  }
+  };
 
   useEffect(() => {
     const getdata = async () => {
@@ -422,7 +445,12 @@ export const ApiProvider = ({ children }) => {
             setUserData(res.data.user);
             setWishlist(
               res.data.wishlist.map((item) => {
-                return item.wishlist_product[0] = { ...item.wishlist_product[0], quantity: 0, discountedPrice: 0, wishlist_id: item.id };
+                return (item.wishlist_product[0] = {
+                  ...item.wishlist_product[0],
+                  quantity: 0,
+                  discountedPrice: 0,
+                  wishlist_id: item.id,
+                });
               })
             );
             // console.log(res);
@@ -447,6 +475,7 @@ export const ApiProvider = ({ children }) => {
             }
           }
         });
+        setSmallLoading(false);
     };
     getdata();
   }, [IsReview, IsCart, User]);
@@ -634,7 +663,12 @@ export const ApiProvider = ({ children }) => {
         UserData,
         checkPassword,
         IsPassword,
-        changePassword
+        changePassword,
+        ChangePassErrors,
+        Password, 
+        setPassword,
+        SmallLoading,
+        setSmallLoading
       }}
     >
       {children}
