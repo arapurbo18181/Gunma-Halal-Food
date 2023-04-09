@@ -4,15 +4,8 @@ import { useState } from "react";
 import { useApi } from "../context/ApiContext";
 
 const CartItem = ({item}) => {
-  const {LargeImage, SmallImage,setShowProduct} = useApi()
-
-  const minusProduct = () =>{
-
-  }
-
-  const plusAmount = (item) =>{
-
-  }
+  const {LargeImage, SmallImage,setShowProduct} = useApi();
+  // console.log(item)
 
   return (
     <div className="flex gap-x-4 py-2 lg:px-6 border-b border-gray-200 w-full font-light text-gray-500">
@@ -23,7 +16,7 @@ const CartItem = ({item}) => {
         <div className="w-full flex justify-between">
           <div className="flex flex-col justify-between mb-2">
             <Link
-              to={`/product/${item.slug}`}
+              to={`/${item.cat_slug}/${item.sub_cat_slug}/${item.slug}`}
               onClick={()=>setShowProduct(item)}
               className="text-base font-medium max-w-[240px] text-primary hover:underline"
             >

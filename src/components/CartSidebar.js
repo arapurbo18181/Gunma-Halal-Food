@@ -8,30 +8,7 @@ import { useApi } from "../context/ApiContext";
 const CartSidebar = () => {
   const { ToggleSidebar, setToggleSidebar,  TotalAmount, GetCartData, cart, setcart, TotalPrice } =
     useApi();
-
-
-  useEffect(() => {
-    // console.log(GetCartData);
-    const datas = GetCartData.map((item) => {
-      // console.log(item);
-      return {
-        id: item.id,
-        price: item.price,
-        product_id: item.product_id,
-        quantity: item.quantity,
-        user_id: item.user_id,
-        image: item.product[0].image,
-        name: item.product[0].name,
-        slug: item.product[0].slug,
-      };
-    });
-    // console.log(datas);
-    setcart(datas);
-  }, [GetCartData]);
-
-  // if (cart) {
-  //   console.log(cart);
-  // }
+    // console.log(cart)
 
   return (
     <>

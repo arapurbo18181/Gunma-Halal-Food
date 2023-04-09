@@ -32,6 +32,7 @@ const ViewProduct = () => {
     removeFromCart,
     decreaseFromCart,
     IsReview,
+    AllReviews
   } = useApi();
   const myRef = useRef();
 
@@ -66,7 +67,7 @@ const ViewProduct = () => {
       })
     };
     getdata();
-  }, [location]);
+  }, [location, AllReviews]);
 
   const handleMouse = (e) => {
     const p = e.clientX - myRef.current.offsetLeft;
@@ -126,6 +127,10 @@ const ViewProduct = () => {
     item.quantity = 0;
     setQuantity(0);
   };
+
+  if (Product) {
+    console.log(Product)
+  }
 
   return (
     <>

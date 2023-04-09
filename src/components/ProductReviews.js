@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const ProductReviews = ({ product }) => {
   const navigate = useNavigate()
-  const { Reviews, setReviews, IsReview, setIsReview, User } = useApi();
+  const { Reviews, setReviews, IsReview, setIsReview, User, AllReviews, setAllReviews } = useApi();
   console.log(product);
 
   const handleReview = (e) => {
@@ -24,6 +24,7 @@ const ProductReviews = ({ product }) => {
           .post(`/api/product/reviews/management/review`, data)
           .then((res) => {
             console.log(res);
+            setIsReview(!IsReview);
           });
       });
       console.log(Reviews);
@@ -31,7 +32,6 @@ const ProductReviews = ({ product }) => {
         rating: 0,
         review: "",
       });
-      setIsReview(!IsReview);
     }else{
       // alert("Plz Login first")
       Swal.fire({

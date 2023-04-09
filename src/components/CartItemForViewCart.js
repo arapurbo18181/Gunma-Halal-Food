@@ -18,6 +18,11 @@ const CartItemForViewCart = ({ item }) => {
     decreaseQuantity(item)
   }
 
+  const remove = () =>{
+    setSmallLoading(true)
+    deleteFromCart(item)
+  }
+
   return (
     <div className="flex h-full gap-x-4 py-2 lg:px-6 border-b border-gray-200 w-full font-light text-gray-500">
       <div className="w-full min-h-[150px] flex justify-between items-center gap-x-4">
@@ -35,7 +40,7 @@ const CartItemForViewCart = ({ item }) => {
             <div className="flex items-start justify-start">$ {item.price}</div>
 
             <div
-              onClick={() => deleteFromCart(item)}
+              onClick={remove}
               className="text-sm text-red-500 underline cursor-pointer"
             >
               Remove

@@ -80,6 +80,7 @@ export const ApiProvider = ({ children }) => {
     confPass: "",
   });
   const [SmallLoading, setSmallLoading] = useState(false);
+  const [AllReviews, setAllReviews] = useState();
   const navigate = useNavigate();
 
   const cards = [
@@ -343,6 +344,9 @@ export const ApiProvider = ({ children }) => {
       password: Register.password,
       confirm_password: Register.confirmPassword,
     };
+
+    console.log(Register)
+
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
         .post(`/api/user/account/management/registration`, data)
@@ -351,16 +355,34 @@ export const ApiProvider = ({ children }) => {
             console.log(res);
             navigate("/login");
             Swal.fire("Success", res.data.success_message, "success");
+            setRegister({
+              email: "",
+              name: "",
+              password: "",
+              confirmPassword: ""
+            });
           }
           if (res.data.status === 204) {
             console.log(res)
             setValidationErrors(res.data.errors);
+            setRegister({
+              email: "",
+              name: "",
+              password: "",
+              confirmPassword: ""
+            });
           }
           if (res.data.status === 205) {
             console.log(res)
             console.log(res.data.error_message);
             setConfirmPassError(res.data.error_message);
             setIsConfirmError(true);
+            setRegister({
+              email: "",
+              name: "",
+              password: "",
+              confirmPassword: ""
+            });
           }
         });
     });
@@ -374,6 +396,7 @@ export const ApiProvider = ({ children }) => {
       password: Login.password,
       cookie_id: GetCookies("cookies"),
     };
+    console.log(Login)
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios.post(`/api/user/account/management/login`, data).then((res) => {
         console.log(res)
@@ -382,14 +405,26 @@ export const ApiProvider = ({ children }) => {
           navigate("/");
           Swal.fire("Success", res.data.success_message, "success");
           setUser(true);
+          setLogin({
+            email: "",
+            password: ""
+          })
         }
         if (res.data.status === 401) {
           console.log(res.data.error_message);
           setLoginError(res.data.error_message);
           setIsLoginError(true);
+          setLogin({
+            email: "",
+            password: ""
+          })
         }
-        if (res.data.status === 204) {
+        if (res.data.status === 422) {
           setLoginValidationErrors(res.data.errors);
+          setLogin({
+            email: "",
+            password: ""
+          })
         }
       });
     });
@@ -453,7 +488,7 @@ export const ApiProvider = ({ children }) => {
                 });
               })
             );
-            // console.log(res);
+            // console.log(res.data.user_cart);
             const datas = res.data.user_cart.map((item) => {
               return {
                 id: item.id,
@@ -464,6 +499,8 @@ export const ApiProvider = ({ children }) => {
                 image: item.product[0].image,
                 name: item.product[0].name,
                 slug: item.product[0].slug,
+                sub_cat_slug: item.product[0].sub_category.slug,
+                cat_slug: item.product[0].sub_category.main_category.slug
               };
             });
             setcart(datas);
@@ -473,6 +510,7 @@ export const ApiProvider = ({ children }) => {
             } else {
               setUser(false);
             }
+            setAllReviews(!AllReviews);
           }
         });
         setSmallLoading(false);
@@ -668,7 +706,9 @@ export const ApiProvider = ({ children }) => {
         Password, 
         setPassword,
         SmallLoading,
-        setSmallLoading
+        setSmallLoading,
+        AllReviews,
+        setAllReviews
       }}
     >
       {children}
