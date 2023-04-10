@@ -158,7 +158,7 @@ const SubCategoryProducts = ({ item }) => {
                   animate="visible"
                 >
                   <img
-                    src={`http://localhost:8000/images/product_images/large/${item.image}`}
+                    src={`${LargeImage}/${item.image}`}
                     alt=""
                     className={`w-28 h-28 rounded-full z-50`}
                   />

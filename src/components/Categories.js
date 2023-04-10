@@ -6,7 +6,7 @@ import CateBanner from "../images/cat-banner.webp";
 
 const Categories = () => {
   const { setItemCategory, categories, CatImage, setCatImage } = useCategory();
-  const {CategoryApi, LargeImage, setCatname} = useApi()
+  const {CategoryApi, LargeImage, setCatname, CategoryImage} = useApi()
 
   return (
     <div className="container">
@@ -33,7 +33,7 @@ const Categories = () => {
             >
               <div className="overflow-hidden w-full flex justify-center items-center">
                 <img
-                  src={`${LargeImage}/${item.image}`}
+                  src={`${CategoryImage}/${item.image}`}
                   alt={item.name}
                   className="hover:scale-110 transition-all duration-500 w-6/12 md:w-8/12 xl:w-10/12"
                 />

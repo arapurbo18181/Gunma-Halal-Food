@@ -22,6 +22,7 @@ const SubCategory = () => {
     Catname,
     setBreadCrumbs,
     setSubCategorySlug,
+    CategoryImage
   } = useApi();
   const navigate = useNavigate()
 
@@ -34,8 +35,8 @@ const SubCategory = () => {
     setLoader(true);
     const getdata = async () => {
       await axios.get(`/api/${params.id}`).then((res) => {
-        console.log(res);
         if (res.data.status === 200) {
+          console.log(res.data);
           setCategory(res.data.categories);
           setSubCategory(res.data.categories.sub_category);
           setLoader(false);
@@ -63,10 +64,10 @@ const SubCategory = () => {
                 <CategorySidebar />
               </div>
               <div className="px-2 w-full">
-                <div className="h-[30vh] overflow-hidden ">
+                <div className="h-[30vh] overflow-hidden">
                   <img
-                    className="hover:scale-110 transition-all duration-300 object-cover"
-                    src={CatImage}
+                    className="hover:scale-110 transition-all duration-300"
+                    src={`${CategoryImage}/${Category.image}`}
                     alt=""
                   />
                 </div>
@@ -88,7 +89,7 @@ const SubCategory = () => {
                         <div className="overflow-hidden">
                           <img
                             className="w-full hover:scale-125 transition-all duration-500"
-                            src={item.image}
+                            src={`${CategoryImage}/${item.image}`}
                             alt={item.name}
                           />
                         </div>

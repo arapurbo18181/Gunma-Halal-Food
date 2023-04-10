@@ -20,6 +20,7 @@ const ProductsOfSubCategory = () => {
   const [SubCateName, setSubCateName] = useState();
   const [SubCateSlug, setSubCateSlug] = useState();
   const [SubCategoryProduct, setSubCategoryProduct] = useState([]);
+  const [BannerImage, setBannerImage] = useState();
   const { ProductsFromCategory, SubCatImage } = useCategory();
   const {
     SubCatProductsApi,
@@ -29,6 +30,7 @@ const ProductsOfSubCategory = () => {
     Catname,
     CategorySlug,
     subCategorySlug,
+    CategoryImage
   } = useApi();
   const params = useParams();
   // console.log(SubProducts);
@@ -49,6 +51,7 @@ const ProductsOfSubCategory = () => {
       await axios.get(`/api${location.pathname}`).then((res) => {
         if (res.data.status === 200) {
           console.log(res);
+          setBannerImage(res.data.products[0].sub_category.image);
           setCateName(res.data.products[0].sub_category.main_category.name);
           setSubCateName(res.data.products[0].sub_category.name);
           setCateSlug(res.data.products[0].sub_category.main_category.slug);
@@ -92,7 +95,7 @@ const ProductsOfSubCategory = () => {
                 <div className="h-[30vh] overflow-hidden ">
                   <img
                     className="hover:scale-110 transition-all duration-300 object-cover"
-                    src={SubCatImage}
+                    src={`${CategoryImage}/${BannerImage}`}
                     alt=""
                   />
                 </div>
