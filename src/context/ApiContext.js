@@ -19,11 +19,15 @@ export const ApiProvider = ({ children }) => {
   const [SubCatname, setSubCatname] = useState();
   const [Catname, setCatname] = useState();
   const [BreadCrumbs, setBreadCrumbs] = useState([]);
+  // ! banner_images
+  // ! category_image/large
+  const [SliderImageRoute] = useState("http://gunma.myesdev.xyz/images/banner_images")
+  const [CategoryImage] = useState("http://gunma.myesdev.xyz/images/category_image/large")
   const [LargeImage] = useState(
-    "http://localhost:8000/images/product_images/large"
+    "http://gunma.myesdev.xyz/images/product_images/large"
   );
   const [SmallImage] = useState(
-    "http://localhost:8000/images/product_images/small"
+    "http://gunma.myesdev.xyz/images/product_images/small"
   );
   const [AllProducts, setAllProducts] = useState([]);
   const [SubProducts, setSubProducts] = useState([]);
@@ -81,6 +85,8 @@ export const ApiProvider = ({ children }) => {
   });
   const [SmallLoading, setSmallLoading] = useState(false);
   const [AllReviews, setAllReviews] = useState();
+  const [SliderImages, setSliderImages] = useState([]);
+  const [SubBanner, setSubBanner] = useState();
   const navigate = useNavigate();
 
   const cards = [
@@ -475,6 +481,8 @@ export const ApiProvider = ({ children }) => {
           console.log(res);
           if (res.data.status === 200) {
             // console.log(IsCart);
+            setSubBanner(res.data.subbanner);
+            setSliderImages(res.data.slider);
             setCategoryApi(res.data.categories);
             setProductsApi(res.data.products);
             setUserData(res.data.user);
@@ -708,7 +716,13 @@ export const ApiProvider = ({ children }) => {
         SmallLoading,
         setSmallLoading,
         AllReviews,
-        setAllReviews
+        setAllReviews,
+        SliderImages, 
+        setSliderImages,
+        SubBanner,
+        setSubBanner,
+        SliderImageRoute,
+        CategoryImage
       }}
     >
       {children}

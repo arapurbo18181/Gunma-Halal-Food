@@ -29,13 +29,13 @@ const Checkout = () => {
     <>
       <BreadCrumbs name={"Checkout"} url={"checkout"} />
 
-      <section className="w-[100%] h-[100%] flex justify-center items-center px-4">
+      <section className="w-[100%] h-[100%] flex justify-center items-start px-4">
         <form className="flex-[2] w-full h-full">
           <div className="flex justify-center my-5 text-4xl font-bold">
             <h1>Checkout</h1>
           </div>
           <div className="flex flex-col justify-center items-center">
-            <div className="flex justify-center items-center w-full">
+            <div className="flex flex-col justify-center items-center w-full">
               <div className="px-10">
                 <div className="flex justify-center my-5 text-2xl font-bold">
                   <h1>Billing Address</h1>
@@ -254,7 +254,7 @@ const Checkout = () => {
             </div>
           </div>
         </form>
-        <div className="flex flex-col flex-1 border border-red-500 rounded-lg h-[400px] w-full px-10 py-5 mt-10">
+        <div className="flex flex-col flex-1 border border-red-500 rounded-lg h-[420px] w-full px-10 py-5 mt-10">
           <div className="w-full text-center">
             <h2 className="text-xl font-bold"> Cart Totals </h2>
           </div>

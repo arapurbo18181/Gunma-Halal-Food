@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider1 from "../images/slider1.png";
 import Slider2 from "../images/slider2.png";
+import { useApi } from "../context/ApiContext";
 
 const sliderImage = [
   {
@@ -65,19 +66,24 @@ const Hero = () => {
 
   // console.log(WidthForSlider);
 
+  const {SliderImages, SliderImageRoute} = useApi();
+
   return (
-    <section className={`w-[98.9vw] xl:w-[84.95vw]`}>
+    <>
+
+    { Slider ? <section className={`w-[98.9vw] xl:w-[84.95vw]`}>
       {/* //! Main Slider */}
       <Slider {...settings}>
-        {sliderImage.map((slide, index) => {
+        {SliderImages.map((slide, index) => {
           return (
             <div key={index} className="w-full h-[25vh] md:h-[40vh] lg:h-[50vh] xl:h-[60vh]">
-                <img className="h-full w-full object-cover" src={slide.img} />
+                <img className="h-full w-full " src={`${SliderImageRoute}/${slide.image}`} />
             </div>
           );
         })}
       </Slider>
-    </section>
+    </section> : ""}
+    </>
   );
 };
 
