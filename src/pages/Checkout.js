@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useApi } from "../context/ApiContext";
 
 const Checkout = () => {
+  const [IsChecked, setIsChecked] = useState(false);
   const { TotalPrice } = useApi();
   // const handleSubmit = (e) =>{
   //   e.preventDefault();
@@ -25,11 +26,20 @@ const Checkout = () => {
   //   })
   // }
 
+  const handleCheck = (value) => {
+    if (value) {
+      if (IsChecked) {
+        console.log(value);
+      }
+    }
+    setIsChecked(!IsChecked);
+  };
+
   return (
     <>
       <BreadCrumbs name={"Checkout"} url={"checkout"} />
 
-      <section className="w-[100%] h-[100%] flex justify-center items-start px-4">
+      <section className="w-[100%] h-[100%] flex flex-col md:flex-row justify-center items-start px-4">
         <form className="flex-[2] w-full h-full">
           <div className="flex justify-center my-5 text-4xl font-bold">
             <h1>Checkout</h1>
@@ -139,7 +149,16 @@ const Checkout = () => {
                   </div>
                 </div>
               </div>
-              <div className="px-10">
+              <div>
+                <input
+                  type="checkbox"
+                  value={"first"}
+                  id=""
+                  onChange={() => handleCheck("first")}
+                />{" "}
+                <span> Separate Shipping Address </span>
+              </div>
+              { IsChecked ? "" : <div className="px-10">
                 <div className="flex justify-center my-5 text-2xl font-bold">
                   <h1>Shipping Address</h1>
                 </div>
@@ -241,7 +260,7 @@ const Checkout = () => {
                     />
                   </div>
                 </div>
-              </div>
+              </div>}
             </div>
 
             <div className="w-fit flex text-sm sm:text-xl justify-center my-4">
@@ -285,9 +304,9 @@ const Checkout = () => {
               <span>Stripe</span>
             </div>
             <div>
-              <input type="radio" name="payment" id="" />{" "}<span>Coin</span>
+              <input type="radio" name="payment" id="" /> <span>Coin</span>
             </div>
-            <div>     
+            <div>
               <input type="radio" name="payment" id="" />{" "}
               <span>Cash On Delivery</span>
             </div>

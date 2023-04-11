@@ -59,6 +59,7 @@ const SubCategoryProducts = ({ item }) => {
     if (AllProducts) {
       AllProducts.map((elem) => {
         if (elem.id === id) {
+          console.log(id);
           elem.quantity = elem.quantity + 1;
           setQuantity(elem.quantity);
         }
@@ -77,9 +78,11 @@ const SubCategoryProducts = ({ item }) => {
           }
         }
       });
-    } else {
+    } 
+    if (AllProducts) {
       AllProducts.map((elem) => {
         if (elem.id === id) {
+          console.log(id);
           if (elem.quantity === 0) {
           } else {
             elem.quantity = elem.quantity - 1;

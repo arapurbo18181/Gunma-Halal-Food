@@ -8,16 +8,20 @@ const SearchProducts = ({ item }) => {
     <>
       <div className="flex justify-start items-start space-x-5">
         <div className="">
-          <img className="rounded-md w-full object-cover" src={`${SmallImage}/${item.image}`} alt={item.image} />
+          <img
+            className="rounded-md w-full object-cover"
+            src={`${SmallImage}/${item.image}`}
+            alt={item.image}
+          />
         </div>
         <div>
           <Link
             className="text-[0.8rem] font-bold"
-            to={`/product/${item.slug}`}
-            onClick={()=>{
-                setShowProduct(item)
-                setSearch("");
-                }}
+            to={`/${item.sub_category.main_category.slug}/${item.sub_category.slug}/${item.slug}`}
+            onClick={() => {
+              setShowProduct(item);
+              setSearch("");
+            }}
           >
             {" "}
             {item.name}{" "}
