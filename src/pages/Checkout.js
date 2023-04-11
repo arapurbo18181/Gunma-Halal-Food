@@ -158,7 +158,7 @@ const Checkout = () => {
                 />{" "}
                 <span> Separate Shipping Address </span>
               </div>
-              { IsChecked ? "" : <div className="px-10">
+              { IsChecked ? <div className="px-10">
                 <div className="flex justify-center my-5 text-2xl font-bold">
                   <h1>Shipping Address</h1>
                 </div>
@@ -260,7 +260,7 @@ const Checkout = () => {
                     />
                   </div>
                 </div>
-              </div>}
+              </div> : ""}
             </div>
 
             <div className="w-fit flex text-sm sm:text-xl justify-center my-4">
