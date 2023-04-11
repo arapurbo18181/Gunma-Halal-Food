@@ -5,6 +5,7 @@ const SetCookies = (myCookie, cookie)=> {
         expires: 365,
         secure: true,
         sameSite: "Strict",
+        // domain: "https://gunma.softtech-it.org/",
         path: "/"
     });
 };

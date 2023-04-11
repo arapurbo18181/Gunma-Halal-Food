@@ -141,6 +141,7 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     if (GetCookies("cookies")) {
+      console.log(GetCookies("cookies"));
     } else {
       const characters =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -213,7 +214,7 @@ export const ApiProvider = ({ children }) => {
           setIsCart(!IsCart);
         })
         .catch((error) => {
-          console.log(error.response);
+          // console.log(error.response);
         });
     });
   };

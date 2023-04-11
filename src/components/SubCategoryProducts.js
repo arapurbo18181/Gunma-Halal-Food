@@ -29,6 +29,7 @@ const SubCategoryProducts = ({ item }) => {
     setCountToAddToCart,
     CountProductToAdd,
     setCountProductToAdd,
+    SubCategoryProduct
   } = useApi();
   const myRef = useRef();
   const [Quantity, setQuantity] = useState(0);
@@ -48,8 +49,8 @@ const SubCategoryProducts = ({ item }) => {
   // setCountProductToAdd(item.id)
 
   const CountToAdd = (id) => {
-    if (SubCatProIsApi) {
-      SubProducts.map((elem) => {
+    if (SubCategoryProduct) {
+      SubCategoryProduct.map((elem) => {
         if (elem.id === id) {
           elem.quantity = elem.quantity + 1;
           setQuantity(elem.quantity);
@@ -68,8 +69,8 @@ const SubCategoryProducts = ({ item }) => {
   };
 
   const CountToRemove = (id) => {
-    if (SubProducts) {
-      SubProducts.map((elem) => {
+    if (SubCategoryProduct) {
+      SubCategoryProduct.map((elem) => {
         if (elem.id === id) {
           if (elem.quantity === 0) {
           } else {
