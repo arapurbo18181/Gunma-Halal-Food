@@ -77,7 +77,7 @@ const Hero = () => {
         {SliderImages.map((slide, index) => {
           return (
             <div key={index} className="w-full h-[25vh] md:h-[40vh] lg:h-[50vh] xl:h-[60vh]">
-                <img className="h-full w-full " src={`${SliderImageRoute}/${slide.image}`} />
+                <img className="h-full w-full" src={`${SliderImageRoute}/${slide.image}`} />
             </div>
           );
         })}

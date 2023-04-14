@@ -8,23 +8,31 @@ import { useApi } from "../context/ApiContext";
 
 const Checkout = () => {
   const [IsChecked, setIsChecked] = useState(false);
-  const { TotalPrice } = useApi();
-  // const handleSubmit = (e) =>{
-  //   e.preventDefault();
-  //   addProductsForOrder()
-  //   setInfo({...Info ,totalAmount: Total });
-  //   deleteAllDocsFromCart()
-  //   setInfo({
-  //     myName: "",
-  //     email: "",
-  //     address: "",
-  //     phoneNumber: 0,
-  //     city: "",
-  //     district: "",
-  //     postCode: 0,
-  //     totalAmount: 0
-  //   })
-  // }
+  const {
+    TotalPrice,
+    BillingAddress,
+    setBillingAddress,
+    ShippingAddress,
+    setShippingAddress,
+    orderProduct
+  } = useApi();
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+      // orderProduct()
+      console.log(BillingAddress);
+    setBillingAddress({
+      deliveryDate: "",
+      firstname: "",
+      lastname: "",
+      email: "",
+      address: "",
+      phone: 0,
+      city: "",
+      district: "",
+      postCode: 0,
+      totalAmount: 0
+    })
+  }
 
   const handleCheck = (value) => {
     if (value) {
@@ -50,12 +58,24 @@ const Checkout = () => {
                 <div className="flex justify-center my-5 text-2xl font-bold">
                   <h1>Billing Address</h1>
                 </div>
+                  <div className="flex flex-col items-start my-4 w-full">
+                    <label htmlFor="email">Delivery Date</label>
+                    <input
+                      onChange={e=>setBillingAddress({...BillingAddress ,deliveryDate:e.target.value})}
+                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                      type="date"
+                      name="name"
+                      placeholder="Enter Your Name"
+                      id="name"
+                      required
+                    />
+                  </div>
                 <div className="flex justify-start items-center">
                   <div className="flex flex-col items-start my-4 w-full">
-                    <label htmlFor="email">Name</label>
+                    <label htmlFor="email">First Name</label>
                     <input
-                      // onChange={e=>setInfo({...Info ,myName:e.target.value})}
-                      // value={Info.myName}
+                      onChange={e=>setBillingAddress({...BillingAddress ,firstname:e.target.value})}
+                      value={BillingAddress.firstname}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                       type="text"
                       name="name"
@@ -65,10 +85,24 @@ const Checkout = () => {
                     />
                   </div>
                   <div className="flex flex-col items-start my-4 w-full ml-4">
+                    <label htmlFor="email">Last Name</label>
+                    <input
+                      onChange={e=>setBillingAddress({...BillingAddress ,lastname:e.target.value})}
+                      value={BillingAddress.lastname}
+                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                      type="text"
+                      name="name"
+                      placeholder="Enter Your Name"
+                      id="name"
+                      required
+                    />
+                  </div>
+                </div>
+                  <div className="flex flex-col items-start my-4 w-full">
                     <label htmlFor="email">Email</label>
                     <input
-                      // onChange={e=>setInfo({...Info ,email:e.target.value})}
-                      // value={Info.email}
+                      onChange={e=>setBillingAddress({...BillingAddress ,email:e.target.value})}
+                      value={BillingAddress.email}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                       type="email"
                       name="email"
@@ -77,12 +111,11 @@ const Checkout = () => {
                       required
                     />
                   </div>
-                </div>
                 <div className="flex flex-col items-start my-4">
                   <label htmlFor="address">Address</label>
                   <textarea
-                    // onChange={e=>setInfo({...Info ,address:e.target.value})}
-                    // value={Info.address}
+                      onChange={e=>setBillingAddress({...BillingAddress ,address:e.target.value})}
+                      value={BillingAddress.address}
                     className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                     type="text"
                     name="address"
@@ -96,8 +129,8 @@ const Checkout = () => {
                   <div className="flex flex-col items-start my-4 w-full">
                     <label htmlFor="phone">Phone</label>
                     <input
-                      // onChange={e=>setInfo({...Info ,phoneNumber: parseInt(e.target.value)})}
-                      // value={Info.phoneNumber}
+                      onChange={e=>setBillingAddress({...BillingAddress ,phone:e.target.value})}
+                      value={BillingAddress.phone}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                       type="number"
                       name="phone"
@@ -109,8 +142,8 @@ const Checkout = () => {
                   <div className="flex flex-col items-start my-4 w-full ml-4">
                     <label htmlFor="city">City</label>
                     <input
-                      // onChange={e=>setInfo({...Info ,city:e.target.value})}
-                      // value={Info.city}
+                      onChange={e=>setBillingAddress({...BillingAddress ,city:e.target.value})}
+                      value={BillingAddress.city}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                       type="text"
                       name="city"
@@ -124,8 +157,8 @@ const Checkout = () => {
                   <div className="flex flex-col items-start my-4 w-full">
                     <label htmlFor="district">District</label>
                     <input
-                      // onChange={e=>setInfo({...Info ,district:e.target.value})}
-                      // value={Info.district}
+                      onChange={e=>setBillingAddress({...BillingAddress ,district:e.target.value})}
+                      value={BillingAddress.district}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                       type="text"
                       name="district"
@@ -137,8 +170,8 @@ const Checkout = () => {
                   <div className="flex flex-col items-start my-4 w-full ml-4">
                     <label htmlFor="postcode">Post Code</label>
                     <input
-                      // onChange={e=>setInfo({...Info ,postCode:parseInt(e.target.value)})}
-                      // value={Info.postCode}
+                      onChange={e=>setBillingAddress({...BillingAddress ,postCode:e.target.value})}
+                      value={BillingAddress.postCode}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                       type="number"
                       name="postcode"
@@ -158,109 +191,138 @@ const Checkout = () => {
                 />{" "}
                 <span> Separate Shipping Address </span>
               </div>
-              { IsChecked ? <div className="px-10">
-                <div className="flex justify-center my-5 text-2xl font-bold">
-                  <h1>Shipping Address</h1>
-                </div>
-                <div className="flex justify-start items-center">
+              {IsChecked ? (
+                <div className="px-10">
+                  <div className="flex justify-center my-5 text-2xl font-bold">
+                    <h1>Shipping Address</h1>
+                  </div>
                   <div className="flex flex-col items-start my-4 w-full">
-                    <label htmlFor="email">Name</label>
+                    <label htmlFor="email">Delivery Date</label>
                     <input
-                      // onChange={e=>setInfo({...Info ,myName:e.target.value})}
-                      // value={Info.myName}
+                      onChange={e=>setShippingAddress({...ShippingAddress ,deliveryDate:e.target.value})}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
-                      type="text"
+                      type="date"
                       name="name"
                       placeholder="Enter Your Name"
                       id="name"
                       required
                     />
                   </div>
-                  <div className="flex flex-col items-start my-4 w-full ml-4">
-                    <label htmlFor="email">Email</label>
-                    <input
-                      // onChange={e=>setInfo({...Info ,email:e.target.value})}
-                      // value={Info.email}
+                  <div className="flex justify-start items-center">
+                    <div className="flex flex-col items-start my-4 w-full">
+                      <label htmlFor="email">First Name</label>
+                      <input
+                      onChange={e=>setShippingAddress({...ShippingAddress ,firstname:e.target.value})}
+                      value={ShippingAddress.firstname}
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        type="text"
+                        name="name"
+                        placeholder="Enter Your Name"
+                        id="name"
+                        required
+                      />
+                    </div>
+                    <div className="flex flex-col items-start my-4 w-full ml-4">
+                      <label htmlFor="email">Last Name</label>
+                      <input
+                      onChange={e=>setShippingAddress({...ShippingAddress ,lastname:e.target.value})}
+                      value={ShippingAddress.lastname}
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        type="text"
+                        name="name"
+                        placeholder="Enter Your Name"
+                        id="name"
+                        required
+                      />
+                    </div>
+                  </div>
+                    <div className="flex flex-col items-start my-4 w-full">
+                      <label htmlFor="email">Email</label>
+                      <input
+                      onChange={e=>setShippingAddress({...ShippingAddress ,email:e.target.value})}
+                      value={ShippingAddress.email}
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        type="email"
+                        name="email"
+                        placeholder="Enter Your Email"
+                        id="email"
+                        required
+                      />
+                    </div>
+                  <div className="flex flex-col items-start my-4">
+                    <label htmlFor="address">Address</label>
+                    <textarea
+                      onChange={e=>setShippingAddress({...ShippingAddress ,address:e.target.value})}
+                      value={ShippingAddress.address}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
-                      type="email"
-                      name="email"
-                      placeholder="Enter Your Email"
-                      id="email"
+                      type="text"
+                      name="address"
+                      placeholder="Enter Your Address"
+                      id="address"
                       required
                     />
                   </div>
-                </div>
-                <div className="flex flex-col items-start my-4">
-                  <label htmlFor="address">Address</label>
-                  <textarea
-                    // onChange={e=>setInfo({...Info ,address:e.target.value})}
-                    // value={Info.address}
-                    className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
-                    type="text"
-                    name="address"
-                    placeholder="Enter Your Address"
-                    id="address"
-                    required
-                  />
-                </div>
 
-                <div className="flex justify-start items-center">
-                  <div className="flex flex-col items-start my-4 w-full">
-                    <label htmlFor="phone">Phone</label>
-                    <input
-                      // onChange={e=>setInfo({...Info ,phoneNumber: parseInt(e.target.value)})}
-                      // value={Info.phoneNumber}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
-                      type="number"
-                      name="phone"
-                      placeholder="Enter Your phone number"
-                      id="phone"
-                      required
-                    />
+                  <div className="flex justify-start items-center">
+                    <div className="flex flex-col items-start my-4 w-full">
+                      <label htmlFor="phone">Phone</label>
+                      <input
+                      onChange={e=>setShippingAddress({...ShippingAddress ,phone:e.target.value})}
+                      value={ShippingAddress.phone}
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        type="number"
+                        name="phone"
+                        placeholder="Enter Your phone number"
+                        id="phone"
+                        required
+                      />
+                    </div>
+                    <div className="flex flex-col items-start my-4 w-full ml-4">
+                      <label htmlFor="city">City</label>
+                      <input
+                      onChange={e=>setShippingAddress({...ShippingAddress ,city:e.target.value})}
+                      value={ShippingAddress.city}
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        type="text"
+                        name="city"
+                        placeholder="Enter Your city"
+                        id="city"
+                        required
+                      />
+                    </div>
                   </div>
-                  <div className="flex flex-col items-start my-4 w-full ml-4">
-                    <label htmlFor="city">City</label>
-                    <input
-                      // onChange={e=>setInfo({...Info ,city:e.target.value})}
-                      // value={Info.city}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
-                      type="text"
-                      name="city"
-                      placeholder="Enter Your city"
-                      id="city"
-                      required
-                    />
+                  <div className="flex justify-start items-center">
+                    <div className="flex flex-col items-start my-4 w-full">
+                      <label htmlFor="district">District</label>
+                      <input
+                      onChange={e=>setShippingAddress({...ShippingAddress ,district:e.target.value})}
+                      value={ShippingAddress.district}
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        type="text"
+                        name="district"
+                        placeholder="Enter Your district"
+                        id="district"
+                        required
+                      />
+                    </div>
+                    <div className="flex flex-col items-start my-4 w-full ml-4">
+                      <label htmlFor="postcode">Post Code</label>
+                      <input
+                      onChange={e=>setShippingAddress({...ShippingAddress ,postCode:e.target.value})}
+                      value={ShippingAddress.postCode}
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        type="number"
+                        name="postcode"
+                        placeholder="Enter Your postcode"
+                        id="postcode"
+                        required
+                      />
+                    </div>
                   </div>
                 </div>
-                <div className="flex justify-start items-center">
-                  <div className="flex flex-col items-start my-4 w-full">
-                    <label htmlFor="district">District</label>
-                    <input
-                      // onChange={e=>setInfo({...Info ,district:e.target.value})}
-                      // value={Info.district}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
-                      type="text"
-                      name="district"
-                      placeholder="Enter Your district"
-                      id="district"
-                      required
-                    />
-                  </div>
-                  <div className="flex flex-col items-start my-4 w-full ml-4">
-                    <label htmlFor="postcode">Post Code</label>
-                    <input
-                      // onChange={e=>setInfo({...Info ,postCode:parseInt(e.target.value)})}
-                      // value={Info.postCode}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
-                      type="number"
-                      name="postcode"
-                      placeholder="Enter Your postcode"
-                      id="postcode"
-                      required
-                    />
-                  </div>
-                </div>
-              </div> : ""}
+              ) : (
+                ""
+              )}
             </div>
 
             <div className="w-fit flex text-sm sm:text-xl justify-center my-4">
@@ -312,11 +374,9 @@ const Checkout = () => {
             </div>
           </div>
           <div className="w-full my-10">
-            <Link to={"/checkout"}>
-              <button className="bg-red-500 text-white w-full py-2 border border-red-500 hover:bg-transparent hover:text-black transition-all duration-500">
+              <button onClick={handleSubmit} className="bg-red-500 text-white w-full py-2 border border-red-500 hover:bg-transparent hover:text-black transition-all duration-500">
                 Checkout
               </button>
-            </Link>
           </div>
         </div>
       </section>

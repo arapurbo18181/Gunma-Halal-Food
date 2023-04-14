@@ -19,8 +19,6 @@ export const ApiProvider = ({ children }) => {
   const [SubCatname, setSubCatname] = useState();
   const [Catname, setCatname] = useState();
   const [BreadCrumbs, setBreadCrumbs] = useState([]);
-  // ! banner_images
-  // ! category_image/large
   const [SliderImageRoute] = useState("http://gunma.myesdev.xyz/images/banner_images")
   const [CategoryImage] = useState("http://gunma.myesdev.xyz/images/category_image/large")
   const [LargeImage] = useState(
@@ -60,7 +58,6 @@ export const ApiProvider = ({ children }) => {
   const [UserId, setUserId] = useState();
   const [CategorySlug, setCategorySlug] = useState();
   const [SubCategorySlug, setSubCategorySlug] = useState();
-
   const [Toggle, setToggle] = useState(false);
   const [ToggleCategory, setToggleCategory] = useState(false);
   const [ItemCategory, setItemCategory] = useState([]);
@@ -87,6 +84,28 @@ export const ApiProvider = ({ children }) => {
   const [AllReviews, setAllReviews] = useState();
   const [SliderImages, setSliderImages] = useState([]);
   const [SubBanner, setSubBanner] = useState();
+  const [BillingAddress, setBillingAddress] = useState({
+    deliveryDate: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    address: "",
+    phone: 0,
+    city: "",
+    district: "",
+    postCode: 0,
+  })
+  const [ShippingAddress, setShippingAddress] = useState({
+    deliveryDate: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    address: "",
+    phone: 0,
+    city: "",
+    district: "",
+    postCode: 0,
+  })
   const navigate = useNavigate();
 
   const cards = [
@@ -723,7 +742,11 @@ export const ApiProvider = ({ children }) => {
         SubBanner,
         setSubBanner,
         SliderImageRoute,
-        CategoryImage
+        CategoryImage,
+        BillingAddress, 
+        setBillingAddress, 
+        ShippingAddress, 
+        setShippingAddress
       }}
     >
       {children}
