@@ -8,9 +8,10 @@ import { IoMdAdd, IoMdClose, IoMdRemove } from "react-icons/io";
 import { UseScrollPositionX } from "./Hooks/useScrollPositionX";
 import { useProduct } from "../context/ProductContext";
 import { useApi } from "../context/ApiContext";
+import Swal from "sweetalert2";
 
 const SubCategoryProducts = ({ item }) => {
-  // console.log(item)
+  // console.log(item);
   const { MyRef, setMyRef, myRefForFlyToCart } = useProduct();
   const {
     BreadCrumbs,
@@ -29,8 +30,11 @@ const SubCategoryProducts = ({ item }) => {
     setCountToAddToCart,
     CountProductToAdd,
     setCountProductToAdd,
-    SubCategoryProduct
+    SubCategoryProduct,
+    CuttingSystem,
+    setCuttingSystem,
   } = useApi();
+
   const myRef = useRef();
   const [Quantity, setQuantity] = useState(0);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
@@ -44,7 +48,6 @@ const SubCategoryProducts = ({ item }) => {
   //     return {...item, amount:0}
   //   }));
   // }, [])
-
 
   // setCountProductToAdd(item.id)
 
@@ -79,7 +82,7 @@ const SubCategoryProducts = ({ item }) => {
           }
         }
       });
-    } 
+    }
     if (AllProducts) {
       AllProducts.map((elem) => {
         if (elem.id === id) {
@@ -95,20 +98,60 @@ const SubCategoryProducts = ({ item }) => {
   };
 
   const handleClick = async (item) => {
+    if (item.cutting_system === "Yes") {
+      await Swal.fire({
+        title: "Do You Want to Cut The Product?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Success!", "Cutting System in implemented", "success");
+          setCount(item.id);
+          const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 90;
+          const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 35;
+          setAnimationCoodinate({ x: setX, y: setY });
+          setIsAddedToCart(true);
+          setTimeout(() => {
+            setCuttingSystem("yes");
+            addToCart(item);
+            item.quantity = 0;
+            setQuantity(0);
+            setIsAddedToCart(false);
+          }, 2000);
+        }else{
+          setCount(item.id);
+          const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 90;
+          const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 35;
+          setAnimationCoodinate({ x: setX, y: setY });
+          setIsAddedToCart(true);
+          setTimeout(() => {
+            addToCart(item);
+            item.quantity = 0;
+            setQuantity(0);
+            setIsAddedToCart(false);
+          }, 2000);
+        }
+      });
+    }else{
+      setCount(item.id);
+      const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 90;
+      const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 35;
+      setAnimationCoodinate({ x: setX, y: setY });
+      setIsAddedToCart(true);
+      setTimeout(() => {
+        addToCart(item);
+        item.quantity = 0;
+        setQuantity(0);
+        setIsAddedToCart(false);
+      }, 2000);
+    }
+
     // setMyRef(true);
-    setCount(item.id);
-    const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 90;
-    const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 35;
-    setAnimationCoodinate({ x: setX, y: setY });
-    // console.log(CartCoordinate, AnimationCoodinate, setX, setY);
-    setIsAddedToCart(true);
-    setTimeout(() => {
-      addToCart(item);
-      item.quantity = 0;
-      setQuantity(0);
-      setIsAddedToCart(false);
-      // setMyRef(false);
-    }, 2000);
+
   };
 
   const imageVariants = {
@@ -134,7 +177,7 @@ const SubCategoryProducts = ({ item }) => {
 
   return (
     <>
-      {(AllProducts || SubProducts) ? (
+      {AllProducts || SubProducts ? (
         <div
           ref={myRef}
           className="px-4 py-4 shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[300px]"
@@ -173,8 +216,12 @@ const SubCategoryProducts = ({ item }) => {
           <div className="flex flex-col justify-between items-start my-2">
             <h2 className="text-[0.8rem] font-bold"> {item.name} </h2>
             <div className="flex justify-center items-center space-x-1">
-              <h2 className="text-lg font-bold text-red-500">৳{item.discountedPrice}</h2>
-              <h2 className="text-sm text-gray-400 line-through">{`${item.discount === 0 ? "": `৳${item.price}` }`}</h2>
+              <h2 className="text-lg font-bold text-red-500">
+                ৳{item.discountedPrice}
+              </h2>
+              <h2 className="text-sm text-gray-400 line-through">{`${
+                item.discount === 0 ? "" : `৳${item.price}`
+              }`}</h2>
             </div>
             <div className="flex justify-between items-center w-[100%] mt-2 h-[2vh]">
               <div

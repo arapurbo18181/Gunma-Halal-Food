@@ -19,13 +19,21 @@ export const ApiProvider = ({ children }) => {
   const [SubCatname, setSubCatname] = useState();
   const [Catname, setCatname] = useState();
   const [BreadCrumbs, setBreadCrumbs] = useState([]);
-  const [SliderImageRoute] = useState("http://gunma.myesdev.xyz/images/banner_images")
-  const [CategoryImage] = useState("http://gunma.myesdev.xyz/images/category_image/large")
+  // const [SliderImageRoute] = useState("http://gunma.myesdev.xyz/images/banner_images")
+  const [SliderImageRoute] = useState("http://localhost:8000/images/banner_images")
+  // const [CategoryImage] = useState("http://gunma.myesdev.xyz/images/category_image/large")
+  const [CategoryImage] = useState("http://localhost:8000/images/category_image/large")
+  // const [LargeImage] = useState(
+  //   "http://gunma.myesdev.xyz/images/product_images/large"
+  // );
   const [LargeImage] = useState(
-    "http://gunma.myesdev.xyz/images/product_images/large"
+    "http://localhost:8000/images/product_images/large"
   );
+  // const [SmallImage] = useState(
+  //   "http://gunma.myesdev.xyz/images/product_images/small"
+  // );
   const [SmallImage] = useState(
-    "http://gunma.myesdev.xyz/images/product_images/small"
+    "http://localhost:8000/images/product_images/small"
   );
   const [AllProducts, setAllProducts] = useState([]);
   const [SubProducts, setSubProducts] = useState([]);
@@ -85,27 +93,29 @@ export const ApiProvider = ({ children }) => {
   const [SliderImages, setSliderImages] = useState([]);
   const [SubBanner, setSubBanner] = useState();
   const [BillingAddress, setBillingAddress] = useState({
-    deliveryDate: "",
-    firstname: "",
-    lastname: "",
+    delivery_date: "",
+    first_name: "",
+    last_name: "",
     email: "",
-    address: "",
+    street: "",
     phone: 0,
     city: "",
-    district: "",
-    postCode: 0,
+    country: "",
+    zip_code: 0,
   })
   const [ShippingAddress, setShippingAddress] = useState({
-    deliveryDate: "",
-    firstname: "",
-    lastname: "",
+    first_name: "",
+    last_name: "",
     email: "",
-    address: "",
+    street: "",
     phone: 0,
     city: "",
-    district: "",
-    postCode: 0,
-  })
+    country: "",
+    zip_code: 0,
+  });
+  const [IsChecked, setIsChecked] = useState(false);
+  const [PaymentMethod, setPaymentMethod] = useState();
+  const [CuttingSystem, setCuttingSystem] = useState("no");
   const navigate = useNavigate();
 
   const cards = [
@@ -222,6 +232,7 @@ export const ApiProvider = ({ children }) => {
       product_id: product.id,
       price: product.discountedPrice,
       quantity: product.quantity,
+      cutting_system: CuttingSystem,
       cookie_id: GetCookies("cookies"),
     };
 
@@ -492,6 +503,23 @@ export const ApiProvider = ({ children }) => {
     });
   };
 
+  const orderProduct = async () => {
+    const data = {
+      shipping_address: ShippingAddress,
+      billing_address: BillingAddress,
+      seperate_shipping: IsChecked,
+      total_amount: TotalPrice,
+      payment_method: PaymentMethod
+    }
+    await axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios
+        .post(`/api/order/management/system/order`, data)
+        .then((res) => {
+          console.log(res);
+        });
+    });
+  }
+
   useEffect(() => {
     const getdata = async () => {
       // console.log(IsCart)
@@ -746,7 +774,14 @@ export const ApiProvider = ({ children }) => {
         BillingAddress, 
         setBillingAddress, 
         ShippingAddress, 
-        setShippingAddress
+        setShippingAddress,
+        IsChecked, 
+        setIsChecked,
+        PaymentMethod, 
+        setPaymentMethod,
+        orderProduct,
+        CuttingSystem, 
+        setCuttingSystem
       }}
     >
       {children}

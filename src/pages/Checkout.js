@@ -5,33 +5,53 @@ import BreadCrumbs from "../components/BreadCrumbs";
 import CartItem from "../components/CartItem";
 import { Link } from "react-router-dom";
 import { useApi } from "../context/ApiContext";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Checkout = () => {
-  const [IsChecked, setIsChecked] = useState(false);
   const {
     TotalPrice,
     BillingAddress,
     setBillingAddress,
     ShippingAddress,
     setShippingAddress,
-    orderProduct
+    orderProduct,
+    IsChecked,
+    setIsChecked,
+    PaymentMethod, 
+    setPaymentMethod
   } = useApi();
   const handleSubmit = (e) =>{
     e.preventDefault();
-      // orderProduct()
-      console.log(BillingAddress);
-    setBillingAddress({
-      deliveryDate: "",
-      firstname: "",
-      lastname: "",
-      email: "",
-      address: "",
-      phone: 0,
-      city: "",
-      district: "",
-      postCode: 0,
-      totalAmount: 0
-    })
+    if (!IsChecked) {
+      setShippingAddress(BillingAddress);
+    }
+    orderProduct();
+    console.log(BillingAddress);
+    // setBillingAddress({
+    //   deliveryDate: "",
+    //   firstname: "",
+    //   lastname: "",
+    //   email: "",
+    //   street: "",
+    //   phone: 0,
+    //   city: "",
+    //   country: "",
+    //   postCode: 0,
+    //   totalAmount: 0
+    // });
+    // setShippingAddress({
+    //   deliveryDate: "",
+    //   firstname: "",
+    //   lastname: "",
+    //   email: "",
+    //   street: "",
+    //   phone: 0,
+    //   city: "",
+    //   country: "",
+    //   postCode: 0,
+    //   totalAmount: 0
+    // });
   }
 
   const handleCheck = (value) => {
@@ -60,22 +80,19 @@ const Checkout = () => {
                 </div>
                   <div className="flex flex-col items-start my-4 w-full">
                     <label htmlFor="email">Delivery Date</label>
-                    <input
-                      onChange={e=>setBillingAddress({...BillingAddress ,deliveryDate:e.target.value})}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
-                      type="date"
-                      name="name"
-                      placeholder="Enter Your Name"
-                      id="name"
-                      required
+                    <DatePicker className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner" placeholderText="Enter Delivery Date" selected={BillingAddress.show_date} onChange={(date)=>{
+                      // console.log(`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`)
+                      console.log(date)
+                      setBillingAddress({...BillingAddress , show_date: date, delivery_date: `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}` })}}
+                      dateFormat="dd-MM-yy"
                     />
                   </div>
                 <div className="flex justify-start items-center">
                   <div className="flex flex-col items-start my-4 w-full">
                     <label htmlFor="email">First Name</label>
                     <input
-                      onChange={e=>setBillingAddress({...BillingAddress ,firstname:e.target.value})}
-                      value={BillingAddress.firstname}
+                      onChange={e=>setBillingAddress({...BillingAddress ,first_name:e.target.value})}
+                      value={BillingAddress.first_name}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                       type="text"
                       name="name"
@@ -87,8 +104,8 @@ const Checkout = () => {
                   <div className="flex flex-col items-start my-4 w-full ml-4">
                     <label htmlFor="email">Last Name</label>
                     <input
-                      onChange={e=>setBillingAddress({...BillingAddress ,lastname:e.target.value})}
-                      value={BillingAddress.lastname}
+                      onChange={e=>setBillingAddress({...BillingAddress ,last_name:e.target.value})}
+                      value={BillingAddress.last_name}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                       type="text"
                       name="name"
@@ -112,15 +129,15 @@ const Checkout = () => {
                     />
                   </div>
                 <div className="flex flex-col items-start my-4">
-                  <label htmlFor="address">Address</label>
+                  <label htmlFor="address">Street</label>
                   <textarea
-                      onChange={e=>setBillingAddress({...BillingAddress ,address:e.target.value})}
-                      value={BillingAddress.address}
+                      onChange={e=>setBillingAddress({...BillingAddress ,street:e.target.value})}
+                      value={BillingAddress.street}
                     className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                     type="text"
-                    name="address"
+                    name="street"
                     placeholder="Enter Your Address"
-                    id="address"
+                    id="street"
                     required
                   />
                 </div>
@@ -155,23 +172,23 @@ const Checkout = () => {
                 </div>
                 <div className="flex justify-start items-center">
                   <div className="flex flex-col items-start my-4 w-full">
-                    <label htmlFor="district">District</label>
+                    <label htmlFor="district">Country</label>
                     <input
-                      onChange={e=>setBillingAddress({...BillingAddress ,district:e.target.value})}
-                      value={BillingAddress.district}
+                      onChange={e=>setBillingAddress({...BillingAddress ,country:e.target.value})}
+                      value={BillingAddress.country}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                       type="text"
-                      name="district"
+                      name="country"
                       placeholder="Enter Your district"
-                      id="district"
+                      id="country"
                       required
                     />
                   </div>
                   <div className="flex flex-col items-start my-4 w-full ml-4">
                     <label htmlFor="postcode">Post Code</label>
                     <input
-                      onChange={e=>setBillingAddress({...BillingAddress ,postCode:e.target.value})}
-                      value={BillingAddress.postCode}
+                      onChange={e=>setBillingAddress({...BillingAddress ,zip_code:e.target.value})}
+                      value={BillingAddress.zip_code}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                       type="number"
                       name="postcode"
@@ -196,24 +213,12 @@ const Checkout = () => {
                   <div className="flex justify-center my-5 text-2xl font-bold">
                     <h1>Shipping Address</h1>
                   </div>
-                  <div className="flex flex-col items-start my-4 w-full">
-                    <label htmlFor="email">Delivery Date</label>
-                    <input
-                      onChange={e=>setShippingAddress({...ShippingAddress ,deliveryDate:e.target.value})}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
-                      type="date"
-                      name="name"
-                      placeholder="Enter Your Name"
-                      id="name"
-                      required
-                    />
-                  </div>
                   <div className="flex justify-start items-center">
                     <div className="flex flex-col items-start my-4 w-full">
                       <label htmlFor="email">First Name</label>
                       <input
-                      onChange={e=>setShippingAddress({...ShippingAddress ,firstname:e.target.value})}
-                      value={ShippingAddress.firstname}
+                      onChange={e=>setShippingAddress({...ShippingAddress ,first_name:e.target.value})}
+                      value={ShippingAddress.first_name}
                         className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                         type="text"
                         name="name"
@@ -225,8 +230,8 @@ const Checkout = () => {
                     <div className="flex flex-col items-start my-4 w-full ml-4">
                       <label htmlFor="email">Last Name</label>
                       <input
-                      onChange={e=>setShippingAddress({...ShippingAddress ,lastname:e.target.value})}
-                      value={ShippingAddress.lastname}
+                      onChange={e=>setShippingAddress({...ShippingAddress ,last_name:e.target.value})}
+                      value={ShippingAddress.last_name}
                         className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                         type="text"
                         name="name"
@@ -250,15 +255,15 @@ const Checkout = () => {
                       />
                     </div>
                   <div className="flex flex-col items-start my-4">
-                    <label htmlFor="address">Address</label>
+                    <label htmlFor="address">Street</label>
                     <textarea
-                      onChange={e=>setShippingAddress({...ShippingAddress ,address:e.target.value})}
-                      value={ShippingAddress.address}
+                      onChange={e=>setShippingAddress({...ShippingAddress ,street:e.target.value})}
+                      value={ShippingAddress.street}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                       type="text"
-                      name="address"
+                      name="street"
                       placeholder="Enter Your Address"
-                      id="address"
+                      id="street"
                       required
                     />
                   </div>
@@ -293,23 +298,23 @@ const Checkout = () => {
                   </div>
                   <div className="flex justify-start items-center">
                     <div className="flex flex-col items-start my-4 w-full">
-                      <label htmlFor="district">District</label>
+                      <label htmlFor="district">Country</label>
                       <input
-                      onChange={e=>setShippingAddress({...ShippingAddress ,district:e.target.value})}
-                      value={ShippingAddress.district}
+                      onChange={e=>setShippingAddress({...ShippingAddress ,country:e.target.value})}
+                      value={ShippingAddress.country}
                         className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                         type="text"
-                        name="district"
+                        name="country"
                         placeholder="Enter Your district"
-                        id="district"
+                        id="country"
                         required
                       />
                     </div>
                     <div className="flex flex-col items-start my-4 w-full ml-4">
                       <label htmlFor="postcode">Post Code</label>
                       <input
-                      onChange={e=>setShippingAddress({...ShippingAddress ,postCode:e.target.value})}
-                      value={ShippingAddress.postCode}
+                      onChange={e=>setShippingAddress({...ShippingAddress ,zip_code:e.target.value})}
+                      value={ShippingAddress.zip_code}
                         className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                         type="number"
                         name="postcode"
@@ -362,14 +367,14 @@ const Checkout = () => {
           </div>
           <div className="flex flex-col justify-center items-start mt-5">
             <div>
-              <input type="radio" name="payment" value={""} id="" />{" "}
+              <input type="radio" name="payment" value={"stripe"} onChange={(e)=>setPaymentMethod(e.target.value)} id="" />{" "}
               <span>Stripe</span>
             </div>
             <div>
-              <input type="radio" name="payment" id="" /> <span>Coin</span>
+              <input type="radio" name="payment" id="" value={"Coin"} onChange={(e)=>setPaymentMethod(e.target.value)} /> <span>Coin</span>
             </div>
             <div>
-              <input type="radio" name="payment" id="" />{" "}
+              <input type="radio" name="payment" id="" value={"Cash On Delivery"} onChange={(e)=>setPaymentMethod(e.target.value)} />{" "}
               <span>Cash On Delivery</span>
             </div>
           </div>
