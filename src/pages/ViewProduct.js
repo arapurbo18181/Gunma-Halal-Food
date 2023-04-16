@@ -14,6 +14,7 @@ import Loaders from "../components/Loaders";
 import { useApi } from "../context/ApiContext";
 import BreadCrumbs from "../components/BreadCrumbs";
 import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import axios from "axios";
 const ViewProduct = () => {
   const [Quantity, setQuantity] = useState(0);
@@ -44,7 +45,7 @@ const ViewProduct = () => {
     const getdata = async () => {
       await axios.get(`/api${location.pathname}`).then((res) => {
         if (res.data.status === 200) {
-          console.log(res);
+          // console.log(res);
           setCateName(res.data.product.sub_category.main_category.name);
           setSubCateName(res.data.product.sub_category.name);
           setCateSlug(res.data.product.sub_category.main_category.slug);
@@ -122,15 +123,34 @@ const ViewProduct = () => {
     }
   };
 
-  const handleClick = (item) => {
-    addToCart(item);
-    item.quantity = 0;
-    setQuantity(0);
+  const handleClick = async (item) => {
+    if (item.cutting_system === "Yes") {
+      await Swal.fire({
+        title: "Do You Want to Cut The Product?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Success!", "Cutting System in implemented", "success");
+          addToCart(item, "YES");
+          item.quantity = 0;
+          setQuantity(0);
+        }else{
+          addToCart(item, "NO");
+          item.quantity = 0;
+          setQuantity(0);
+        }
+      });
+    }else{
+        addToCart(item, "NO");
+        item.quantity = 0;
+        setQuantity(0);
+    }
   };
-
-  if (Product) {
-    console.log(Product)
-  }
 
   return (
     <>

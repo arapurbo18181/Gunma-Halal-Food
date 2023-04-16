@@ -35,7 +35,7 @@ const UserProfile = () => {
             </div>
           <div className="flex justify-start items-center">
             <div className="flex flex-col items-start my-4 w-full">
-              <label htmlFor="email">Name</label>
+              <label htmlFor="email">First Name</label>
               <input
                 // onChange={e=>setInfo({...Info ,myName:e.target.value})}
                 // value={Info.myName}
@@ -48,6 +48,20 @@ const UserProfile = () => {
               />
             </div>
             <div className="flex flex-col items-start my-4 w-full ml-4">
+              <label htmlFor="email">Last Name</label>
+              <input
+                // onChange={e=>setInfo({...Info ,email:e.target.value})}
+                // value={Info.email}
+                className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                type="text"
+                name="name"
+                placeholder="Enter Your Email"
+                id="name"
+                required
+              />
+            </div>
+          </div>
+            <div className="flex flex-col items-start my-4 w-full">
               <label htmlFor="email">Email</label>
               <input
                 // onChange={e=>setInfo({...Info ,email:e.target.value})}
@@ -60,17 +74,16 @@ const UserProfile = () => {
                 required
               />
             </div>
-          </div>
           <div className="flex flex-col items-start my-4">
-            <label htmlFor="address">Address</label>
+            <label htmlFor="address">Street</label>
             <textarea
               // onChange={e=>setInfo({...Info ,address:e.target.value})}
               // value={Info.address}
               className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
               type="text"
-              name="address"
+              name="street"
               placeholder="Enter Your Address"
-              id="address"
+              id="street"
               required
             />
           </div>
@@ -105,15 +118,15 @@ const UserProfile = () => {
           </div>
           <div className="flex justify-start items-center">
             <div className="flex flex-col items-start my-4 w-full">
-              <label htmlFor="district">District</label>
+              <label htmlFor="district">Country</label>
               <input
                 // onChange={e=>setInfo({...Info ,district:e.target.value})}
                 // value={Info.district}
                 className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
                 type="text"
-                name="district"
+                name="country"
                 placeholder="Enter Your district"
-                id="district"
+                id="country"
                 required
               />
             </div>

@@ -4,6 +4,7 @@ import { useApi } from "../context/ApiContext";
 
 const SearchProducts = ({ item }) => {
   const { SmallImage, setSearch, setShowProduct } = useApi();
+  console.log(item)
   return (
     <>
       <div className="flex justify-start items-start space-x-5">
@@ -17,7 +18,7 @@ const SearchProducts = ({ item }) => {
         <div>
           <Link
             className="text-[0.8rem] font-bold"
-            to={`/${item.sub_category.main_category.slug}/${item.sub_category.slug}/${item.slug}`}
+            // to={`/${item.sub_category.main_category.slug}/${item.sub_category.slug}/${item.slug}`}
             onClick={() => {
               setShowProduct(item);
               setSearch("");

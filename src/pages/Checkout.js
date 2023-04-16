@@ -80,7 +80,7 @@ const Checkout = () => {
                 </div>
                   <div className="flex flex-col items-start my-4 w-full">
                     <label htmlFor="email">Delivery Date</label>
-                    <DatePicker className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner" placeholderText="Enter Delivery Date" selected={BillingAddress.show_date} onChange={(date)=>{
+                    <DatePicker minDate={new Date()} className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner" placeholderText="Enter Delivery Date" selected={BillingAddress.show_date} onChange={(date)=>{
                       // console.log(`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`)
                       console.log(date)
                       setBillingAddress({...BillingAddress , show_date: date, delivery_date: `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}` })}}
@@ -365,7 +365,7 @@ const Checkout = () => {
             <h3>Total</h3>
             <h5>$ {parseFloat(TotalPrice).toFixed(2)}</h5>
           </div>
-          <div className="flex flex-col justify-center items-start mt-5">
+          {/* <div className="flex flex-col justify-center items-start mt-5">
             <div>
               <input type="radio" name="payment" value={"stripe"} onChange={(e)=>setPaymentMethod(e.target.value)} id="" />{" "}
               <span>Stripe</span>
@@ -377,7 +377,7 @@ const Checkout = () => {
               <input type="radio" name="payment" id="" value={"Cash On Delivery"} onChange={(e)=>setPaymentMethod(e.target.value)} />{" "}
               <span>Cash On Delivery</span>
             </div>
-          </div>
+          </div> */}
           <div className="w-full my-10">
               <button onClick={handleSubmit} className="bg-red-500 text-white w-full py-2 border border-red-500 hover:bg-transparent hover:text-black transition-all duration-500">
                 Checkout

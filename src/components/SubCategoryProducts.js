@@ -109,15 +109,13 @@ const SubCategoryProducts = ({ item }) => {
         confirmButtonText: "Yes",
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Success!", "Cutting System in implemented", "success");
           setCount(item.id);
           const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 90;
           const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 35;
           setAnimationCoodinate({ x: setX, y: setY });
           setIsAddedToCart(true);
           setTimeout(() => {
-            setCuttingSystem("yes");
-            addToCart(item);
+            addToCart(item, "YES");
             item.quantity = 0;
             setQuantity(0);
             setIsAddedToCart(false);
@@ -129,7 +127,7 @@ const SubCategoryProducts = ({ item }) => {
           setAnimationCoodinate({ x: setX, y: setY });
           setIsAddedToCart(true);
           setTimeout(() => {
-            addToCart(item);
+            addToCart(item, "NO");
             item.quantity = 0;
             setQuantity(0);
             setIsAddedToCart(false);
@@ -143,7 +141,7 @@ const SubCategoryProducts = ({ item }) => {
       setAnimationCoodinate({ x: setX, y: setY });
       setIsAddedToCart(true);
       setTimeout(() => {
-        addToCart(item);
+        addToCart(item, "NO");
         item.quantity = 0;
         setQuantity(0);
         setIsAddedToCart(false);
@@ -180,7 +178,7 @@ const SubCategoryProducts = ({ item }) => {
       {AllProducts || SubProducts ? (
         <div
           ref={myRef}
-          className="px-4 py-4 shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[300px]"
+          className="px-4 py-4 shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[400px]"
         >
           <div className="">
             <Link
@@ -214,7 +212,8 @@ const SubCategoryProducts = ({ item }) => {
             </Link>
           </div>
           <div className="flex flex-col justify-between items-start my-2">
-            <h2 className="text-[0.8rem] font-bold"> {item.name} </h2>
+            <h2 className="text-[0.8rem] font-bold"> {item.name}  </h2>
+            <h2 className="text-[0.8rem] font-semibold"> Stock: {item.stock}  </h2>
             <div className="flex justify-center items-center space-x-1">
               <h2 className="text-lg font-bold text-red-500">
                 ৳{item.discountedPrice}
