@@ -124,6 +124,7 @@ export const ApiProvider = ({ children }) => {
   const [IsChecked, setIsChecked] = useState(false);
   const [PaymentMethod, setPaymentMethod] = useState();
   const [CuttingSystem, setCuttingSystem] = useState("no");
+  const [IsRegister, setIsRegister] = useState(false);
   const navigate = useNavigate();
 
   const cards = [
@@ -397,6 +398,7 @@ export const ApiProvider = ({ children }) => {
         .post(`/api/user/account/management/registration`, data)
         .then((res) => {
           console.log(res)
+          setIsRegister(false)
           if (res.data.status === 200) {
             console.log(res);
             navigate("/login");
@@ -793,7 +795,9 @@ export const ApiProvider = ({ children }) => {
         setPaymentMethod,
         orderProduct,
         CuttingSystem, 
-        setCuttingSystem
+        setCuttingSystem,
+        IsRegister, 
+        setIsRegister
       }}
     >
       {children}

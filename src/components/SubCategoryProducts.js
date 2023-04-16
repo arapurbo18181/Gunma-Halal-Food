@@ -98,58 +98,19 @@ const SubCategoryProducts = ({ item }) => {
   };
 
   const handleClick = async (item) => {
-    if (item.cutting_system === "Yes") {
-      await Swal.fire({
-        title: "Do You Want to Cut The Product?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          setCount(item.id);
-          const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 90;
-          const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 35;
-          setAnimationCoodinate({ x: setX, y: setY });
-          setIsAddedToCart(true);
-          setTimeout(() => {
-            addToCart(item, "YES");
-            item.quantity = 0;
-            setQuantity(0);
-            setIsAddedToCart(false);
-          }, 2000);
-        }else{
-          setCount(item.id);
-          const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 90;
-          const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 35;
-          setAnimationCoodinate({ x: setX, y: setY });
-          setIsAddedToCart(true);
-          setTimeout(() => {
-            addToCart(item, "NO");
-            item.quantity = 0;
-            setQuantity(0);
-            setIsAddedToCart(false);
-          }, 2000);
-        }
-      });
-    }else{
-      setCount(item.id);
-      const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 90;
-      const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 35;
-      setAnimationCoodinate({ x: setX, y: setY });
-      setIsAddedToCart(true);
-      setTimeout(() => {
-        addToCart(item, "NO");
-        item.quantity = 0;
-        setQuantity(0);
-        setIsAddedToCart(false);
-      }, 2000);
-    }
+    setCount(item.id);
+    const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 90;
+    const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 35;
+    setAnimationCoodinate({ x: setX, y: setY });
+    setIsAddedToCart(true);
+    setTimeout(() => {
+      addToCart(item, "NO");
+      item.quantity = 0;
+      setQuantity(0);
+      setIsAddedToCart(false);
+    }, 2000);
 
     // setMyRef(true);
-
   };
 
   const imageVariants = {
@@ -212,8 +173,11 @@ const SubCategoryProducts = ({ item }) => {
             </Link>
           </div>
           <div className="flex flex-col justify-between items-start my-2">
-            <h2 className="text-[0.8rem] font-bold"> {item.name}  </h2>
-            <h2 className="text-[0.8rem] font-semibold"> Stock: {item.stock}  </h2>
+            <h2 className="text-[0.8rem] font-bold"> {item.name} </h2>
+            <h2 className="text-[0.8rem] font-semibold">
+              {" "}
+              Stock: {item.stock}{" "}
+            </h2>
             <div className="flex justify-center items-center space-x-1">
               <h2 className="text-lg font-bold text-red-500">
                 ৳{item.discountedPrice}
