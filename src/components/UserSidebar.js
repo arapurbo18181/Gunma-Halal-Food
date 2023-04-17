@@ -10,8 +10,8 @@ const UserSidebar = () => {
             <div className='rounded-full overflow-hidden h-24 w-24 md:h-32 md:w-32 xl:h-40 xl:w-40 '>
                 <img className='object-cover' src="https://media.istockphoto.com/id/1200677760/photo/portrait-of-handsome-smiling-young-man-with-crossed-arms.jpg?s=612x612&w=0&k=20&c=g_ZmKDpK9VEEzWw4vJ6O577ENGLTOcrvYeiLxi8mVuo=" alt="" />
             </div>
-            <h2 className='text-white font-semibold text-xl'>{UserData.name}</h2>
-            <h2 className='text-white font-semibold text-xl'>{UserData.email}</h2>
+            {/* <h2 className='text-white font-semibold text-xl'>{UserData.name}</h2> */}
+            {/* <h2 className='text-white font-semibold text-xl'>{UserData.email}</h2> */}
         </div>
         <div className='flex-1 mt-10 flex flex-col md:flex-row xl:flex-col justify-start items-center md:space-x-6 space-y-2 xl:space-x-0'>
             {

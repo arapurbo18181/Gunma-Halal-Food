@@ -80,7 +80,7 @@ const Checkout = () => {
                 </div>
                   <div className="flex flex-col items-start my-4 w-full">
                     <label htmlFor="email">Delivery Date</label>
-                    <DatePicker minDate={new Date()} className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner" placeholderText="Enter Delivery Date" selected={BillingAddress.show_date} onChange={(date)=>{
+                    <DatePicker minDate={new Date()} className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100" placeholderText="Enter Delivery Date" selected={BillingAddress.show_date} onChange={(date)=>{
                       // console.log(`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`)
                       console.log(date)
                       setBillingAddress({...BillingAddress , show_date: date, delivery_date: `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}` })}}
@@ -93,7 +93,7 @@ const Checkout = () => {
                     <input
                       onChange={e=>setBillingAddress({...BillingAddress ,first_name:e.target.value})}
                       value={BillingAddress.first_name}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                       type="text"
                       name="name"
                       placeholder="Enter Your Name"
@@ -106,7 +106,7 @@ const Checkout = () => {
                     <input
                       onChange={e=>setBillingAddress({...BillingAddress ,last_name:e.target.value})}
                       value={BillingAddress.last_name}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                       type="text"
                       name="name"
                       placeholder="Enter Your Name"
@@ -120,7 +120,7 @@ const Checkout = () => {
                     <input
                       onChange={e=>setBillingAddress({...BillingAddress ,email:e.target.value})}
                       value={BillingAddress.email}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                       type="email"
                       name="email"
                       placeholder="Enter Your Email"
@@ -133,7 +133,7 @@ const Checkout = () => {
                   <textarea
                       onChange={e=>setBillingAddress({...BillingAddress ,street:e.target.value})}
                       value={BillingAddress.street}
-                    className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                    className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                     type="text"
                     name="street"
                     placeholder="Enter Your Address"
@@ -148,7 +148,7 @@ const Checkout = () => {
                     <input
                       onChange={e=>setBillingAddress({...BillingAddress ,phone:e.target.value})}
                       value={BillingAddress.phone}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                       type="number"
                       name="phone"
                       placeholder="Enter Your phone number"
@@ -161,7 +161,7 @@ const Checkout = () => {
                     <input
                       onChange={e=>setBillingAddress({...BillingAddress ,city:e.target.value})}
                       value={BillingAddress.city}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                       type="text"
                       name="city"
                       placeholder="Enter Your city"
@@ -176,7 +176,7 @@ const Checkout = () => {
                     <input
                       onChange={e=>setBillingAddress({...BillingAddress ,country:e.target.value})}
                       value={BillingAddress.country}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                       type="text"
                       name="country"
                       placeholder="Enter Your district"
@@ -189,7 +189,7 @@ const Checkout = () => {
                     <input
                       onChange={e=>setBillingAddress({...BillingAddress ,zip_code:e.target.value})}
                       value={BillingAddress.zip_code}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                       type="number"
                       name="postcode"
                       placeholder="Enter Your postcode"
@@ -219,7 +219,7 @@ const Checkout = () => {
                       <input
                       onChange={e=>setShippingAddress({...ShippingAddress ,first_name:e.target.value})}
                       value={ShippingAddress.first_name}
-                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                         type="text"
                         name="name"
                         placeholder="Enter Your Name"
@@ -232,7 +232,7 @@ const Checkout = () => {
                       <input
                       onChange={e=>setShippingAddress({...ShippingAddress ,last_name:e.target.value})}
                       value={ShippingAddress.last_name}
-                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                         type="text"
                         name="name"
                         placeholder="Enter Your Name"
@@ -246,7 +246,7 @@ const Checkout = () => {
                       <input
                       onChange={e=>setShippingAddress({...ShippingAddress ,email:e.target.value})}
                       value={ShippingAddress.email}
-                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                         type="email"
                         name="email"
                         placeholder="Enter Your Email"
@@ -259,7 +259,7 @@ const Checkout = () => {
                     <textarea
                       onChange={e=>setShippingAddress({...ShippingAddress ,street:e.target.value})}
                       value={ShippingAddress.street}
-                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                       type="text"
                       name="street"
                       placeholder="Enter Your Address"
@@ -274,7 +274,7 @@ const Checkout = () => {
                       <input
                       onChange={e=>setShippingAddress({...ShippingAddress ,phone:e.target.value})}
                       value={ShippingAddress.phone}
-                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                         type="number"
                         name="phone"
                         placeholder="Enter Your phone number"
@@ -287,7 +287,7 @@ const Checkout = () => {
                       <input
                       onChange={e=>setShippingAddress({...ShippingAddress ,city:e.target.value})}
                       value={ShippingAddress.city}
-                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                         type="text"
                         name="city"
                         placeholder="Enter Your city"
@@ -302,7 +302,7 @@ const Checkout = () => {
                       <input
                       onChange={e=>setShippingAddress({...ShippingAddress ,country:e.target.value})}
                       value={ShippingAddress.country}
-                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                         type="text"
                         name="country"
                         placeholder="Enter Your district"
@@ -315,7 +315,7 @@ const Checkout = () => {
                       <input
                       onChange={e=>setShippingAddress({...ShippingAddress ,zip_code:e.target.value})}
                       value={ShippingAddress.zip_code}
-                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                         type="number"
                         name="postcode"
                         placeholder="Enter Your postcode"

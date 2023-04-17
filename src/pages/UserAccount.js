@@ -15,12 +15,12 @@ export default function UserAccount() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!User) {
-      console.log(User)
-      navigate("/")
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!User) {
+  //     console.log(User)
+  //     navigate("/")
+  //   }
+  // }, [])
 
   return (
     <>

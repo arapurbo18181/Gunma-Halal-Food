@@ -453,9 +453,9 @@ export const ApiProvider = ({ children }) => {
         console.log(res)
         if (res.data.status === 200) {
           setUserEmail(res.data.email);
+          setUser(true);
           navigate("/");
           Swal.fire("Success", res.data.success_message, "success");
-          setUser(true);
           setLogin({
             email: "",
             password: ""
@@ -575,11 +575,11 @@ export const ApiProvider = ({ children }) => {
             });
             setcart(datas);
             // setGetCartData(res.data.user_cart);
-            if (res.data.email) {
-              setUser(true);
-            } else {
-              setUser(false);
-            }
+            // if (res.data.email) {
+            //   setUser(true);
+            // } else {
+            //   setUser(false);
+            // }
             setAllReviews(!AllReviews);
           }
         });

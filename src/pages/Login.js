@@ -47,7 +47,7 @@ const Login = () => {
                 <input
                   onChange={login}
                   value={Login.email}
-                  className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                  className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                   type="email"
                   name="email"
                   placeholder="Enter Your Email"
@@ -69,7 +69,7 @@ const Login = () => {
                 <input
                   onChange={login}
                   value={Login.password}
-                  className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner"
+                  className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                   type="password"
                   name="password"
                   placeholder="Enter Your Password"
