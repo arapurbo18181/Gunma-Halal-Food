@@ -22,9 +22,11 @@ export const ApiProvider = ({ children }) => {
   // const [SliderImageRoute] = useState("http://gunma.myesdev.xyz/images/banner_images")
   // const [SliderImageRoute] = useState("http://localhost:8000/images/banner_images")
   const [SliderImageRoute] = useState("https://gunma-admin.getthemeplugin.com/images/banner_images")
+  // const [SliderImageRoute] = useState("http://admin.softtech-it.org/images/banner_images")
   // const [CategoryImage] = useState("http://gunma.myesdev.xyz/images/category_image/large")
   // const [CategoryImage] = useState("http://localhost:8000/images/category_image/large")
   const [CategoryImage] = useState("https://gunma-admin.getthemeplugin.com/images/category_image/large")
+  // const [CategoryImage] = useState("http://admin.softtech-it.org/images/category_image/large")
   // const [LargeImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/large"
   // );
@@ -34,6 +36,9 @@ export const ApiProvider = ({ children }) => {
   const [LargeImage] = useState(
     "https://gunma-admin.getthemeplugin.com/images/product_images/large"
   );
+  // const [LargeImage] = useState(
+  //   "http://admin.softtech-it.org/images/product_images/large"
+  // );
   // const [SmallImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/small"
   // );
@@ -43,6 +48,9 @@ export const ApiProvider = ({ children }) => {
   const [SmallImage] = useState(
     "https://gunma-admin.getthemeplugin.com/images/product_images/small"
   );
+  // const [SmallImage] = useState(
+  //   "http://admin.softtech-it.org/images/product_images/small"
+  // );
   const [AllProducts, setAllProducts] = useState([]);
   const [SubProducts, setSubProducts] = useState([]);
   const [Register, setRegister] = useState({});
@@ -174,6 +182,8 @@ export const ApiProvider = ({ children }) => {
   ];
   const [UserMenu, setUserMenu] = useState(userAccount);
   const [CardsForUserDashboard, setCardsForUserDashboard] = useState(cards);
+  const [CoinAmount, setCoinAmount] = useState();
+  const [StripeAmount, setStripeAmount] = useState();
   const location = useLocation();
   const params = useParams();
 
@@ -225,10 +235,14 @@ export const ApiProvider = ({ children }) => {
     setTotalWishlist(amount);
   }, [Wishlist]);
 
+
+  
+
   const logOut = async () => {
     await axios.get(`/api/user/account/management/logout`).then((res) => {
       console.log(res);
       if (res.data.status === 200) {
+        localStorage.removeItem("token")
         navigate("/");
         setUser(false);
         Swal.fire("Success", res.data.success_message, "success");
@@ -243,11 +257,16 @@ export const ApiProvider = ({ children }) => {
       quantity: product.quantity,
       cutting_system: cutting,
       cookie_id: GetCookies("cookies"),
+      token: JSON.parse(localStorage.getItem("token"))
     };
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/user/cart/management/add-to-cart`, data)
+        .post(`/api/user/cart/management/add-to-cart`, data,{
+          headers: {
+            Authorization: JSON.parse(localStorage.getItem("token"))
+          } 
+        })
         .then((res) => {
           console.log(res);
           setIsCart(!IsCart);
@@ -269,11 +288,16 @@ export const ApiProvider = ({ children }) => {
     const data = {
       cookie_id: GetCookies("cookies"),
       product_id: item.id,
+      token: JSON.parse(localStorage.getItem("token"))
     };
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/user/wishlist/management/add-to-wishlist`, data)
+        .post(`/api/user/wishlist/management/add-to-wishlist`, data,{
+          headers:{
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+          }
+        })
         .then((res) => {
           console.log(res);
           setIsCart(!IsCart);
@@ -370,7 +394,11 @@ export const ApiProvider = ({ children }) => {
   useEffect(() => {
     const getdata = async () => {
       await axios
-        .get(`/api/product/search/management/search/${Search}`)
+        .get(`/api/product/search/management/search/${Search}`, {
+          headers:{
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+          }
+        })
         .then((res) => {
           setSearchProduct(
             res.data.map((item) => {
@@ -395,7 +423,11 @@ export const ApiProvider = ({ children }) => {
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/user/account/management/registration`, data)
+        .post(`/api/user/account/management/registration`, data, {
+          headers: {
+            Authorization: 'Bearer jgjggjggjjg'
+          }
+        })
         .then((res) => {
           console.log(res)
           setIsRegister(false)
@@ -439,6 +471,11 @@ export const ApiProvider = ({ children }) => {
     });
   };
 
+  // useEffect(() => {
+
+  // }, [User])
+  
+
   const loginSubmit = (e) => {
     e.preventDefault();
 
@@ -452,6 +489,7 @@ export const ApiProvider = ({ children }) => {
       axios.post(`/api/user/account/management/login`, data).then((res) => {
         console.log(res)
         if (res.data.status === 200) {
+          localStorage.setItem("token", JSON.stringify(res.data.token));
           setUserEmail(res.data.email);
           setUser(true);
           navigate("/");
@@ -523,7 +561,8 @@ export const ApiProvider = ({ children }) => {
       billing_address: BillingAddress,
       seperate_shipping: IsChecked,
       total_amount: TotalPrice,
-      payment_method: PaymentMethod
+      payment_type: PaymentMethod,
+      paid_amount: CoinAmount ? CoinAmount : StripeAmount
     }
     await axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
@@ -538,7 +577,11 @@ export const ApiProvider = ({ children }) => {
     const getdata = async () => {
       // console.log(IsCart)
       await axios
-        .get(`/api/get/index/all/info/${GetCookies("cookies")}`)
+        .get(`/api/get/index/all/info/${GetCookies("cookies")}/${ localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : "test" }`,{
+          headers:{
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+          }
+        })
         .then((res) => {
           console.log(res);
           if (res.data.status === 200) {
@@ -574,12 +617,12 @@ export const ApiProvider = ({ children }) => {
               };
             });
             setcart(datas);
-            // setGetCartData(res.data.user_cart);
-            // if (res.data.email) {
-            //   setUser(true);
-            // } else {
-            //   setUser(false);
-            // }
+            setGetCartData(res.data.user_cart);
+            if (res.data.email) {
+              setUser(true);
+            } else {
+              setUser(false);
+            }
             setAllReviews(!AllReviews);
           }
         });
@@ -797,7 +840,11 @@ export const ApiProvider = ({ children }) => {
         CuttingSystem, 
         setCuttingSystem,
         IsRegister, 
-        setIsRegister
+        setIsRegister,
+        setStripeAmount,
+        setCoinAmount,
+        CoinAmount,
+        StripeAmount
       }}
     >
       {children}

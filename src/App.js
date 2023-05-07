@@ -24,7 +24,8 @@ import { useApi } from "./context/ApiContext";
 import ErrorPage from "./pages/ErrorPage";
 
 // axios.defaults.baseURL = "http://gunma.myesdev.xyz/";
-axios.defaults.baseURL = "https://gunma-admin.getthemeplugin.com/";
+// axios.defaults.baseURL = "https://gunma-admin.getthemeplugin.com/";
+axios.defaults.baseURL = "http://admin.softtech-it.org/";
 // axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.post["Accept"] = "application/json";

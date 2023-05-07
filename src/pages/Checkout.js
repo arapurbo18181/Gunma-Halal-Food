@@ -9,6 +9,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Checkout = () => {
+  const [CoinInput, setCoinInput] = useState(false);
+  const [StripeInput, setStripeInput] = useState(false);
   const {
     TotalPrice,
     BillingAddress,
@@ -19,7 +21,11 @@ const Checkout = () => {
     IsChecked,
     setIsChecked,
     PaymentMethod, 
-    setPaymentMethod
+    setPaymentMethod,
+    setStripeAmount,
+    setCoinAmount,
+    CoinAmount,
+    StripeAmount
   } = useApi();
   const handleSubmit = (e) =>{
     e.preventDefault();
@@ -365,19 +371,31 @@ const Checkout = () => {
             <h3>Total</h3>
             <h5>$ {parseFloat(TotalPrice).toFixed(2)}</h5>
           </div>
-          {/* <div className="flex flex-col justify-center items-start mt-5">
+          <div className="flex flex-col justify-center items-start mt-5">
             <div>
-              <input type="radio" name="payment" value={"stripe"} onChange={(e)=>setPaymentMethod(e.target.value)} id="" />{" "}
-              <span>Stripe</span>
+              <input type="radio" name="payment" value={"stripe"} onChange={(e)=>{
+                setPaymentMethod(e.target.value)
+                setStripeInput(true)
+                setCoinInput(false)
+                }} id="" />{" "}
+              <span>Stripe</span> { StripeInput ? <span> <input value={StripeAmount} onChange={e=>setStripeAmount(e.target.value)} className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100" type="number" name="" id="" /> </span> : ""}
             </div>
             <div>
-              <input type="radio" name="payment" id="" value={"Coin"} onChange={(e)=>setPaymentMethod(e.target.value)} /> <span>Coin</span>
+              <input type="radio" name="payment" id="" value={"coin"} onChange={(e)=>{
+                setPaymentMethod(e.target.value)
+                setCoinInput(true)
+                setStripeInput(false)
+                }} /> <span>Coin</span> { CoinInput ? <span> <input value={CoinAmount} onChange={e=>setCoinAmount(e.target.value)} className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100" type="number" name="" id="" /> </span> : ""}
             </div>
             <div>
-              <input type="radio" name="payment" id="" value={"Cash On Delivery"} onChange={(e)=>setPaymentMethod(e.target.value)} />{" "}
+              <input type="radio" name="payment" id="" value={"cash_on_delivery"} onChange={(e)=>{
+                setPaymentMethod(e.target.value)
+                setCoinInput(false)
+                setStripeInput(false)
+                }} />{" "}
               <span>Cash On Delivery</span>
             </div>
-          </div> */}
+          </div>
           <div className="w-full my-10">
               <button onClick={handleSubmit} className="bg-red-500 text-white w-full py-2 border border-red-500 hover:bg-transparent hover:text-black transition-all duration-500">
                 Checkout

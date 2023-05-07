@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 const ProductReviews = ({ product }) => {
   const navigate = useNavigate()
   const { Reviews, setReviews, IsReview, setIsReview, User, AllReviews, setAllReviews } = useApi();
-  console.log(product);
 
   const handleReview = (e) => {
     e.preventDefault();
@@ -18,10 +17,15 @@ const ProductReviews = ({ product }) => {
         review: Reviews.review,
         rating: Reviews.rating,
         product_id: product.id,
+        token: JSON.parse(localStorage.getItem("token"))
       };
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
-          .post(`/api/product/reviews/management/review`, data)
+          .post(`/api/product/reviews/management/review`, data,{
+            headers:{
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+            }
+          })
           .then((res) => {
             console.log(res);
             setIsReview(!IsReview);
