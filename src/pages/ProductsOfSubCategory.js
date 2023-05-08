@@ -19,7 +19,6 @@ const ProductsOfSubCategory = () => {
   const [CateSlug, setCateSlug] = useState();
   const [SubCateName, setSubCateName] = useState();
   const [SubCateSlug, setSubCateSlug] = useState();
-  const [SubCategoryProduct, setSubCategoryProduct] = useState([]);
   const [BannerImage, setBannerImage] = useState();
   const { ProductsFromCategory, SubCatImage } = useCategory();
   const {
@@ -30,7 +29,9 @@ const ProductsOfSubCategory = () => {
     Catname,
     CategorySlug,
     subCategorySlug,
-    CategoryImage
+    CategoryImage,
+    SubCategoryProduct,
+    setSubCategoryProduct
   } = useApi();
   const params = useParams();
   // console.log(SubProducts);

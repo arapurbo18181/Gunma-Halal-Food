@@ -55,6 +55,7 @@ const SubCategoryProducts = ({ item }) => {
     if (SubCategoryProduct) {
       SubCategoryProduct.map((elem) => {
         if (elem.id === id) {
+          console.log(id)
           elem.quantity = elem.quantity + 1;
           setQuantity(elem.quantity);
         }

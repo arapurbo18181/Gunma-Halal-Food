@@ -21,11 +21,15 @@ export const ApiProvider = ({ children }) => {
   const [BreadCrumbs, setBreadCrumbs] = useState([]);
   // const [SliderImageRoute] = useState("http://gunma.myesdev.xyz/images/banner_images")
   // const [SliderImageRoute] = useState("http://localhost:8000/images/banner_images")
-  const [SliderImageRoute] = useState("https://gunma-admin.getthemeplugin.com/images/banner_images")
+  const [SliderImageRoute] = useState(
+    "https://gunma-admin.getthemeplugin.com/images/banner_images"
+  );
   // const [SliderImageRoute] = useState("http://admin.softtech-it.org/images/banner_images")
   // const [CategoryImage] = useState("http://gunma.myesdev.xyz/images/category_image/large")
   // const [CategoryImage] = useState("http://localhost:8000/images/category_image/large")
-  const [CategoryImage] = useState("https://gunma-admin.getthemeplugin.com/images/category_image/large")
+  const [CategoryImage] = useState(
+    "https://gunma-admin.getthemeplugin.com/images/category_image/large"
+  );
   // const [CategoryImage] = useState("http://admin.softtech-it.org/images/category_image/large")
   // const [LargeImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/large"
@@ -98,7 +102,7 @@ export const ApiProvider = ({ children }) => {
   const [IsReview, setIsReview] = useState(false);
   const [UserData, setUserData] = useState();
   const [IsPassword, setIsPassword] = useState();
-  const [ChangePassErrors, setChangePassErrors] = useState({});  
+  const [ChangePassErrors, setChangePassErrors] = useState({});
   const [Password, setPassword] = useState({
     oldPass: "",
     newPass: "",
@@ -113,17 +117,17 @@ export const ApiProvider = ({ children }) => {
     first_name: "",
     last_name: "",
     email: "",
-    street: "",
+    state: "",
     phone: 0,
     city: "",
     country: "",
     zip_code: 0,
-  })
+  });
   const [ShippingAddress, setShippingAddress] = useState({
     first_name: "",
     last_name: "",
     email: "",
-    street: "",
+    state: "",
     phone: 0,
     city: "",
     country: "",
@@ -133,6 +137,7 @@ export const ApiProvider = ({ children }) => {
   const [PaymentMethod, setPaymentMethod] = useState();
   const [CuttingSystem, setCuttingSystem] = useState("no");
   const [IsRegister, setIsRegister] = useState(false);
+  const [SubCategoryProduct, setSubCategoryProduct] = useState([]);
   const navigate = useNavigate();
 
   const cards = [
@@ -235,14 +240,11 @@ export const ApiProvider = ({ children }) => {
     setTotalWishlist(amount);
   }, [Wishlist]);
 
-
-  
-
   const logOut = async () => {
     await axios.get(`/api/user/account/management/logout`).then((res) => {
       console.log(res);
       if (res.data.status === 200) {
-        localStorage.removeItem("token")
+        localStorage.removeItem("token");
         navigate("/");
         setUser(false);
         Swal.fire("Success", res.data.success_message, "success");
@@ -257,15 +259,15 @@ export const ApiProvider = ({ children }) => {
       quantity: product.quantity,
       cutting_system: cutting,
       cookie_id: GetCookies("cookies"),
-      token: JSON.parse(localStorage.getItem("token"))
+      token: JSON.parse(localStorage.getItem("token")),
     };
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/user/cart/management/add-to-cart`, data,{
+        .post(`/api/user/cart/management/add-to-cart`, data, {
           headers: {
-            Authorization: JSON.parse(localStorage.getItem("token"))
-          } 
+            Authorization: JSON.parse(localStorage.getItem("token")),
+          },
         })
         .then((res) => {
           console.log(res);
@@ -288,15 +290,17 @@ export const ApiProvider = ({ children }) => {
     const data = {
       cookie_id: GetCookies("cookies"),
       product_id: item.id,
-      token: JSON.parse(localStorage.getItem("token"))
+      token: JSON.parse(localStorage.getItem("token")),
     };
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/user/wishlist/management/add-to-wishlist`, data,{
-          headers:{
-            Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
-          }
+        .post(`/api/user/wishlist/management/add-to-wishlist`, data, {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
         })
         .then((res) => {
           console.log(res);
@@ -395,9 +399,11 @@ export const ApiProvider = ({ children }) => {
     const getdata = async () => {
       await axios
         .get(`/api/product/search/management/search/${Search}`, {
-          headers:{
-            Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
-          }
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
         })
         .then((res) => {
           setSearchProduct(
@@ -417,43 +423,42 @@ export const ApiProvider = ({ children }) => {
       email: Register.email,
       password: Register.password,
       confirm_password: Register.confirmPassword,
+      cookie_id: GetCookies("cookies"),
     };
 
-    console.log(Register)
+    console.log(Register);
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/user/account/management/registration`, data, {
-          headers: {
-            Authorization: 'Bearer jgjggjggjjg'
-          }
-        })
+        .post(`/api/user/account/management/registration`, data)
         .then((res) => {
-          console.log(res)
-          setIsRegister(false)
+          console.log(res);
+          setIsRegister(false);
           if (res.data.status === 200) {
             console.log(res);
-            navigate("/login");
+            localStorage.setItem("token", JSON.stringify(res.data.token));
+            setUser(true);
+            navigate("/");
             Swal.fire("Success", res.data.success_message, "success");
             setRegister({
               email: "",
               name: "",
               password: "",
-              confirmPassword: ""
+              confirmPassword: "",
             });
           }
           if (res.data.status === 204) {
-            console.log(res)
+            console.log(res);
             setValidationErrors(res.data.errors);
             setRegister({
               email: "",
               name: "",
               password: "",
-              confirmPassword: ""
+              confirmPassword: "",
             });
           }
           if (res.data.status === 205) {
-            console.log(res)
+            console.log(res);
             console.log(res.data.error_message);
             setConfirmPassError(res.data.error_message);
             setIsConfirmError(true);
@@ -461,11 +466,11 @@ export const ApiProvider = ({ children }) => {
               email: "",
               name: "",
               password: "",
-              confirmPassword: ""
+              confirmPassword: "",
             });
           }
           if (res.data.status === 409) {
-            console.log(res)
+            console.log(res);
           }
         });
     });
@@ -474,7 +479,6 @@ export const ApiProvider = ({ children }) => {
   // useEffect(() => {
 
   // }, [User])
-  
 
   const loginSubmit = (e) => {
     e.preventDefault();
@@ -484,20 +488,20 @@ export const ApiProvider = ({ children }) => {
       password: Login.password,
       cookie_id: GetCookies("cookies"),
     };
-    console.log(Login)
+    console.log(Login);
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios.post(`/api/user/account/management/login`, data).then((res) => {
-        console.log(res)
+        console.log(res);
         if (res.data.status === 200) {
           localStorage.setItem("token", JSON.stringify(res.data.token));
-          setUserEmail(res.data.email);
           setUser(true);
+          setUserEmail(res.data.email);
           navigate("/");
           Swal.fire("Success", res.data.success_message, "success");
           setLogin({
             email: "",
-            password: ""
-          })
+            password: "",
+          });
         }
         if (res.data.status === 401) {
           console.log(res.data.error_message);
@@ -505,27 +509,40 @@ export const ApiProvider = ({ children }) => {
           setIsLoginError(true);
           setLogin({
             email: "",
-            password: ""
-          })
+            password: "",
+          });
         }
         if (res.data.status === 422) {
           setLoginValidationErrors(res.data.errors);
           setLogin({
             email: "",
-            password: ""
-          })
+            password: "",
+          });
         }
       });
     });
   };
 
   const checkPassword = async (value) => {
-    await axios
-      .get(`/api/user/account/management/check-password/${value}`)
-      .then((res) => {
-        console.log(res);
-        setIsPassword(res.data.message);
-      });
+    if (value) {
+      await axios
+        .get(
+          `/api/user/account/management/check-password/${value}/${JSON.parse(
+            localStorage.getItem("token")
+          )}`,
+          {
+            headers: {
+              Authorization: `Bearer ${JSON.parse(
+                localStorage.getItem("token")
+              )}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          setIsPassword(res.data.message);
+        });
+    }
   };
 
   const changePassword = async (value) => {
@@ -534,19 +551,26 @@ export const ApiProvider = ({ children }) => {
       old_password: value.oldPass,
       new_password: value.newPass,
       confirm_password: value.confPass,
+      token: JSON.parse(localStorage.getItem("token")),
     };
     await axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/user/account/management/change-password`, data)
+        .post(`/api/user/account/management/change-password/`, data, {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        })
         .then((res) => {
           console.log(res);
           if (res.data.status === 200) {
-            Swal.fire("success", res.data.message, "success")
+            Swal.fire("success", res.data.message, "success");
             setPassword({
               oldPass: "",
               newPass: "",
               confPass: "",
-            })
+            });
           }
           if (res.data.status === 204) {
             setChangePassErrors(res.data.errors);
@@ -557,31 +581,46 @@ export const ApiProvider = ({ children }) => {
 
   const orderProduct = async () => {
     const data = {
-      shipping_address: ShippingAddress,
+      shipping_address: IsChecked ? ShippingAddress : BillingAddress,
       billing_address: BillingAddress,
       seperate_shipping: IsChecked,
       total_amount: TotalPrice,
       payment_type: PaymentMethod,
-      paid_amount: CoinAmount ? CoinAmount : StripeAmount
-    }
+      paid_amount: CoinAmount ? Number(CoinAmount) : Number(StripeAmount),
+      token: JSON.parse(localStorage.getItem("token")),
+    };
+    console.log(data)
     await axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios
-        .post(`/api/order/management/system/order`, data)
-        .then((res) => {
-          console.log(res);
-        });
+      axios.post(`/api/order/management/system/order`, data, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(
+            localStorage.getItem("token")
+          )}`,
+        },
+      }).then((res) => {
+        console.log(res);
+      });
     });
-  }
+  };
 
   useEffect(() => {
     const getdata = async () => {
       // console.log(IsCart)
       await axios
-        .get(`/api/get/index/all/info/${GetCookies("cookies")}/${ localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : "test" }`,{
-          headers:{
-            Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+        .get(
+          `/api/get/index/all/info/${GetCookies("cookies")}/${
+            localStorage.getItem("token")
+              ? JSON.parse(localStorage.getItem("token"))
+              : "test"
+          }`,
+          {
+            headers: {
+              Authorization: `Bearer ${JSON.parse(
+                localStorage.getItem("token")
+              )}`,
+            },
           }
-        })
+        )
         .then((res) => {
           console.log(res);
           if (res.data.status === 200) {
@@ -613,7 +652,7 @@ export const ApiProvider = ({ children }) => {
                 name: item.product[0].name,
                 slug: item.product[0].slug,
                 sub_cat_slug: item.product[0].sub_category.slug,
-                cat_slug: item.product[0].sub_category.main_category.slug
+                cat_slug: item.product[0].sub_category.main_category.slug,
               };
             });
             setcart(datas);
@@ -626,7 +665,7 @@ export const ApiProvider = ({ children }) => {
             setAllReviews(!AllReviews);
           }
         });
-        setSmallLoading(false);
+      setSmallLoading(false);
     };
     getdata();
   }, [IsReview, IsCart, User]);
@@ -816,35 +855,37 @@ export const ApiProvider = ({ children }) => {
         IsPassword,
         changePassword,
         ChangePassErrors,
-        Password, 
+        Password,
         setPassword,
         SmallLoading,
         setSmallLoading,
         AllReviews,
         setAllReviews,
-        SliderImages, 
+        SliderImages,
         setSliderImages,
         SubBanner,
         setSubBanner,
         SliderImageRoute,
         CategoryImage,
-        BillingAddress, 
-        setBillingAddress, 
-        ShippingAddress, 
+        BillingAddress,
+        setBillingAddress,
+        ShippingAddress,
         setShippingAddress,
-        IsChecked, 
+        IsChecked,
         setIsChecked,
-        PaymentMethod, 
+        PaymentMethod,
         setPaymentMethod,
         orderProduct,
-        CuttingSystem, 
+        CuttingSystem,
         setCuttingSystem,
-        IsRegister, 
+        IsRegister,
         setIsRegister,
         setStripeAmount,
         setCoinAmount,
         CoinAmount,
-        StripeAmount
+        StripeAmount,
+        SubCategoryProduct,
+        setSubCategoryProduct
       }}
     >
       {children}
