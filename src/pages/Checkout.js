@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import BreadCrumbs from "../components/BreadCrumbs";
@@ -7,10 +7,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useApi } from "../context/ApiContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 const Checkout = () => {
   const [CoinInput, setCoinInput] = useState(false);
   const [StripeInput, setStripeInput] = useState(false);
+  const [ShowState, setShowState] = useState(false);
+  const [SelectCoin, setSelectCoin] = useState();
+  const ref = useRef();
   const navigate = useNavigate();
   const {
     TotalPrice,
@@ -28,7 +32,13 @@ const Checkout = () => {
     CoinAmount,
     StripeAmount,
     User,
+    States,
+    setStates,
+    setUseCoins,
+    applyCoin,
+    UserData
   } = useApi();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // if (IsChecked) {
@@ -68,6 +78,10 @@ const Checkout = () => {
     }
   }, []);
 
+  // window.onclick = ()=>{
+  //   setShowState(false)
+  // }
+
   const handleCheck = (value) => {
     if (value) {
       if (IsChecked) {
@@ -76,6 +90,20 @@ const Checkout = () => {
     }
     setIsChecked(!IsChecked);
   };
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setShowState(false);
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
 
   return (
     <>
@@ -149,23 +177,57 @@ const Checkout = () => {
                     required
                   />
                 </div>
-                <div className="flex flex-col items-start my-4">
+                <div className="flex flex-col items-start my-4 relative">
                   <label htmlFor="address">State</label>
-                  <input
-                    onChange={(e) =>
-                      setBillingAddress({
-                        ...BillingAddress,
-                        state: e.target.value,
-                      })
-                    }
-                    value={BillingAddress.street}
-                    className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                    type="text"
-                    name="state"
-                    placeholder="Enter Your State"
-                    id="state"
-                    required
-                  />
+                  <div
+                    onClick={(e) => setShowState(true)}
+                    className="w-full flex justify-between items-center px-4 bg-gray-100"
+                  >
+                    <h2>Select State</h2> <MdOutlineKeyboardArrowDown />
+                  </div>
+                  {ShowState ? (
+                    <div className="absolute w-full top-20">
+                      <input
+                        onChange={(e) => {
+                          setBillingAddress({
+                            ...BillingAddress,
+                            state: e.target.value,
+                          });
+                        }}
+                        value={BillingAddress.state}
+                        autoComplete="off"
+                        className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                        type="text"
+                        name="state"
+                        placeholder="Enter Your State"
+                        id="state"
+                        required
+                      />
+                      <div
+                        ref={ref}
+                        className="w-full h-[200px] bg-white z-10 overflow-y-auto border shadow-md"
+                      >
+                        {States.map((item) => {
+                          return (
+                            <div
+                              onClick={(e) => {
+                                setBillingAddress({
+                                  ...BillingAddress,
+                                  state: item.name,
+                                });
+                                setShowState(false);
+                              }}
+                              className="border-b px-2 py-2 cursor-pointer hover:bg-gray-200"
+                            >
+                              <h2>{item.name}</h2>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <div className="flex flex-col items-start my-4 w-full">
                   <label htmlFor="city">City</label>
@@ -432,13 +494,19 @@ const Checkout = () => {
           </div>
         </form>
         <div className="flex-[0.8] space-y-2 mt-20">
-          <div className="w-full border border-gray-300 bg-blue-500 flex justify-between items-center py-2 px-4 rounded-md text-white">
+          <form onSubmit={e=>{
+            e.preventDefault()
+            applyCoin(SelectCoin)}} className="w-full border border-gray-300 bg-blue-500 flex justify-between items-center py-2 px-4 rounded-md text-white">
             <div>
-              <h2 className="text-lg font-semibold">Your Points : <span className="text-2xl font-bold"> 100 </span> </h2>
+              <h2 className="text-lg font-semibold">
+                Your Points : <span className="text-2xl font-bold"> {UserData.coins} </span>{" "}
+              </h2>
             </div>
             <div className="flex justify-center items-center space-x-3">
               <div className="text-base font-semibold">Use Points : </div>{" "}
               <input
+                onChange={e=> setSelectCoin(e.target.value)}
+                value={SelectCoin}
                 className="bg-gray-100 focus:bg-white w-28 rounded-md px-2 py-1 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100 text-black"
                 placeholder="Points"
                 type="number"
@@ -447,12 +515,12 @@ const Checkout = () => {
               />
             </div>
             <div>
-              <button className="bg-gray-700 rounded-sm text-white w-full py-2 hover:bg-black transition-all duration-500 text-sm md:text-base px-4">
+              <button  className="bg-gray-700 rounded-sm text-white w-full py-2 hover:bg-black transition-all duration-500 text-sm md:text-base px-4">
                 Apply
               </button>
             </div>
-          </div>
-          <div className="flex flex-col border border-red-500 rounded-lg h-[420px] w-full px-2 md:px-10 py-5">
+          </form>
+          <div className="flex flex-col border border-red-500 rounded-lg h-[480px] w-full px-2 md:px-10 py-5">
             <div className="w-full text-center">
               <h2 className="text-base md:text-xl font-bold"> Cart Totals </h2>
             </div>

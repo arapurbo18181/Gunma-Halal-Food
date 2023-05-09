@@ -189,6 +189,8 @@ export const ApiProvider = ({ children }) => {
   const [CardsForUserDashboard, setCardsForUserDashboard] = useState(cards);
   const [CoinAmount, setCoinAmount] = useState();
   const [StripeAmount, setStripeAmount] = useState();
+  const [States, setStates] = useState([]);
+  const [UseCoins, setUseCoins] = useState();
   const location = useLocation();
   const params = useParams();
 
@@ -228,7 +230,7 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     const amount = cart.reduce((accumulator, currItem) => {
-      return accumulator + Number(currItem.quantity) * Number(currItem.price);
+      return accumulator +  Number(currItem.total_price);
     }, 0);
     setTotalPrice(amount);
   }, [cart]);
@@ -339,9 +341,11 @@ export const ApiProvider = ({ children }) => {
   };
 
   const increaseQuantity = (item) => {
+    console.log(item)
     const data = {
       quantity: "plus",
       id: item.id,
+      price: item.price,
     };
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios.post(`/api/user/cart/management/update-cart`, data).then((res) => {
@@ -357,6 +361,7 @@ export const ApiProvider = ({ children }) => {
       const data = {
         quantity: "minus",
         id: item.id,
+        price: item.price,
       };
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
@@ -581,7 +586,7 @@ export const ApiProvider = ({ children }) => {
 
   const orderProduct = async () => {
     const data = {
-      shipping_address: IsChecked ? ShippingAddress : BillingAddress,
+      shipping_address: IsChecked ?  BillingAddress : ShippingAddress,
       billing_address: BillingAddress,
       seperate_shipping: IsChecked,
       total_amount: TotalPrice,
@@ -602,6 +607,28 @@ export const ApiProvider = ({ children }) => {
       });
     });
   };
+
+  const applyCoin = async (coins) =>{
+
+    const data ={
+      total_amount: TotalPrice,
+      coin: coins,
+      token: JSON.parse(localStorage.getItem("token"))
+    }
+
+    await axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.post(`/api/order/management/system/use-coin`, data, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(
+            localStorage.getItem("token")
+          )}`,
+        },
+      }).then((res) => {
+        console.log(res);
+        setIsCart(!IsCart);
+      });
+    });
+  }
 
   useEffect(() => {
     const getdata = async () => {
@@ -630,6 +657,7 @@ export const ApiProvider = ({ children }) => {
             setCategoryApi(res.data.categories);
             setProductsApi(res.data.products);
             setUserData(res.data.user);
+            setStates(res.data.states);
             setWishlist(
               res.data.wishlist.map((item) => {
                 return (item.wishlist_product[0] = {
@@ -653,6 +681,7 @@ export const ApiProvider = ({ children }) => {
                 slug: item.product[0].slug,
                 sub_cat_slug: item.product[0].sub_category.slug,
                 cat_slug: item.product[0].sub_category.main_category.slug,
+                total_price: item.total_price
               };
             });
             setcart(datas);
@@ -885,7 +914,12 @@ export const ApiProvider = ({ children }) => {
         CoinAmount,
         StripeAmount,
         SubCategoryProduct,
-        setSubCategoryProduct
+        setSubCategoryProduct,
+        States,
+        setStates,
+        setUseCoins,
+        applyCoin,
+        UserData
       }}
     >
       {children}
