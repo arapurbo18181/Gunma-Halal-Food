@@ -45,8 +45,7 @@ const Signup = () => {
             <BreadCrumbs name={"Sign Up"} url={"signup"} />
             <section className="bg-[#f9fafb] w-[100%] h-[90vh] flex justify-center items-center">
               <form
-                onSubmit={handleRegister}
-                className="w-[500px] h-[620px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container"
+                className="w-[500px] h-[650px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container"
               >
                 <div className="flex flex-col items-center justify-center my-5 text-3xl font-bold">
                   <h1 className="">Sign Up</h1>
@@ -60,22 +59,44 @@ const Signup = () => {
                     ""
                   )}
                   <div className="flex flex-col items-start my-4">
-                    <label htmlFor="email">
-                      Name <span className="text-red-600">*</span>
+                    <label htmlFor="first_name">
+                      First Name <span className="text-red-600">*</span>
                     </label>
                     <input
                       onChange={signUp}
-                      value={Register.name}
+                      value={Register.first_name}
                       className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                       type="text"
-                      name="name"
-                      placeholder="Enter Your Name"
-                      id="name"
+                      name="first_name"
+                      placeholder="Enter Your First Name"
+                      id="first_name"
                       // required
                     />
-                    {ValidationErrors.name ? (
+                    {ValidationErrors.first_name ? (
                       <small className="text-red-500 ml-2">
-                        {ValidationErrors.name}
+                        {ValidationErrors.first_name}
+                      </small>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="flex flex-col items-start my-4">
+                    <label htmlFor="last_name">
+                     Last Name <span className="text-red-600">*</span>
+                    </label>
+                    <input
+                      onChange={signUp}
+                      value={Register.last_name}
+                      className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                      type="text"
+                      name="last_name"
+                      placeholder="Enter Your Last Name"
+                      id="last_name"
+                      // required
+                    />
+                    {ValidationErrors.last_name ? (
+                      <small className="text-red-500 ml-2">
+                        {ValidationErrors.last_name}
                       </small>
                     ) : (
                       ""
@@ -141,7 +162,7 @@ const Signup = () => {
                     />
                   </div>
                   <div className="w-full flex justify-center my-4">
-                    <button className="w-full border border-red-500 text-red-500 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300">
+                    <button onClick={handleRegister} className="w-full border border-red-500 text-red-500 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300">
                       Sign Up
                     </button>
                   </div>

@@ -20,38 +20,38 @@ export const ApiProvider = ({ children }) => {
   const [Catname, setCatname] = useState();
   const [BreadCrumbs, setBreadCrumbs] = useState([]);
   // const [SliderImageRoute] = useState("http://gunma.myesdev.xyz/images/banner_images")
-  // const [SliderImageRoute] = useState("http://localhost:8000/images/banner_images")
-  const [SliderImageRoute] = useState(
-    "https://gunma-admin.getthemeplugin.com/images/banner_images"
-  );
+  const [SliderImageRoute] = useState("http://localhost:8000/images/banner_images")
+  // const [SliderImageRoute] = useState(
+  //   "https://gunma-admin.getthemeplugin.com/images/banner_images"
+  // );
   // const [SliderImageRoute] = useState("http://admin.softtech-it.org/images/banner_images")
   // const [CategoryImage] = useState("http://gunma.myesdev.xyz/images/category_image/large")
-  // const [CategoryImage] = useState("http://localhost:8000/images/category_image/large")
-  const [CategoryImage] = useState(
-    "https://gunma-admin.getthemeplugin.com/images/category_image/large"
-  );
+  const [CategoryImage] = useState("http://localhost:8000/images/category_image/large")
+  // const [CategoryImage] = useState(
+  //   "https://gunma-admin.getthemeplugin.com/images/category_image/large"
+  // );
   // const [CategoryImage] = useState("http://admin.softtech-it.org/images/category_image/large")
   // const [LargeImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/large"
   // );
-  // const [LargeImage] = useState(
-  //   "http://localhost:8000/images/product_images/large"
-  // );
   const [LargeImage] = useState(
-    "https://gunma-admin.getthemeplugin.com/images/product_images/large"
+    "http://localhost:8000/images/product_images/large"
   );
+  // const [LargeImage] = useState(
+  //   "https://gunma-admin.getthemeplugin.com/images/product_images/large"
+  // );
   // const [LargeImage] = useState(
   //   "http://admin.softtech-it.org/images/product_images/large"
   // );
   // const [SmallImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/small"
   // );
-  // const [SmallImage] = useState(
-  //   "http://localhost:8000/images/product_images/small"
-  // );
   const [SmallImage] = useState(
-    "https://gunma-admin.getthemeplugin.com/images/product_images/small"
+    "http://localhost:8000/images/product_images/small"
   );
+  // const [SmallImage] = useState(
+  //   "https://gunma-admin.getthemeplugin.com/images/product_images/small"
+  // );
   // const [SmallImage] = useState(
   //   "http://admin.softtech-it.org/images/product_images/small"
   // );
@@ -122,6 +122,7 @@ export const ApiProvider = ({ children }) => {
     city: "",
     country: "",
     zip_code: 0,
+    delivery_time: ""
   });
   const [ShippingAddress, setShippingAddress] = useState({
     first_name: "",
@@ -190,6 +191,7 @@ export const ApiProvider = ({ children }) => {
   const [CoinAmount, setCoinAmount] = useState();
   const [StripeAmount, setStripeAmount] = useState();
   const [States, setStates] = useState([]);
+  const [ShippingStates, setShippingStates] = useState([]);
   const [UseCoins, setUseCoins] = useState();
   const location = useLocation();
   const params = useParams();
@@ -243,7 +245,8 @@ export const ApiProvider = ({ children }) => {
   }, [Wishlist]);
 
   const logOut = async () => {
-    await axios.get(`/api/user/account/management/logout`).then((res) => {
+    await axios.get(`/api/user/account/management/logout/${JSON.parse(localStorage.getItem("token")
+    )}`).then((res) => {
       console.log(res);
       if (res.data.status === 200) {
         localStorage.removeItem("token");
@@ -424,7 +427,8 @@ export const ApiProvider = ({ children }) => {
   const registerSubmit = (e) => {
     e.preventDefault();
     const data = {
-      name: Register.name,
+      first_name: Register.first_name,
+      last_name: Register.last_name,
       email: Register.email,
       password: Register.password,
       confirm_password: Register.confirmPassword,
@@ -447,7 +451,8 @@ export const ApiProvider = ({ children }) => {
             Swal.fire("Success", res.data.success_message, "success");
             setRegister({
               email: "",
-              name: "",
+              first_name: "",
+              last_name: "",
               password: "",
               confirmPassword: "",
             });
@@ -457,7 +462,8 @@ export const ApiProvider = ({ children }) => {
             setValidationErrors(res.data.errors);
             setRegister({
               email: "",
-              name: "",
+              first_name: "",
+              last_name: "",
               password: "",
               confirmPassword: "",
             });
@@ -469,7 +475,8 @@ export const ApiProvider = ({ children }) => {
             setIsConfirmError(true);
             setRegister({
               email: "",
-              name: "",
+              first_name: "",
+              last_name: "",
               password: "",
               confirmPassword: "",
             });
@@ -658,6 +665,7 @@ export const ApiProvider = ({ children }) => {
             setProductsApi(res.data.products);
             setUserData(res.data.user);
             setStates(res.data.states);
+            setShippingStates(res.data.states);
             setWishlist(
               res.data.wishlist.map((item) => {
                 return (item.wishlist_product[0] = {
@@ -763,6 +771,19 @@ export const ApiProvider = ({ children }) => {
   const getProducts = async (category, sub_category) => {
     await axios.get(`/api/${category}/${sub_category}`).then((res) => {
       setSubCatProductsApi(res.data.products);
+    });
+  };
+
+  const filterStates = async (value) => {
+    await axios.get(`/api/state/search/management/state/${value}`).then((res) => {
+      console.log(res);
+      setStates(res.data);
+    });
+  };
+  const filterShippingStates = async (value) => {
+    await axios.get(`/api/state/search/management/state/${value}`).then((res) => {
+      console.log(res);
+      setShippingStates(res.data);
     });
   };
 
@@ -919,7 +940,10 @@ export const ApiProvider = ({ children }) => {
         setStates,
         setUseCoins,
         applyCoin,
-        UserData
+        UserData,
+        filterStates,
+        ShippingStates,
+        filterShippingStates
       }}
     >
       {children}
