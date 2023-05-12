@@ -4,19 +4,25 @@ import { FaBars } from "react-icons/fa";
 import Searchbar from "../Searchbar";
 import { useCategory } from "../../context/CategoryContext";
 import { useApi } from "../../context/ApiContext";
+import { AiFillHome } from "react-icons/ai";
+import { AiFillInfoCircle } from "react-icons/ai";
+import { MdContactMail } from "react-icons/md";
 
 const menu = [
   {
     menu: "Home",
     page: "/",
+    icon: <AiFillHome />,
   },
   {
     menu: "About Us",
     page: "/about",
+    icon: <AiFillInfoCircle />,
   },
   {
     menu: "Contact",
     page: "/contact",
+    icon: <MdContactMail />,
   },
 ];
 
@@ -49,7 +55,7 @@ const menuForMobile = [
 
 const Menubar = () => {
   const { Toggle, setToggle, toggleNav } = useCategory();
-  const {BreadCrumbs, setBreadCrumbs} = useApi()
+  const { BreadCrumbs, setBreadCrumbs } = useApi();
 
   return (
     <section className="w-full flex justify-center items-center">
@@ -65,12 +71,15 @@ const Menubar = () => {
               <Link
                 key={index}
                 to={item.page}
-                onClick={()=>{
-                  item.menu === "Home" ?  setBreadCrumbs([])  : setBreadCrumbs([item.menu])
+                onClick={() => {
+                  item.menu === "Home"
+                    ? setBreadCrumbs([])
+                    : setBreadCrumbs([item.menu]);
                 }}
-                className="text-base font-semibold hover:-translate-y-1 transition-all duration-300"
+                className="text-base font-semibold hover:-translate-y-1 transition-all duration-300 flex justify-center items-center space-x-2"
               >
-                {item.menu}
+                <span> {item.icon} </span>
+                <span> {item.menu} </span>
               </Link>
             );
           })}
@@ -93,7 +102,7 @@ const Menubar = () => {
           {menuForMobile.map((item, index) => {
             return (
               <Link
-              key={index}
+                key={index}
                 to={item.page}
                 onClick={toggleNav}
                 className="border-b w-full py-2 px-2 text-center h-full text-xl"

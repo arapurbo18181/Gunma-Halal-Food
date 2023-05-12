@@ -55,30 +55,6 @@ const Checkout = () => {
     // }
     orderProduct();
     console.log(BillingAddress);
-    // setBillingAddress({
-    //   deliveryDate: "",
-    //   firstname: "",
-    //   lastname: "",
-    //   email: "",
-    //   street: "",
-    //   phone: 0,
-    //   city: "",
-    //   country: "",
-    //   postCode: 0,
-    //   totalAmount: 0
-    // });
-    // setShippingAddress({
-    //   deliveryDate: "",
-    //   firstname: "",
-    //   lastname: "",
-    //   email: "",
-    //   street: "",
-    //   phone: 0,
-    //   city: "",
-    //   country: "",
-    //   postCode: 0,
-    //   totalAmount: 0
-    // });
   };
   useEffect(() => {
     if (!User) {
@@ -91,10 +67,6 @@ const Checkout = () => {
       email: UserData.email,
     });
   }, []);
-
-  // window.onclick = ()=>{
-  //   setShowState(false)
-  // }
 
   const handleCheck = (value) => {
     if (value) {
@@ -120,7 +92,7 @@ const Checkout = () => {
       // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ref]);
+  }, [ref, myref]);
 
   useEffect(() => {
     const data = States.find((item) => {

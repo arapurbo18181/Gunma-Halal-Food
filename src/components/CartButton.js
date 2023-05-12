@@ -18,6 +18,8 @@ const CartButton = () => {
         TotalAmount,
         TotalWishlist,
         setCartCoordinate,
+        IsCartSidebar, 
+        setIsCartSidebar
       } = useApi();
 
       useEffect(() => {
@@ -31,7 +33,14 @@ const CartButton = () => {
         // console.log(CartCoordinate);
       }, [CartCoordinate]);
   return (
-    <div onClick={() => setToggleSidebar(!ToggleSidebar)} className="fixed right-0 top-36 z-30 flex justify-center items-center hover:-translate-y-1 transition-all duration-300 bg-gray-700 h-16 w-12 cursor-pointer" ref={myRef}>
+    <div onClick={() => {
+      setToggleSidebar(!ToggleSidebar)
+      if(IsCartSidebar === true){
+        setIsCartSidebar(false)
+      }else{
+        setIsCartSidebar(true)
+      }
+      }} className="fixed right-0 top-36 z-30 flex justify-center items-center hover:-translate-y-1 transition-all duration-300 bg-gray-700 h-16 w-12 cursor-pointer" ref={myRef}>
     <div className="cart relative ">
       <BsBagCheckFill
         className="text-3xl text-yellow-500"

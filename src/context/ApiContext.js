@@ -20,41 +20,41 @@ export const ApiProvider = ({ children }) => {
   const [Catname, setCatname] = useState();
   const [BreadCrumbs, setBreadCrumbs] = useState([]);
   // const [SliderImageRoute] = useState("http://gunma.myesdev.xyz/images/banner_images")
-  const [SliderImageRoute] = useState("http://localhost:8000/images/banner_images")
+  // const [SliderImageRoute] = useState("http://localhost:8000/images/banner_images")
   // const [SliderImageRoute] = useState(
   //   "https://gunma-admin.getthemeplugin.com/images/banner_images"
   // );
-  // const [SliderImageRoute] = useState("http://admin.softtech-it.org/images/banner_images")
+  const [SliderImageRoute] = useState("http://admin.softtech-it.org/images/banner_images")
   // const [CategoryImage] = useState("http://gunma.myesdev.xyz/images/category_image/large")
-  const [CategoryImage] = useState("http://localhost:8000/images/category_image/large")
+  // const [CategoryImage] = useState("http://localhost:8000/images/category_image/large")
   // const [CategoryImage] = useState(
   //   "https://gunma-admin.getthemeplugin.com/images/category_image/large"
   // );
-  // const [CategoryImage] = useState("http://admin.softtech-it.org/images/category_image/large")
+  const [CategoryImage] = useState("http://admin.softtech-it.org/images/category_image/large")
   // const [LargeImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/large"
   // );
-  const [LargeImage] = useState(
-    "http://localhost:8000/images/product_images/large"
-  );
+  // const [LargeImage] = useState(
+  //   "http://localhost:8000/images/product_images/large"
+  // );
   // const [LargeImage] = useState(
   //   "https://gunma-admin.getthemeplugin.com/images/product_images/large"
   // );
-  // const [LargeImage] = useState(
-  //   "http://admin.softtech-it.org/images/product_images/large"
-  // );
+  const [LargeImage] = useState(
+    "http://admin.softtech-it.org/images/product_images/large"
+  );
   // const [SmallImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/small"
   // );
-  const [SmallImage] = useState(
-    "http://localhost:8000/images/product_images/small"
-  );
+  // const [SmallImage] = useState(
+  //   "http://localhost:8000/images/product_images/small"
+  // );
   // const [SmallImage] = useState(
   //   "https://gunma-admin.getthemeplugin.com/images/product_images/small"
   // );
-  // const [SmallImage] = useState(
-  //   "http://admin.softtech-it.org/images/product_images/small"
-  // );
+  const [SmallImage] = useState(
+    "http://admin.softtech-it.org/images/product_images/small"
+  );
   const [AllProducts, setAllProducts] = useState([]);
   const [SubProducts, setSubProducts] = useState([]);
   const [Register, setRegister] = useState({});
@@ -139,6 +139,7 @@ export const ApiProvider = ({ children }) => {
   const [CuttingSystem, setCuttingSystem] = useState("no");
   const [IsRegister, setIsRegister] = useState(false);
   const [SubCategoryProduct, setSubCategoryProduct] = useState([]);
+  const [IsCartSidebar, setIsCartSidebar] = useState(false);
   const navigate = useNavigate();
 
   const cards = [
@@ -943,7 +944,9 @@ export const ApiProvider = ({ children }) => {
         UserData,
         filterStates,
         ShippingStates,
-        filterShippingStates
+        filterShippingStates,
+        IsCartSidebar,
+        setIsCartSidebar
       }}
     >
       {children}
