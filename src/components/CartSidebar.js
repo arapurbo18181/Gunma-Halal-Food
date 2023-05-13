@@ -40,10 +40,10 @@ const CartSidebar = () => {
     <>
       {cart ? (
         <div className={`flex justify-center items-center z-20 fixed top-0 ${IsCartSidebar ? "right-0" : "-right-full"} transition-all duration-500 h-screen`}>
-        <div className={`h-full w-full md:w-[65vw] xl:w-[70vw]  ${IsCartSidebar ? "bg-black bg-opacity-40 transition-all duration-500 delay-300" : "duration-75"} `}>
+        <div className={`h-full w-full md:w-[65vw] xl:w-[70vw] ${IsCartSidebar ? "bg-black bg-opacity-40 transition-all duration-500 delay-300" : "duration-75"} `}>
 
         </div>
-          <div  ref={ref}
+          <div ref={ref}
             className={`w-full bg-white h-full shadow-2xl md:w-[35vw] xl:w-[30vw] px-4 lg:px-[35px]`}
           >
             <div className="flex items-center justify-between py-6 border-b">
@@ -70,7 +70,10 @@ const CartSidebar = () => {
                 </div>
               </div>
               <Link
-                onClick={() => setToggleSidebar(!ToggleSidebar)}
+                onClick={() => {
+                  setToggleSidebar(!ToggleSidebar)
+                  setIsCartSidebar(false)
+                  }}
                 to={"/cart"}
                 className="bg-gray-200 flex p-4 justify-center items-center text-primary w-full font-medium"
               >
@@ -78,7 +81,10 @@ const CartSidebar = () => {
               </Link>
               {User ? (
                 <Link
-                  onClick={() => setToggleSidebar(!ToggleSidebar)}
+                  onClick={() => {
+                    setToggleSidebar(!ToggleSidebar)
+                    setIsCartSidebar(false)
+                    }}
                   to={"/checkout"}
                   className="bg-black flex p-4 justify-center items-center text-white w-full font-medium"
                 >
@@ -88,6 +94,7 @@ const CartSidebar = () => {
                 <Link
                   onClick={() => {
                     setToggleSidebar(!ToggleSidebar);
+                    setIsCartSidebar(false)
                   }}
                   to={"/login"}
                   className="bg-black flex p-4 justify-center items-center text-white w-full font-medium"

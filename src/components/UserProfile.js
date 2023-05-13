@@ -15,8 +15,8 @@ const UserProfile = () => {
   // }, [UserImage, Image]);
 
   return (
-    <section className="w-[100%] h-[100%] flex justify-center items-center">
-      <form className="w-[1000px] h-[550px]">
+    <section className="w-screen h-[100%] flex justify-center items-center">
+      <form className="w-full h-[550px]">
         <div className="flex justify-center my-5 text-4xl font-bold">
           <h1>Your Profile</h1>
         </div>

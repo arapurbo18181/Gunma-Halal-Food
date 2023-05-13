@@ -127,6 +127,11 @@ const Checkout = () => {
     });
   };
 
+  useEffect(() => {
+    setBillingAddress({...BillingAddress, first_name: UserData.name, last_name: UserData.last_name, email: UserData.email})
+  }, [])
+  
+
   return (
     <>
       <BreadCrumbs name={"Checkout"} url={"checkout"} />
@@ -147,34 +152,50 @@ const Checkout = () => {
                   <div className="flex flex-col items-start my-4 w-full">
                     <label htmlFor="email">First Name</label>
                     <input
-                      value={UserData.name}
+                    onChange={(e) =>
+                      setBillingAddress({
+                        ...BillingAddress,
+                        first_name: e.target.value,
+                      })
+                    }
+                      value={BillingAddress.first_name}
                       className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                       type="text"
                       name="name"
                       placeholder="Enter Your Name"
                       id="name"
                       required
-                      readOnly
                     />
                   </div>
                   <div className="flex flex-col items-start my-4 w-full ml-0 sm:ml-4">
                     <label htmlFor="email">Last Name</label>
                     <input
-                      value={UserData.last_name}
+                    onChange={(e) =>
+                      setBillingAddress({
+                        ...BillingAddress,
+                        last_name: e.target.value,
+                      })
+                    }
+                      value={BillingAddress.last_name}
                       className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                       type="text"
                       name="name"
                       placeholder="Enter Your Name"
                       id="name"
                       required
-                      readOnly
                     />
                   </div>
                 </div>
                 <div className="flex flex-col items-start my-4 w-full">
                   <label htmlFor="email">Email</label>
                   <input
-                    value={UserData.email}
+                    onChange={(e) =>
+                      setBillingAddress({
+                        ...BillingAddress,
+                        last_name: e.target.value,
+                      })
+                    }
+                    value={BillingAddress.email}
                     className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                     type="email"
                     name="email"

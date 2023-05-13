@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import BreadCrumbs from "../components/BreadCrumbs";
 import { useApi } from "../context/ApiContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import { AiOutlineMail } from "react-icons/ai";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 const Login = () => {
   const {
@@ -27,7 +29,7 @@ const Login = () => {
         <section className="bg-[#f9fafb] w-[100%] h-[90vh] flex justify-center items-center">
           <form
             onSubmit={loginSubmit}
-            className="w-[500px] h-[500px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container"
+            className="w-[500px] h-[400px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container -mt-36"
           >
             <div className="flex justify-center my-5 text-4xl font-bold">
               <h1>Log In</h1>
@@ -44,16 +46,21 @@ const Login = () => {
                 <label htmlFor="email">
                   Email <span className="text-red-600">*</span>
                 </label>
-                <input
-                  onChange={login}
-                  value={Login.email}
-                  className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                  type="email"
-                  name="email"
-                  placeholder="Enter Your Email"
-                  id=""
-                  // required
-                />
+                <div className="flex justify-start items-center space-x-4 px-2 py-3 w-full rounded-md bg-white outline-none transition-all duration-300 ease-in-out group-focus:outline-2 group-focus:outline-offset-0 group-focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100">
+                  <div className="">
+                    <AiOutlineMail className="text-lg" />
+                  </div>
+                  <input
+                    onChange={login}
+                    value={Login.email}
+                    className="h-full w-full outline-none"
+                    type="email"
+                    name="email"
+                    placeholder="Enter Your Email"
+                    id=""
+                    // required
+                  />
+                </div>
                 {LoginValidationErrors.email ? (
                   <small className="text-red-500 ml-2">
                     {LoginValidationErrors.email}
@@ -66,16 +73,22 @@ const Login = () => {
                 <label htmlFor="passsword">
                   Password <span className="text-red-600">*</span>
                 </label>
-                <input
-                  onChange={login}
-                  value={Login.password}
-                  className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                  type="password"
-                  name="password"
-                  placeholder="Enter Your Password"
-                  id=""
-                  // required
-                />
+
+                <div className="flex justify-start items-center space-x-4 px-2 py-3 w-full rounded-md bg-white outline-none transition-all duration-300 ease-in-out group-focus:outline-2 group-focus:outline-offset-0 group-focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100">
+                  <div className="">
+                    <RiLockPasswordLine className="text-lg" />
+                  </div>
+                  <input
+                    onChange={login}
+                    value={Login.password}
+                    className="h-full w-full outline-none"
+                    type="password"
+                    name="password"
+                    placeholder="Enter Your Password"
+                    id=""
+                    // required
+                  />
+                </div>
                 {LoginValidationErrors.password ? (
                   <small className="text-red-500 ml-2">
                     {LoginValidationErrors.password}
@@ -88,7 +101,7 @@ const Login = () => {
                 <h2 className="cursor-pointer">Forgot Your Password?</h2>
               </div>
               <div className="w-full flex justify-center my-4">
-                <button className="w-full bg-red-500 text-white py-2 rounded-full hover:bg-red-600 transition-all duration-300">
+                <button className="w-full border border-red-500 text-red-500 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300">
                   Log In
                 </button>
               </div>
