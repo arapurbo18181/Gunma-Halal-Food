@@ -16,7 +16,7 @@ const TopSellingProducts = () => {
           p Selling Products
         </h1>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-[100%]">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 place-content-center w-full">
         {AllProducts.map((item, index) => {
           const discountedAmount = (item.price / 100) * item.discount;
           const newPrice = item.price - discountedAmount;

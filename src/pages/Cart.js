@@ -56,7 +56,7 @@ const Cart = () => {
 
                 <div className="flex justify-between items-center w-full mt-5">
                   <div className="uppercase font-semibold">
-                    <span className="mr-2"> Total: </span> ${" "}
+                    <span className="mr-2"> Total: </span> ¥{" "}
                     {parseFloat(TotalPrice).toFixed(2)}
                   </div>
                   {/* <div
@@ -74,7 +74,7 @@ const Cart = () => {
               </div>
               <div className="flex justify-between py-2 border-b border-gray-200">
                 <h3 className=" font-semibold">Subtotal</h3>
-                <h5 className="text-base text-gray-400">${" "}
+                <h5 className="text-base text-gray-400">¥{" "}
                     {parseFloat(TotalPrice).toFixed(2)}</h5>
               </div>
               <div className="flex justify-between py-2 border-b border-gray-200 ">
@@ -90,11 +90,11 @@ const Cart = () => {
                     (estimated for japan)
                   </span>{" "}
                 </h3>
-                <h5 className="text-red-500 font-semibold">$0</h5>
+                <h5 className="text-red-500 font-semibold">¥0</h5>
               </div>
               <div className="flex justify-between py-2 border-b border-gray-200 font-bold text-xl">
                 <h3>Total</h3>
-                <h5>${" "}
+                <h5>¥{" "}
                     {parseFloat(TotalPrice).toFixed(2)}</h5>
               </div>
               <div className="w-full mt-10">

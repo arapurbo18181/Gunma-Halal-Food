@@ -29,7 +29,7 @@ const Login = () => {
         <section className="bg-[#f9fafb] w-[100%] h-[90vh] flex justify-center items-center">
           <form
             onSubmit={loginSubmit}
-            className="w-[500px] h-[400px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container -mt-36"
+            className="w-[500px] h-[460px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container -mt-36"
           >
             <div className="flex justify-center my-5 text-4xl font-bold">
               <h1>Log In</h1>

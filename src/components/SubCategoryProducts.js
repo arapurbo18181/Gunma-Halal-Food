@@ -55,7 +55,7 @@ const SubCategoryProducts = ({ item }) => {
     if (SubCategoryProduct) {
       SubCategoryProduct.map((elem) => {
         if (elem.id === id) {
-          console.log(id)
+          console.log(id);
           elem.quantity = elem.quantity + 1;
           setQuantity(elem.quantity);
         }
@@ -140,50 +140,48 @@ const SubCategoryProducts = ({ item }) => {
       {AllProducts || SubProducts ? (
         <div
           ref={myRef}
-          className="px-4 py-4 shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[400px]"
+          className="shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[400px]"
         >
-          <div className="">
-            <Link
-              className="relative flex justify-center items-center transition-all duration-500"
-              to={`/${item.sub_category.main_category.slug}/${item.sub_category.slug}/${item.slug}`}
-              onClick={() => {
-                setShowProduct(item);
-                setBreadCrumbs([...BreadCrumbs, item.name]);
-              }}
-            >
-              <img
-                className="cursor-pointer w-full -z-10"
-                src={`${LargeImage}/${item.image}`}
-                alt=""
-              />
-              {item.id === Count && isAddedToCart && (
-                <motion.div
-                  className={`absolute top-0`}
-                  id="animation"
-                  variants={imageVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  <img
-                    src={`${LargeImage}/${item.image}`}
-                    alt=""
-                    className={`w-28 h-28 rounded-full z-50`}
-                  />
-                </motion.div>
-              )}
-            </Link>
-          </div>
-          <div className="flex flex-col justify-between items-start my-2">
-            <h2 className="text-[0.8rem] font-bold"> {item.name} </h2>
-            <h2 className="text-[0.8rem] font-semibold">
+          <Link
+            className="relative"
+            to={`/${item.sub_category.main_category.slug}/${item.sub_category.slug}/${item.slug}`}
+            onClick={() => {
+              setShowProduct(item);
+              setBreadCrumbs([...BreadCrumbs, item.name]);
+            }}
+          >
+            <img
+              className="rounded-t-lg cursor-pointer w-full -z-10"
+              src={`${LargeImage}/${item.image}`}
+              alt=""
+            />
+            {item.id === Count && isAddedToCart && (
+              <motion.div
+                className={`absolute top-0`}
+                id="animation"
+                variants={imageVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <img
+                  src={`${LargeImage}/${item.image}`}
+                  alt=""
+                  className={`w-28 h-28 rounded-full z-50`}
+                />
+              </motion.div>
+            )}
+          </Link>
+          <div className="flex flex-col justify-between items-start my-2 px-5 pb-5">
+            <h2 className="text-sm md:text-base font-semibold tracking-tight text-gray-900 dark:text-white"> {item.name} </h2>
+            <h2 className="text-[0.7rem] md:text-xs font-semibold">
               {" "}
               Stock: {item.stock}{" "}
             </h2>
-            <div className="flex justify-center items-center space-x-1">
-              <h2 className="text-lg font-bold text-red-500">
+            <div className="flex justify-center items-center space-x-1 my-2">
+              <h2 className="text-base md:text-lg font-bold text-red-500">
                 ৳{item.discountedPrice}
               </h2>
-              <h2 className="text-sm text-gray-400 line-through">{`${
+              <h2 className="text-xs md:text-sm text-gray-400 line-through">{`${
                 item.discount === 0 ? "" : `৳${item.price}`
               }`}</h2>
             </div>

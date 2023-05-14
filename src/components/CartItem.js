@@ -27,7 +27,7 @@ const CartItem = ({item}) => {
             </div>
           </div>
           <div className="flex gap-x-2 h-[36px] text-sm">
-            <div className="flex-1 flex justify-end items-center text-primary font-medium"> {`$ ${parseFloat(item.price).toFixed(2)}`} </div>
+            <div className="flex-1 flex justify-end items-center text-primary font-medium"> {`¥ ${parseFloat(item.price).toFixed(2)}`} </div>
           </div>
         </div>
       </div>

@@ -40,11 +40,11 @@ const CartSidebar = () => {
     <>
       {cart ? (
         <div className={`flex justify-center items-center z-20 fixed top-0 ${IsCartSidebar ? "right-0" : "-right-full"} transition-all duration-500 h-screen`}>
-        <div className={`h-full w-full md:w-[65vw] xl:w-[70vw] ${IsCartSidebar ? "bg-black bg-opacity-40 transition-all duration-500 delay-300" : "duration-75"} `}>
+        <div className={`h-full w-[20vw] sm:w-[40vw] md:w-[55vw] xl:w-[70vw] ${IsCartSidebar ? "bg-black bg-opacity-40 transition-all duration-500 delay-300" : "duration-75"} `}>
 
         </div>
           <div ref={ref}
-            className={`w-full bg-white h-full shadow-2xl md:w-[35vw] xl:w-[30vw] px-4 lg:px-[35px]`}
+            className={` bg-white h-full shadow-2xl w-[80vw] sm:w-[60vw] md:w-[45vw] xl:w-[30vw] px-4 lg:px-[35px]`}
           >
             <div className="flex items-center justify-between py-6 border-b">
               <div className="uppercase text-sm font-semibold">
@@ -65,7 +65,7 @@ const CartSidebar = () => {
             <div className="flex flex-col gap-y-3 py-4 mt-4">
               <div className="flex justify-between items-center w-full">
                 <div className="uppercase font-semibold">
-                  <span className="mr-2"> Total: </span> ${" "}
+                  <span className="mr-2"> Total: </span> ¥{" "}
                   {parseFloat(TotalPrice).toFixed(2)}
                 </div>
               </div>

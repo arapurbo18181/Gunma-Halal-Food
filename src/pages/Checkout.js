@@ -136,7 +136,7 @@ const Checkout = () => {
     <>
       <BreadCrumbs name={"Checkout"} url={"checkout"} />
 
-      <section className="w-[100%] h-[100%] flex flex-col lg:flex-row justify-center items-start px-4 py-10 space-x-0 md:space-x-8">
+      <section className="w-[100%] h-[100%] flex flex-col xl:flex-row justify-center items-center xl:items-start px-4 py-10 space-x-0 md:space-x-8">
         <form className="flex-[2] w-full h-full container">
           <div className="flex justify-center my-5 text-2xl md:text-3xl xl:text-4xl font-bold">
             <h1>Checkout</h1>
@@ -572,20 +572,20 @@ const Checkout = () => {
               e.preventDefault();
               applyCoin(SelectCoin);
             }}
-            className="w-full border border-gray-300 bg-blue-500 flex justify-between items-center py-2 px-4 rounded-md text-white"
+            className="w-full border border-gray-300 bg-blue-500 flex justify-between items-center space-x-2 py-2 px-4 rounded-md text-white"
           >
             <div>
-              <h2 className="text-lg font-semibold">
+              <h2 className="text-sm md:text-base">
                 Your Points :{" "}
-                <span className="text-2xl font-bold"> {UserData.coins} </span>{" "}
+                <span className="text-lg font-bold"> {UserData.coins} </span>{" "}
               </h2>
             </div>
             <div className="flex justify-center items-center space-x-3">
-              <div className="text-base font-semibold">Use Points : </div>{" "}
+              <div className="text-sm md:text-base">Use Points : </div>{" "}
               <input
                 onChange={(e) => setSelectCoin(e.target.value)}
                 value={SelectCoin}
-                className="bg-gray-100 focus:bg-white w-28 rounded-md px-2 py-1 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100 text-black"
+                className="bg-gray-100 focus:bg-white w-20 rounded-md px-2 py-1 text-sm md:text-base outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100 text-black"
                 placeholder="Points"
                 type="number"
                 name=""
@@ -593,7 +593,7 @@ const Checkout = () => {
               />
             </div>
             <div>
-              <button className="bg-gray-700 rounded-sm text-white w-full py-2 hover:bg-black transition-all duration-500 text-sm md:text-base px-4">
+              <button className="bg-gray-700 rounded-sm text-white w-full py-1 md:py-2 hover:bg-black transition-all duration-500 text-sm md:text-base px-2 md:px-4">
                 Apply
               </button>
             </div>
@@ -622,12 +622,12 @@ const Checkout = () => {
                 </span>{" "}
               </h3>
               <h5 className="text-sm md:text-base text-red-500 font-semibold">
-                $0
+              ¥0
               </h5>
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200 font-bold text-lg md:text-xl">
               <h3>Total</h3>
-              <h5>$ {parseFloat(TotalPrice).toFixed(2)}</h5>
+              <h5>¥ {parseFloat(TotalPrice).toFixed(2)}</h5>
             </div>
             <div className="flex flex-col justify-center items-start mt-5">
               <div>
@@ -666,14 +666,6 @@ const Checkout = () => {
               >
                 Checkout
               </button>
-            </div>
-            <div className="w-full">
-              <a
-                href="http://localhost:8000/api/order/management/system/view"
-                // onClick={testRoute}className="bg-red-500 text-white w-full py-2 border border-red-500 hover:bg-transparent hover:text-black transition-all duration-500 text-sm md:text-base"
-              >
-                Test
-              </a>
             </div>
           </div>
         </div>

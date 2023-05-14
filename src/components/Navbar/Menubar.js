@@ -43,14 +43,6 @@ const menuForMobile = [
     menu: "Privacy Policy",
     page: "/privacypolicy",
   },
-  {
-    menu: "Login",
-    page: "/login",
-  },
-  {
-    menu: "SignUp",
-    page: "/signup",
-  },
 ];
 
 const Menubar = () => {

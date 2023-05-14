@@ -6,29 +6,50 @@ import { useApi } from "../context/ApiContext";
 import SmallLoader from "./SmallLoader";
 
 const CartItemForViewCart = ({ item }) => {
-  const {SmallImage, LargeImage, removeFromCart, addToCart, decreaseFromCart, increaseQuantity, deleteFromCart, decreaseQuantity, IsCart, setIsCart, SmallLoading, setSmallLoading} = useApi();
+  const {
+    SmallImage,
+    LargeImage,
+    removeFromCart,
+    addToCart,
+    decreaseFromCart,
+    increaseQuantity,
+    deleteFromCart,
+    decreaseQuantity,
+    IsCart,
+    setIsCart,
+    SmallLoading,
+    setSmallLoading,
+  } = useApi();
 
   const increase = () => {
-    setSmallLoading(true)
+    setSmallLoading(true);
     increaseQuantity(item);
-  }
+  };
 
   const decrease = () => {
-    setSmallLoading(true)
-    decreaseQuantity(item)
-  }
+    if (item.quantity === 1) {
+      alert("You cann't decrease data");
+    } else {
+      setSmallLoading(true);
+      decreaseQuantity(item);
+    }
+  };
 
-  const remove = () =>{
-    setSmallLoading(true)
-    deleteFromCart(item)
-  }
+  const remove = () => {
+    setSmallLoading(true);
+    deleteFromCart(item);
+  };
 
   return (
     <div className="flex h-full gap-x-4 py-2 lg:px-6 border-b border-gray-200 w-full font-light text-gray-500">
       <div className="w-full min-h-[150px] flex justify-between items-center gap-x-4">
         <div className="flex flex-col sm:flex-row gap-x-4 gap-y-2 flex-1">
           <Link to={`/product/${item.slug}`}>
-            <img className="max-w-[80px]" src={`${LargeImage}/${item.image}`} alt="" />
+            <img
+              className="max-w-[80px]"
+              src={`${LargeImage}/${item.image}`}
+              alt=""
+            />
           </Link>
           <div className="flex flex-col gap-y-1 justify-start">
             <Link
@@ -37,7 +58,7 @@ const CartItemForViewCart = ({ item }) => {
             >
               {item.name}
             </Link>
-            <div className="flex items-start justify-start">$ {item.price}</div>
+            <div className="flex items-start justify-start">¥ {item.price}</div>
 
             <div
               onClick={remove}
@@ -48,31 +69,32 @@ const CartItemForViewCart = ({ item }) => {
           </div>
         </div>
         <div className="flex flex-1 justify-center w-full items-center h-full font-medium">
-          { SmallLoading ? 
-          <SmallLoader width={"100%"} height={"100%"} />
-          : 
-          <div className="flex w-20 items-center h-10 border text-primary font-medium">
-            <div
-              onClick={decrease}
-              className="flex-1 flex justify-center items-center cursor-pointer h-full"
-            >
-              <IoMdRemove />
+          {SmallLoading ? (
+            <SmallLoader width={"100%"} height={"100%"} />
+          ) : (
+            <div className="flex w-20 items-center h-10 border text-primary font-medium">
+              <div
+                onClick={decrease}
+                className="flex-1 flex justify-center items-center cursor-pointer h-full"
+              >
+                <IoMdRemove />
+              </div>
+              <div className="h-full flex justify-center items-center px-2">
+                {" "}
+                {item.quantity}{" "}
+              </div>
+              <div
+                onClick={increase}
+                className="flex-1 h-full flex justify-center items-center cursor-pointer"
+              >
+                <IoMdAdd />
+              </div>
             </div>
-            <div className="h-full flex justify-center items-center px-2">
-              {" "}
-              {item.quantity}{" "}
-            </div>
-            <div
-              onClick={increase}
-              className="flex-1 h-full flex justify-center items-center cursor-pointer"
-            >
-              <IoMdAdd />
-            </div>
-          </div>}
+          )}
         </div>
         <div className="flex flex-1 justify-end items-center text-primary font-medium">
           {" "}
-          {`$ ${parseFloat(item.price * item.quantity).toFixed(2)}`}{" "}
+          {`¥ ${parseFloat(item.price * item.quantity).toFixed(2)}`}{" "}
         </div>
       </div>
     </div>

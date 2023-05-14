@@ -18,12 +18,12 @@ const UserSettings = () => {
   }, [Password.oldPass]);
 
   return (
-    <section className="w-screen h-full flex justify-center items-center">
+    <section className="w-full h-full flex justify-center items-center">
       <form className="w-full h-[550px]">
-        <div className="flex justify-center my-5 text-4xl font-bold">
+        <div className="flex justify-center my-5 text-2xl md:text-4xl font-bold">
           <h1>Change Password</h1>
         </div>
-        <div className="px-10">
+        <div className="px-2 md:px-10">
           <div className="flex flex-col items-start my-4">
             <div className="flex justify-center items-center space-x-3">
               <label htmlFor="email">

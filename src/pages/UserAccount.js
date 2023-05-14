@@ -25,10 +25,8 @@ export default function UserAccount() {
   return (
     <>
       <BreadCrumbs name={"User Account"} url={"useraccount"} />
-      <div className="w-full px-2 sm:px-0 flex justify-start items-center">
-        <div className="">
-          {/* <UserToprbar /> */}
-          <div className="flex flex-col xl:flex-row justify-start items-start space-y-2">
+      <div className="w-screen px-2 sm:px-0 flex justify-start items-center">
+          <div className="flex flex-col xl:flex-row justify-start items-start w-full">
             <div className="">
               <UserSidebar />
             </div>
@@ -39,7 +37,6 @@ export default function UserAccount() {
               {ToggleUserMenu === 3 && <UserSettings />}
             </div>
           </div>
-        </div>
       </div>
     </>
   );

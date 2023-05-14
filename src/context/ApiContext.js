@@ -613,24 +613,36 @@ export const ApiProvider = ({ children }) => {
         },
       }).then((res) => {
         console.log(res);
+        setIsCart(!IsCart)
         // redirected("http://localhost:8000/api/order/management/system/view");
         // window.location.replace('http://localhost:8000/api/order/management/system/view');
 
-        Swal.fire({
-          title: '<strong> Are You Sure? </strong>',
-          icon: 'info',
-          html: res.data ,
-          showCloseButton: true,
-          showCancelButton: false,
-          showConfirmButton: false,
-          focusConfirm: false,
-          // confirmButtonText:
-          //   '<i class="fa fa-thumbs-up"></i> Great!',
-          // confirmButtonAriaLabel: 'Thumbs up, great!',
-          // cancelButtonText:
-          //   '<i class="fa fa-thumbs-down"></i>',
-          // cancelButtonAriaLabel: 'Thumbs down'
-        })
+        if (res.data.status === 422) {
+          Swal.fire("warning", "Billing & Shipping Address Required", "warning");
+        }
+        if (res.data.status === 421) {
+          Swal.fire("warning", res.data.message, "warning");
+        }
+        if (res.data.status === 200) {
+          Swal.fire("success", res.data.message, "success");
+        }
+
+        // Swal.fire({
+        //   title: '<strong> Are You Sure? </strong>',
+        //   icon: 'info',
+        //   html: res.data ,
+        //   showCloseButton: true,
+        //   showCancelButton: false,
+        //   showConfirmButton: false,
+        //   focusConfirm: false,
+        //   // confirmButtonText:
+        //   //   '<i class="fa fa-thumbs-up"></i> Great!',
+        //   // confirmButtonAriaLabel: 'Thumbs up, great!',
+        //   // cancelButtonText:
+        //   //   '<i class="fa fa-thumbs-down"></i>',
+        //   // cancelButtonAriaLabel: 'Thumbs down'
+        // })
+
 
       });
     });
@@ -653,6 +665,15 @@ export const ApiProvider = ({ children }) => {
         },
       }).then((res) => {
         console.log(res);
+        if (res.data.status === 401) {
+          Swal.fire("warning", res.data.message, "warning");
+        }
+        if (res.data.status === 400) {
+          Swal.fire("warning", res.data.error_message, "warning");
+        }
+        if (res.data.status === 200) {
+          Swal.fire("success", res.data.message, "success");
+        }
         setIsCart(!IsCart);
       });
     });

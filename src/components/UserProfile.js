@@ -15,12 +15,12 @@ const UserProfile = () => {
   // }, [UserImage, Image]);
 
   return (
-    <section className="w-screen h-[100%] flex justify-center items-center">
-      <form className="w-full h-[550px]">
-        <div className="flex justify-center my-5 text-4xl font-bold">
+    <section className="w-full h-full flex justify-center items-center mb-20">
+      <form className="w-full h-full">
+        <div className="flex justify-center my-5 text-2xl md:text-4xl font-bold">
           <h1>Your Profile</h1>
         </div>
-        <div className="px-10">
+        <div className="px-2 md:px-10">
         <div className="flex flex-col items-start my-4 w-full">
               <label htmlFor="email">Image</label>
               <input

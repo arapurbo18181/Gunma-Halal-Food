@@ -24,7 +24,7 @@ const userAccount = [
   },
   {
     id: 3,
-    tab: "Change Password",
+    tab: "Settings",
     icon: <AiFillLock />,
   },
 ];
@@ -85,11 +85,11 @@ const UserSidebar = () => {
                 onClick={() => setToggleUserMenu(item.id)}
                 className={`${
                   ToggleUserMenu === i
-                    ? "bg-white text-blue-600 border border-blue-500 rounded w-full py-2 text-sm md:text-base xl:text-xl px-1 flex justify-center items-center space-x-1 group"
-                    : "text-white bg-blue-600 w-full py-2 text-sm md:text-base xl:text-xl border-blue-500 px-1 flex justify-center items-center space-x-1 group"
+                    ? "bg-white text-blue-600 border border-blue-500 rounded w-full py-1 sm:py-2 text-xs sm:text-sm md:text-base xl:text-xl px-0 sm:px-1 flex flex-col md:flex-row justify-center items-center space-x-1 group"
+                    : "text-white bg-blue-600 w-full py-1 sm:py-2 text-xs sm:text-sm md:text-base xl:text-xl border-blue-500 px-0 sm:px-1 flex flex-col md:flex-row justify-center items-center space-x-1 group"
                 }`}
               >
-                <div className="text-white bg-blue-600 w-8 h-8 rounded-full flex justify-center items-center">
+                <div className="text-white bg-blue-600 w-6 sm:w-8 h-6 sm:h-8 rounded-full flex justify-center items-center">
                   {" "}
                   {item.icon}{" "}
                 </div>{" "}

@@ -48,7 +48,7 @@ const Signup = () => {
             <BreadCrumbs name={"Sign Up"} url={"signup"} />
             <section className="bg-[#f9fafb] w-[100%] h-[90vh] flex justify-center items-center">
               <form
-                className="w-[500px] h-[650px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container -mt-32"
+                className="w-[500px] h-[700px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container -mt-32"
               >
                 <div className="flex flex-col items-center justify-center my-5 text-3xl font-bold">
                   <h1 className="">Sign Up</h1>
