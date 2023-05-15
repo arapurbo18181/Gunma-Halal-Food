@@ -22,6 +22,8 @@ import { useProduct } from "./context/ProductContext";
 import axios from "axios";
 import { useApi } from "./context/ApiContext";
 import ErrorPage from "./pages/ErrorPage";
+import Forgot_password from "./pages/Forgot_password";
+import SetNewPass from "./pages/SetNewPass";
 
 // axios.defaults.baseURL = "http://gunma.myesdev.xyz/";
 // axios.defaults.baseURL = "https://gunma-admin.getthemeplugin.com/";
@@ -57,6 +59,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/forgotpassword" element={<Forgot_password />} />
+            <Route path="/setpassword/:id" element={<SetNewPass />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/useraccount" element={<UserAccount />} />
             <Route path="/cart" element={<Cart />} />

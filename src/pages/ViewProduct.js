@@ -33,7 +33,7 @@ const ViewProduct = () => {
     removeFromCart,
     decreaseFromCart,
     IsReview,
-    AllReviews
+    AllReviews,
   } = useApi();
   const myRef = useRef();
 
@@ -43,29 +43,32 @@ const ViewProduct = () => {
   useEffect(() => {
     setLoader(true);
     const getdata = async () => {
-      await axios.get(`/api${location.pathname}`).then((res) => {
-        if (res.data.status === 200) {
-          // console.log(res);
-          setCateName(res.data.product.sub_category.main_category.name);
-          setSubCateName(res.data.product.sub_category.name);
-          setCateSlug(res.data.product.sub_category.main_category.slug);
-          setSubCateSlug(res.data.product.sub_category.slug);
-          const discountedAmount =
-            (res.data.product.price / 100) * res.data.product.discount;
-          const newPrice = res.data.product.price - discountedAmount;
-          setProduct(
-            (res.data.product = {
-              ...res.data.product,
-              quantity: 0,
-              discountedPrice: newPrice,
-            })
-          );
-          setLoader(false);
-        }
-      }).catch(error=>{
-        console.log(error)
-        navigate("/error")
-      })
+      await axios
+        .get(`/api${location.pathname}`)
+        .then((res) => {
+          if (res.data.status === 200) {
+            // console.log(res);
+            setCateName(res.data.product.sub_category.main_category.name);
+            setSubCateName(res.data.product.sub_category.name);
+            setCateSlug(res.data.product.sub_category.main_category.slug);
+            setSubCateSlug(res.data.product.sub_category.slug);
+            const discountedAmount =
+              (res.data.product.price / 100) * res.data.product.discount;
+            const newPrice = res.data.product.price - discountedAmount;
+            setProduct(
+              (res.data.product = {
+                ...res.data.product,
+                quantity: 0,
+                discountedPrice: newPrice,
+              })
+            );
+            setLoader(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          navigate("/error");
+        });
     };
     getdata();
   }, [location, AllReviews]);
@@ -124,31 +127,36 @@ const ViewProduct = () => {
   };
 
   const handleClick = async (item) => {
-    if (item.cutting_system === "Yes") {
-      await Swal.fire({
-        title: "Do You Want to Cut The Product?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire("Success!", "Cutting System in implemented", "success");
-          addToCart(item, "YES");
-          item.quantity = 0;
-          setQuantity(0);
-        }else{
-          addToCart(item, "NO");
-          item.quantity = 0;
-          setQuantity(0);
-        }
-      });
-    }else{
+    if (item.quantity === 0) {
+      Swal.fire("warning", "Please add some product first", "warning");
+    } else {
+      if (item.cutting_system === "Yes") {
+        await Swal.fire({
+          title: "Do You Want to Cut The Product?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes",
+          cancelButtonText: "No",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire("Success!", "Cutting System in implemented", "success");
+            addToCart(item, "YES");
+            item.quantity = 0;
+            setQuantity(0);
+          } else {
+            addToCart(item, "NO");
+            item.quantity = 0;
+            setQuantity(0);
+          }
+        });
+      } else {
         addToCart(item, "NO");
         item.quantity = 0;
         setQuantity(0);
+      }
     }
   };
 
@@ -158,12 +166,8 @@ const ViewProduct = () => {
         <Loaders width={"100%"} height={"80vh"} />
       ) : (
         <>
-          <BreadCrumbs
-            name={`${CateName}/${SubCateName}/${Product.name}`}
-            url={`${CateSlug}/${SubCateSlug}/${Product.slug}`}
-          />
           <section className="flex justify-center items-center w-full">
-            <div className="flex justify-start items-center xl:items-start w-[100%] space-x-5">
+            <div className="flex justify-start items-center xl:items-start w-[100%]">
               <div className="hidden w-[14vw] sticky left-0 top-[4.6rem] xl:block -mt-4">
                 <CategorySidebar />
               </div>
@@ -172,7 +176,12 @@ const ViewProduct = () => {
                   <Loaders width={"100%"} height={"full"} />
                 </div>
               ) : (
-                <div className="w-full divide-y-2 space-y-5">
+                <>
+                <div className="w-full space-y-5">
+                  <BreadCrumbs
+                    name={`${CateName}/${SubCateName}/${Product.name}`}
+                    url={`${CateSlug}/${SubCateSlug}/${Product.slug}`}
+                  />
                   <div className="h-full w-[100%] flex justify-center items-center">
                     <div className="flex flex-col md:flex-row justify-center items-start w-full xl:w-[70vw] space-x-4">
                       <CartButton />
@@ -260,7 +269,7 @@ const ViewProduct = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="w-full flex flex-col justify-center items-center">
+                  <div className="w-full flex flex-col justify-center items-center px-4">
                     <div>
                       <ProductTopbar />
                     </div>
@@ -273,6 +282,7 @@ const ViewProduct = () => {
                   </div>
                   <Footer />
                 </div>
+                </>
               )}
             </div>
           </section>

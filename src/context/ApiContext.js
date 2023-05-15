@@ -140,8 +140,8 @@ export const ApiProvider = ({ children }) => {
   const [IsRegister, setIsRegister] = useState(false);
   const [SubCategoryProduct, setSubCategoryProduct] = useState([]);
   const [IsCartSidebar, setIsCartSidebar] = useState(false);
+  const [ForgotPass, setForgotPass] = useState();
   const navigate = useNavigate();
-  const redirected =  redirect();
 
   const cards = [
     {
@@ -195,6 +195,12 @@ export const ApiProvider = ({ children }) => {
   const [States, setStates] = useState([]);
   const [ShippingStates, setShippingStates] = useState([]);
   const [UseCoins, setUseCoins] = useState();
+  const [SetNewPass, setSetNewPass] = useState({
+    new_password: "",
+    confirm_password: "",
+    email: ""
+  });
+  const [SetPassParams, setSetPassParams] = useState();
   const location = useLocation();
   const params = useParams();
 
@@ -749,51 +755,6 @@ export const ApiProvider = ({ children }) => {
     getdata();
   }, [IsReview, IsCart, User]);
 
-  // useEffect(() => {
-  //   const datas = GetCartData.map((item) => {
-  //     return {
-  //       id: item.id,
-  //       price: item.price,
-  //       product_id: item.product_id,
-  //       quantity: item.quantity,
-  //       user_id: item.user_id,
-  //       image: item.product[0].image,
-  //       name: item.product[0].name,
-  //       slug: item.product[0].slug,
-  //     };
-  //   });
-  //   setcart(datas);
-  // }, [GetCartData]);
-
-  // useEffect(() => {
-  //   const getdata = async () => {
-  //     await axios
-  //       .get(`/api/get/index/all/info/${GetCookies("cookies")}`)
-  //       .then((res) => {
-  //         const datas = res.data.user_cart.map((item) => {
-  //           return {
-  //             id: item.id,
-  //             price: item.price,
-  //             product_id: item.product_id,
-  //             quantity: item.quantity,
-  //             user_id: item.user_id,
-  //             image: item.product[0].image,
-  //             name: item.product[0].name,
-  //             slug: item.product[0].slug,
-  //           };
-  //         });
-  //         setcart(datas);
-  //         // setGetCartData(res.data.user_cart);
-  //         if (res.data.email) {
-  //           setUser(true);
-  //         } else {
-  //           setUser(false);
-  //         }
-  //       });
-  //   };
-  //   getdata();
-  // }, [IsCart, User]);
-
   useEffect(() => {
     setAllProducts(
       ProductsApi.map((item) => {
@@ -843,6 +804,49 @@ export const ApiProvider = ({ children }) => {
       setSubCatProIsApi(true);
     }
   }, [SubCatProductsApi]);
+
+  const forgotPassword = async (e) =>{
+    e.preventDefault();
+
+    const data ={
+      email: ForgotPass,
+    }
+
+    await axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.post(`/api/user/account/management/forget-password`, data).then((res) => {
+        console.log(res);
+        if (res.data.status === 200 ) {
+          Swal.fire("success", res.data.message, "success");
+        }
+        if (res.data.status === 401) {
+          Swal.fire("warning", res.data.message, "warning");
+        }
+      });
+    });
+
+  }
+
+  const setPasswords = async (e) => {
+    e.preventDefault();
+    const data = {
+      new_password: SetNewPass.new_password,
+      confirm_password: SetNewPass.confirm_password,
+      email: SetPassParams
+    }
+
+    await axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios.post(`/api/user/account/management/set-password`, data).then((res) => {
+        console.log(res);
+        if (res.data.status === 200) {
+          localStorage.setItem("token", JSON.stringify(res.data.token));
+          navigate("/")
+          Swal.fire("success", res.data.message, "success");
+          setUser(true);
+        }
+      });
+    });
+
+  }
 
   return (
     <ApiContext.Provider
@@ -987,7 +991,15 @@ export const ApiProvider = ({ children }) => {
         ShippingStates,
         filterShippingStates,
         IsCartSidebar,
-        setIsCartSidebar
+        setIsCartSidebar,
+        ForgotPass,
+        setForgotPass,
+        forgotPassword,
+        SetNewPass,
+        setSetNewPass,
+        setPasswords,
+        SetPassParams,
+        setSetPassParams
       }}
     >
       {children}

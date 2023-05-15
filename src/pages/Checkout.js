@@ -10,6 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import subDays from "date-fns/subDays";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Checkout = () => {
   const [CoinInput, setCoinInput] = useState(false);
@@ -45,16 +46,20 @@ const Checkout = () => {
     filterStates,
     ShippingStates,
     filterShippingStates,
+    cart
   } = useApi();
+
+  console.log(cart.length)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (IsChecked) {
-    // } else {
-    //   setShippingAddress(BillingAddress);
-    // }
-    orderProduct();
-    console.log(BillingAddress);
+    if (cart.length !== 0) {
+      
+      orderProduct();
+      console.log(BillingAddress);
+    }else{
+      Swal.fire("warning","Please add some product first", "warning")
+    }
   };
   useEffect(() => {
     if (!User) {

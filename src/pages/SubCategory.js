@@ -22,9 +22,9 @@ const SubCategory = () => {
     Catname,
     setBreadCrumbs,
     setSubCategorySlug,
-    CategoryImage
+    CategoryImage,
   } = useApi();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const params = useParams();
   // console.log(params);
@@ -34,17 +34,20 @@ const SubCategory = () => {
   useEffect(() => {
     setLoader(true);
     const getdata = async () => {
-      await axios.get(`/api/${params.id}`).then((res) => {
-        if (res.data.status === 200) {
-          console.log(res.data);
-          setCategory(res.data.categories);
-          setSubCategory(res.data.categories.sub_category);
-          setLoader(false);
-        }
-      }).catch(error=>{
-        console.log(error)
-        navigate("/error");
-      })
+      await axios
+        .get(`/api/${params.id}`)
+        .then((res) => {
+          if (res.data.status === 200) {
+            console.log(res.data);
+            setCategory(res.data.categories);
+            setSubCategory(res.data.categories.sub_category);
+            setLoader(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          navigate("/error");
+        });
     };
     getdata();
   }, [location]);
@@ -57,13 +60,16 @@ const SubCategory = () => {
         </>
       ) : (
         <>
-          <BreadCrumbs name={`${Category.name}`} url={`${Category.slug}`} />
           <section className="flex justify-center items-start w-full">
-            <div className="flex justify-start items-start w-[100%] space-x-5">
+            <div className="flex justify-start items-start w-[100%]">
               <div className="hidden w-[14vw] sticky top-[4.6rem] left-0 xl:block -mt-4">
                 <CategorySidebar />
               </div>
-              <div className="px-2 w-full">
+              <div className="w-full">
+                <BreadCrumbs
+                  name={`${Category.name}`}
+                  url={`${Category.slug}`}
+                />
                 <div className="h-[30vh] overflow-hidden">
                   <img
                     className="hover:scale-110 transition-all duration-300"
@@ -71,13 +77,13 @@ const SubCategory = () => {
                     alt=""
                   />
                 </div>
-                <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-8">
+                <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-8 px-4">
                   <span className="underline decoration-red-500 underline-offset-8">
                     {Category.name ? Category.name.slice(0, 2) : ""}
                   </span>
                   {Category.name ? Category.name.slice(2) : ""}
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4 px-4">
                   {SubCategory.map((item, index) => {
                     return (
                       <Link

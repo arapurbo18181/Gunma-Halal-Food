@@ -8,7 +8,7 @@ const CategorySidebar = () => {
   const location = useLocation();
 
   return (
-    <section className={`overflow-y-auto border-r border-r-red-200 bg-slate-100 scrollbar-hide left-0 transition-all duration-500 w-[14vw] h-screen ${location.pathname === "/" ? "mt-2" : "mt-4"}`}>
+    <section className={`overflow-y-auto border-r border-r-red-200 bg-slate-100 scrollbar-hide left-0 transition-all duration-500 w-[14vw] h-[98vh]`}>
       <div className="">
       {/* <Searchbar/> */}
       <h1 className="text-3xl font-bold text-center text-gray-700 my-4">

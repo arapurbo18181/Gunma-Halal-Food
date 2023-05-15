@@ -11,7 +11,6 @@ import { useApi } from "../context/ApiContext";
 import Swal from "sweetalert2";
 
 const SubCategoryProducts = ({ item }) => {
-  // console.log(item);
   const { MyRef, setMyRef, myRefForFlyToCart } = useProduct();
   const {
     BreadCrumbs,
@@ -99,17 +98,68 @@ const SubCategoryProducts = ({ item }) => {
   };
 
   const handleClick = async (item) => {
-    setCount(item.id);
-    const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 90;
-    const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 35;
-    setAnimationCoodinate({ x: setX, y: setY });
-    setIsAddedToCart(true);
-    setTimeout(() => {
-      addToCart(item, "NO");
-      item.quantity = 0;
-      setQuantity(0);
-      setIsAddedToCart(false);
-    }, 2000);
+    if (item.quantity === 0) {
+      Swal.fire("warning", "Please add some product first", "warning");
+    } else {
+      console.log(item)
+      if (item.cutting_system === "Yes") {
+        Swal.fire({
+          title: "Do You Want to Cut The Product?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes",
+          cancelButtonText: "No",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setCount(item.id);
+            const setX =
+              CartCoordinate.x - (myRef.current.offsetLeft - posX) - 50;
+            const setY =
+              CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
+            setAnimationCoodinate({ x: setX, y: setY });
+            setIsAddedToCart(true);
+            setTimeout(() => {
+              addToCart(item, "YES");
+              item.quantity = 0;
+              setQuantity(0);
+              setIsAddedToCart(false);
+            }, 2000);
+          } else {
+            setCount(item.id);
+            const setX =
+              CartCoordinate.x - (myRef.current.offsetLeft - posX) - 50;
+            const setY =
+              CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
+            setAnimationCoodinate({ x: setX, y: setY });
+            setIsAddedToCart(true);
+            setTimeout(() => {
+              addToCart(item, "NO");
+              item.quantity = 0;
+              setQuantity(0);
+              setIsAddedToCart(false);
+            }, 2000);
+          }
+        });
+      } else if(item.cutting_system === "No"){
+        console.log(item)
+        setCount(item.id);
+        const setX =
+          CartCoordinate.x - (myRef.current.offsetLeft - posX) - 50;
+        const setY =
+          CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
+        setAnimationCoodinate({ x: setX, y: setY });
+        setIsAddedToCart(true);
+        setTimeout(() => {
+          addToCart(item, "YES");
+          item.quantity = 0;
+          setQuantity(0);
+          setIsAddedToCart(false);
+        }, 2000);
+      }
+    }
 
     // setMyRef(true);
   };
@@ -140,18 +190,11 @@ const SubCategoryProducts = ({ item }) => {
       {AllProducts || SubProducts ? (
         <div
           ref={myRef}
-          className="shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[400px]"
+          className="shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-0 xl:hover:-translate-y-3 transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[400px]"
         >
-          <Link
-            className="relative"
-            to={`/${item.sub_category.main_category.slug}/${item.sub_category.slug}/${item.slug}`}
-            onClick={() => {
-              setShowProduct(item);
-              setBreadCrumbs([...BreadCrumbs, item.name]);
-            }}
-          >
+          <div className="relative">
             <img
-              className="rounded-t-lg cursor-pointer w-full -z-10"
+              className="rounded-t-lg w-full object-cover relative -z-10"
               src={`${LargeImage}/${item.image}`}
               alt=""
             />
@@ -166,13 +209,23 @@ const SubCategoryProducts = ({ item }) => {
                 <img
                   src={`${LargeImage}/${item.image}`}
                   alt=""
-                  className={`w-28 h-28 rounded-full z-50`}
+                  className={`w-28 h-28 rounded-full z-10`}
                 />
               </motion.div>
             )}
-          </Link>
+          </div>
           <div className="flex flex-col justify-between items-start my-2 px-5 pb-5">
-            <h2 className="text-sm md:text-base font-semibold tracking-tight text-gray-900 dark:text-white"> {item.name} </h2>
+            <Link
+              onClick={() => {
+                setShowProduct(item);
+                setBreadCrumbs([...BreadCrumbs, item.name]);
+              }}
+              to={`/${item.sub_category.main_category.slug}/${item.sub_category.slug}/${item.slug}`}
+              className="text-sm md:text-base font-semibold tracking-wide text-gray-900 dark:text-white"
+            >
+              {" "}
+              {item.name}{" "}
+            </Link>
             <h2 className="text-[0.7rem] md:text-xs font-semibold">
               {" "}
               Stock: {item.stock}{" "}
@@ -185,7 +238,7 @@ const SubCategoryProducts = ({ item }) => {
                 item.discount === 0 ? "" : `৳${item.price}`
               }`}</h2>
             </div>
-            <div className="flex justify-between items-center w-[100%] mt-2 h-[2vh]">
+            <div className="flex justify-between items-center w-full mt-2 h-[2vh]">
               <div
                 onClick={() => CountToRemove(item.id)}
                 className="flex-1 flex justify-center items-center cursor-pointer h-full w-full border-red-600 border px-1 py-3 active:bg-white active:text-black hover:bg-red-500 hover:text-white text-xs md:text-sm transition-all duration-300"

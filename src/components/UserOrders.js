@@ -43,7 +43,7 @@ const UserOrders = () => {
                   <td class="px-1 sm:px-3 md:px-6 py-1 md:py-3">{item.due_amount}</td>
                   <td class="px-1 sm:px-3 md:px-6 py-1 md:py-3">{item.order_date}</td>
                   <td class="px-1 sm:px-3 md:px-6 py-1 md:py-3">{item.delivery_date}</td>
-                  <td class="px-1 sm:px-3 md:px-6 py-1 md:py-3">{item.delivery_status}</td>
+                  <td class="px-1 sm:px-3 md:px-6 py-1 md:py-3">{item.delivery_status === "PENDING" ? "Pending" : item.delivery_status === "PROCESSING" ? "Shipped" : "Completed" }</td>
                 </tr>
               );
             })}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BreadCrumbs from "../components/BreadCrumbs";
 import { useApi } from "../context/ApiContext";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
 
@@ -98,7 +98,7 @@ const Login = () => {
                 )}
               </div>
               <div className="flex justify-end">
-                <h2 className="cursor-pointer">Forgot Your Password?</h2>
+                <Link to={"/forgotpassword"} className="cursor-pointer">Forgot Your Password?</Link>
               </div>
               <div className="w-full flex justify-center my-4">
                 <button className="w-full border border-red-500 text-red-500 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300">

@@ -47,9 +47,7 @@ const Signup = () => {
           <>
             <BreadCrumbs name={"Sign Up"} url={"signup"} />
             <section className="bg-[#f9fafb] w-[100%] h-[90vh] flex justify-center items-center">
-              <form
-                className="w-[500px] h-[700px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container -mt-32"
-              >
+              <form className="w-[500px] h-[700px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container -mt-32">
                 <div className="flex flex-col items-center justify-center my-5 text-3xl font-bold">
                   <h1 className="">Sign Up</h1>
                 </div>
@@ -65,20 +63,20 @@ const Signup = () => {
                     <label htmlFor="first_name">
                       First Name <span className="text-red-600">*</span>
                     </label>
-                <div className="flex justify-start items-center space-x-4 px-2 py-3 w-full rounded-md bg-white outline-none transition-all duration-300 ease-in-out group-focus:outline-2 group-focus:outline-offset-0 group-focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100">
-                  <div className="">
-                    <MdDriveFileRenameOutline className="text-lg" />
-                  </div>
-                    <input
-                      onChange={signUp}
-                      value={Register.first_name}
-                      className="h-full w-full outline-none"
-                      type="text"
-                      name="first_name"
-                      placeholder="Enter Your First Name"
-                      id="first_name"
-                      // required
-                    />
+                    <div className="flex justify-start items-center space-x-4 px-2 py-3 w-full rounded-md bg-white outline-none transition-all duration-300 ease-in-out group-focus:outline-2 group-focus:outline-offset-0 group-focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100">
+                      <div className="">
+                        <MdDriveFileRenameOutline className="text-lg" />
+                      </div>
+                      <input
+                        onChange={signUp}
+                        value={Register.first_name}
+                        className="h-full w-full outline-none"
+                        type="text"
+                        name="first_name"
+                        placeholder="Enter Your First Name"
+                        id="first_name"
+                        // required
+                      />
                     </div>
                     {ValidationErrors.first_name ? (
                       <small className="text-red-500 ml-2">
@@ -90,22 +88,22 @@ const Signup = () => {
                   </div>
                   <div className="flex flex-col items-start my-4">
                     <label htmlFor="last_name">
-                     Last Name <span className="text-red-600">*</span>
+                      Last Name <span className="text-red-600">*</span>
                     </label>
-                <div className="flex justify-start items-center space-x-4 px-2 py-3 w-full rounded-md bg-white outline-none transition-all duration-300 ease-in-out group-focus:outline-2 group-focus:outline-offset-0 group-focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100">
-                  <div className="">
-                    <MdDriveFileRenameOutline className="text-lg" />
-                  </div>
-                    <input
-                      onChange={signUp}
-                      value={Register.last_name}
-                      className="h-full w-full outline-none"
-                      type="text"
-                      name="last_name"
-                      placeholder="Enter Your Last Name"
-                      id="last_name"
-                      // required
-                    />
+                    <div className="flex justify-start items-center space-x-4 px-2 py-3 w-full rounded-md bg-white outline-none transition-all duration-300 ease-in-out group-focus:outline-2 group-focus:outline-offset-0 group-focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100">
+                      <div className="">
+                        <MdDriveFileRenameOutline className="text-lg" />
+                      </div>
+                      <input
+                        onChange={signUp}
+                        value={Register.last_name}
+                        className="h-full w-full outline-none"
+                        type="text"
+                        name="last_name"
+                        placeholder="Enter Your Last Name"
+                        id="last_name"
+                        // required
+                      />
                     </div>
                     {ValidationErrors.last_name ? (
                       <small className="text-red-500 ml-2">
@@ -119,20 +117,20 @@ const Signup = () => {
                     <label htmlFor="email">
                       Email <span className="text-red-600">*</span>
                     </label>
-                <div className="flex justify-start items-center space-x-4 px-2 py-3 w-full rounded-md bg-white outline-none transition-all duration-300 ease-in-out group-focus:outline-2 group-focus:outline-offset-0 group-focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100">
-                  <div className="">
-                    <AiOutlineMail className="text-lg" />
-                  </div>
-                    <input
-                      onChange={signUp}
-                      value={Register.email}
-                      className="h-full w-full outline-none"
-                      // type="email"
-                      name="email"
-                      placeholder="Enter Your Email"
-                      id="email"
-                      // required
-                    />
+                    <div className="flex justify-start items-center space-x-4 px-2 py-3 w-full rounded-md bg-white outline-none transition-all duration-300 ease-in-out group-focus:outline-2 group-focus:outline-offset-0 group-focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100">
+                      <div className="">
+                        <AiOutlineMail className="text-lg" />
+                      </div>
+                      <input
+                        onChange={signUp}
+                        value={Register.email}
+                        className="h-full w-full outline-none"
+                        // type="email"
+                        name="email"
+                        placeholder="Enter Your Email"
+                        id="email"
+                        // required
+                      />
                     </div>
                     {ValidationErrors.email ? (
                       <small className="text-red-500 ml-2">
@@ -146,20 +144,20 @@ const Signup = () => {
                     <label htmlFor="passsword">
                       Password <span className="text-red-600">*</span>
                     </label>
-                <div className="flex justify-start items-center space-x-4 px-2 py-3 w-full rounded-md bg-white outline-none transition-all duration-300 ease-in-out group-focus:outline-2 group-focus:outline-offset-0 group-focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100">
-                  <div className="">
-                    <RiLockPasswordLine className="text-lg" />
-                  </div>
-                    <input
-                      onChange={signUp}
-                      value={Register.password}
-                      className="h-full w-full outline-none"
-                      type="password"
-                      name="password"
-                      placeholder="Enter Your Password"
-                      id="password"
-                      // required
-                    />
+                    <div className="flex justify-start items-center space-x-4 px-2 py-3 w-full rounded-md bg-white outline-none transition-all duration-300 ease-in-out group-focus:outline-2 group-focus:outline-offset-0 group-focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100">
+                      <div className="">
+                        <RiLockPasswordLine className="text-lg" />
+                      </div>
+                      <input
+                        onChange={signUp}
+                        value={Register.password}
+                        className="h-full w-full outline-none"
+                        type="password"
+                        name="password"
+                        placeholder="Enter Your Password"
+                        id="password"
+                        // required
+                      />
                     </div>
                     {ValidationErrors.password ? (
                       <small className="text-red-500 ml-2">
@@ -173,24 +171,27 @@ const Signup = () => {
                     <label htmlFor="passsword">
                       Confirm Password <span className="text-red-600">*</span>
                     </label>
-                <div className="flex justify-start items-center space-x-4 px-2 py-3 w-full rounded-md bg-white outline-none transition-all duration-300 ease-in-out group-focus:outline-2 group-focus:outline-offset-0 group-focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100">
-                  <div className="">
-                    <RiLockPasswordLine className="text-lg" />
-                  </div>
-                    <input
-                      onChange={signUp}
-                      value={Register.confirmPassword}
-                      className="h-full w-full outline-none"
-                      type="password"
-                      name="confirmPassword"
-                      placeholder="Enter Your Password"
-                      id="password"
-                      // required
-                    />
+                    <div className="flex justify-start items-center space-x-4 px-2 py-3 w-full rounded-md bg-white outline-none transition-all duration-300 ease-in-out group-focus:outline-2 group-focus:outline-offset-0 group-focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100">
+                      <div className="">
+                        <RiLockPasswordLine className="text-lg" />
+                      </div>
+                      <input
+                        onChange={signUp}
+                        value={Register.confirmPassword}
+                        className="h-full w-full outline-none"
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="Enter Your Password"
+                        id="password"
+                        // required
+                      />
                     </div>
                   </div>
                   <div className="w-full flex justify-center my-4">
-                    <button onClick={handleRegister} className="w-full border border-red-500 text-red-500 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300">
+                    <button
+                      onClick={handleRegister}
+                      className="w-full border border-red-500 text-red-500 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300"
+                    >
                       Sign Up
                     </button>
                   </div>
