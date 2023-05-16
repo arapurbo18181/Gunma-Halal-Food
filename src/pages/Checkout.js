@@ -49,8 +49,6 @@ const Checkout = () => {
     cart
   } = useApi();
 
-  console.log(cart.length)
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (cart.length !== 0) {
@@ -106,7 +104,7 @@ const Checkout = () => {
       }
     });
     if (data) {
-      console.log(data.delivery_time);
+      // console.log(data.delivery_time);
       setDeliveryDate(data.delivery_time);
     }
   }, [BillingAddress.state]);
@@ -135,6 +133,7 @@ const Checkout = () => {
   useEffect(() => {
     setBillingAddress({...BillingAddress, first_name: UserData.name, last_name: UserData.last_name, email: UserData.email})
   }, [])
+  const today = new Date();
   
 
   return (
@@ -323,12 +322,7 @@ const Checkout = () => {
                 <div className="flex flex-col items-start my-4 w-full">
                   <label htmlFor="email">Delivery Date</label>
                   <DatePicker
-                    minDate={subDays(
-                      new Date(),
-                      `${
-                        DeliveryDate === 24 ? -1 : DeliveryDate === 48 ? -2 : -3
-                      }`
-                    )}
+                    minDate={new Date(today.setDate(today.getDate() + 1 ))}
                     className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                     placeholderText="Enter Delivery Date"
                     selected={BillingAddress.show_date}
@@ -582,7 +576,7 @@ const Checkout = () => {
             <div>
               <h2 className="text-sm md:text-base">
                 Your Points :{" "}
-                <span className="text-lg font-bold"> {UserData.coins} </span>{" "}
+                <span className="text-lg font-bold"> {parseFloat(UserData.coins).toFixed(2)}  </span>{" "}
               </h2>
             </div>
             <div className="flex justify-center items-center space-x-3">

@@ -45,13 +45,15 @@ const Signup = () => {
           <Loaders height={"100vh"} width={"100vh"} />
         ) : (
           <>
-            <BreadCrumbs name={"Sign Up"} url={"signup"} />
-            <section className="bg-[#f9fafb] w-[100%] h-[90vh] flex justify-center items-center">
-              <form className="w-[500px] h-[700px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container -mt-32">
-                <div className="flex flex-col items-center justify-center my-5 text-3xl font-bold">
+            <div>
+              <BreadCrumbs name={"Sign Up"} url={"signup"} />
+            </div>
+            <section className="w-full h-5/6 flex justify-center items-start mt-10">
+              <form className="w-full md:w-1/2 xl:w-1/3 h-fit bg-white drop-shadow-2xl rounded-lg border border-red-300 container mt-0">
+                <div className="flex flex-col items-center justify-center my-2 md:my-3 xl:my-5 text-2xl md:txt-3xl xl:text-4xl font-bold">
                   <h1 className="">Sign Up</h1>
                 </div>
-                <div className="px-10">
+                <div className="px-2 md:px-5 xl:px-10">
                   {ConfirmPassError && IsConfirmError ? (
                     <div className="bg-red-500 text-xl w-full text-center text-white py-4 rounded-md transition-all duration-500">
                       {ConfirmPassError}
@@ -187,7 +189,7 @@ const Signup = () => {
                       />
                     </div>
                   </div>
-                  <div className="w-full flex justify-center my-4">
+                  <div className="w-full flex justify-center mt-4 mb-20">
                     <button
                       onClick={handleRegister}
                       className="w-full border border-red-500 text-red-500 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300"

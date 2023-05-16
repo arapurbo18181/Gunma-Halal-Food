@@ -1,6 +1,11 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import { redirect, useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  redirect,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import Swal from "sweetalert2";
 import GetCookies from "../components/Hooks/GetCookies";
 import SetCookies from "../components/Hooks/SetCookies";
@@ -20,41 +25,45 @@ export const ApiProvider = ({ children }) => {
   const [Catname, setCatname] = useState();
   const [BreadCrumbs, setBreadCrumbs] = useState([]);
   // const [SliderImageRoute] = useState("http://gunma.myesdev.xyz/images/banner_images")
-  const [SliderImageRoute] = useState("http://localhost:8000/images/banner_images")
+  // const [SliderImageRoute] = useState(
+  //   "http://localhost:8000/images/banner_images"
+  // );
   // const [SliderImageRoute] = useState(
   //   "https://gunma-admin.getthemeplugin.com/images/banner_images"
   // );
-  // const [SliderImageRoute] = useState("http://admin.softtech-it.org/images/banner_images")
+  const [SliderImageRoute] = useState("http://admin.softtech-it.org/images/banner_images")
   // const [CategoryImage] = useState("http://gunma.myesdev.xyz/images/category_image/large")
-  const [CategoryImage] = useState("http://localhost:8000/images/category_image/large")
+  // const [CategoryImage] = useState(
+  //   "http://localhost:8000/images/category_image/large"
+  // );
   // const [CategoryImage] = useState(
   //   "https://gunma-admin.getthemeplugin.com/images/category_image/large"
   // );
-  // const [CategoryImage] = useState("http://admin.softtech-it.org/images/category_image/large")
+  const [CategoryImage] = useState("http://admin.softtech-it.org/images/category_image/large")
   // const [LargeImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/large"
   // );
-  const [LargeImage] = useState(
-    "http://localhost:8000/images/product_images/large"
-  );
+  // const [LargeImage] = useState(
+  //   "http://localhost:8000/images/product_images/large"
+  // );
   // const [LargeImage] = useState(
   //   "https://gunma-admin.getthemeplugin.com/images/product_images/large"
   // );
-  // const [LargeImage] = useState(
-  //   "http://admin.softtech-it.org/images/product_images/large"
-  // );
+  const [LargeImage] = useState(
+    "http://admin.softtech-it.org/images/product_images/large"
+  );
   // const [SmallImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/small"
   // );
-  const [SmallImage] = useState(
-    "http://localhost:8000/images/product_images/small"
-  );
+  // const [SmallImage] = useState(
+  //   "http://localhost:8000/images/product_images/small"
+  // );
   // const [SmallImage] = useState(
   //   "https://gunma-admin.getthemeplugin.com/images/product_images/small"
   // );
-  // const [SmallImage] = useState(
-  //   "http://admin.softtech-it.org/images/product_images/small"
-  // );
+  const [SmallImage] = useState(
+    "http://admin.softtech-it.org/images/product_images/small"
+  );
   const [AllProducts, setAllProducts] = useState([]);
   const [SubProducts, setSubProducts] = useState([]);
   const [Register, setRegister] = useState({});
@@ -122,7 +131,7 @@ export const ApiProvider = ({ children }) => {
     city: "",
     country: "",
     zip_code: "",
-    delivery_time: ""
+    delivery_time: "",
   });
   const [ShippingAddress, setShippingAddress] = useState({
     first_name: "",
@@ -141,6 +150,16 @@ export const ApiProvider = ({ children }) => {
   const [SubCategoryProduct, setSubCategoryProduct] = useState([]);
   const [IsCartSidebar, setIsCartSidebar] = useState(false);
   const [ForgotPass, setForgotPass] = useState();
+  const [UserProfile, setUserProfile] = useState({
+    image: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone: "",
+    state: "",
+    city: "",
+    zip_code: "",
+  });
   const navigate = useNavigate();
 
   const cards = [
@@ -164,7 +183,7 @@ export const ApiProvider = ({ children }) => {
     },
     {
       id: 4,
-      amount: UserData ? UserData.coins : 0 ,
+      amount: UserData ? UserData.coins : 0,
       head: "Points",
       body: "in Your account",
     },
@@ -198,9 +217,10 @@ export const ApiProvider = ({ children }) => {
   const [SetNewPass, setSetNewPass] = useState({
     new_password: "",
     confirm_password: "",
-    email: ""
+    email: "",
   });
   const [SetPassParams, setSetPassParams] = useState();
+  const [AddToCartClick, setAddToCartClick] = useState(false);
   const location = useLocation();
   const params = useParams();
 
@@ -240,7 +260,7 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     const amount = cart.reduce((accumulator, currItem) => {
-      return accumulator +  Number(currItem.total_price);
+      return accumulator + Number(currItem.total_price);
     }, 0);
     setTotalPrice(amount);
   }, [cart]);
@@ -253,22 +273,27 @@ export const ApiProvider = ({ children }) => {
   }, [Wishlist]);
 
   const logOut = async () => {
-    await axios.get(`/api/user/account/management/logout/${JSON.parse(localStorage.getItem("token")
-    )}`).then((res) => {
-      console.log(res);
-      if (res.data.status === 200) {
-        localStorage.removeItem("token");
-        navigate("/");
-        setUser(false);
-        Swal.fire("Success", res.data.success_message, "success");
-      }
-    });
+    await axios
+      .get(
+        `/api/user/account/management/logout/${JSON.parse(
+          localStorage.getItem("token")
+        )}`
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.data.status === 200) {
+          localStorage.removeItem("token");
+          navigate("/");
+          setUser(false);
+          Swal.fire("Success", res.data.success_message, "success");
+        }
+      });
   };
 
   const addToCart = async (product, cutting) => {
     const data = {
       product_id: product.id,
-      price: product.discountedPrice,
+      price: Math.round(product.discountedPrice),
       quantity: product.quantity,
       cutting_system: cutting,
       cookie_id: GetCookies("cookies"),
@@ -284,6 +309,7 @@ export const ApiProvider = ({ children }) => {
         })
         .then((res) => {
           console.log(res);
+          setAddToCartClick(false);
           setIsCart(!IsCart);
         })
         .catch((error) => {
@@ -352,7 +378,7 @@ export const ApiProvider = ({ children }) => {
   };
 
   const increaseQuantity = (item) => {
-    console.log(item)
+    console.log(item);
     const data = {
       quantity: "plus",
       id: item.id,
@@ -601,89 +627,96 @@ export const ApiProvider = ({ children }) => {
 
   const orderProduct = async () => {
     const data = {
-      shipping_address: IsChecked ?  BillingAddress : ShippingAddress,
+      shipping_address: IsChecked ? BillingAddress : ShippingAddress,
       billing_address: BillingAddress,
-      seperate_shipping: IsChecked,
+      seperate_shipping: IsChecked ? false : true,
       total_amount: TotalPrice,
       payment_type: PaymentMethod,
       paid_amount: CoinAmount ? Number(CoinAmount) : Number(StripeAmount),
       token: JSON.parse(localStorage.getItem("token")),
     };
-    console.log(data)
+    console.log(data);
     await axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/order/management/system/order`, data, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(
-            localStorage.getItem("token")
-          )}`,
-        },
-      }).then((res) => {
-        console.log(res);
-        setIsCart(!IsCart)
-        // redirected("http://localhost:8000/api/order/management/system/view");
-        // window.location.replace('http://localhost:8000/api/order/management/system/view');
+      axios
+        .post(`/api/order/management/system/order`, data, {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setIsCart(!IsCart);
+          // redirected("http://localhost:8000/api/order/management/system/view");
+          // window.location.replace('http://localhost:8000/api/order/management/system/view');
 
-        if (res.data.status === 422) {
-          Swal.fire("warning", "Billing & Shipping Address Required", "warning");
-        }
-        if (res.data.status === 421) {
-          Swal.fire("warning", res.data.message, "warning");
-        }
-        if (res.data.status === 200) {
-          Swal.fire("success", res.data.message, "success");
-        }
+          if (res.data.status === 422) {
+            Swal.fire(
+              "warning",
+              "Billing & Shipping Address Required",
+              "warning"
+            );
+          }
+          if (res.data.status === 421) {
+            Swal.fire("warning", res.data.message, "warning");
+          }
+          if (res.data.status === 200) {
+            Swal.fire("success", res.data.message, "success");
+          }
+          if (res.data.status === 100) {
+            Swal.fire({
+              title: "<strong> Are You Sure? </strong>",
+              icon: "info",
+              html: res.data.view,
+              showCloseButton: true,
+              showCancelButton: false,
+              showConfirmButton: false,
+              focusConfirm: false,
+              // confirmButtonText:
+              //   '<i class="fa fa-thumbs-up"></i> Great!',
+              // confirmButtonAriaLabel: 'Thumbs up, great!',
+              // cancelButtonText:
+              //   '<i class="fa fa-thumbs-down"></i>',
+              // cancelButtonAriaLabel: 'Thumbs down'
+            });
+          }
 
-        // Swal.fire({
-        //   title: '<strong> Are You Sure? </strong>',
-        //   icon: 'info',
-        //   html: res.data ,
-        //   showCloseButton: true,
-        //   showCancelButton: false,
-        //   showConfirmButton: false,
-        //   focusConfirm: false,
-        //   // confirmButtonText:
-        //   //   '<i class="fa fa-thumbs-up"></i> Great!',
-        //   // confirmButtonAriaLabel: 'Thumbs up, great!',
-        //   // cancelButtonText:
-        //   //   '<i class="fa fa-thumbs-down"></i>',
-        //   // cancelButtonAriaLabel: 'Thumbs down'
-        // })
-
-
-      });
+        });
     });
   };
 
-  const applyCoin = async (coins) =>{
-
-    const data ={
+  const applyCoin = async (coins) => {
+    const data = {
       total_amount: TotalPrice,
       coin: coins,
-      token: JSON.parse(localStorage.getItem("token"))
-    }
+      token: JSON.parse(localStorage.getItem("token")),
+    };
 
     await axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/order/management/system/use-coin`, data, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(
-            localStorage.getItem("token")
-          )}`,
-        },
-      }).then((res) => {
-        console.log(res);
-        if (res.data.status === 401) {
-          Swal.fire("warning", res.data.message, "warning");
-        }
-        if (res.data.status === 400) {
-          Swal.fire("warning", res.data.error_message, "warning");
-        }
-        if (res.data.status === 200) {
-          Swal.fire("success", res.data.message, "success");
-        }
-        setIsCart(!IsCart);
-      });
+      axios
+        .post(`/api/order/management/system/use-coin`, data, {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data.status === 401) {
+            Swal.fire("warning", res.data.message, "warning");
+          }
+          if (res.data.status === 400) {
+            Swal.fire("warning", res.data.error_message, "warning");
+          }
+          if (res.data.status === 200) {
+            Swal.fire("success", res.data.message, "success");
+          }
+          setIsCart(!IsCart);
+        });
     });
-  }
+  };
 
   useEffect(() => {
     const getdata = async () => {
@@ -737,7 +770,7 @@ export const ApiProvider = ({ children }) => {
                 slug: item.product[0].slug,
                 sub_cat_slug: item.product[0].sub_category.slug,
                 cat_slug: item.product[0].sub_category.main_category.slug,
-                total_price: item.total_price
+                total_price: item.total_price,
               };
             });
             setcart(datas);
@@ -778,16 +811,20 @@ export const ApiProvider = ({ children }) => {
   };
 
   const filterStates = async (value) => {
-    await axios.get(`/api/state/search/management/state/${value}`).then((res) => {
-      console.log(res);
-      setStates(res.data);
-    });
+    await axios
+      .get(`/api/state/search/management/state/${value}`)
+      .then((res) => {
+        console.log(res);
+        setStates(res.data);
+      });
   };
   const filterShippingStates = async (value) => {
-    await axios.get(`/api/state/search/management/state/${value}`).then((res) => {
-      console.log(res);
-      setShippingStates(res.data);
-    });
+    await axios
+      .get(`/api/state/search/management/state/${value}`)
+      .then((res) => {
+        console.log(res);
+        setShippingStates(res.data);
+      });
   };
 
   useEffect(() => {
@@ -805,48 +842,80 @@ export const ApiProvider = ({ children }) => {
     }
   }, [SubCatProductsApi]);
 
-  const forgotPassword = async (e) =>{
+  const forgotPassword = async (e) => {
     e.preventDefault();
 
-    const data ={
+    const data = {
       email: ForgotPass,
-    }
+    };
 
     await axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/user/account/management/forget-password`, data).then((res) => {
-        console.log(res);
-        if (res.data.status === 200 ) {
-          Swal.fire("success", res.data.message, "success");
-        }
-        if (res.data.status === 401) {
-          Swal.fire("warning", res.data.message, "warning");
-        }
-      });
+      axios
+        .post(`/api/user/account/management/forget-password`, data)
+        .then((res) => {
+          console.log(res);
+          if (res.data.status === 200) {
+            Swal.fire("success", res.data.message, "success");
+          }
+          if (res.data.status === 401) {
+            Swal.fire("warning", res.data.message, "warning");
+          }
+        });
     });
-
-  }
+  };
 
   const setPasswords = async (e) => {
     e.preventDefault();
     const data = {
       new_password: SetNewPass.new_password,
       confirm_password: SetNewPass.confirm_password,
-      email: SetPassParams
-    }
+      email: SetPassParams,
+    };
 
     await axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/user/account/management/set-password`, data).then((res) => {
-        console.log(res);
-        if (res.data.status === 200) {
-          localStorage.setItem("token", JSON.stringify(res.data.token));
-          navigate("/")
-          Swal.fire("success", res.data.message, "success");
-          setUser(true);
-        }
-      });
+      axios
+        .post(`/api/user/account/management/set-password`, data)
+        .then((res) => {
+          console.log(res);
+          if (res.data.status === 200) {
+            localStorage.setItem("token", JSON.stringify(res.data.token));
+            navigate("/");
+            Swal.fire("success", res.data.message, "success");
+            setUser(true);
+          }
+        });
     });
+  };
 
-  }
+  const updateProfile = async (e) => {
+    e.preventDefault()
+    const data = {
+      first_name: UserProfile.first_name,
+      last_name: UserProfile.last_name,
+      email: UserProfile.email,
+      phone: UserProfile.phone,
+      state: UserProfile.state,
+      city: UserProfile.city,
+      zip_code: UserProfile.zip_code,
+      token: JSON.parse(localStorage.getItem("token")),
+    };
+    console.log(data)
+
+    await axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios
+        .post(`/api/user/account/management/change-profile`, data, {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          // setIsCart(!IsCart);
+        });
+    });
+  };
 
   return (
     <ApiContext.Provider
@@ -999,7 +1068,12 @@ export const ApiProvider = ({ children }) => {
         setSetNewPass,
         setPasswords,
         SetPassParams,
-        setSetPassParams
+        setSetPassParams,
+        AddToCartClick,
+        setAddToCartClick,
+        UserProfile,
+        setUserProfile,
+        updateProfile,
       }}
     >
       {children}

@@ -18,7 +18,7 @@ const TopRatedProducts = () => {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-[100%] ">
         {AllProducts.map((item, index) => {
           const discountedAmount = (item.price / 100) * item.discount;
-          const newPrice = item.price - discountedAmount;
+          const newPrice = item.price - Math.round(discountedAmount);
           item.discountedPrice = newPrice;
           return <SubCategoryProducts item={item} key={index} />;
         })}

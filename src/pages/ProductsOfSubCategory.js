@@ -119,7 +119,7 @@ const ProductsOfSubCategory = () => {
                       SubCategoryProduct.map((item, index) => {
                         const discountedAmount =
                           (item.price / 100) * item.discount;
-                        const newPrice = item.price - discountedAmount;
+                        const newPrice = item.price - Math.round(discountedAmount);
                         item.discountedPrice = newPrice;
                         return <SubCategoryProducts item={item} key={index} />;
                       })
