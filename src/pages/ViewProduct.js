@@ -59,7 +59,7 @@ const ViewProduct = () => {
               (res.data.product = {
                 ...res.data.product,
                 quantity: 0,
-                discountedPrice: newPrice,
+                discountedPrice: Math.round(newPrice),
               })
             );
             setLoader(false);
@@ -217,11 +217,11 @@ const ViewProduct = () => {
                         </p>
                         <div className="flex justify-start items-center space-x-1">
                           <h2 className="text-2xl font-bold text-red-500">
-                            ৳{Product.discountedPrice}
+                          ৳{Product.discountedPrice}
                           </h2>
                           <h2 className="text-base text-gray-400 line-through">
                             {`${
-                              Product.discount === 0 ? "" : `৳${Product.price}`
+                              Product.discount === "0.00" ? "" : `৳${Product.price}`
                             }`}
                           </h2>
                         </div>

@@ -46,17 +46,16 @@ const Checkout = () => {
     filterStates,
     ShippingStates,
     filterShippingStates,
-    cart
+    cart,
   } = useApi();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (cart.length !== 0) {
-      
       orderProduct();
       console.log(BillingAddress);
-    }else{
-      Swal.fire("warning","Please add some product first", "warning")
+    } else {
+      Swal.fire("warning", "Please add some product first", "warning");
     }
   };
   useEffect(() => {
@@ -104,10 +103,22 @@ const Checkout = () => {
       }
     });
     if (data) {
-      // console.log(data.delivery_time);
+      console.log(data.delivery_time);
       setDeliveryDate(data.delivery_time);
     }
   }, [BillingAddress.state]);
+
+  useEffect(() => {
+    const data = States.find((item) => {
+      if (item.name === ShippingAddress.state) {
+        return item;
+      }
+    });
+    if (data) {
+      console.log(data.delivery_time);
+      setDeliveryDate(data.delivery_time);
+    }
+  }, [ShippingAddress.state]);
 
   const testRoute = async (e) => {
     e.preventDefault();
@@ -131,10 +142,14 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    setBillingAddress({...BillingAddress, first_name: UserData.name, last_name: UserData.last_name, email: UserData.email})
-  }, [])
+    setBillingAddress({
+      ...BillingAddress,
+      first_name: UserData.name,
+      last_name: UserData.last_name,
+      email: UserData.email,
+    });
+  }, []);
   const today = new Date();
-  
 
   return (
     <>
@@ -156,12 +171,12 @@ const Checkout = () => {
                   <div className="flex flex-col items-start my-4 w-full">
                     <label htmlFor="email">First Name</label>
                     <input
-                    onChange={(e) =>
-                      setBillingAddress({
-                        ...BillingAddress,
-                        first_name: e.target.value,
-                      })
-                    }
+                      onChange={(e) =>
+                        setBillingAddress({
+                          ...BillingAddress,
+                          first_name: e.target.value,
+                        })
+                      }
                       value={BillingAddress.first_name}
                       className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                       type="text"
@@ -174,12 +189,12 @@ const Checkout = () => {
                   <div className="flex flex-col items-start my-4 w-full ml-0 sm:ml-4">
                     <label htmlFor="email">Last Name</label>
                     <input
-                    onChange={(e) =>
-                      setBillingAddress({
-                        ...BillingAddress,
-                        last_name: e.target.value,
-                      })
-                    }
+                      onChange={(e) =>
+                        setBillingAddress({
+                          ...BillingAddress,
+                          last_name: e.target.value,
+                        })
+                      }
                       value={BillingAddress.last_name}
                       className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                       type="text"
@@ -226,13 +241,8 @@ const Checkout = () => {
                     <div ref={ref} className="absolute w-full top-16">
                       <input
                         onChange={(e) => {
-                          setBillingAddress({
-                            ...BillingAddress,
-                            state: e.target.value,
-                          });
                           filterStates(e.target.value);
                         }}
-                        value={BillingAddress.state}
                         autoComplete="off"
                         className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                         type="text"
@@ -319,10 +329,15 @@ const Checkout = () => {
                     required
                   />
                 </div>
-                <div className="flex flex-col items-start my-4 w-full">
+                { IsChecked && BillingAddress.state ? <div className="flex flex-col items-start my-4 w-full">
                   <label htmlFor="email">Delivery Date</label>
                   <DatePicker
-                    minDate={new Date(today.setDate(today.getDate() + 1 ))}
+                    minDate={subDays(
+                      new Date(),
+                      `${
+                        DeliveryDate == 24 ? -1 : DeliveryDate == 48 ? -2 : -3
+                      }`
+                    )}
                     className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                     placeholderText="Enter Delivery Date"
                     selected={BillingAddress.show_date}
@@ -339,8 +354,8 @@ const Checkout = () => {
                     }}
                     dateFormat="dd-MM-yy"
                   />
-                </div>
-                <div className="flex flex-col items-start my-4 w-full">
+                </div> : ""}
+                {/* <div className="flex flex-col items-start my-4 w-full">
                   <label htmlFor="delivery_time">Delivery Time</label>
                   <input
                     onChange={(e) =>
@@ -357,7 +372,7 @@ const Checkout = () => {
                     id="delivery_time"
                     required
                   />
-                </div>
+                </div> */}
               </div>
               <div className="flex-[0.001] h-[1000px] w-[1px] bg-gray-300"></div>
               <div className="flex-1 overflow-hidden">
@@ -457,13 +472,8 @@ const Checkout = () => {
                         <div ref={myref} className="absolute w-full top-16">
                           <input
                             onChange={(e) => {
-                              setShippingAddress({
-                                ...ShippingAddress,
-                                state: e.target.value,
-                              });
                               filterShippingStates(e.target.value);
                             }}
-                            value={ShippingAddress.state}
                             autoComplete="off"
                             className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                             type="text"
@@ -550,6 +560,36 @@ const Checkout = () => {
                         required
                       />
                     </div>
+                    { ShippingAddress.state ? <div className="flex flex-col items-start my-4 w-full">
+                      <label htmlFor="email">Delivery Date</label>
+                      <DatePicker
+                        minDate={subDays(
+                          new Date(),
+                          `${
+                            DeliveryDate == 24
+                              ? -1
+                              : DeliveryDate == 48
+                              ? -2
+                              : -3
+                          }`
+                        )}
+                        className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                        placeholderText="Enter Delivery Date"
+                        selected={ShippingAddress.show_date}
+                        onChange={(date) => {
+                          // console.log(`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`)
+                          console.log(date);
+                          setShippingAddress({
+                            ...ShippingAddress,
+                            show_date: date,
+                            delivery_date: `${date.getDate()}-${
+                              date.getMonth() + 1
+                            }-${date.getFullYear()}`,
+                          });
+                        }}
+                        dateFormat="dd-MM-yy"
+                      />
+                    </div> : ""}
                   </div>
                 }
               </div>
@@ -576,7 +616,10 @@ const Checkout = () => {
             <div>
               <h2 className="text-sm md:text-base">
                 Your Points :{" "}
-                <span className="text-lg font-bold"> {parseFloat(UserData.coins).toFixed(2)}  </span>{" "}
+                <span className="text-lg font-bold">
+                  {" "}
+                  {parseFloat(UserData.coins).toFixed(2)}{" "}
+                </span>{" "}
               </h2>
             </div>
             <div className="flex justify-center items-center space-x-3">
@@ -621,7 +664,7 @@ const Checkout = () => {
                 </span>{" "}
               </h3>
               <h5 className="text-sm md:text-base text-red-500 font-semibold">
-              ¥0
+                ¥0
               </h5>
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200 font-bold text-lg md:text-xl">

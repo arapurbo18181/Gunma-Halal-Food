@@ -12,14 +12,14 @@ const Categories = () => {
     <div className="container">
       {/* //! Top Categories */}
 
-      <h1 className="text-3xl font-bold text-gray-700 mt-8 mb-4 mx-4">
+      <h1 className="text-3xl font-bold text-gray-700 mt-8 mb-10 mx-4">
         <span className="underline decoration-red-500 underline-offset-8">
           To
         </span>
         p{" "}
         Categories
       </h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-2 ">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mx-2 gap-6 w-full place-items-center">
         {CategoryApi.map((item, index) => {
           return (
             <Link
@@ -29,13 +29,13 @@ const Categories = () => {
                 setItemCategory(item.sub_category)
                 setCatname(item.name)
                 }}
-              className="flex flex-col justify-center items-center w-[45vw] md:w-full max-w-[300px] "
+              className="flex flex-col justify-center items-center space-y-4 w-[45vw] hover:-translate-y-3 transition-all duration-500 md:w-full max-w-[200px] shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-lg pb-4"
             >
-              <div className="overflow-hidden w-full flex justify-center items-center">
+              <div className="overflow-hidden w-full flex justify-center items-center rounded-t-lg">
                 <img
                   src={`${CategoryImage}/${item.image}`}
                   alt={item.name}
-                  className="hover:scale-110 transition-all duration-500 w-6/12 md:w-8/12 xl:w-10/12"
+                  className="hover:scale-110 transition-all duration-500 w-full object-cover h-full rounded-t-lg"
                 />
               </div>
               <h3 className="text-sm sm:text-base md:text-xl"> {item.name} </h3>

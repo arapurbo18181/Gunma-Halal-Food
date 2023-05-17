@@ -4,6 +4,7 @@ import {
   redirect,
   useLocation,
   useNavigate,
+  useNavigation,
   useParams,
 } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -34,12 +35,13 @@ export const ApiProvider = ({ children }) => {
   const [SliderImageRoute] = useState("http://admin.softtech-it.org/images/banner_images")
   // const [CategoryImage] = useState("http://gunma.myesdev.xyz/images/category_image/large")
   // const [CategoryImage] = useState(
-  //   "http://localhost:8000/images/category_image/large"
+  //   "http://localhost:8000/images/category_image/medium"
   // );
   // const [CategoryImage] = useState(
   //   "https://gunma-admin.getthemeplugin.com/images/category_image/large"
   // );
-  const [CategoryImage] = useState("http://admin.softtech-it.org/images/category_image/large")
+  const [CategoryImage1] = useState("http://admin.softtech-it.org/images/category_image/large")
+  const [CategoryImage] = useState("http://admin.softtech-it.org/images/category_image/medium")
   // const [LargeImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/large"
   // );
@@ -50,7 +52,7 @@ export const ApiProvider = ({ children }) => {
   //   "https://gunma-admin.getthemeplugin.com/images/product_images/large"
   // );
   const [LargeImage] = useState(
-    "http://admin.softtech-it.org/images/product_images/large"
+    "http://admin.softtech-it.org/images/product_images/medium"
   );
   // const [SmallImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/small"
@@ -131,9 +133,9 @@ export const ApiProvider = ({ children }) => {
     city: "",
     country: "",
     zip_code: "",
-    delivery_time: "",
   });
   const [ShippingAddress, setShippingAddress] = useState({
+    delivery_date: "",
     first_name: "",
     last_name: "",
     email: "",
@@ -344,7 +346,12 @@ export const ApiProvider = ({ children }) => {
         .then((res) => {
           console.log(res);
           setIsCart(!IsCart);
-          // setWishlist();
+          if (res.data.status === 200) {
+            Swal.fire("success", res.data.success_message, "success")
+          }
+          if (res.data.status === 401) {
+            Swal.fire("warning", res.data.error_message, "warning")
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -632,7 +639,6 @@ export const ApiProvider = ({ children }) => {
       seperate_shipping: IsChecked ? false : true,
       total_amount: TotalPrice,
       payment_type: PaymentMethod,
-      paid_amount: CoinAmount ? Number(CoinAmount) : Number(StripeAmount),
       token: JSON.parse(localStorage.getItem("token")),
     };
     console.log(data);
@@ -662,6 +668,7 @@ export const ApiProvider = ({ children }) => {
             Swal.fire("warning", res.data.message, "warning");
           }
           if (res.data.status === 200) {
+            navigate("/")
             Swal.fire("success", res.data.message, "success");
           }
           if (res.data.status === 100) {
@@ -1074,6 +1081,7 @@ export const ApiProvider = ({ children }) => {
         UserProfile,
         setUserProfile,
         updateProfile,
+        CategoryImage1
       }}
     >
       {children}

@@ -32,6 +32,7 @@ const ProductsOfSubCategory = () => {
     CategoryImage,
     SubCategoryProduct,
     setSubCategoryProduct,
+    CategoryImage1
   } = useApi();
   const params = useParams();
   // console.log(SubProducts);
@@ -95,10 +96,10 @@ const ProductsOfSubCategory = () => {
                 ) : (
                   ""
                 )}
-                <div className="h-[30vh] overflow-hidden ">
+                <div className="h-[35vh] overflow-hidden ">
                   <img
-                    className="hover:scale-110 transition-all duration-300 object-cover"
-                    src={`${CategoryImage}/${BannerImage}`}
+                    className="hover:scale-110 transition-all duration-300 object-cover h-full"
+                    src={`${CategoryImage1}/${BannerImage}`}
                     alt=""
                   />
                 </div>
@@ -110,18 +111,19 @@ const ProductsOfSubCategory = () => {
                 </h2>
                 <CartButton />
                 <div className="px-4">
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 ">
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 px-4">
                     {Loader ? (
                       <div className="w-[80vw] flex justify-center items-center">
                         <Loaders width={"100%"} height={"full"} />
                       </div>
                     ) : (
                       SubCategoryProduct.map((item, index) => {
+                        console.log(item.sub_category.main_category.slug)
                         const discountedAmount =
                           (item.price / 100) * item.discount;
                         const newPrice = item.price - Math.round(discountedAmount);
                         item.discountedPrice = newPrice;
-                        return <SubCategoryProducts item={item} key={index} />;
+                        return <SubCategoryProducts item={item} key={index} sub_category_slug={item.sub_category.slug} main_category_slug={item.sub_category.main_category.slug} product_slug={item.slug} />;
                       })
                     )}
                   </div>

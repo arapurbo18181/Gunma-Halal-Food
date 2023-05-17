@@ -10,7 +10,8 @@ import { useProduct } from "../context/ProductContext";
 import { useApi } from "../context/ApiContext";
 import Swal from "sweetalert2";
 
-const SubCategoryProducts = ({ item }) => {
+const SubCategoryProducts = ({ item, sub_category_slug, main_category_slug, product_slug }) => {
+  // console.log(item.sub_category.main_category)
   const { MyRef, setMyRef, myRefForFlyToCart } = useProduct();
   const {
     BreadCrumbs,
@@ -41,16 +42,8 @@ const SubCategoryProducts = ({ item }) => {
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const [Count, setCount] = useState();
   const [AnimationCoodinate, setAnimationCoodinate] = useState({});
-  const [NewPrice, setNewPrice] = useState();
   const posY = UseScrollPosition();
   const posX = UseScrollPositionX();
-  // useEffect(() => {
-  //   setAllProducts(ProductsApi.map((item) => {
-  //     return {...item, amount:0}
-  //   }));
-  // }, [])
-
-  // setCountProductToAdd(item.id)
 
   const CountToAdd = (id) => {
     if (SubCategoryProduct) {
@@ -100,6 +93,7 @@ const SubCategoryProducts = ({ item }) => {
   };
 
   const handleClick = async (item) => {
+    console.log(item)
     if (item.quantity === 0) {
       Swal.fire("warning", "Please add some product first", "warning");
     } else {
@@ -149,7 +143,7 @@ const SubCategoryProducts = ({ item }) => {
         console.log(item)
         setCount(item.id);
         const setX =
-          CartCoordinate.x - (myRef.current.offsetLeft - posX) - 50;
+          CartCoordinate.x - (myRef.current.offsetLeft - posX) - 80;
         const setY =
           CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
         setAnimationCoodinate({ x: setX, y: setY });
@@ -196,9 +190,9 @@ const SubCategoryProducts = ({ item }) => {
           ref={myRef}
           className="shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-0 xl:hover:-translate-y-3 transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[400px]"
         >
-          <div className="relative">
+          <div className="relative w-full flex justify-center items-center rounded-t-lg">
             <img
-              className="rounded-t-lg w-full object-cover relative -z-10"
+              className="rounded-t-lg w-full object-cover max-w-[220px] max-h-[220px] relative hover:scale-110 transition-all duration-500 -z-10"
               src={`${LargeImage}/${item.image}`}
               alt=""
             />
@@ -224,7 +218,7 @@ const SubCategoryProducts = ({ item }) => {
                 setShowProduct(item);
                 setBreadCrumbs([...BreadCrumbs, item.name]);
               }}
-              to={`/${item.sub_category.main_category.slug}/${item.sub_category.slug}/${item.slug}`}
+              to={`/${main_category_slug}/${sub_category_slug}/${product_slug}`}
               className="text-sm md:text-base font-semibold tracking-wide text-gray-900 dark:text-white"
             >
               {" "}

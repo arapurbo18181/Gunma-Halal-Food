@@ -46,7 +46,7 @@ const Wishlist = () => {
                   {Wishlist.map((item, i) => {
                     const discountedAmount = (item.price / 100) * item.discount;
                     const newPrice = item.price - discountedAmount;
-                    item.discountedPrice = newPrice;
+                    item.discountedPrice = Math.round(newPrice);
                     return (
                       <>
                         <div class="w-full max-w-[250px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 space-y-4  hover:-translate-y-3 transition-all duration-500">

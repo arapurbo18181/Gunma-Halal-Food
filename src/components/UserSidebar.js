@@ -5,6 +5,7 @@ import { AiFillHome } from "react-icons/ai";
 import { AiFillProfile } from "react-icons/ai";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { AiFillLock } from "react-icons/ai";
+import userImage from "../images/user.png"
 
 const userAccount = [
   {
@@ -42,10 +43,10 @@ const UserSidebar = () => {
     <>
       <section className="hidden  w-full xl:flex xl:flex-col justify-center items-center xl:items-start space-x-2 xl:space-x-0 bg-blue-600 xl:h-screen">
         <div className="flex-1 flex flex-col justify-center items-center space-y-2 w-full xl:w-[350px] py-2 px-2">
-          <div className="rounded-full overflow-hidden h-24 w-24 md:h-32 md:w-32 xl:h-40 xl:w-40 ">
+          <div className="overflow-hidden h-24 w-24 md:h-32 md:w-32 xl:h-44 xl:w-40 ">
             <img
               className="object-cover"
-              src="https://media.istockphoto.com/id/1200677760/photo/portrait-of-handsome-smiling-young-man-with-crossed-arms.jpg?s=612x612&w=0&k=20&c=g_ZmKDpK9VEEzWw4vJ6O577ENGLTOcrvYeiLxi8mVuo="
+              src={userImage}
               alt=""
             />
           </div>
