@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { useCategory } from "../../context/CategoryContext";
 import { useApi } from "../../context/ApiContext";
+import ProfileImage from "../../images/user.png"
 
 const Topbar = () => {
   const { TotalWishlist, User } = useApi();
@@ -59,22 +60,23 @@ const Topbar = () => {
           {" "}
           SignUp{" "}
         </Link>}
-        { User && <Link
-          to={"/useraccount"}
-          className="hidden xl:block flex-1 hover:-translate-y-1 transition-all duration-300"
-        >
-          <VscAccount className="cursor-pointer text-xl" />
-        </Link>}
+        
         <Link
           to={"/wishlist"}
-          className="hidden xl:block flex-1 relative hover:-translate-y-1 transition-all duration-300"
+          className="hidden flex-1 relative hover:-translate-y-1 transition-all duration-300 w-10 h-10 xl:flex justify-center items-center"
         >
-          <BsSuitHeart className="cursor-pointer text-xl" />
-          <div className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-red-500 flex justify-center items-center text-xs text-white">
+          <BsSuitHeart className="cursor-pointer text-xl w-full" />
+          <div className="absolute top-0 right-1 w-4 h-4 rounded-full bg-red-500 flex justify-center items-center text-xs text-white">
             {" "}
             {TotalWishlist}{" "}
           </div>
         </Link>
+        { User && <Link
+          to={"/useraccount"}
+          className="hidden xl:block flex-1 hover:-translate-y-1 transition-all duration-300"
+        >
+          <img className="w-20 border border-blue-600 rounded-full" src={ProfileImage} alt="" />
+        </Link>}
       </div>
     </section>
   );

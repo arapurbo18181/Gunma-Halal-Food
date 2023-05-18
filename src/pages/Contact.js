@@ -6,7 +6,7 @@ const Contact = () => {
   return (
     <>
     <BreadCrumbs name={"Contact"} url={"contact"} />
-      <section className="text-gray-600 body-font relative">
+      {/* <section className="text-gray-600 body-font relative">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-col text-center w-full mb-12">
             <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
@@ -139,7 +139,14 @@ const Contact = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+      <div className="w-full h-full text-center mt-10">
+        <h2 className="text-4xl font-bold mt-5">Address: 群馬県館林市成島町222-1-2A</h2>
+        <h2 className="text-4xl font-bold mt-5">Feel free to contact us at</h2>
+        <h2 className="text-4xl font-bold mt-5">0276-57-6420 or 080-3919-9020 (WhatsApp, Viber)</h2>
+        <p className="mt-20">Or if you prefer, you can drop us a note using the form below. You'll always get a response from a real person — with a real name — within 24 hours.</p>
+        <p className="mt-20 font-bold">Our Business time: 10:00 AM to 10:00 PM (Everyday)</p>
+      </div>
       <Footer />
     </>
   );

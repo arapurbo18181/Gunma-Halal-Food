@@ -8,10 +8,15 @@ import { IoMdAdd, IoMdClose, IoMdRemove } from "react-icons/io";
 import { UseScrollPositionX } from "./Hooks/useScrollPositionX";
 import { useProduct } from "../context/ProductContext";
 import { useApi } from "../context/ApiContext";
+import { AiFillEye } from "react-icons/ai";
 import Swal from "sweetalert2";
 
-const SubCategoryProducts = ({ item, sub_category_slug, main_category_slug, product_slug }) => {
-  // console.log(item.sub_category.main_category)
+const SubCategoryProducts = ({
+  item,
+  sub_category_slug,
+  main_category_slug,
+  product_slug,
+}) => {
   const { MyRef, setMyRef, myRefForFlyToCart } = useProduct();
   const {
     BreadCrumbs,
@@ -34,7 +39,7 @@ const SubCategoryProducts = ({ item, sub_category_slug, main_category_slug, prod
     CuttingSystem,
     setCuttingSystem,
     AddToCartClick,
-    setAddToCartClick
+    setAddToCartClick,
   } = useApi();
 
   const myRef = useRef();
@@ -93,11 +98,9 @@ const SubCategoryProducts = ({ item, sub_category_slug, main_category_slug, prod
   };
 
   const handleClick = async (item) => {
-    console.log(item)
     if (item.quantity === 0) {
       Swal.fire("warning", "Please add some product first", "warning");
     } else {
-      console.log(item)
       if (item.cutting_system === "Yes") {
         Swal.fire({
           title: "Do You Want to Cut The Product?",
@@ -139,13 +142,10 @@ const SubCategoryProducts = ({ item, sub_category_slug, main_category_slug, prod
             }, 2000);
           }
         });
-      } else if(item.cutting_system === "No"){
-        console.log(item)
+      } else if (item.cutting_system === "No") {
         setCount(item.id);
-        const setX =
-          CartCoordinate.x - (myRef.current.offsetLeft - posX) - 80;
-        const setY =
-          CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
+        const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 80;
+        const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
         setAnimationCoodinate({ x: setX, y: setY });
         setIsAddedToCart(true);
         setAddToCartClick(true);
@@ -181,7 +181,6 @@ const SubCategoryProducts = ({ item, sub_category_slug, main_category_slug, prod
       },
     },
   };
-  
 
   return (
     <>
@@ -190,7 +189,17 @@ const SubCategoryProducts = ({ item, sub_category_slug, main_category_slug, prod
           ref={myRef}
           className="shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-0 xl:hover:-translate-y-3 transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[400px]"
         >
-          <div className="relative w-full flex justify-center items-center rounded-t-lg">
+          <div className="relative w-full flex justify-center items-center rounded-t-lg group transition-all duration-500">
+            <div className="absolute w-full h-full group-hover:bg-black group-hover:bg-opacity-50 rounded-t-lg transition-all duration-500">
+              <div className="absolute right-3 -top-6 group-hover:top-6 p-2 flex flex-col items-center justify-center gap-y-2 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                <Link
+                  to={`/${main_category_slug}/${sub_category_slug}/${product_slug}`}
+                  className="w-12 h-12 bg-white flex justify-center items-center text-primary drop-shadow-xl"
+                >
+                  <AiFillEye className="text-xl" />
+                </Link>
+              </div>
+            </div>
             <img
               className="rounded-t-lg w-full object-cover max-w-[220px] max-h-[220px] relative hover:scale-110 transition-all duration-500 -z-10"
               src={`${LargeImage}/${item.image}`}
@@ -230,14 +239,20 @@ const SubCategoryProducts = ({ item, sub_category_slug, main_category_slug, prod
             </h2>
             <div className="flex justify-center items-center space-x-1 my-2">
               <h2 className="text-base md:text-lg font-bold text-red-500">
-              ৳{Math.round(item.discountedPrice)}
+                ৳{Math.round(item.discountedPrice)}
               </h2>
               <h2 className="text-xs md:text-sm text-gray-400 line-through">{`${
-                item.discount === 0 ? "" : `৳${parseFloat(item.price).toFixed(2)}`
+                item.discount === 0
+                  ? ""
+                  : `৳${parseFloat(item.price).toFixed(2)}`
               }`}</h2>
             </div>
             <div className="relative flex justify-between items-center w-full mt-2 h-[30px]">
-              { AddToCartClick ? <div className="absolute top-0 left-0 right-0 h-full w-full bg-black bg-opacity-25"></div> : ""}
+              {AddToCartClick ? (
+                <div className="absolute top-0 left-0 right-0 h-full w-full bg-black bg-opacity-25"></div>
+              ) : (
+                ""
+              )}
               <div
                 onClick={() => CountToRemove(item.id)}
                 className="flex-1 flex justify-center items-center cursor-pointer h-full w-full border-red-600 border px-1 active:bg-white active:text-black hover:bg-red-500 hover:text-white text-xs md:text-sm transition-all duration-300"

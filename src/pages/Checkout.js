@@ -618,7 +618,7 @@ const Checkout = () => {
                 Your Points :{" "}
                 <span className="text-lg font-bold">
                   {" "}
-                  {parseFloat(UserData.coins).toFixed(2)}{" "}
+                  {Math.round(UserData.coins)}{" "}
                 </span>{" "}
               </h2>
             </div>
@@ -647,7 +647,7 @@ const Checkout = () => {
             <div className="flex justify-between py-2 border-b border-gray-200">
               <h3 className="text-sm md:text-base font-semibold">Subtotal</h3>
               <h5 className="text-sm md:text-base text-gray-400">
-                $ {parseFloat(TotalPrice).toFixed(2)}
+              ¥ {parseFloat(TotalPrice).toFixed(2)}
               </h5>
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200 ">
@@ -682,15 +682,15 @@ const Checkout = () => {
                     setStripeInput(true);
                     setCoinInput(false);
                   }}
-                  id=""
+                  id="stripe"
                 />{" "}
-                <span className="text-sm md:text-base">Stripe</span>
+                <label htmlFor="stripe" className="text-sm md:text-base">Stripe</label>
               </div>
               <div>
                 <input
                   type="radio"
                   name="payment"
-                  id=""
+                  id="cash_on_delivery"
                   value={"cash_on_delivery"}
                   onChange={(e) => {
                     setPaymentMethod(e.target.value);
@@ -698,7 +698,7 @@ const Checkout = () => {
                     setStripeInput(false);
                   }}
                 />{" "}
-                <span className="text-sm md:text-base">Cash On Delivery</span>
+                <label htmlFor="cash_on_delivery" className="text-sm md:text-base">Cash On Delivery</label>
               </div>
             </div>
             <div className="w-full my-10">

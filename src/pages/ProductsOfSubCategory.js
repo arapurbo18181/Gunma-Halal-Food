@@ -12,6 +12,7 @@ import Loaders from "../components/Loaders";
 import { useApi } from "../context/ApiContext";
 import BreadCrumbs from "../components/BreadCrumbs";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const ProductsOfSubCategory = () => {
   const [Loader, setLoader] = useState(false);
@@ -20,6 +21,7 @@ const ProductsOfSubCategory = () => {
   const [SubCateName, setSubCateName] = useState();
   const [SubCateSlug, setSubCateSlug] = useState();
   const [BannerImage, setBannerImage] = useState();
+  const [Message,setMessage] = useState();
   const { ProductsFromCategory, SubCatImage } = useCategory();
   const {
     SubCatProductsApi,
@@ -48,13 +50,16 @@ const ProductsOfSubCategory = () => {
 
   useEffect(() => {
     setLoader(true);
-    console.log(location);
     const getdata = async () => {
       await axios
         .get(`/api${location.pathname}`)
         .then((res) => {
+          console.log(res);
+          if (res.data.status === 500) {
+            setMessage(res.data.message);
+            setLoader(false);
+          }
           if (res.data.status === 200) {
-            console.log(res);
             setBannerImage(res.data.products[0].sub_category.image);
             setCateName(res.data.products[0].sub_category.main_category.name);
             setSubCateName(res.data.products[0].sub_category.name);
@@ -87,7 +92,10 @@ const ProductsOfSubCategory = () => {
               <div className="hidden w-[14vw] sticky left-0 top-[4.6rem] xl:block -mt-4">
                 <CategorySidebar />
               </div>
-              <div className="w-full">
+              {
+                Message ? <div className="w-full h-full flex justify-center items-center">
+                  <h2 className="text-2xl mt-20"> No Product available....... </h2>
+                </div> : <div className="w-full">
                 {CateName && SubCateName ? (
                   <BreadCrumbs
                     name={`${CateName}/${SubCateName}`}
@@ -130,6 +138,8 @@ const ProductsOfSubCategory = () => {
                 </div>
                 <Footer />
               </div>
+              }
+              
             </div>
           </section>
         </>

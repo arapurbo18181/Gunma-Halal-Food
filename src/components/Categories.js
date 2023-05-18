@@ -19,7 +19,7 @@ const Categories = () => {
         p{" "}
         Categories
       </h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mx-2 gap-6 w-full place-items-center">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 px-2 gap-6 w-full place-items-center">
         {CategoryApi.map((item, index) => {
           return (
             <Link

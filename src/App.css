@@ -71,8 +71,15 @@
   opacity: 0.5;
 }
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .slick-prev, .slick-next {
     display: none !important;
   }
+
+} */
+
+.slick-list{
+  overflow: hidden !important;
 }
+
+

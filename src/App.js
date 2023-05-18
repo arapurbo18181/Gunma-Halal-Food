@@ -24,11 +24,12 @@ import { useApi } from "./context/ApiContext";
 import ErrorPage from "./pages/ErrorPage";
 import Forgot_password from "./pages/Forgot_password";
 import SetNewPass from "./pages/SetNewPass";
+import ShippingPolicy from "./pages/ShippingPolicy";
 
 // axios.defaults.baseURL = "http://gunma.myesdev.xyz/";
 // axios.defaults.baseURL = "https://gunma-admin.getthemeplugin.com/";
-axios.defaults.baseURL = "https://admin.softtech-it.org/";
-// axios.defaults.baseURL = "http://localhost:8000/";
+// axios.defaults.baseURL = "https://admin.softtech-it.org/";
+axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.post["Accept"] = "application/json";
 axios.defaults.withCredentials = true;
@@ -72,6 +73,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/shippingpolicy" element={<ShippingPolicy />} />
             <Route path="/error" element={<ErrorPage/>} />
             <Route path="/*" element={<ErrorPage/>} />
           </Routes>

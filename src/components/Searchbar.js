@@ -42,7 +42,7 @@ const Searchbar = () => {
               {SearchProduct.map((item) => {
                 const discountedAmount = (item.price / 100) * item.discount;
                 const newPrice = item.price - discountedAmount;
-                item.discountedPrice = newPrice;
+                item.discountedPrice = Math.round(newPrice);
                 return <SearchProducts item={item} />;
               })}
             </div>
