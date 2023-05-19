@@ -43,7 +43,7 @@ const UserProfile = () => {
   }, [ref]);
 
   return (
-    <section className="w-full h-full flex justify-center items-center mb-20">
+    <section className="w-full h-full flex justify-center items-center">
       <form onSubmit={updateProfile} className="w-full h-full">
         <div className="flex justify-center my-5 text-2xl md:text-4xl font-bold">
           <h1>Your Profile</h1>

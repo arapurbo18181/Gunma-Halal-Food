@@ -41,7 +41,7 @@ const UserSidebar = () => {
   } = useApi();
   return (
     <>
-      <section className="hidden  w-full xl:flex xl:flex-col justify-center items-center xl:items-start space-x-2 xl:space-x-0 bg-blue-600 xl:h-screen">
+      <section className="hidden w-full xl:flex xl:flex-col justify-center items-center xl:items-start space-x-2 xl:space-x-0 bg-blue-600 xl:h-screen">
         <div className="flex-1 flex flex-col justify-center items-center space-y-2 w-full xl:w-[350px] py-2 px-2">
           <div className="overflow-hidden h-24 w-24 md:h-32 md:w-32 xl:h-44 xl:w-40 ">
             <img

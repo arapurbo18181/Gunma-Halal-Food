@@ -120,6 +120,7 @@ const SubCategoryProducts = ({
               CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
             setAnimationCoodinate({ x: setX, y: setY });
             setIsAddedToCart(true);
+            setAddToCartClick(true);
             setTimeout(() => {
               addToCart(item, "YES");
               item.quantity = 0;
@@ -134,6 +135,7 @@ const SubCategoryProducts = ({
               CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
             setAnimationCoodinate({ x: setX, y: setY });
             setIsAddedToCart(true);
+            setAddToCartClick(true);
             setTimeout(() => {
               addToCart(item, "NO");
               item.quantity = 0;

@@ -9,7 +9,7 @@ const UserDashboard = () => {
       <div className="w-full">
         <UserToprbar />
       </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-6 place-items-center w-full">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 place-items-center w-full">
         {CardsForUserDashboard.map((item, i) => {
           return (
             <div

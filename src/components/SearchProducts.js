@@ -4,7 +4,6 @@ import { useApi } from "../context/ApiContext";
 
 const SearchProducts = ({ item }) => {
   const { SmallImage, setSearch, setShowProduct } = useApi();
-  console.log(item)
   return (
     <>
       <div className="flex justify-start items-start space-x-5">
