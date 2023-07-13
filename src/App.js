@@ -1,30 +1,31 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import RingLoader from "react-spinners/RingLoader";
+import LoadingBar from "react-top-loading-bar";
 import "./App.css";
-import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/Home";
+import Navbar from "./components/Navbar";
+import { useApi } from "./context/ApiContext";
+import { useProduct } from "./context/ProductContext";
 import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Shop from "./pages/Shop";
-import UserAccount from "./pages/UserAccount";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import SubCategory from "./pages/SubCategory";
-import ProductsOfSubCategory from "./pages/ProductsOfSubCategory";
-import ViewProduct from "./pages/ViewProduct";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Wishlist from "./pages/Wishlist";
-import RingLoader from "react-spinners/RingLoader";
-import { useEffect, useState } from "react";
-import Navbar from "./components/Navbar";
-import LoadingBar from "react-top-loading-bar";
-import { useProduct } from "./context/ProductContext";
-import axios from "axios";
-import { useApi } from "./context/ApiContext";
+import Contact from "./pages/Contact";
 import ErrorPage from "./pages/ErrorPage";
 import Forgot_password from "./pages/Forgot_password";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ProductsOfSubCategory from "./pages/ProductsOfSubCategory";
 import SetNewPass from "./pages/SetNewPass";
 import ShippingPolicy from "./pages/ShippingPolicy";
+import Shop from "./pages/Shop";
+import Signup from "./pages/Signup";
+import SubCategory from "./pages/SubCategory";
+import SuccessPage from "./pages/SuccessPage";
+import UserAccount from "./pages/UserAccount";
+import ViewProduct from "./pages/ViewProduct";
+import Wishlist from "./pages/Wishlist";
 
 // axios.defaults.baseURL = "http://gunma.myesdev.xyz/";
 // axios.defaults.baseURL = "https://gunma-admin.getthemeplugin.com/";
@@ -67,13 +68,14 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-            <Route path="/:id" element={<SubCategory />} />
-            <Route path="/:id/:id" element={<ProductsOfSubCategory />} />
-            <Route path="/:id/:id/:id" element={<ViewProduct />} />
+            <Route path="/category/:id" element={<SubCategory />} />
+            <Route path="/category/:id/:id" element={<ProductsOfSubCategory />} />
+            <Route path="/product/:id" element={<ViewProduct />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/shippingpolicy" element={<ShippingPolicy />} />
+            <Route path="/successpage" element={<SuccessPage />} />
             <Route path="/error" element={<ErrorPage/>} />
             <Route path="/*" element={<ErrorPage/>} />
           </Routes>

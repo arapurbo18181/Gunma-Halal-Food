@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import CartButton from "../components/CartButton";
 import { useApi } from "../context/ApiContext";
 import BreadCrumbs from "../components/BreadCrumbs";
+import Swal from "sweetalert2";
 
 const Wishlist = () => {
   const {
@@ -20,22 +21,43 @@ const Wishlist = () => {
   console.log(Wishlist);
 
   const handleCart = (item) => {
-    item.quantity = 1;
-    addToCart(item);
+    if (item.cutting_system === "Yes") {
+      Swal.fire({
+        title: "Do You Want to Cut The Product?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          item.quantity = 1;
+          addToCart(item, "YES");
+        } else {
+          item.quantity = 1;
+          addToCart(item, "NO");
+        }
+      });
+    } else if (item.cutting_system === "No") {
+      item.quantity = 1;
+      addToCart(item, "NO");
+    }
   };
 
   return (
     <>
       {Wishlist && (
         <>
-          <BreadCrumbs name={"Wishlist"} url={"wishlist"} />
           <section className="flex justify-center items-start w-full">
-            <div className="flex justify-start items-center xl:items-start w-[100%] space-x-5">
-              <div className="hidden w-[14vw] sticky left-0 top-28 xl:block -mt-4">
+            <div className="flex justify-start items-center xl:items-start w-full">
+              <div className="hidden w-[16.5vw] h-full sticky top-[5.3rem] xl:block ">
                 <CategorySidebar />
               </div>
               <div className="w-full">
-                <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-14">
+                <BreadCrumbs name={"Wishlist"} url={"wishlist"} />
+                <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-14 mx-4">
                   <span className="underline decoration-red-500 underline-offset-8">
                     Wi
                   </span>
@@ -51,7 +73,7 @@ const Wishlist = () => {
                       <>
                         <div class="w-full max-w-[250px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 space-y-4  hover:-translate-y-3 transition-all duration-500">
                           <Link
-                            to={`/${item.sub_category.main_category.slug}/${item.sub_category.slug}/${item.slug}`}
+                            to={`/product/${item.slug}`}
                           >
                             <img
                               class="rounded-t-lg"
@@ -61,7 +83,7 @@ const Wishlist = () => {
                           </Link>
                           <div class="px-5 pb-5">
                             <Link
-                              to={`/${item.sub_category.main_category.slug}/${item.sub_category.slug}/${item.slug}`}
+                              to={`/product/${item.slug}`}
                             >
                               <h5 class="text-sm md:text-base font-semibold tracking-tight text-gray-900 dark:text-white">
                                 {item.name}

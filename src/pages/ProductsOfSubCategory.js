@@ -60,17 +60,18 @@ const ProductsOfSubCategory = () => {
             setLoader(false);
           }
           if (res.data.status === 200) {
-            setBannerImage(res.data.products[0].sub_category.image);
-            setCateName(res.data.products[0].sub_category.main_category.name);
-            setSubCateName(res.data.products[0].sub_category.name);
-            setCateSlug(res.data.products[0].sub_category.main_category.slug);
-            setSubCateSlug(res.data.products[0].sub_category.slug);
+            setBannerImage(res.data.subcategory.banner_image);
+            setCateName(res.data.subcategory.main_category.name);
+            setSubCateName(res.data.subcategory.name);
+            setCateSlug(res.data.subcategory.main_category.slug);
+            setSubCateSlug(res.data.subcategory.slug);  
             setSubCategoryProduct(
-              res.data.products.map((item) => {
+              res.data.subcategory.product.map((item) => {
                 return { ...item, quantity: 0, discountedPrice: 0 };
               })
             );
             setLoader(false);
+            setMessage("");
           }
         })
         .catch((error) => {
@@ -89,22 +90,22 @@ const ProductsOfSubCategory = () => {
         <>
           <section className="flex justify-center items-start w-full">
             <div className="flex justify-start items-center w-[100%] xl:items-start">
-              <div className="hidden w-[14vw] sticky left-0 top-[4.6rem] xl:block -mt-4">
+              <div className="hidden w-[16.5vw] h-full sticky top-[5.3rem] xl:block ">
                 <CategorySidebar />
               </div>
               {
                 Message ? <div className="w-full h-full flex justify-center items-center">
                   <h2 className="text-2xl mt-20"> No Product available....... </h2>
                 </div> : <div className="w-full">
-                {CateName && SubCateName ? (
+                {CateName  ? (
                   <BreadCrumbs
-                    name={`${CateName}/${SubCateName}`}
-                    url={`${CateSlug}/${SubCateSlug}`}
+                    name={`${CateName}'\'${SubCateName}`}
+                    url={`${CateSlug}'\'${SubCateSlug}`}
                   />
                 ) : (
                   ""
                 )}
-                <div className="h-[35vh] overflow-hidden ">
+                <div className="h-[35vh] overflow-hidden w-full">
                   <img
                     className="hover:scale-110 transition-all duration-300 object-cover h-full"
                     src={`${CategoryImage1}/${BannerImage}`}
@@ -113,7 +114,7 @@ const ProductsOfSubCategory = () => {
                 </div>
                 <h2 className="text-3xl font-bold text-gray-700 mt-4 mb-14 px-4">
                   <span className="underline decoration-red-500 underline-offset-8">
-                    {SubCateName ? SubCateName.slice(0, 2) : ""}
+                    {SubCateName ? SubCateName.slice(0, 2) : ""} 
                   </span>
                   {SubCateName ? SubCateName.slice(2) : ""}
                 </h2>
@@ -126,12 +127,11 @@ const ProductsOfSubCategory = () => {
                       </div>
                     ) : (
                       SubCategoryProduct.map((item, index) => {
-                        console.log(item.sub_category.main_category.slug)
                         const discountedAmount =
                           (item.price / 100) * item.discount;
                         const newPrice = item.price - Math.round(discountedAmount);
                         item.discountedPrice = newPrice;
-                        return <SubCategoryProducts item={item} key={index} sub_category_slug={item.sub_category.slug} main_category_slug={item.sub_category.main_category.slug} product_slug={item.slug} />;
+                        return <SubCategoryProducts item={item} key={index} product_slug={item.slug} />;
                       })
                     )}
                   </div>

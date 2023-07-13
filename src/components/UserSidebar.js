@@ -1,11 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { AiFillHome, AiFillProfile } from "react-icons/ai";
+import { BsFillCartCheckFill, BsFillGearFill } from "react-icons/bs";
 import { useApi } from "../context/ApiContext";
-import { AiFillHome } from "react-icons/ai";
-import { AiFillProfile } from "react-icons/ai";
-import { BsFillCartCheckFill } from "react-icons/bs";
-import { AiFillLock } from "react-icons/ai";
-import userImage from "../images/user.png"
+import userImage from "../images/user.png";
 
 const userAccount = [
   {
@@ -26,7 +23,7 @@ const userAccount = [
   {
     id: 3,
     tab: "Settings",
-    icon: <AiFillLock />,
+    icon: <BsFillGearFill />,
   },
 ];
 
@@ -42,7 +39,7 @@ const UserSidebar = () => {
   return (
     <>
       <section className="hidden w-full xl:flex xl:flex-col justify-center items-center xl:items-start space-x-2 xl:space-x-0 bg-blue-600 xl:h-screen">
-        <div className="flex-1 flex flex-col justify-center items-center space-y-2 w-full xl:w-[350px] py-2 px-2">
+        <div className="flex-1 flex flex-col justify-center items-center space-y-2 w-full xl:w-[20vw] py-2 px-2">
           <div className="overflow-hidden h-24 w-24 md:h-32 md:w-32 xl:h-44 xl:w-40 ">
             <img
               className="object-cover"
@@ -77,7 +74,7 @@ const UserSidebar = () => {
           })}
         </div>
       </section>
-      <div className="xl:hidden fixed bottom-0 left-0 right-0 bg-white z-30 py-2 border-t shadow-[0_15px_20px_10px_rgba(0,0,0,0.3)]">
+      <div className="xl:hidden fixed bottom-0 left-0 right-0 bg-white z-50 py-2 border-t shadow-[0_15px_20px_10px_rgba(0,0,0,0.3)]">
         <div className="w-full px-4 flex justify-start items-center space-x-1">
           {userAccount.map((item, i) => {
             return (

@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
 import { IoMdArrowForward } from "react-icons/io";
-import { FiTrash2 } from "react-icons/fi";
-import CartItem from "./CartItem";
+import { Link } from "react-router-dom";
 import { useApi } from "../context/ApiContext";
+import CartItem from "./CartItem";
+import FreeDel from "./FreeDel";
+import SmallLoader from "./SmallLoader";
 
 const CartSidebar = () => {
   const {
@@ -17,6 +18,7 @@ const CartSidebar = () => {
     User,
     setIsCartSidebar,
     IsCartSidebar,
+    SmallLoading,
   } = useApi();
   // console.log(cart)
 
@@ -39,14 +41,23 @@ const CartSidebar = () => {
   return (
     <>
       {cart ? (
-        <div className={`flex justify-center items-center z-20 fixed top-0 ${IsCartSidebar ? "right-0" : "-right-full"} transition-all duration-500 h-screen`}>
-        <div className={`h-full w-[20vw] sm:w-[40vw] md:w-[55vw] xl:w-[70vw] ${IsCartSidebar ? "bg-black bg-opacity-40 transition-all duration-500 delay-300" : "duration-75"} `}>
-
-        </div>
-          <div ref={ref}
-            className={` bg-white h-full shadow-2xl w-[80vw] sm:w-[60vw] md:w-[45vw] xl:w-[30vw] px-4 lg:px-[35px]`}
+        <div
+          className={`flex justify-center items-center z-40 fixed top-0 ${
+            IsCartSidebar ? "right-0" : "-right-full"
+          } transition-all duration-500 h-screen`}
+        >
+          <div
+            className={`h-full w-[20vw] sm:w-[40vw] md:w-[55vw] xl:w-[70vw] ${
+              IsCartSidebar
+                ? "bg-black bg-opacity-40 transition-all duration-500 delay-300"
+                : "duration-75"
+            } `}
+          ></div>
+          <div
+            ref={ref}
+            className={` bg-white h-full shadow-2xl w-[80vw] sm:w-[60vw] md:w-[45vw] xl:w-[30vw] px-4 lg:px-[35px] overflow-y-auto scrollbar-hide my-10`}
           >
-            <div className="flex items-center justify-between py-6 border-b">
+            <div className="flex items-center justify-between py-0.5 border-b">
               <div className="uppercase text-sm font-semibold">
                 Shooping Bag ({TotalAmount})
               </div>
@@ -57,51 +68,77 @@ const CartSidebar = () => {
                 <IoMdArrowForward className="text-2xl" />
               </div>
             </div>
-            <div className="flex flex-col gap-y-2 h-[50vh] lg:h-640px overflow-y-auto overflow-x-hidden border-b">
-              {cart.map((item, index) => {
-                return <CartItem item={item} key={index} />;
-              })}
+            <FreeDel />
+            <Link
+              onClick={() => {
+                setToggleSidebar(!ToggleSidebar);
+                setIsCartSidebar(false);
+              }}
+              to={"/"}
+              className="bg-blue-600 flex px-2 lg:px-4 py-0.5 text-sm justify-center items-center text-white w-full font-medium my-2 hover:text-blue-600 hover:bg-white border border-blue-600 transition-all duration-300"
+            >
+              Continue Shopping
+            </Link>
+            <div className="flex flex-col gap-y-0 h-[55vh] sm:h-[60vh] overflow-y-auto overflow-x-hidden">
+              {SmallLoading ? (
+                <SmallLoader width={"100%"} height={"100%"} />
+              ) : (
+                <>
+                  {cart.map((item, index) => {
+                    return <CartItem item={item} key={index} />;
+                  })}
+                </>
+              )}
             </div>
-            <div className="flex flex-col gap-y-3 py-4 mt-4">
+            <div className="flex flex-col gap-y-3 py-2 lg:mt-0">
+              <div className="flex-1 w-full text-end uppercase text-sm font-semibold">
+                <span className="mr-2"> Total: </span> ¥{" "}
+                {parseFloat(TotalPrice).toFixed(2)}
+              </div>
               <div className="flex justify-between items-center w-full">
-                <div className="uppercase font-semibold">
-                  <span className="mr-2"> Total: </span> ¥{" "}
-                  {parseFloat(TotalPrice).toFixed(2)}
+                <div className="flex-1 text-sm">
+                  {8500 - TotalPrice < 1 ? (
+                    <h2> You will get a free delivery </h2>
+                  ) : (
+                    <h2>Buy more ¥{8500 - TotalPrice} for free delivery </h2>
+                  )}
                 </div>
               </div>
-              <Link
-                onClick={() => {
-                  setToggleSidebar(!ToggleSidebar)
-                  setIsCartSidebar(false)
-                  }}
-                to={"/cart"}
-                className="bg-gray-200 flex p-4 justify-center items-center text-primary w-full font-medium"
-              >
-                View Cart
-              </Link>
-              {User ? (
-                <Link
-                  onClick={() => {
-                    setToggleSidebar(!ToggleSidebar)
-                    setIsCartSidebar(false)
-                    }}
-                  to={"/checkout"}
-                  className="bg-black flex p-4 justify-center items-center text-white w-full font-medium"
-                >
-                  Checkout
-                </Link>
-              ) : (
+              <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-2">
                 <Link
                   onClick={() => {
                     setToggleSidebar(!ToggleSidebar);
-                    setIsCartSidebar(false)
+                    setIsCartSidebar(false);
                   }}
-                  to={"/login"}
-                  className="bg-black flex p-4 justify-center items-center text-white w-full font-medium"
+                  to={"/cart"}
+                  className="w-full border border-red-500 text-red-500 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 text-center"
                 >
-                  Checkout
+                  View Cart
                 </Link>
-              )}
+                {User ? (
+                  <a
+                    onClick={() => {
+                      setToggleSidebar(!ToggleSidebar);
+                      setIsCartSidebar(false);
+                    }}
+                    href={"/checkout"}
+                    className="w-full border border-red-500 text-red-500 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 text-center"
+                  >
+                    Checkout
+                  </a>
+                ) : (
+                  <Link
+                    onClick={() => {
+                      setToggleSidebar(!ToggleSidebar);
+                      setIsCartSidebar(false);
+                    }}
+                    to={"/login"}
+                    className="w-full border border-red-500 text-red-500 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 text-center"
+                  >
+                    Checkout
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         </div>

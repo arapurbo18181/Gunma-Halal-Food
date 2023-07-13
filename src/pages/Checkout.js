@@ -1,26 +1,32 @@
-import React, { useRef } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import BreadCrumbs from "../components/BreadCrumbs";
-import CartItem from "../components/CartItem";
-import { Link, useNavigate } from "react-router-dom";
-import { useApi } from "../context/ApiContext";
+import axios from "axios";
+import subDays from "date-fns/subDays";
+import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import subDays from "date-fns/subDays";
-import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import BreadCrumbs from "../components/BreadCrumbs";
+import CheckoutForm from "../components/CheckoutForm";
+import { useApi } from "../context/ApiContext";
 
 const Checkout = () => {
   const [CoinInput, setCoinInput] = useState(false);
+  const [Height, setHeight] = useState(false);
   const [StripeInput, setStripeInput] = useState(false);
   const [ShowState, setShowState] = useState(false);
+  const [ShowTime, setShowTime] = useState(false);
+  const [ShippingShowTime, setShippingShowTime] = useState(false);
   const [ShippingShowState, setShippingShowState] = useState(false);
   const [SelectCoin, setSelectCoin] = useState();
   const [DeliveryDate, setDeliveryDate] = useState();
+  const [DeliverySchedule, setDeliverySchedule] = useState();
+  const [ShippingDeliverySchedule, setShippingDeliverySchedule] = useState();
   const ref = useRef();
   const myref = useRef();
+  const timeref = useRef();
+  const timeref2 = useRef();
+  const heightRef = useRef();
   const navigate = useNavigate();
   const {
     TotalPrice,
@@ -47,9 +53,16 @@ const Checkout = () => {
     ShippingStates,
     filterShippingStates,
     cart,
+    DeliveryTime,
+    Note,
+    setNote,
+    FinalTotal,
+    TotalVat,
   } = useApi();
+  const location = useLocation()
 
   const handleSubmit = (e) => {
+    setStripeInput(false);
     e.preventDefault();
     if (cart.length !== 0) {
       orderProduct();
@@ -58,17 +71,30 @@ const Checkout = () => {
       Swal.fire("warning", "Please add some product first", "warning");
     }
   };
+
+  if (!UserData && location.pathname === "/checkout") {
+    window.location.replace('https://gunma.softtech-it.org/');
+  }
+
+
   useEffect(() => {
-    if (!User) {
-      navigate("/");
-    }
     setBillingAddress({
       ...BillingAddress,
+      show_date: "",
+      delivery_time: "",
       first_name: UserData.name,
       last_name: UserData.last_name,
       email: UserData.email,
     });
-  }, []);
+  }, [BillingAddress.state]);
+
+  useEffect(() => {
+    setShippingAddress({
+      ...ShippingAddress,
+      show_date: "",
+      delivery_time: "",
+    });
+  }, [ShippingAddress.state]);
 
   const handleCheck = (value) => {
     if (value) {
@@ -87,6 +113,15 @@ const Checkout = () => {
       if (myref.current && !myref.current.contains(event.target)) {
         setShippingShowState(false);
       }
+      if (heightRef.current && !heightRef.current.contains(event.target)) {
+        setHeight(false);
+      }
+      if (timeref.current && !timeref.current.contains(event.target)) {
+        setShowTime(false);
+      }
+      if (timeref2.current && !timeref2.current.contains(event.target)) {
+        setShippingShowTime(false);
+      }
     }
     // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
@@ -94,7 +129,7 @@ const Checkout = () => {
       // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ref, myref]);
+  }, [ref, myref, heightRef, timeref, timeref2]);
 
   useEffect(() => {
     const data = States.find((item) => {
@@ -142,32 +177,31 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    setBillingAddress({
-      ...BillingAddress,
-      first_name: UserData.name,
-      last_name: UserData.last_name,
-      email: UserData.email,
-    });
-  }, []);
-  const today = new Date();
+    if (DeliverySchedule) {
+      // const temp = DeliverySchedule.split(",");
+      console.log(DeliverySchedule);
+    }
+    if (ShippingDeliverySchedule) {
+    }
+  }, [BillingAddress.state, ShippingAddress.state]);
 
   return (
     <>
       <BreadCrumbs name={"Checkout"} url={"checkout"} />
 
-      <section className="w-[100%] h-[100%] flex flex-col xl:flex-row justify-center items-center xl:items-start px-4 py-10 space-x-0 md:space-x-8">
+      <section className="w-[100%] h-[100%] flex flex-col xl:flex-row justify-center items-center xl:items-start px-4 pb-10 pt-5 space-y-8 xl:space-y-0 space-x-0 xl:space-x-8 mb-20 xl:mb-0">
         <form className="flex-[2] w-full h-full container">
-          <div className="flex justify-center my-5 text-2xl md:text-3xl xl:text-4xl font-bold">
+          <div className="flex justify-center mb-5 text-2xl md:text-3xl xl:text-4xl font-bold">
             <h1>Checkout</h1>
           </div>
-          <div className="flex flex-col justify-center items-center h-full">
-            <div className="flex flex-col xl:flex-row justify-center items-center xl:items-start h-full w-full px-5 border rounded-md border-gray-300 shadow-lg space-x-4">
-              <div className="flex-1">
+          <div className="flex flex-col justify-center items-center h-fit">
+            <div className="flex flex-col space-y-10 md:space-y-0 md:flex-row justify-center items-center md:items-start w-full px-5 space-x-0 md:space-x-4 h-fit pb-10 md:pb-0">
+              <div className="flex-1 h-full border rounded-md border-gray-300 shadow-lg px-3 w-full">
                 <div className="flex justify-center my-5 text-lg md:text-xl lg:text-2xl font-bold">
                   <h1>Billing Address</h1>
                 </div>
 
-                <div className="flex flex-col sm:flex-row justify-start items-center w-full">
+                <div className="flex flex-row justify-start items-center w-full">
                   <div className="flex flex-col items-start my-4 w-full">
                     <label htmlFor="email">First Name</label>
                     <input
@@ -186,7 +220,7 @@ const Checkout = () => {
                       required
                     />
                   </div>
-                  <div className="flex flex-col items-start my-4 w-full ml-0 sm:ml-4">
+                  <div className="flex flex-col items-start my-4 w-full ml-2 sm:ml-4">
                     <label htmlFor="email">Last Name</label>
                     <input
                       onChange={(e) =>
@@ -205,112 +239,46 @@ const Checkout = () => {
                     />
                   </div>
                 </div>
-                <div className="flex flex-col items-start my-4 w-full">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    onChange={(e) =>
-                      setBillingAddress({
-                        ...BillingAddress,
-                        last_name: e.target.value,
-                      })
-                    }
-                    value={BillingAddress.email}
-                    className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                    type="email"
-                    name="email"
-                    placeholder="Enter Your Email"
-                    id="email"
-                    required
-                    readOnly
-                  />
-                </div>
-                <div className="flex flex-col items-start my-4 relative">
-                  <label htmlFor="state">State</label>
-                  <div
-                    onClick={(e) => setShowState(true)}
-                    className="w-full flex justify-between items-center px-4 bg-gray-100 py-2 cursor-pointer"
-                  >
-                    <h2>
-                      {BillingAddress.state
-                        ? BillingAddress.state
-                        : "Select State"}
-                    </h2>{" "}
-                    <MdOutlineKeyboardArrowDown />
+                <div className="flex flex-row justify-start items-center w-full">
+                  <div className="flex flex-col items-start my-4 w-full">
+                    <label htmlFor="email">Email</label>
+                    <input
+                      onChange={(e) =>
+                        setBillingAddress({
+                          ...BillingAddress,
+                          last_name: e.target.value,
+                        })
+                      }
+                      value={BillingAddress.email}
+                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                      type="email"
+                      name="email"
+                      placeholder="Enter Your Email"
+                      id="email"
+                      required
+                      readOnly
+                    />
                   </div>
-                  {ShowState ? (
-                    <div ref={ref} className="absolute w-full top-16">
-                      <input
-                        onChange={(e) => {
-                          filterStates(e.target.value);
-                        }}
-                        autoComplete="off"
-                        className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                        type="text"
-                        name="state"
-                        placeholder="Enter Your State"
-                        id="state"
-                        required
-                      />
-                      <div className="w-full h-[200px] bg-white z-10 overflow-y-auto border shadow-md">
-                        {States.map((item) => {
-                          return (
-                            <div
-                              onClick={(e) => {
-                                setBillingAddress({
-                                  ...BillingAddress,
-                                  state: item.name,
-                                });
-                                setShowState(false);
-                              }}
-                              className="border-b px-2 py-2 cursor-pointer hover:bg-gray-200"
-                            >
-                              <h2>{item.name}</h2>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
-                <div className="flex flex-col items-start my-4 w-full">
-                  <label htmlFor="city">City</label>
-                  <input
-                    onChange={(e) =>
-                      setBillingAddress({
-                        ...BillingAddress,
-                        city: e.target.value,
-                      })
-                    }
-                    value={BillingAddress.city}
-                    className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                    type="text"
-                    name="city"
-                    placeholder="Enter Your city"
-                    id="city"
-                    required
-                  />
+                  <div className="flex flex-col items-start my-4 w-full ml-2 sm:ml-4">
+                    <label htmlFor="phone">Phone</label>
+                    <input
+                      onChange={(e) =>
+                        setBillingAddress({
+                          ...BillingAddress,
+                          phone: e.target.value,
+                        })
+                      }
+                      value={BillingAddress.phone}
+                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                      type="number"
+                      name="phone"
+                      placeholder="Enter Your phone number"
+                      id="phone"
+                      required
+                    />
+                  </div>
                 </div>
 
-                <div className="flex flex-col items-start my-4 w-full">
-                  <label htmlFor="phone">Phone</label>
-                  <input
-                    onChange={(e) =>
-                      setBillingAddress({
-                        ...BillingAddress,
-                        phone: e.target.value,
-                      })
-                    }
-                    value={BillingAddress.phone}
-                    className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                    type="number"
-                    name="phone"
-                    placeholder="Enter Your phone number"
-                    id="phone"
-                    required
-                  />
-                </div>
                 <div className="flex flex-col items-start my-4 w-full">
                   <label htmlFor="zipcode">Zip Code</label>
                   <input
@@ -329,105 +297,250 @@ const Checkout = () => {
                     required
                   />
                 </div>
-                {/* { IsChecked && BillingAddress.state ? <div className="flex flex-col items-start my-4 w-full">
-                  <label htmlFor="email">Delivery Date</label>
-                  <DatePicker
-                    minDate={subDays(
-                      new Date(),
-                      `${
-                        DeliveryDate == 24 ? -1 : DeliveryDate == 48 ? -2 : -3
-                      }`
+
+                <div className="flex flex-row justify-start items-center w-full">
+                  <div className="flex flex-1 flex-col items-start my-4 relative">
+                    <label htmlFor="state">State</label>
+                    <div
+                      onClick={(e) => setShowState(true)}
+                      className="w-full flex justify-between items-center px-4 bg-gray-100 py-2 cursor-pointer text-sm sm:text-base"
+                    >
+                      <h2>
+                        {BillingAddress.state
+                          ? BillingAddress.state
+                          : "Select State"}
+                      </h2>{" "}
+                      <MdOutlineKeyboardArrowDown />
+                    </div>
+                    {ShowState ? (
+                      <div ref={ref} className="absolute w-full top-16 z-30">
+                        <input
+                          onChange={(e) => {
+                            filterStates(e.target.value);
+                          }}
+                          autoComplete="off"
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-0.5 shadow-inner border-2 border-gray-100"
+                          type="text"
+                          name="state"
+                          placeholder="Enter Your State"
+                          id="state"
+                          required
+                        />
+                        <div className="w-full h-[200px] bg-white overflow-y-auto border shadow-md">
+                          {States.map((item) => {
+                            return (
+                              <div
+                                onClick={(e) => {
+                                  setBillingAddress({
+                                    ...BillingAddress,
+                                    state: item.name,
+                                  });
+                                  setShowState(false);
+                                  const temp =
+                                    item.delivery_schedule_id.split(",");
+                                  setDeliverySchedule(temp);
+                                }}
+                                className="border-b px-2 py-2 cursor-pointer hover:bg-gray-200"
+                              >
+                                <h2>{item.name}</h2>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ) : (
+                      ""
                     )}
-                    className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                    placeholderText="Enter Delivery Date"
-                    selected={BillingAddress.show_date}
-                    onChange={(date) => {
-                      // console.log(`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`)
-                      console.log(date);
-                      setBillingAddress({
-                        ...BillingAddress,
-                        show_date: date,
-                        delivery_date: `${date.getDate()}-${
-                          date.getMonth() + 1
-                        }-${date.getFullYear()}`,
-                      });
-                    }}
-                    dateFormat="dd-MM-yy"
-                  />
-                </div> : ""} */}
-                {/* <div className="flex flex-col items-start my-4 w-full">
-                  <label htmlFor="delivery_time">Delivery Time</label>
-                  <input
-                    onChange={(e) =>
-                      setBillingAddress({
-                        ...BillingAddress,
-                        delivery_time: e.target.value,
-                      })
-                    }
-                    value={BillingAddress.delivery_time}
-                    className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                    type="time"
-                    name="delivery_time"
-                    placeholder="Enter Your Delivery Time"
-                    id="delivery_time"
-                    required
-                  />
-                </div> */}
+                  </div>
+                  <div className="flex flex-1 flex-col items-start my-4 w-full ml-2 sm:ml-4">
+                    <label htmlFor="city">City</label>
+                    <input
+                      onChange={(e) =>
+                        setBillingAddress({
+                          ...BillingAddress,
+                          city: e.target.value,
+                        })
+                      }
+                      value={BillingAddress.city}
+                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                      type="text"
+                      name="city"
+                      placeholder="Enter Your city"
+                      id="city"
+                      required
+                    />
+                  </div>
+                </div>
+                {IsChecked && BillingAddress.state ? (
+                  <>
+                    <div className="flex flex-col justify-center items-center px-1">
+                      <div
+                        onClick={() => setHeight(true)}
+                        ref={heightRef}
+                        className={`${
+                          IsChecked
+                            ? "translate-x-0 block"
+                            : "-translate-x-full hidden"
+                        } transition-all duration-300 flex flex-col items-start my-4 w-64 md:w-full h-full z-20`}
+                      >
+                        <label htmlFor="email">Delivery Date</label>
+                        <DatePicker
+                          minDate={subDays(
+                            new Date(),
+                            `${
+                              DeliveryDate == 24
+                                ? -1
+                                : DeliveryDate == 48
+                                ? -2
+                                : -3
+                            }`
+                          )}
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100 z-20"
+                          placeholderText="Enter Delivery Date"
+                          selected={BillingAddress.show_date}
+                          onChange={(date) => {
+                            // console.log(`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`)
+                            console.log(date);
+                            setBillingAddress({
+                              ...BillingAddress,
+                              show_date: date,
+                              delivery_date: `${
+                                date.getDate() < 10
+                                  ? "0" + date.getDate()
+                                  : date.getDate()
+                              }-${
+                                date.getMonth() < 9
+                                  ? "0" + (date.getMonth() + 1)
+                                  : date.getMonth() + 1
+                              }-${date.getFullYear()}`,
+                            });
+                          }}
+                          dateFormat="dd-MM-yy"
+                        />
+                      </div>
+
+                      <div className="flex flex-col items-start my-4 relative w-full">
+                        <label htmlFor="state">Delivery Time</label>
+                        <div
+                          onClick={(e) => setShowTime(true)}
+                          className="w-full flex justify-between items-center px-4 bg-gray-100 py-2 cursor-pointer"
+                        >
+                          <h2>
+                            {BillingAddress.delivery_time
+                              ? BillingAddress.delivery_time
+                              : "Select Time"}
+                          </h2>{" "}
+                          <MdOutlineKeyboardArrowDown />
+                        </div>
+                        {ShowTime ? (
+                          <div ref={timeref} className="absolute w-full top-16">
+                            <div className="w-full h-fit bg-white z-10 overflow-y-auto border shadow-md">
+                              {DeliveryTime.map((item, index) => {
+                                return (
+                                  DeliverySchedule[index] == item.id && (
+                                    <div
+                                      onClick={(e) => {
+                                        setBillingAddress({
+                                          ...BillingAddress,
+                                          delivery_time: item.schedule,
+                                          delivery_time_id: item.id,
+                                        });
+                                        setShowTime(false);
+                                      }}
+                                      className="border-b px-2 py-2 cursor-pointer hover:bg-gray-200"
+                                    >
+                                      <h2>{item.schedule}</h2>
+                                    </div>
+                                  )
+                                );
+                              })}
+                            </div>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+
+                      <div className="flex flex-col items-start my-4 w-full">
+                        <label htmlFor="street_address">
+                          Street Address{" "}
+                          <span className="text-sm">(Optional)</span>{" "}
+                        </label>
+                        <input
+                          onChange={(e) =>
+                            setBillingAddress({
+                              ...BillingAddress,
+                              street_address: e.target.value,
+                            })
+                          }
+                          value={BillingAddress.street_address}
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          type="text"
+                          name="street_address"
+                          placeholder="Road Number, House Number"
+                          id="street_address"
+                        />
+                      </div>
+
+                      <div className="flex flex-col items-start my-4 w-full">
+                        <label htmlFor="house_name_room_number">
+                          House Name & Room Number{" "}
+                          <span className="text-sm">(Optional)</span>{" "}
+                        </label>
+                        <input
+                          onChange={(e) =>
+                            setBillingAddress({
+                              ...BillingAddress,
+                              house_name_room_number: e.target.value,
+                            })
+                          }
+                          value={BillingAddress.house_name_room_number}
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          type="text"
+                          name="house_name_room_number"
+                          placeholder="House Name, Room Number"
+                          id="house_name_room_number"
+                        />
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
               </div>
-              <div className="flex-[0.001] h-[1000px] w-[1px] bg-gray-300"></div>
-              <div className="flex-1 overflow-hidden">
+              {/* <div
+                className={`hidden xl:block flex-[0.001] h-fit w-[1px] bg-gray-300`}
+              ></div> */}
+              <div
+                className={`flex-1 h-full border rounded-md border-gray-300 shadow-lg px-3 pb-10 w-full`}
+              >
                 <div className="flex justify-center my-5 text-lg md:text-xl lg:text-2xl font-bold">
                   <h1>Shipping Address</h1>
                 </div>
 
-                <div className="flex justify-start items-start space-x-2 border border-red-600 py-2 px-4">
+                <div className="flex justify-start items-start space-x-2 border border-red-600 py-2 px-4 w-full">
                   <input
                     className="h-4 md:h-5 w-4 md:w-5"
                     type="checkbox"
                     value={"first"}
                     id=""
-                    onChange={() => handleCheck("first")}
+                    onChange={(e) => handleCheck(e.target.value)}
                   />{" "}
                   <div className="text-xs md:text-base">
                     {" "}
                     Same Billing & Shipping Address{" "}
                   </div>
                 </div>
-                { IsChecked && BillingAddress.state ? <div className={`${
-                      IsChecked ? "translate-x-0" : "-translate-x-full"
-                    } transition-all duration-500 px-2 flex flex-col items-start my-4 w-full`}>
-                  <label htmlFor="email">Delivery Date</label>
-                  <DatePicker
-                    minDate={subDays(
-                      new Date(),
-                      `${
-                        DeliveryDate == 24 ? -1 : DeliveryDate == 48 ? -2 : -3
-                      }`
-                    )}
-                    className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                    placeholderText="Enter Delivery Date"
-                    selected={BillingAddress.show_date}
-                    onChange={(date) => {
-                      // console.log(`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`)
-                      console.log(date);
-                      setBillingAddress({
-                        ...BillingAddress,
-                        show_date: date,
-                        delivery_date: `${date.getDate()}-${
-                          date.getMonth() + 1
-                        }-${date.getFullYear()}`,
-                      });
-                    }}
-                    dateFormat="dd-MM-yy"
-                  />
-                </div> : ""}
+
                 {
                   <div
                     className={`${
-                      IsChecked ? "translate-x-full" : "translate-x-0"
-                    } transition-all duration-500 px-2`}
+                      IsChecked
+                        ? "translate-x-full hidden"
+                        : "translate-x-0 block"
+                    } transition-all duration-500`}
                   >
-                    <div className="flex flex-col sm:flex-row justify-start items-center">
+                    <div className="flex flex-row justify-start items-center">
                       <div className="flex flex-col items-start my-4 w-full">
                         <label htmlFor="email">First Name</label>
                         <input
@@ -438,7 +551,7 @@ const Checkout = () => {
                             })
                           }
                           value={ShippingAddress.first_name}
-                          className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                           type="text"
                           name="name"
                           placeholder="Enter Your Name"
@@ -446,7 +559,7 @@ const Checkout = () => {
                           required
                         />
                       </div>
-                      <div className="flex flex-col items-start my-4 w-full ml-0 sm:ml-4">
+                      <div className="flex flex-col items-start my-4 w-full ml-2 sm:ml-4">
                         <label htmlFor="email">Last Name</label>
                         <input
                           onChange={(e) =>
@@ -456,7 +569,7 @@ const Checkout = () => {
                             })
                           }
                           value={ShippingAddress.last_name}
-                          className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                           type="text"
                           name="name"
                           placeholder="Enter Your Name"
@@ -465,111 +578,44 @@ const Checkout = () => {
                         />
                       </div>
                     </div>
-                    <div className="flex flex-col items-start my-4 w-full">
-                      <label htmlFor="email">Email</label>
-                      <input
-                        onChange={(e) =>
-                          setShippingAddress({
-                            ...ShippingAddress,
-                            email: e.target.value,
-                          })
-                        }
-                        value={ShippingAddress.email}
-                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                        type="email"
-                        name="email"
-                        placeholder="Enter Your Email"
-                        id="email"
-                        required
-                      />
-                    </div>
-                    <div className="flex flex-col items-start my-4 relative">
-                      <label htmlFor="state">State</label>
-                      <div
-                        onClick={(e) => setShippingShowState(true)}
-                        className="w-full flex justify-between items-center px-4 bg-gray-100 py-2 cursor-pointer"
-                      >
-                        <h2>
-                          {ShippingAddress.state
-                            ? ShippingAddress.state
-                            : "Select State"}
-                        </h2>{" "}
-                        <MdOutlineKeyboardArrowDown />
+                    <div className="flex flex-row justify-start items-center">
+                      <div className="flex flex-col items-start my-4 w-full">
+                        <label htmlFor="email">Email</label>
+                        <input
+                          onChange={(e) =>
+                            setShippingAddress({
+                              ...ShippingAddress,
+                              email: e.target.value,
+                            })
+                          }
+                          value={ShippingAddress.email}
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          type="email"
+                          name="email"
+                          placeholder="Enter Your Email"
+                          id="email"
+                          required
+                        />
                       </div>
-                      {ShippingShowState ? (
-                        <div ref={myref} className="absolute w-full top-16">
-                          <input
-                            onChange={(e) => {
-                              filterShippingStates(e.target.value);
-                            }}
-                            autoComplete="off"
-                            className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                            type="text"
-                            name="state"
-                            placeholder="Enter Your State"
-                            id="state"
-                            required
-                          />
-                          <div className="w-full h-[200px] bg-white z-10 overflow-y-auto border shadow-md">
-                            {ShippingStates.map((item) => {
-                              return (
-                                <div
-                                  onClick={(e) => {
-                                    setShippingAddress({
-                                      ...ShippingAddress,
-                                      state: item.name,
-                                    });
-                                    setShippingShowState(false);
-                                  }}
-                                  className="border-b px-2 py-2 cursor-pointer hover:bg-gray-200"
-                                >
-                                  <h2>{item.name}</h2>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      ) : (
-                        ""
-                      )}
+                      <div className="flex flex-col items-start my-4 w-full ml-2 sm:ml-4">
+                        <label htmlFor="phone">Phone</label>
+                        <input
+                          onChange={(e) =>
+                            setShippingAddress({
+                              ...ShippingAddress,
+                              phone: e.target.value,
+                            })
+                          }
+                          value={ShippingAddress.phone}
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          type="number"
+                          name="phone"
+                          placeholder="Enter Your phone number"
+                          id="phone"
+                          required
+                        />
+                      </div>
                     </div>
-                    <div className="flex flex-col items-start my-4 w-full">
-                      <label htmlFor="city">City</label>
-                      <input
-                        onChange={(e) =>
-                          setShippingAddress({
-                            ...ShippingAddress,
-                            city: e.target.value,
-                          })
-                        }
-                        value={ShippingAddress.city}
-                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                        type="text"
-                        name="city"
-                        placeholder="Enter Your city"
-                        id="city"
-                        required
-                      />
-                    </div>
-                    <div className="flex flex-col items-start my-4 w-full">
-                      <label htmlFor="phone">Phone</label>
-                      <input
-                        onChange={(e) =>
-                          setShippingAddress({
-                            ...ShippingAddress,
-                            phone: e.target.value,
-                          })
-                        }
-                        value={ShippingAddress.phone}
-                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                        type="number"
-                        name="phone"
-                        placeholder="Enter Your phone number"
-                        id="phone"
-                        required
-                      />
-                    </div>
-
                     <div className="flex flex-col items-start my-4 w-full">
                       <label htmlFor="postcode">Zip Code</label>
                       <input
@@ -580,7 +626,7 @@ const Checkout = () => {
                           })
                         }
                         value={ShippingAddress.zip_code}
-                        className="w-full rounded-md bg-white px-3 py-2 text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                        className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
                         type="number"
                         name="postcode"
                         placeholder="Enter Your postcode"
@@ -588,36 +634,207 @@ const Checkout = () => {
                         required
                       />
                     </div>
-                    { ShippingAddress.state ? <div className="flex flex-col items-start my-4 w-full">
-                      <label htmlFor="email">Delivery Date</label>
-                      <DatePicker
-                        minDate={subDays(
-                          new Date(),
-                          `${
-                            DeliveryDate == 24
-                              ? -1
-                              : DeliveryDate == 48
-                              ? -2
-                              : -3
-                          }`
+                    <div className="flex flex-row justify-start items-center w-full">
+                      <div className="flex flex-1 flex-col items-start my-4 relative">
+                        <label htmlFor="state">State</label>
+                        <div
+                          onClick={(e) => setShippingShowState(true)}
+                          className="w-full flex justify-between items-center px-4 bg-gray-100 py-2 cursor-pointer text-sm sm:text-base"
+                        >
+                          <h2>
+                            {ShippingAddress.state
+                              ? ShippingAddress.state
+                              : "Select State"}
+                          </h2>{" "}
+                          <MdOutlineKeyboardArrowDown />
+                        </div>
+                        {ShippingShowState ? (
+                          <div
+                            ref={myref}
+                            className="absolute w-full top-16 z-30"
+                          >
+                            <input
+                              onChange={(e) => {
+                                filterShippingStates(e.target.value);
+                              }}
+                              autoComplete="off"
+                              className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 mt-0.5 mb-0 shadow-inner border-2 border-gray-100"
+                              type="text"
+                              name="state"
+                              placeholder="Enter Your State"
+                              id="state"
+                              required
+                            />
+                            <div className="w-full h-[200px] bg-white overflow-y-auto border shadow-md">
+                              {ShippingStates.map((item) => {
+                                return (
+                                  <div
+                                    onClick={(e) => {
+                                      setShippingAddress({
+                                        ...ShippingAddress,
+                                        state: item.name,
+                                      });
+                                      setShippingShowState(false);
+                                      const temp =
+                                        item.delivery_schedule_id.split(",");
+                                      setShippingDeliverySchedule(temp);
+                                    }}
+                                    className=" border-b px-2 py-2 cursor-pointer hover:bg-gray-200"
+                                  >
+                                    <h2>{item.name}</h2>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        ) : (
+                          ""
                         )}
-                        className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                        placeholderText="Enter Delivery Date"
-                        selected={ShippingAddress.show_date}
-                        onChange={(date) => {
-                          // console.log(`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`)
-                          console.log(date);
-                          setShippingAddress({
-                            ...ShippingAddress,
-                            show_date: date,
-                            delivery_date: `${date.getDate()}-${
-                              date.getMonth() + 1
-                            }-${date.getFullYear()}`,
-                          });
-                        }}
-                        dateFormat="dd-MM-yy"
-                      />
-                    </div> : ""}
+                      </div>
+                      <div className="flex flex-1 flex-col items-start my-4 w-full ml-2 sm:ml-4">
+                        <label htmlFor="city">City</label>
+                        <input
+                          onChange={(e) =>
+                            setShippingAddress({
+                              ...ShippingAddress,
+                              city: e.target.value,
+                            })
+                          }
+                          value={ShippingAddress.city}
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          type="text"
+                          name="city"
+                          placeholder="Enter Your city"
+                          id="city"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    {ShippingAddress.state ? (
+                      <div className="flex flex-col justify-center items-center px-1">
+                        <div className="flex flex-col items-start my-4 w-full">
+                          <label htmlFor="email">Delivery Date</label>
+                          <DatePicker
+                            minDate={subDays(
+                              new Date(),
+                              `${
+                                DeliveryDate == 24
+                                  ? -1
+                                  : DeliveryDate == 48
+                                  ? -2
+                                  : -3
+                              }`
+                            )}
+                            className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                            placeholderText="Enter Delivery Date"
+                            selected={ShippingAddress.show_date}
+                            onChange={(date) => {
+                              // console.log(`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`)
+                              console.log(date);
+                              setShippingAddress({
+                                ...ShippingAddress,
+                                show_date: date,
+                                delivery_date: `${date.getDate()}-${
+                                  date.getMonth() + 1
+                                }-${date.getFullYear()}`,
+                              });
+                            }}
+                            dateFormat="dd-MM-yy"
+                          />
+                        </div>
+
+                        <div className="flex flex-col items-start my-4 relative w-full">
+                          <label htmlFor="state">Delivery Time</label>
+                          <div
+                            onClick={() => setShippingShowTime(true)}
+                            className="w-full flex justify-between items-center px-4 bg-gray-100 py-2 cursor-pointer"
+                          >
+                            <h2>
+                              {ShippingAddress.delivery_time
+                                ? ShippingAddress.delivery_time
+                                : "Select Time"}
+                            </h2>
+                            <MdOutlineKeyboardArrowDown />
+                          </div>
+                          {ShippingShowTime ? (
+                            <div
+                              ref={timeref2}
+                              className="absolute w-full top-16"
+                            >
+                              <div className="w-full h-fit bg-white z-10 overflow-y-auto border shadow-md">
+                                {DeliveryTime.map((item, index) => {
+                                  return (
+                                    ShippingDeliverySchedule[index] ==
+                                      item.id && (
+                                      <div
+                                        onClick={(e) => {
+                                          setShippingAddress({
+                                            ...ShippingAddress,
+                                            delivery_time: item.schedule,
+                                            delivery_time_id: item.id,
+                                          });
+                                          setShippingShowTime(false);
+                                        }}
+                                        className="border-b px-2 py-2 cursor-pointer hover:bg-gray-200"
+                                      >
+                                        <h2>{item.schedule}</h2>
+                                      </div>
+                                    )
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+
+                        <div className="flex flex-col items-start my-4 w-full">
+                          <label htmlFor="street_address">
+                            Street Address{" "}
+                            <span className="text-sm">(Optional)</span>{" "}
+                          </label>
+                          <input
+                            onChange={(e) =>
+                              setShippingAddress({
+                                ...ShippingAddress,
+                                street_address: e.target.value,
+                              })
+                            }
+                            value={ShippingAddress.street_address}
+                            className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                            type="text"
+                            name="street_address"
+                            placeholder="Road Number, House Number"
+                            id="street_address"
+                          />
+                        </div>
+
+                        <div className="flex flex-col items-start my-4 w-full">
+                          <label htmlFor="house_name_room_number">
+                            House Name & Room Number{" "}
+                            <span className="text-sm">(Optional)</span>{" "}
+                          </label>
+                          <input
+                            onChange={(e) =>
+                              setShippingAddress({
+                                ...ShippingAddress,
+                                house_name_room_number: e.target.value,
+                              })
+                            }
+                            value={ShippingAddress.house_name_room_number}
+                            className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                            type="text"
+                            name="house_name_room_number"
+                            placeholder="House Name, Room Number"
+                            id="house_name_room_number"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 }
               </div>
@@ -633,13 +850,13 @@ const Checkout = () => {
             </div> */}
           </div>
         </form>
-        <div className="flex-[0.8] space-y-2 mt-20">
+        <div className="flex-1 space-y-6 w-full container">
           <form
             onSubmit={(e) => {
               e.preventDefault();
               applyCoin(SelectCoin);
             }}
-            className="w-full border border-gray-300 bg-blue-500 flex justify-between items-center space-x-2 py-2 px-4 rounded-md text-white"
+            className="w-full border border-gray-300 bg-blue-500 flex justify-between items-center space-x-2 py-1 px-4 rounded-md text-white"
           >
             <div>
               <h2 className="text-sm md:text-base">
@@ -668,20 +885,22 @@ const Checkout = () => {
               </button>
             </div>
           </form>
-          <div className="flex flex-col border border-red-500 rounded-lg h-[480px] w-full px-2 md:px-10 py-5">
+          <div className="flex flex-col border border-red-500 rounded-lg h-full w-full px-2 md:px-10 py-5">
             <div className="w-full text-center">
               <h2 className="text-base md:text-xl font-bold"> Cart Totals </h2>
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200">
               <h3 className="text-sm md:text-base font-semibold">Subtotal</h3>
               <h5 className="text-sm md:text-base text-gray-400">
-              ¥ {parseFloat(TotalPrice).toFixed(2)}
+                ¥ {parseFloat(TotalPrice).toFixed(2)}
               </h5>
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200 ">
-              <h3 className="text-sm md:text-base font-semibold">Shipping</h3>
+              <h3 className="text-sm md:text-base font-semibold">
+                Shipping Charge
+              </h3>
               <h5 className="text-sm md:text-base text-red-500 font-semibold">
-                Calculate shipping
+                ¥ {TotalPrice > 8500 ? 0 : 1200}
               </h5>
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200 ">
@@ -692,29 +911,28 @@ const Checkout = () => {
                 </span>{" "}
               </h3>
               <h5 className="text-sm md:text-base text-red-500 font-semibold">
-                ¥0
+                ¥ {parseFloat(TotalVat).toFixed(2)}
               </h5>
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200 font-bold text-lg md:text-xl">
               <h3>Total</h3>
-              <h5>¥ {parseFloat(TotalPrice).toFixed(2)}</h5>
+              <h5>¥ {parseFloat(FinalTotal).toFixed(2)}</h5>
             </div>
-            <div className="flex flex-col justify-center items-start mt-5">
-              <div>
-                <input
-                  type="radio"
-                  name="payment"
-                  value={"stripe"}
-                  onChange={(e) => {
-                    setPaymentMethod(e.target.value);
-                    setStripeInput(true);
-                    setCoinInput(false);
-                  }}
-                  id="stripe"
-                />{" "}
-                <label htmlFor="stripe" className="text-sm md:text-base">Stripe</label>
-              </div>
-              <div>
+            <div className="flex flex-col my-3">
+              <label>Note:</label>
+              <textarea
+                value={Note}
+                onChange={(e) => setNote(e.target.value)}
+                className="bg-gray-100 focus:bg-white rounded-md px-2 py-1 text-sm md:text-base outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100 text-black"
+                name="note"
+                id="note"
+                cols="30"
+                rows="6"
+                placeholder="write a note"
+              ></textarea>
+            </div>
+            <ul className="flex flex-col justify-center items-start mt-5">
+              <li>
                 <input
                   type="radio"
                   name="payment"
@@ -725,18 +943,54 @@ const Checkout = () => {
                     setCoinInput(false);
                     setStripeInput(false);
                   }}
+                  checked={PaymentMethod === "cash_on_delivery"}
                 />{" "}
-                <label htmlFor="cash_on_delivery" className="text-sm md:text-base">Cash On Delivery</label>
+                <label
+                  htmlFor="cash_on_delivery"
+                  className="text-sm md:text-base"
+                >
+                  Cash On Delivery
+                </label>
+              </li>
+              <li>
+                <div>
+                  <input
+                    type="radio"
+                    name="payment"
+                    value={"stripe"}
+                    onChange={(e) => {
+                      setPaymentMethod(e.target.value);
+                      setStripeInput(true);
+                      setCoinInput(false);
+                    }}
+                    id="stripe"
+                  checked={PaymentMethod === "stripe"}
+                  />{" "}
+                  <label htmlFor="stripe" className="text-sm md:text-base">
+                    Stripe
+                  </label>
+                </div>
+                {PaymentMethod === "stripe" ? (
+                  <div className="">
+                    <CheckoutForm />
+                  </div>
+                ) : (
+                  ""
+                )}
+              </li>
+            </ul>
+            {PaymentMethod === "cash_on_delivery" ? (
+              <div className="w-full mt-10">
+                <button
+                  onClick={handleSubmit}
+                  className="bg-red-500 text-white w-full py-2 border border-red-500 hover:bg-transparent hover:text-black transition-all duration-500 text-sm md:text-base"
+                >
+                  Order
+                </button>
               </div>
-            </div>
-            <div className="w-full my-10">
-              <button
-                onClick={handleSubmit}
-                className="bg-red-500 text-white w-full py-2 border border-red-500 hover:bg-transparent hover:text-black transition-all duration-500 text-sm md:text-base"
-              >
-                Checkout
-              </button>
-            </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </section>

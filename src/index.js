@@ -1,28 +1,34 @@
-import React, { useState } from "react";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import App from "./App";
+import { ApiProvider } from "./context/ApiContext";
 import { CategoryProvider } from "./context/CategoryContext";
 import { ProductProvider } from "./context/ProductContext";
-import BreadCrumbs from "./components/BreadCrumbs";
-import { ApiProvider } from "./context/ApiContext";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
+const stripePromise = loadStripe(
+  "pk_test_51N5RkhAgeBkOeS8sUqqkyqCinBF7lKGMRlVmCkZfAQUovdzK8foRj9UAUUrNXBuD1W8lUO8tuiJTTKYWL4SLSRPy00qoYCU8Wz"
+);
+
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Elements stripe={stripePromise}>
+      <BrowserRouter>
         <CategoryProvider>
-            <ProductProvider>
-              <ApiProvider>
-                <App />
-              </ApiProvider>
-            </ProductProvider>
+          <ProductProvider>
+            <ApiProvider>
+              <App />
+            </ApiProvider>
+          </ProductProvider>
         </CategoryProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </Elements>
   </React.StrictMode>
 );
 

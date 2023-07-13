@@ -5,6 +5,7 @@ import { useApi } from "../context/ApiContext";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import Image from "../images/user.png"
 
 const ProductReviews = ({ product }) => {
   const navigate = useNavigate()
@@ -21,7 +22,7 @@ const ProductReviews = ({ product }) => {
       };
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
-          .post(`/api/product/reviews/management/review`, data,{
+          .post(`/api/review`, data,{
             headers:{
               Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
             }
@@ -69,7 +70,6 @@ const ProductReviews = ({ product }) => {
           <div>
             <Rate
               onChange={(value) => setReviews({ ...Reviews, rating: value })}
-              allowHalf
               style={{ color: "red" }}
               allowClear={false}
             />
@@ -110,7 +110,7 @@ const ProductReviews = ({ product }) => {
                   <div className="h-16 w-16 rounded-full overflow-hidden">
                     <img
                       className="scale-100"
-                      src="https://thumbs.dreamstime.com/b/man-portrait-young-happy-man-smiling-face-male-model-blue-shirt-crossed-arms-pose-violet-background-guy-casual-fashion-187062144.jpg"
+                      src={Image}
                       alt=""
                     />
                   </div>

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import BreadCrumbs from "../components/BreadCrumbs";
-import { useApi } from "../context/ApiContext";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
+import { Link, useNavigate } from "react-router-dom";
+import BreadCrumbs from "../components/BreadCrumbs";
+import { useApi } from "../context/ApiContext";
 
 const Login = () => {
   const {
@@ -28,10 +28,24 @@ const Login = () => {
         <div>
           <BreadCrumbs name={"Login"} url={"login"} />
         </div>
-        <section className="w-full h-5/6 flex justify-center items-start mt-20">
+        <section className="w-full h-5/6 flex flex-col justify-center items-center py-5">
+          <div className="flex justify-center items-center px-2 md:px-0 w-full md:w-1/2 xl:w-1/3 mb-5 space-x-2">
+            <Link
+              to={"/login"}
+              className="w-full border border-red-500 py-2 rounded-full bg-red-500 text-white transition-all duration-300 text-center"
+            >
+              Log In
+            </Link>
+            <Link
+              to={"/signup"}
+              className="w-full border border-red-500 text-red-500 py-2 rounded-full transition-all duration-300 text-center"
+            >
+              Sign Up
+            </Link>
+          </div>
           <form
             onSubmit={loginSubmit}
-            className="w-full md:w-1/2 xl:w-1/3 h-fit bg-white drop-shadow-2xl rounded-lg border border-red-300 container"
+            className="w-full md:w-1/2 xl:w-1/3 h-fit bg-white drop-shadow-2xl rounded-lg border border-red-300 container mx-4 md:mx-0"
           >
             <div className="flex justify-center my-2 md:my-3 xl:my-5 text-2xl md:txt-3xl xl:text-4xl font-bold">
               <h1>Log In</h1>
@@ -104,7 +118,7 @@ const Login = () => {
                   Forgot Your Password?
                 </Link>
               </div>
-              <div className="w-full flex justify-center mt-4 mb-20">
+              <div className="w-full flex justify-center mt-4 mb-10">
                 <button className="w-full border border-red-500 text-red-500 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300">
                   Log In
                 </button>

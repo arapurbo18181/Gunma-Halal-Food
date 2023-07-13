@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useApi } from "../context/ApiContext";
 
-const SearchProducts = ({ item }) => {
+const SearchProducts = ({
+  item,
+  product_slug,
+}) => {
   const { SmallImage, setSearch, setShowProduct } = useApi();
   return (
     <>
@@ -17,7 +20,7 @@ const SearchProducts = ({ item }) => {
         <div>
           <Link
             className="text-[0.8rem] font-bold"
-            // to={`/${item.sub_category.main_category.slug}/${item.sub_category.slug}/${item.slug}`}
+            to={`/product/${product_slug}`}
             onClick={() => {
               setShowProduct(item);
               setSearch("");

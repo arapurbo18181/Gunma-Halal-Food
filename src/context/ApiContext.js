@@ -1,22 +1,26 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import {
-  redirect,
-  useLocation,
-  useNavigate,
-  useNavigation,
-  useParams,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import GetCookies from "../components/Hooks/GetCookies";
 import SetCookies from "../components/Hooks/SetCookies";
-import RemoveCookies from "../components/Hooks/RemoveCookies";
 
 const ApiContext = createContext();
 
 export const useApi = () => useContext(ApiContext);
 
 export const ApiProvider = ({ children }) => {
+  const [TotalVat, setTotalVat] = useState();
+  const [FinalTotal, setFinalTotal] = useState();
+  const [StripeCheckout, setStripeCheckout] = useState();
+  const [Note, setNote] = useState();
+  const [LatestProducts, setLatestProducts] = useState([]);
+  const [LatestPro, setLatestPro] = useState([]);
+  const [TopSellingProducts, setTopSellingProducts] = useState([]);
+  const [SellingProducts, setSellingProducts] = useState([]);
+  const [TopRatedProducts, setTopRatedProducts] = useState([]);
+  const [RatedProducts, setRatedProducts] = useState([]);
+  const [IsCategorySidebar, setIsCategorySidebar] = useState();
   const [CategoryApi, setCategoryApi] = useState();
   const [ProductsApi, setProductsApi] = useState([]);
   const [SubCatProductsApi, setSubCatProductsApi] = useState([]);
@@ -32,17 +36,25 @@ export const ApiProvider = ({ children }) => {
   // const [SliderImageRoute] = useState(
   //   "https://gunma-admin.getthemeplugin.com/images/banner_images"
   // );
-  const [SliderImageRoute] = useState("http://admin.softtech-it.org/images/banner_images")
+  const [SliderImageRoute] = useState(
+    "https://admin.softtech-it.org/images/banner_images"
+  );
   // const [CategoryImage] = useState("http://gunma.myesdev.xyz/images/category_image/large")
   // const [CategoryImage] = useState(
   //   "http://localhost:8000/images/category_image/medium"
   // );
   // const [CategoryImage] = useState(
-  //   "https://gunma-admin.getthemeplugin.com/images/category_image/large"
+  //   "https://gunma-admin.getthemeplugin.com/images/category_image/medium"
   // );
-  // const [CategoryImage1] = useState("http://localhost:8000/images/category_image/large")
-  const [CategoryImage1] = useState("http://admin.softtech-it.org/images/category_image/large")
-  const [CategoryImage] = useState("http://admin.softtech-it.org/images/category_image/medium")
+  // const [CategoryImage1] = useState(
+  //   "http://localhost:8000/images/category_image/large"
+  // );
+  const [CategoryImage1] = useState(
+    "https://admin.softtech-it.org/images/category_image/large"
+  );
+  const [CategoryImage] = useState(
+    "http://admin.softtech-it.org/images/category_image/medium"
+  );
   // const [LargeImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/large"
   // );
@@ -53,7 +65,7 @@ export const ApiProvider = ({ children }) => {
   //   "https://gunma-admin.getthemeplugin.com/images/product_images/large"
   // );
   const [LargeImage] = useState(
-    "http://admin.softtech-it.org/images/product_images/medium"
+    "https://admin.softtech-it.org/images/product_images/medium"
   );
   // const [SmallImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/small"
@@ -65,7 +77,7 @@ export const ApiProvider = ({ children }) => {
   //   "https://gunma-admin.getthemeplugin.com/images/product_images/small"
   // );
   const [SmallImage] = useState(
-    "http://admin.softtech-it.org/images/product_images/small"
+    "https://admin.softtech-it.org/images/product_images/small"
   );
   const [AllProducts, setAllProducts] = useState([]);
   const [SubProducts, setSubProducts] = useState([]);
@@ -106,7 +118,7 @@ export const ApiProvider = ({ children }) => {
   const [IsCart, setIsCart] = useState(false);
   const [SubCatImage, setSubCatImage] = useState();
   const [UserEmail, setUserEmail] = useState();
-  const [TotalPrice, setTotalPrice] = useState();
+  const [TotalPrice, setTotalPrice] = useState(0);
   const [Reviews, setReviews] = useState({
     rating: 0,
     review: "",
@@ -134,6 +146,10 @@ export const ApiProvider = ({ children }) => {
     city: "",
     country: "",
     zip_code: "",
+    delivery_time: "",
+    street_address: "",
+    house_name_room_number: "",
+    delivery_time_id: "",
   });
   const [ShippingAddress, setShippingAddress] = useState({
     delivery_date: "",
@@ -145,9 +161,13 @@ export const ApiProvider = ({ children }) => {
     city: "",
     country: "",
     zip_code: "",
+    delivery_time: "",
+    street_address: "",
+    house_name_room_number: "",
+    delivery_time_id: "",
   });
   const [IsChecked, setIsChecked] = useState(false);
-  const [PaymentMethod, setPaymentMethod] = useState();
+  const [PaymentMethod, setPaymentMethod] = useState("cash_on_delivery");
   const [CuttingSystem, setCuttingSystem] = useState("no");
   const [IsRegister, setIsRegister] = useState(false);
   const [SubCategoryProduct, setSubCategoryProduct] = useState([]);
@@ -217,24 +237,28 @@ export const ApiProvider = ({ children }) => {
       amount: TotalAmount,
       head: "Products",
       body: "in Your Cart",
+      slug: "cart"
     },
     {
       id: 2,
       amount: TotalWishlist,
       head: "Products",
       body: "in Your Wishlist",
+      slug: "wishlist"
     },
     {
       id: 3,
       amount: UserData ? UserData.user_orders.length : 0,
-      head: "Products",
+      head: "Times",
       body: "You Ordered",
+      slug: "Orders"
     },
     {
       id: 4,
       amount: UserData ? UserData.coins : 0,
       head: "Points",
       body: "in Your account",
+      slug: "points"
     },
   ]);
   const [CoinAmount, setCoinAmount] = useState();
@@ -249,8 +273,8 @@ export const ApiProvider = ({ children }) => {
   });
   const [SetPassParams, setSetPassParams] = useState();
   const [AddToCartClick, setAddToCartClick] = useState(false);
-  const location = useLocation();
-  const params = useParams();
+  const [Orders, setOrders] = useState();
+  const [DeliveryTime, setDeliveryTime] = useState();
 
   useEffect(() => {
     if (GetCookies("cookies")) {
@@ -290,6 +314,23 @@ export const ApiProvider = ({ children }) => {
   }, [cart]);
 
   useEffect(() => {
+    const vat = cart.reduce((accumulator, currItem) => {
+      const temp = Number(currItem.price) / 100;
+      const temp2 = temp * Number(currItem.vat);
+      return accumulator + temp2 * Number(currItem.quantity);
+    }, 0);
+    setTotalVat(vat);
+  }, [cart]);
+
+  useEffect(() => {
+    if (TotalPrice < 8500) {
+      setFinalTotal(TotalPrice + 1200 + TotalVat);
+    } else {
+      setFinalTotal(TotalPrice + TotalVat);
+    }
+  }, [TotalPrice, TotalVat]);
+
+  useEffect(() => {
     const amount = Wishlist.reduce((accumulator, currItem) => {
       return (accumulator += 1);
     }, 0);
@@ -298,11 +339,7 @@ export const ApiProvider = ({ children }) => {
 
   const logOut = async () => {
     await axios
-      .get(
-        `/api/user/account/management/logout/${JSON.parse(
-          localStorage.getItem("token")
-        )}`
-      )
+      .get(`/api/user/logout/${JSON.parse(localStorage.getItem("token"))}`)
       .then((res) => {
         console.log(res);
         if (res.data.status === 200) {
@@ -323,10 +360,11 @@ export const ApiProvider = ({ children }) => {
       cookie_id: GetCookies("cookies"),
       token: JSON.parse(localStorage.getItem("token")),
     };
+    console.log(data)
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/user/cart/management/add-to-cart`, data, {
+        .post(`/api/add-to-cart`, data, {
           headers: {
             Authorization: JSON.parse(localStorage.getItem("token")),
           },
@@ -358,7 +396,7 @@ export const ApiProvider = ({ children }) => {
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/user/wishlist/management/add-to-wishlist`, data, {
+        .post(`/api/add-to-wishlist`, data, {
           headers: {
             Authorization: `Bearer ${JSON.parse(
               localStorage.getItem("token")
@@ -369,10 +407,10 @@ export const ApiProvider = ({ children }) => {
           console.log(res);
           setIsCart(!IsCart);
           if (res.data.status === 200) {
-            Swal.fire("success", res.data.success_message, "success")
+            Swal.fire("success", res.data.success_message, "success");
           }
           if (res.data.status === 401) {
-            Swal.fire("warning", res.data.error_message, "warning")
+            Swal.fire("warning", res.data.error_message, "warning");
           }
         })
         .catch((error) => {
@@ -383,7 +421,7 @@ export const ApiProvider = ({ children }) => {
 
   const removeFromWishlist = (item) => {
     axios
-      .get(`api/user/wishlist/management/delete-wishlist/${item.wishlist_id}`)
+      .get(`api/delete-wishlist/${item.wishlist_id}`)
       .then((res) => {
         console.log(res);
         setIsCart(!IsCart);
@@ -396,28 +434,32 @@ export const ApiProvider = ({ children }) => {
 
   const deleteFromCart = (item) => {
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios
-        .get(`/api/user/cart/management/delete-cart/${item.id}`)
-        .then((res) => {
-          // console.log(res)
-          // setGetCartData(res.data.carts);
-          setIsCart(!IsCart);
-        });
+      axios.get(`/api/delete-cart/${item.id}`).then((res) => {
+        // console.log(res)
+        // setGetCartData(res.data.carts);
+        setIsCart(!IsCart);
+      });
     });
   };
 
-  const increaseQuantity = (item) => {
-    console.log(item);
+  const increaseQuantity = (item, quantity) => {
     const data = {
-      quantity: "plus",
+      quantity: Number(quantity),
       id: item.id,
       price: item.price,
     };
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/user/cart/management/update-cart`, data).then((res) => {
-        // setGetCartData(res.data.carts);
-        setIsCart(!IsCart);
-      });
+      axios
+        .post(`/api/update-cart`, data)
+        .then((res) => {
+          // setGetCartData(res.data.carts);
+          console.log(res);
+          setIsCart(!IsCart);
+        })
+        .catch((err) => {
+          Swal.fire("warning", err.response.data.message, "warning");
+          setIsCart(!IsCart);
+        });
     });
   };
   const decreaseQuantity = (item) => {
@@ -469,7 +511,7 @@ export const ApiProvider = ({ children }) => {
   useEffect(() => {
     const getdata = async () => {
       await axios
-        .get(`/api/product/search/management/search/${Search}`, {
+        .get(`/api/search/${Search}`, {
           headers: {
             Authorization: `Bearer ${JSON.parse(
               localStorage.getItem("token")
@@ -501,53 +543,51 @@ export const ApiProvider = ({ children }) => {
     console.log(Register);
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios
-        .post(`/api/user/account/management/registration`, data)
-        .then((res) => {
+      axios.post(`/api/user/registration`, data).then((res) => {
+        console.log(res);
+        setIsRegister(false);
+        if (res.data.status === 200) {
           console.log(res);
-          setIsRegister(false);
-          if (res.data.status === 200) {
-            console.log(res);
-            localStorage.setItem("token", JSON.stringify(res.data.token));
-            setUser(true);
-            navigate("/");
-            Swal.fire("Success", res.data.success_message, "success");
-            setRegister({
-              email: "",
-              first_name: "",
-              last_name: "",
-              password: "",
-              confirmPassword: "",
-            });
-          }
-          if (res.data.status === 204) {
-            console.log(res);
-            setValidationErrors(res.data.errors);
-            setRegister({
-              email: "",
-              first_name: "",
-              last_name: "",
-              password: "",
-              confirmPassword: "",
-            });
-          }
-          if (res.data.status === 205) {
-            console.log(res);
-            console.log(res.data.error_message);
-            setConfirmPassError(res.data.error_message);
-            setIsConfirmError(true);
-            setRegister({
-              email: "",
-              first_name: "",
-              last_name: "",
-              password: "",
-              confirmPassword: "",
-            });
-          }
-          if (res.data.status === 409) {
-            console.log(res);
-          }
-        });
+          localStorage.setItem("token", JSON.stringify(res.data.token));
+          setUser(true);
+          navigate("/");
+          Swal.fire("Success", res.data.success_message, "success");
+          setRegister({
+            email: "",
+            first_name: "",
+            last_name: "",
+            password: "",
+            confirmPassword: "",
+          });
+        }
+        if (res.data.status === 204) {
+          console.log(res);
+          setValidationErrors(res.data.errors);
+          setRegister({
+            email: "",
+            first_name: "",
+            last_name: "",
+            password: "",
+            confirmPassword: "",
+          });
+        }
+        if (res.data.status === 205) {
+          console.log(res);
+          console.log(res.data.error_message);
+          setConfirmPassError(res.data.error_message);
+          setIsConfirmError(true);
+          setRegister({
+            email: "",
+            first_name: "",
+            last_name: "",
+            password: "",
+            confirmPassword: "",
+          });
+        }
+        if (res.data.status === 409) {
+          console.log(res);
+        }
+      });
     });
   };
 
@@ -565,7 +605,7 @@ export const ApiProvider = ({ children }) => {
     };
     console.log(Login);
     axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios.post(`/api/user/account/management/login`, data).then((res) => {
+      axios.post(`/api/user/login`, data).then((res) => {
         console.log(res);
         if (res.data.status === 200) {
           localStorage.setItem("token", JSON.stringify(res.data.token));
@@ -602,7 +642,7 @@ export const ApiProvider = ({ children }) => {
     if (value) {
       await axios
         .get(
-          `/api/user/account/management/check-password/${value}/${JSON.parse(
+          `/api/user/check-password/${value}/${JSON.parse(
             localStorage.getItem("token")
           )}`,
           {
@@ -630,7 +670,7 @@ export const ApiProvider = ({ children }) => {
     };
     await axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/user/account/management/change-password/`, data, {
+        .post(`/api/user/change-password/`, data, {
           headers: {
             Authorization: `Bearer ${JSON.parse(
               localStorage.getItem("token")
@@ -659,14 +699,15 @@ export const ApiProvider = ({ children }) => {
       shipping_address: IsChecked ? BillingAddress : ShippingAddress,
       billing_address: BillingAddress,
       seperate_shipping: IsChecked ? false : true,
-      total_amount: TotalPrice,
+      total_amount: FinalTotal,
       payment_type: PaymentMethod,
+      note: Note,
       token: JSON.parse(localStorage.getItem("token")),
     };
     console.log(data);
     await axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/order/management/system/order`, data, {
+        .post(`/api/order`, data, {
           headers: {
             Authorization: `Bearer ${JSON.parse(
               localStorage.getItem("token")
@@ -693,8 +734,32 @@ export const ApiProvider = ({ children }) => {
             Swal.fire("warning", res.data.message, "warning");
           }
           if (res.data.status === 200) {
-            navigate("/")
+            navigate("/");
             Swal.fire("success", res.data.message, "success");
+            setBillingAddress({
+              delivery_date: "",
+              state: "",
+              phone: "",
+              city: "",
+              country: "",
+              zip_code: "",
+              delivery_time: "",
+              street_address: "",
+              house_name_room_number: "",
+              delivery_time_id: "",
+            })
+            setShippingAddress({
+              delivery_date: "",
+              state: "",
+              phone: "",
+              city: "",
+              country: "",
+              zip_code: "",
+              delivery_time: "",
+              street_address: "",
+              house_name_room_number: "",
+              delivery_time_id: "",
+            })
           }
           if (res.data.status === 100) {
             Swal.fire({
@@ -713,7 +778,6 @@ export const ApiProvider = ({ children }) => {
               // cancelButtonAriaLabel: 'Thumbs down'
             });
           }
-
         });
     });
   };
@@ -727,7 +791,7 @@ export const ApiProvider = ({ children }) => {
 
     await axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/order/management/system/use-coin`, data, {
+        .post(`/api/use-coin`, data, {
           headers: {
             Authorization: `Bearer ${JSON.parse(
               localStorage.getItem("token")
@@ -755,7 +819,7 @@ export const ApiProvider = ({ children }) => {
       // console.log(IsCart)
       await axios
         .get(
-          `/api/get/index/all/info/${GetCookies("cookies")}/${
+          `/api/index/${GetCookies("cookies")}/${
             localStorage.getItem("token")
               ? JSON.parse(localStorage.getItem("token"))
               : "test"
@@ -779,32 +843,39 @@ export const ApiProvider = ({ children }) => {
             setUserData(res.data.user);
             setStates(res.data.states);
             setShippingStates(res.data.states);
+            setOrders(res.data.orders);
             setCardsForUserDashboard([
               {
                 id: 1,
                 amount: TotalAmount,
                 head: "Products",
                 body: "in Your Cart",
+                slug: "cart"
               },
               {
                 id: 2,
                 amount: TotalWishlist,
                 head: "Products",
                 body: "in Your Wishlist",
+                slug: "wishlist"
               },
               {
                 id: 3,
                 amount: UserData ? UserData.user_orders.length : 0,
-                head: "Products",
+                head: "Times",
                 body: "You Ordered",
+                slug: "Orders"
               },
-              {
-                id: 4,
-                amount: UserData ? UserData.coins : 0,
-                head: "Points",
-                body: "in Your account",
-              },
-            ])
+              // {
+              //   id: 4,
+              //   amount: UserData ? UserData.coins : 0,
+              //   head: "Points",
+              //   body: "in Your account",
+              //   slug: "points"
+              // },
+            ]);
+            setLatestProducts(res.data.latest_products);
+            setTopSellingProducts(res.data.top_selling_products);
             setWishlist(
               res.data.wishlist.map((item) => {
                 return (item.wishlist_product[0] = {
@@ -815,6 +886,8 @@ export const ApiProvider = ({ children }) => {
                 });
               })
             );
+            setDeliveryTime(res.data.schedule);
+            setTopRatedProducts(res.data.top_rated_products);
             // console.log(res.data.user_cart);
             const datas = res.data.user_cart.map((item) => {
               return {
@@ -826,9 +899,10 @@ export const ApiProvider = ({ children }) => {
                 image: item.product[0].image,
                 name: item.product[0].name,
                 slug: item.product[0].slug,
-                sub_cat_slug: item.product[0].sub_category.slug,
-                cat_slug: item.product[0].sub_category.main_category.slug,
+                // sub_cat_slug: item.product[0].sub_category.slug,
+                // cat_slug: item.product[0].sub_category.main_category.slug,
                 total_price: item.total_price,
+                vat: item.product[0].vat,
               };
             });
             setcart(datas);
@@ -844,20 +918,44 @@ export const ApiProvider = ({ children }) => {
       setSmallLoading(false);
     };
     getdata();
-  }, [IsReview, IsCart, User]);
+  }, [IsReview, IsCart, User, TotalAmount, TotalWishlist]);
 
   useEffect(() => {
     setAllProducts(
       ProductsApi.map((item) => {
-        return { ...item, quantity: 0, discountedPrice: 0 };
+        return { ...item, quantity: 1, discountedPrice: 0 };
       })
     );
   }, [ProductsApi]);
 
   useEffect(() => {
+    setRatedProducts(
+      TopRatedProducts.map((item) => {
+        return { ...item, quantity: 1, discountedPrice: 0 };
+      })
+    );
+  }, [TopRatedProducts]);
+
+  useEffect(() => {
+    setLatestPro(
+      LatestProducts.map((item) => {
+        return { ...item, quantity: 1, discountedPrice: 0 };
+      })
+    );
+  }, [LatestProducts]);
+
+  useEffect(() => {
+    setSellingProducts(
+      TopSellingProducts.map((item) => {
+        return { ...item, quantity: 1, discountedPrice: 0 };
+      })
+    );
+  }, [TopSellingProducts]);
+
+  useEffect(() => {
     setSubProducts(
       SubCatProductsApi.map((item) => {
-        return { ...item, quantity: 0, discountedPrice: 0 };
+        return { ...item, quantity: 1, discountedPrice: 0 };
       })
     );
   }, [SubCatProductsApi]);
@@ -869,12 +967,10 @@ export const ApiProvider = ({ children }) => {
   };
 
   const filterStates = async (value) => {
-    await axios
-      .get(`/api/state/search/management/state/${value}`)
-      .then((res) => {
-        console.log(res);
-        setStates(res.data);
-      });
+    await axios.get(`/api/state/${value}`).then((res) => {
+      console.log(res);
+      setStates(res.data);
+    });
   };
   const filterShippingStates = async (value) => {
     await axios
@@ -908,17 +1004,15 @@ export const ApiProvider = ({ children }) => {
     };
 
     await axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios
-        .post(`/api/user/account/management/forget-password`, data)
-        .then((res) => {
-          console.log(res);
-          if (res.data.status === 200) {
-            Swal.fire("success", res.data.message, "success");
-          }
-          if (res.data.status === 401) {
-            Swal.fire("warning", res.data.message, "warning");
-          }
-        });
+      axios.post(`/api/user/forget-password`, data).then((res) => {
+        console.log(res);
+        if (res.data.status === 200) {
+          Swal.fire("success", res.data.message, "success");
+        }
+        if (res.data.status === 401) {
+          Swal.fire("warning", res.data.message, "warning");
+        }
+      });
     });
   };
 
@@ -931,22 +1025,20 @@ export const ApiProvider = ({ children }) => {
     };
 
     await axios.get("/sanctum/csrf-cookie").then((response) => {
-      axios
-        .post(`/api/user/account/management/set-password`, data)
-        .then((res) => {
-          console.log(res);
-          if (res.data.status === 200) {
-            localStorage.setItem("token", JSON.stringify(res.data.token));
-            navigate("/");
-            Swal.fire("success", res.data.message, "success");
-            setUser(true);
-          }
-        });
+      axios.post(`/api/user/set-password`, data).then((res) => {
+        console.log(res);
+        if (res.data.status === 200) {
+          localStorage.setItem("token", JSON.stringify(res.data.token));
+          navigate("/");
+          Swal.fire("success", res.data.message, "success");
+          setUser(true);
+        }
+      });
     });
   };
 
   const updateProfile = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const data = {
       first_name: UserProfile.first_name,
       last_name: UserProfile.last_name,
@@ -957,11 +1049,11 @@ export const ApiProvider = ({ children }) => {
       zip_code: UserProfile.zip_code,
       token: JSON.parse(localStorage.getItem("token")),
     };
-    console.log(data)
+    console.log(data);
 
     await axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
-        .post(`/api/user/account/management/change-profile`, data, {
+        .post(`/api/user/change-profile`, data, {
           headers: {
             Authorization: `Bearer ${JSON.parse(
               localStorage.getItem("token")
@@ -975,9 +1067,18 @@ export const ApiProvider = ({ children }) => {
     });
   };
 
+  const toggleCat = () => {
+    if (ToggleCategory === true) {
+      setIsCategorySidebar(false);
+    }else{
+      setIsCategorySidebar(false);
+    }
+  };
+
   return (
     <ApiContext.Provider
       value={{
+        toggleCat,
         CategoryApi,
         setCategoryApi,
         IsApi,
@@ -1132,7 +1233,28 @@ export const ApiProvider = ({ children }) => {
         UserProfile,
         setUserProfile,
         updateProfile,
-        CategoryImage1
+        CategoryImage1,
+        Orders,
+        setOrders,
+        DeliveryTime,
+        IsCategorySidebar,
+        setIsCategorySidebar,
+        TopRatedProducts,
+        setTopRatedProducts,
+        RatedProducts,
+        setRatedProducts,
+        SellingProducts,
+        setSellingProducts,
+        LatestPro,
+        setLatestPro,
+        Note,
+        setNote,
+        StripeCheckout,
+        setStripeCheckout,
+        FinalTotal,
+        setFinalTotal,
+        TotalVat,
+        setTotalVat,
       }}
     >
       {children}

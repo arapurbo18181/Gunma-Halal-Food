@@ -2,13 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { useApi } from "../context/ApiContext";
 import SearchProducts from "./SearchProducts";
+import { useLocation } from "react-router-dom";
 
 const Searchbar = () => {
   const [IsSearch, setIsSearch] = useState(false);
   const { Search, setSearch, SearchProduct, NewSearchProducts } = useApi();
   const ref = useRef();
+  const location = useLocation();
 
   useEffect(() => {
+    setIsSearch(false);
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
         setIsSearch(false);
@@ -20,7 +23,7 @@ const Searchbar = () => {
       // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ref]);
+  }, [ref, location]);
 
   return (
     <div className="w-full flex justify-center items-center">
@@ -43,9 +46,9 @@ const Searchbar = () => {
                 const discountedAmount = (item.price / 100) * item.discount;
                 const newPrice = item.price - discountedAmount;
                 item.discountedPrice = Math.round(newPrice);
-                return <SearchProducts item={item} />;
+                return <SearchProducts item={item} key={item.id} product_slug={item.slug}  />;
               })}
-            </div> : ''}
+            </div> : ""}
           </div>
         ) : (
           ""

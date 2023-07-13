@@ -39,10 +39,10 @@ const SubCategory = () => {
     setLoader(true);
     const getdata = async () => {
       await axios
-        .get(`/api/${params.id}`)
+        .get(`/api/category/${params.id}`)
         .then((res) => {
           if (res.data.status === 200) {
-            console.log(res.data);
+            console.log(res);
             setCategory(res.data.categories);
             setSubCategory(res.data.categories.sub_category);
             setCatProducts(res.data.products);
@@ -68,7 +68,7 @@ const SubCategory = () => {
         <>
           <section className="flex justify-center items-start w-full">
             <div className="flex justify-start items-start w-[100%]">
-              <div className="hidden w-[14vw] sticky top-[4.6rem] left-0 xl:block -mt-4">
+              <div className="hidden w-[16.5vw] h-full sticky top-[5.3rem] xl:block ">
                 <CategorySidebar />
               </div>
               <div className="w-full">
@@ -79,7 +79,7 @@ const SubCategory = () => {
                 <div className="h-[35vh] w-full overflow-hidden">
                   <img
                     className="hover:scale-110 transition-all duration-300 h-full w-full"
-                    src={`${CategoryImage1}/${Category.image}`}
+                    src={`${CategoryImage1}/${Category.banner_image}`}
                     alt=""
                   />
                 </div>
@@ -89,12 +89,12 @@ const SubCategory = () => {
                   </span>
                   {Category.name ? Category.name.slice(2) : ""}
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mx-2 gap-6 w-full place-items-center">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 px-4 gap-6 w-full place-items-center">
                   {SubCategory.map((item, index) => {
                     return (
                       <Link
                         key={index}
-                        to={`/${Category.slug}/${item.slug}`}
+                        to={`/category/${Category.slug}/${item.slug}`}
                         onClick={() => {}}
                         className="border shadow-[0_2px_6px_0px_rgb(180,180,180)] hover:-translate-y-3 transition-all duration-500 rounded-md max-w-[200px] space-y-4 pb-4 rounded-t-lg"
                       >

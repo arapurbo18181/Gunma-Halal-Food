@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useApi } from "../context/ApiContext";
 import { useCategory } from "../context/CategoryContext";
-import CateBanner from "../images/cat-banner.webp";
 
 const Categories = () => {
   const { setItemCategory, categories, CatImage, setCatImage } = useCategory();
@@ -24,12 +23,12 @@ const Categories = () => {
           return (
             <Link
               key={index}
-              to={`/${item.slug}`}
+              to={`/category/${item.slug}`}
               onClick={() => {
                 setItemCategory(item.sub_category)
                 setCatname(item.name)
                 }}
-              className="flex flex-col justify-center items-center space-y-4 w-[45vw] hover:-translate-y-3 transition-all duration-500 md:w-full max-w-[200px] shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-lg pb-4"
+              className="flex flex-col justify-center items-center space-y-4 w-[45vw] transition-all duration-500 md:w-full max-w-[200px] shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-lg pb-4"
             >
               <div className="overflow-hidden w-full flex justify-center items-center rounded-t-lg">
                 <img

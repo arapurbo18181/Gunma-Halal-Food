@@ -1,22 +1,15 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { BsPlusLg } from "react-icons/bs";
-import { BsSuitHeart } from "react-icons/bs";
-import { Link } from "react-router-dom";
-import { UseScrollPosition } from "./Hooks/UseScollPosition";
-import { IoMdAdd, IoMdClose, IoMdRemove } from "react-icons/io";
-import { UseScrollPositionX } from "./Hooks/useScrollPositionX";
-import { useProduct } from "../context/ProductContext";
-import { useApi } from "../context/ApiContext";
+import React, { useRef, useState } from "react";
 import { AiFillEye } from "react-icons/ai";
+import { IoMdAdd, IoMdRemove } from "react-icons/io";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useApi } from "../context/ApiContext";
+import { useProduct } from "../context/ProductContext";
+import { UseScrollPosition } from "./Hooks/UseScollPosition";
+import { UseScrollPositionX } from "./Hooks/useScrollPositionX";
 
-const SubCategoryProducts = ({
-  item,
-  sub_category_slug,
-  main_category_slug,
-  product_slug,
-}) => {
+const SubCategoryProducts = ({ item, product_slug }) => {
   const { MyRef, setMyRef, myRefForFlyToCart } = useProduct();
   const {
     BreadCrumbs,
@@ -40,10 +33,15 @@ const SubCategoryProducts = ({
     setCuttingSystem,
     AddToCartClick,
     setAddToCartClick,
+    RatedProducts,
+    LatestPro,
+    SellingProducts,
+    cart,
+    increaseQuantity,
   } = useApi();
 
   const myRef = useRef();
-  const [Quantity, setQuantity] = useState(0);
+  const [Quantity, setQuantity] = useState(1);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const [Count, setCount] = useState();
   const [AnimationCoodinate, setAnimationCoodinate] = useState({});
@@ -54,7 +52,6 @@ const SubCategoryProducts = ({
     if (SubCategoryProduct) {
       SubCategoryProduct.map((elem) => {
         if (elem.id === id) {
-          console.log(id);
           elem.quantity = elem.quantity + 1;
           setQuantity(elem.quantity);
         }
@@ -63,7 +60,30 @@ const SubCategoryProducts = ({
     if (AllProducts) {
       AllProducts.map((elem) => {
         if (elem.id === id) {
-          console.log(id);
+          elem.quantity = elem.quantity + 1;
+          setQuantity(elem.quantity);
+        }
+      });
+    }
+    if (RatedProducts) {
+      RatedProducts.map((elem) => {
+        if (elem.id === id) {
+          elem.quantity = elem.quantity + 1;
+          setQuantity(elem.quantity);
+        }
+      });
+    }
+    if (LatestPro) {
+      LatestPro.map((elem) => {
+        if (elem.id === id) {
+          elem.quantity = elem.quantity + 1;
+          setQuantity(elem.quantity);
+        }
+      });
+    }
+    if (SellingProducts) {
+      SellingProducts.map((elem) => {
+        if (elem.id === id) {
           elem.quantity = elem.quantity + 1;
           setQuantity(elem.quantity);
         }
@@ -86,7 +106,6 @@ const SubCategoryProducts = ({
     if (AllProducts) {
       AllProducts.map((elem) => {
         if (elem.id === id) {
-          console.log(id);
           if (elem.quantity === 0) {
           } else {
             elem.quantity = elem.quantity - 1;
@@ -98,67 +117,78 @@ const SubCategoryProducts = ({
   };
 
   const handleClick = async (item) => {
-    if (item.quantity === 0) {
-      Swal.fire("warning", "Please add some product first", "warning");
-    } else {
-      if (item.cutting_system === "Yes") {
-        Swal.fire({
-          title: "Do You Want to Cut The Product?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes",
-          cancelButtonText: "No",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            setCount(item.id);
-            const setX =
-              CartCoordinate.x - (myRef.current.offsetLeft - posX) - 50;
-            const setY =
-              CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
-            setAnimationCoodinate({ x: setX, y: setY });
-            setIsAddedToCart(true);
-            setAddToCartClick(true);
-            setTimeout(() => {
+    // const temp = cart.find((elem) => {
+    //   if (elem.name === item.name) {
+    //     // increaseQuantity(item, item.quantity)
+    //     return item;
+    //   }
+    // });
+    // if (temp) {
+    //   increaseQuantity(temp, Number(temp.quantity));
+    // } else {
+      if (item.quantity === 0) {
+        Swal.fire("warning", "Please add some product first", "warning");
+      } else {
+        if (item.cutting_system === "Yes") {
+          Swal.fire({
+            title: "Do You Want to Cut The Product?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              setCount(item.id);
+              const setX =
+                CartCoordinate.x - (myRef.current.offsetLeft - posX) - 50;
+              const setY =
+                CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
+              setAnimationCoodinate({ x: setX, y: setY });
+              setIsAddedToCart(true);
+              setAddToCartClick(true);
               addToCart(item, "YES");
-              item.quantity = 0;
-              setQuantity(0);
-              setIsAddedToCart(false);
-            }, 2000);
-          } else {
-            setCount(item.id);
-            const setX =
-              CartCoordinate.x - (myRef.current.offsetLeft - posX) - 50;
-            const setY =
-              CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
-            setAnimationCoodinate({ x: setX, y: setY });
-            setIsAddedToCart(true);
-            setAddToCartClick(true);
-            setTimeout(() => {
+              setTimeout(() => {
+                item.quantity = 1;
+                setQuantity(1);
+                setIsAddedToCart(false);
+              }, 1000);
+            } else {
+              setCount(item.id);
+              const setX =
+                CartCoordinate.x - (myRef.current.offsetLeft - posX) - 50;
+              const setY =
+                CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
+              setAnimationCoodinate({ x: setX, y: setY });
+              setIsAddedToCart(true);
+              setAddToCartClick(true);
               addToCart(item, "NO");
-              item.quantity = 0;
-              setQuantity(0);
-              setIsAddedToCart(false);
-            }, 2000);
-          }
-        });
-      } else if (item.cutting_system === "No") {
-        setCount(item.id);
-        const setX = CartCoordinate.x - (myRef.current.offsetLeft - posX) - 80;
-        const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
-        setAnimationCoodinate({ x: setX, y: setY });
-        setIsAddedToCart(true);
-        setAddToCartClick(true);
-        setTimeout(() => {
-          addToCart(item, "YES");
-          item.quantity = 0;
-          setQuantity(0);
-          setIsAddedToCart(false);
-        }, 2000);
+              setTimeout(() => {
+                item.quantity = 1;
+                setQuantity(1);
+                setIsAddedToCart(false);
+              }, 1000);
+            }
+          });
+        } else if (item.cutting_system === "No") {
+          setCount(item.id);
+          const setX =
+            CartCoordinate.x - (myRef.current.offsetLeft - posX) - 80;
+          const setY = CartCoordinate.y - (myRef.current.offsetTop - posY) - 20;
+          setAnimationCoodinate({ x: setX, y: setY });
+          setIsAddedToCart(true);
+          setAddToCartClick(true);
+          addToCart(item, "NO");
+          setTimeout(() => {
+            item.quantity = 1;
+            setQuantity(1);
+            setIsAddedToCart(false);
+          }, 1000);
+        }
       }
-    }
+    // }
 
     // setMyRef(true);
   };
@@ -178,7 +208,7 @@ const SubCategoryProducts = ({
       y: AnimationCoodinate.y,
       zIndex: 100,
       transition: {
-        duration: 2,
+        duration: 1,
         ease: "easeInOut",
       },
     },
@@ -187,18 +217,25 @@ const SubCategoryProducts = ({
   return (
     <>
       {AllProducts || SubProducts ? (
-        <div
+        <section
           ref={myRef}
-          className="shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-0 xl:hover:-translate-y-3 transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[400px]"
+          className="shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[500px] relative"
         >
+          {(item.status === "0" || item.stock === "0") && (
+            <div className="absolute w-full h-full bg-gray-100 z-20 bg-opacity-70">
+              { item.stock === "0" && <div className="absolute -right-4 -top-4 bg-blue-500 text-white py-1 px-2 border border-white rounded-full">
+                <h2> Stock Out </h2>
+              </div>}
+            </div>
+          )}
           <div className="relative w-full flex justify-center items-center rounded-t-lg group transition-all duration-500">
             <div className="absolute w-full h-full group-hover:bg-black group-hover:bg-opacity-50 rounded-t-lg transition-all duration-500">
               <div className="absolute right-3 -top-6 group-hover:top-6 p-2 flex flex-col items-center justify-center gap-y-2 opacity-0 group-hover:opacity-100 transition-all duration-500">
                 <Link
-                  to={`/${main_category_slug}/${sub_category_slug}/${product_slug}`}
-                  className="w-12 h-12 bg-white flex justify-center items-center text-primary drop-shadow-xl"
+                  to={`/product/${product_slug}`}
+                  className="w-12 h-12 bg-gray-300 flex justify-center items-center text-primary drop-shadow-xl rounded-sm"
                 >
-                  <AiFillEye className="text-xl" />
+                  <AiFillEye className="text-xl transition-all duration-300" />
                 </Link>
               </div>
             </div>
@@ -223,30 +260,25 @@ const SubCategoryProducts = ({
               </motion.div>
             )}
           </div>
-          <div className="flex flex-col justify-between items-start my-2 px-5 pb-5">
+          <div className="flex flex-col justify-between items-start my-2 px-2 md:px-5 pb-2 md:pb-5">
             <Link
               onClick={() => {
                 setShowProduct(item);
                 setBreadCrumbs([...BreadCrumbs, item.name]);
               }}
-              to={`/${main_category_slug}/${sub_category_slug}/${product_slug}`}
-              className="text-sm md:text-base font-semibold tracking-wide text-gray-900 dark:text-white"
+              to={`/product/${product_slug}`}
+              className="text-[10px] md:text-base font-semibold tracking-normal text-gray-900 h-full"
             >
-              {" "}
-              {item.name}{" "}
+              {item.name}
             </Link>
-            <h2 className="text-[0.7rem] md:text-xs font-semibold">
-              {" "}
-              Stock: {item.stock}{" "}
-            </h2>
             <div className="flex justify-center items-center space-x-1 my-2">
               <h2 className="text-base md:text-lg font-bold text-red-500">
-                ৳{Math.round(item.discountedPrice)}
+                ¥ {Math.round(item.discountedPrice)}
               </h2>
               <h2 className="text-xs md:text-sm text-gray-400 line-through">{`${
-                item.discount === 0
+                item.discount === "0.00"
                   ? ""
-                  : `৳${parseFloat(item.price).toFixed(2)}`
+                  : `¥ ${Number(item.price)}`
               }`}</h2>
             </div>
             <div className="relative flex justify-between items-center w-full mt-2 h-[30px]">
@@ -255,12 +287,12 @@ const SubCategoryProducts = ({
               ) : (
                 ""
               )}
-              <div
+              <button
                 onClick={() => CountToRemove(item.id)}
                 className="flex-1 flex justify-center items-center cursor-pointer h-full w-full border-red-600 border px-1 active:bg-white active:text-black hover:bg-red-500 hover:text-white text-xs md:text-sm transition-all duration-300"
               >
                 <IoMdRemove />
-              </div>
+              </button>
               <div className="w-full flex justify-center h-full items-center">
                 <button
                   onClick={() => handleClick(item)}
@@ -270,15 +302,15 @@ const SubCategoryProducts = ({
                 </button>
               </div>
 
-              <div
+              <button
                 onClick={() => CountToAdd(item.id)}
                 className="flex-1 h-full flex justify-center items-center cursor-pointer border-red-600 border px-1  active:bg-white active:text-black hover:bg-red-500 hover:text-white transition-all duration-300 text-xs md:text-sm"
               >
                 <IoMdAdd />
-              </div>
+              </button>
             </div>
           </div>
-        </div>
+        </section>
       ) : (
         ""
       )}

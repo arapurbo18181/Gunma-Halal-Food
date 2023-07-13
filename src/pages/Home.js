@@ -12,9 +12,9 @@ import TopSellingProducts from "../components/TopSellingProducts";
 
 const Home = () => {
   return (
-    <section className="flex flex-col justify-center h-full items-center">
+    <section className="flex flex-col justify-center h-full items-center overflow-hidden">
       <div className="flex justify-start h-full items-start">
-        <div className="hidden w-[14vw] h-full sticky top-[4.6rem] xl:block -mt-4">
+        <div className="hidden w-[14vw] h-full sticky top-0 xl:block">
           <CategorySidebar />
         </div>
         <div className="flex flex-col justify-start xl:w-[84.95vw]">
@@ -22,9 +22,10 @@ const Home = () => {
             <Hero />
             <CartButton/>
           </div>
-          <div className="flex flex-col justify-center items-center w-full">
+          <div className="flex flex-col justify-center items-center w-full px-3">
             <Categories />
             <TopSellingProducts/>
+            <LatestProducts/>
             <HomeBanner/>
             <TopRatedProducts/>
           </div>

@@ -1,8 +1,8 @@
 import React from "react";
-import { useProduct } from "../context/ProductContext";
-import RingLoader from "react-spinners/RingLoader";
 import BreadCrumbs from "../components/BreadCrumbs";
 import CategorySidebar from "../components/CategorySidebar";
+import { useProduct } from "../context/ProductContext";
+import CartButton from "../components/CartButton";
 
 const About = () => {
   const { progress, setProgress } = useProduct();
@@ -10,12 +10,13 @@ const About = () => {
     <>
       <section className="flex justify-center items-start w-full">
         <div className="flex justify-start items-center xl:items-start w-[100%]">
-          <div className="hidden w-[14vw] sticky left-0 top-[4.6rem] xl:block -mt-4">
+          <div className="hidden w-[16.5vw] h-full sticky top-[5.3rem] xl:block ">
             <CategorySidebar />
+            <CartButton/>
           </div>
           <div className="w-full flex flex-col justify-center items-center text-center space-y-20">
             <BreadCrumbs name={"About"} url={"about"} />
-            <div className="space-y-4 px-10">
+            <div className="space-y-4 px-16">
               <h2 className="text-4xl font-bold mb-10">
                 Welcome to Gunma Halal Food!! This is a part of IBADAH Company
                 Ltd.
@@ -42,7 +43,7 @@ const About = () => {
                 E-mail:- support@gunmahalalfood.com
               </h3>
             </div>
-            <div className="space-y-4 px-10">
+            <div className="space-y-4 px-16">
               <h3 className="text-3xl font-bold text-blue-700">会社案内</h3>
               <h3 className="text-3xl font-bold">会社名：株式会社IBADAH</h3>
               <h4 className="font-bold">会社法人等番号：4070-00-1038657　</h4>

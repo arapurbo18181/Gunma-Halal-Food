@@ -6,6 +6,7 @@ import { useApi } from "../context/ApiContext";
 import BreadCrumbs from "../components/BreadCrumbs";
 import SmallLoader from "../components/SmallLoader";
 import Loaders from "../components/Loaders";
+import FreeDel from "../components/FreeDel";
 
 const Cart = () => {
   const {
@@ -21,6 +22,7 @@ const Cart = () => {
   return (
     <>
       <BreadCrumbs name="Cart" url="cart" />
+          <FreeDel/>
       {cart ? (
         <>
           <section className="flex flex-col lg:flex-row justify-center items-center px-1 lg:px-20 lg:space-x-5 mb-20">
@@ -39,7 +41,7 @@ const Cart = () => {
                 </div>
                 <div className="flex flex-col gap-y-2 h-[380px] justify-between overflow-y-auto overflow-x-hidden">
                   {SmallLoading ? (
-                    <SmallLoader width={"100%"} height={"50vh"} />
+                    <SmallLoader width={"100%"} height={"100%"} />
                   ) : (
                     <>
                       {cart.map((item, index) => {

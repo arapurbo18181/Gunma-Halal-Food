@@ -7,7 +7,7 @@ import {
 } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import { Link } from "react-router-dom";
-import Logo from "../images/logo.png";
+import Logo from "../images/Gunma logo.png";
 
 const year = new Date().getFullYear();
 

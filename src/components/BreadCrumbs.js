@@ -15,7 +15,7 @@ const BreadCrumbs = ({name, url}) => {
   // console.log(BreadCrumbs)
 
   if (name) {
-    const crumb = name.split("/").map((item, index) => {
+    const crumb = name.split("'\'").map((item, index) => {
       // console.log(to[index]);
       return (
         <li key={item}>
@@ -36,7 +36,7 @@ const BreadCrumbs = ({name, url}) => {
             <Link
               // to={`${index === 0 ? `/${to[index]}` : `/${to[index - 1]}/${to[index]}`}`}
               to={`${ index === 2 ? `/${to[index - 2]}/${to[index - 1]}/${to[index]}` : `${index === 0 ? `/${to[index]}` : `/${to[index - 1]}/${to[index]}`}`}`}
-              className="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white"
+              className="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2"
             >
               {item}
             </Link>
@@ -47,14 +47,14 @@ const BreadCrumbs = ({name, url}) => {
 
     return (
       <nav
-        className={`w-full flex px-5 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700`}
+        className={`w-full flex px-2 xl:px-5 py-1 xl:py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 `}
         aria-label="Breadcrumb"
       >
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
           <li className="inline-flex items-center">
             <Link
               to="/"
-              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
+              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600"
             >
               <svg
                 aria-hidden="true"
