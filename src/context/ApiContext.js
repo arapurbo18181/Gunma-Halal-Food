@@ -10,6 +10,7 @@ const ApiContext = createContext();
 export const useApi = () => useContext(ApiContext);
 
 export const ApiProvider = ({ children }) => {
+  const [FinalTotalWithCoupon, setFinalTotalWithCoupon] = useState();
   const [TotalVat, setTotalVat] = useState();
   const [FinalTotal, setFinalTotal] = useState();
   const [StripeCheckout, setStripeCheckout] = useState();
@@ -237,28 +238,28 @@ export const ApiProvider = ({ children }) => {
       amount: TotalAmount,
       head: "Products",
       body: "in Your Cart",
-      slug: "cart"
+      slug: "cart",
     },
     {
       id: 2,
       amount: TotalWishlist,
       head: "Products",
       body: "in Your Wishlist",
-      slug: "wishlist"
+      slug: "wishlist",
     },
     {
       id: 3,
       amount: UserData ? UserData.user_orders.length : 0,
       head: "Times",
       body: "You Ordered",
-      slug: "Orders"
+      slug: "Orders",
     },
     {
       id: 4,
       amount: UserData ? UserData.coins : 0,
       head: "Points",
       body: "in Your account",
-      slug: "points"
+      slug: "points",
     },
   ]);
   const [CoinAmount, setCoinAmount] = useState();
@@ -278,7 +279,6 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     if (GetCookies("cookies")) {
-      console.log(GetCookies("cookies"));
     } else {
       const characters =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -319,16 +319,20 @@ export const ApiProvider = ({ children }) => {
       const temp2 = temp * Number(currItem.vat);
       return accumulator + temp2 * Number(currItem.quantity);
     }, 0);
-    setTotalVat(vat);
+    setTotalVat(Math.round(vat));
   }, [cart]);
 
   useEffect(() => {
-    if (TotalPrice < 8500) {
-      setFinalTotal(TotalPrice + 1200 + TotalVat);
+    if (cart.length === 0) {
+      setFinalTotal(0);
     } else {
-      setFinalTotal(TotalPrice + TotalVat);
+      if (TotalPrice < 8500) {
+        setFinalTotal(TotalPrice + 1200 + TotalVat);
+      } else {
+        setFinalTotal(TotalPrice + TotalVat);
+      }
     }
-  }, [TotalPrice, TotalVat]);
+  }, [TotalPrice, TotalVat, cart]);
 
   useEffect(() => {
     const amount = Wishlist.reduce((accumulator, currItem) => {
@@ -360,7 +364,7 @@ export const ApiProvider = ({ children }) => {
       cookie_id: GetCookies("cookies"),
       token: JSON.parse(localStorage.getItem("token")),
     };
-    console.log(data)
+    console.log(data);
 
     axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
@@ -699,7 +703,7 @@ export const ApiProvider = ({ children }) => {
       shipping_address: IsChecked ? BillingAddress : ShippingAddress,
       billing_address: BillingAddress,
       seperate_shipping: IsChecked ? false : true,
-      total_amount: FinalTotal,
+      total_amount: FinalTotalWithCoupon ? FinalTotalWithCoupon : FinalTotal,
       payment_type: PaymentMethod,
       note: Note,
       token: JSON.parse(localStorage.getItem("token")),
@@ -747,7 +751,7 @@ export const ApiProvider = ({ children }) => {
               street_address: "",
               house_name_room_number: "",
               delivery_time_id: "",
-            })
+            });
             setShippingAddress({
               delivery_date: "",
               state: "",
@@ -759,7 +763,7 @@ export const ApiProvider = ({ children }) => {
               street_address: "",
               house_name_room_number: "",
               delivery_time_id: "",
-            })
+            });
           }
           if (res.data.status === 100) {
             Swal.fire({
@@ -839,7 +843,7 @@ export const ApiProvider = ({ children }) => {
             setSubBanner(res.data.subbanner);
             setSliderImages(res.data.slider);
             setCategoryApi(res.data.categories);
-            setProductsApi(res.data.products);
+            // setProductsApi(res.data.products);
             setUserData(res.data.user);
             setStates(res.data.states);
             setShippingStates(res.data.states);
@@ -850,21 +854,21 @@ export const ApiProvider = ({ children }) => {
                 amount: TotalAmount,
                 head: "Products",
                 body: "in Your Cart",
-                slug: "cart"
+                slug: "cart",
               },
               {
                 id: 2,
                 amount: TotalWishlist,
                 head: "Products",
                 body: "in Your Wishlist",
-                slug: "wishlist"
+                slug: "wishlist",
               },
               {
                 id: 3,
                 amount: UserData ? UserData.user_orders.length : 0,
                 head: "Times",
                 body: "You Ordered",
-                slug: "Orders"
+                slug: "Orders",
               },
               // {
               //   id: 4,
@@ -913,6 +917,12 @@ export const ApiProvider = ({ children }) => {
               setUser(false);
             }
             setAllReviews(!AllReviews);
+            if (res.data.user.coupon_discount !== null) {
+              const temp =
+                (FinalTotal / 100) *
+                Number(res.data.user.coupon_discount.discount);
+              setFinalTotalWithCoupon(Math.round(FinalTotal - temp));
+            }
           }
         });
       setSmallLoading(false);
@@ -920,13 +930,13 @@ export const ApiProvider = ({ children }) => {
     getdata();
   }, [IsReview, IsCart, User, TotalAmount, TotalWishlist]);
 
-  useEffect(() => {
-    setAllProducts(
-      ProductsApi.map((item) => {
-        return { ...item, quantity: 1, discountedPrice: 0 };
-      })
-    );
-  }, [ProductsApi]);
+  // useEffect(() => {
+  //   setAllProducts(
+  //     ProductsApi.map((item) => {
+  //       return { ...item, quantity: 1, discountedPrice: 0 };
+  //     })
+  //   );
+  // }, [ProductsApi]);
 
   useEffect(() => {
     setRatedProducts(
@@ -1070,14 +1080,43 @@ export const ApiProvider = ({ children }) => {
   const toggleCat = () => {
     if (ToggleCategory === true) {
       setIsCategorySidebar(false);
-    }else{
+    } else {
       setIsCategorySidebar(false);
     }
+  };
+
+  const applyCoupon = async (coupon_code) => {
+    const data = {
+      code: coupon_code,
+      token: JSON.parse(localStorage.getItem("token")),
+    };
+
+    await axios.get("/sanctum/csrf-cookie").then((response) => {
+      axios
+        .post(`/api/use-coupon`, data, {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setIsCart(!IsCart);
+          if (res.data.status === 200) {
+            Swal.fire("success", res.data.message, "success");
+          }
+          if (res.data.status === 401) {
+            Swal.fire("warning", res.data.message, "warning");
+          }
+        });
+    });
   };
 
   return (
     <ApiContext.Provider
       value={{
+        applyCoupon,
         toggleCat,
         CategoryApi,
         setCategoryApi,
@@ -1255,6 +1294,8 @@ export const ApiProvider = ({ children }) => {
         setFinalTotal,
         TotalVat,
         setTotalVat,
+        FinalTotalWithCoupon,
+        setFinalTotalWithCoupon
       }}
     >
       {children}

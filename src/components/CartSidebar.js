@@ -93,7 +93,7 @@ const CartSidebar = () => {
             <div className="flex flex-col gap-y-3 py-2 lg:mt-0">
               <div className="flex-1 w-full text-end uppercase text-sm font-semibold">
                 <span className="mr-2"> Total: </span> ¥{" "}
-                {parseFloat(TotalPrice).toFixed(2)}
+                {TotalPrice}
               </div>
               <div className="flex justify-between items-center w-full">
                 <div className="flex-1 text-sm">

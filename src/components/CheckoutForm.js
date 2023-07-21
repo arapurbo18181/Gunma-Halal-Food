@@ -70,6 +70,7 @@ export default function CheckoutForm() {
         BillingAddress.phone &&
         BillingAddress.delivery_time
       ) {
+        console.log("checked")
         if (!stripe || !elements) {
           // Stripe.js has not yet loaded.
           // Make sure to disable form submission until Stripe.js has loaded.
@@ -89,11 +90,7 @@ export default function CheckoutForm() {
             body: JSON.stringify({ items: { amount: Number(FinalTotal) } }),
           }
         )
-          .then((res) => {
-            console.log(res);
-            res.json();
-
-          })
+          .then((res) => res.json())
           .catch((err) => {
             console.log(err);
             Swal.fire("warning", "Server Problem", "warning");

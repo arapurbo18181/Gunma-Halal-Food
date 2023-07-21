@@ -18,7 +18,6 @@ const Wishlist = () => {
     SmallImage,
     LargeImage,
   } = useApi();
-  console.log(Wishlist);
 
   const handleCart = (item) => {
     if (item.cutting_system === "Yes") {
@@ -78,7 +77,7 @@ const Wishlist = () => {
                             <img
                               class="rounded-t-lg"
                               src={`${LargeImage}/${item.image}`}
-                              alt="product image"
+                              alt={item.name}
                             />
                           </Link>
                           <div class="px-5 pb-5">
@@ -125,61 +124,6 @@ const Wishlist = () => {
                             </div>
                           </div>
                         </div>
-
-                        {/* <div
-                          key={i}
-                          className="px-4 py-4 border shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md hover:-translate-y-3 transition-all duration-500 max-w-[220px] max-h-[300px]"
-                        >
-                          <Link
-                            className="flex justify-center items-center hover:scale-110 cursor-pointer transition-all duration-500"
-                            to={`/${item.sub_category.main_category.slug}/${item.sub_category.slug}/${item.slug}`}
-                            // onClick={() => setShowProduct(item)}
-                          >
-                            <img
-                              className="w-[100px]"
-                              src={`${LargeImage}/${item.image}`}
-                              alt={item.name}
-                            />
-                          </Link>
-                          <div className="flex flex-col justify-between items-start my-2">
-                            <h2 className="text-[1rem] font-bold">
-                              {" "}
-                              {item.name}{" "}
-                            </h2>
-                            <div className="flex justify-center items-center space-x-1">
-                              <h2 className="text-lg font-bold text-red-500">
-                                ৳{item.discountedPrice}
-                              </h2>
-                              <h2 className="text-sm text-gray-400 line-through">
-                                {`${
-                                  item.discount === 0 ? "" : `৳${item.price}`
-                                }`}
-                              </h2>
-                            </div>
-                            <div className="flex justify-between items-center space-x-2 w-[100%]">
-                              <div className="w-full flex justify-center items-center my-2">
-                                <button
-                                  onClick={() => {
-                                    removeFromWishlist(item);
-                                  }}
-                                  className="flex justify-center items-center space-x-2 bg-red-500 hover:bg-red-600 transition-all duration-300 text-white px-3 py-1 rounded-full cursor-pointer w-full text-sm"
-                                >
-                                  {" "}
-                                  <BsTrash /> <span>Remove</span>{" "}
-                                </button>
-                              </div>
-                              <div className="w-full flex justify-center items-center my-2 ">
-                                <button
-                                  onClick={() => handleCart(item)}
-                                  className="flex justify-center items-center space-x-2 bg-red-500 hover:bg-red-600 transition-all duration-300 text-white px-3 py-1 rounded-full cursor-pointer w-full text-sm"
-                                >
-                                  {" "}
-                                  <BsPlusLg /> <span>Cart</span>{" "}
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div> */}
                       </>
                     );
                   })}

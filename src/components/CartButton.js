@@ -40,7 +40,7 @@ const CartButton = () => {
       }else{
         setIsCartSidebar(true)
       }
-      }} className={`fixed right-0 top-36 z-50 justify-center items-center hover:-translate-y-1 transition-all duration-300 bg-gray-700 h-16 w-12 cursor-pointer ${IsCartSidebar ? "hidden" : "flex"}`} ref={myRef}>
+      }} className={`fixed right-0 top-64 z-50 justify-center items-center hover:-translate-y-1 transition-all duration-300 bg-gray-700 h-16 w-12 cursor-pointer ${IsCartSidebar ? "hidden" : "flex"}`} ref={myRef}>
     <div className="cart relative ">
       <BsBagCheckFill
         className="text-3xl text-yellow-400"

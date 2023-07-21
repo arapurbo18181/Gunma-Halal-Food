@@ -7,6 +7,7 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import BreadCrumbs from "../components/BreadCrumbs";
+import CartButton from "../components/CartButton";
 import CheckoutForm from "../components/CheckoutForm";
 import { useApi } from "../context/ApiContext";
 
@@ -22,6 +23,7 @@ const Checkout = () => {
   const [DeliveryDate, setDeliveryDate] = useState();
   const [DeliverySchedule, setDeliverySchedule] = useState();
   const [ShippingDeliverySchedule, setShippingDeliverySchedule] = useState();
+  const [Coupon, setCoupon] = useState();
   const ref = useRef();
   const myref = useRef();
   const timeref = useRef();
@@ -57,9 +59,20 @@ const Checkout = () => {
     Note,
     setNote,
     FinalTotal,
+    setFinalTotal,
     TotalVat,
+    applyCoupon,
+    FinalTotalWithCoupon
   } = useApi();
   const location = useLocation()
+
+  // useEffect(() => {
+  //   if (UserData.coupon_discount !== null) {
+  //     const temp = (FinalTotal/100) * Number(UserData.coupon_discount.discount);
+  //     setFinalTotal(FinalTotal - temp);
+  //   }
+  // }, [UserData])
+  
 
   const handleSubmit = (e) => {
     setStripeInput(false);
@@ -195,6 +208,7 @@ const Checkout = () => {
             <h1>Checkout</h1>
           </div>
           <div className="flex flex-col justify-center items-center h-fit">
+            <CartButton/>
             <div className="flex flex-col space-y-10 md:space-y-0 md:flex-row justify-center items-center md:items-start w-full px-5 space-x-0 md:space-x-4 h-fit pb-10 md:pb-0">
               <div className="flex-1 h-full border rounded-md border-gray-300 shadow-lg px-3 w-full">
                 <div className="flex justify-center my-5 text-lg md:text-xl lg:text-2xl font-bold">
@@ -885,6 +899,31 @@ const Checkout = () => {
               </button>
             </div>
           </form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              applyCoupon(Coupon);
+            }}
+            className="w-full border border-gray-300 bg-blue-500 flex justify-between items-center space-x-2 py-1 px-4 rounded-md text-white"
+          >
+            <div className="flex justify-center items-center space-x-3">
+              <div className="text-sm md:text-base">Use Coupon : </div>{" "}
+              <input
+                onChange={(e) => setCoupon(e.target.value)}
+                value={Coupon}
+                className="bg-gray-100 focus:bg-white w-20 rounded-md px-2 py-1 text-sm md:text-base outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100 text-black"
+                placeholder="Coupon"
+                type="text"
+                name=""
+                id=""
+              />
+            </div>
+            <div>
+              <button className="bg-gray-700 rounded-sm text-white w-full py-1 md:py-2 hover:bg-black transition-all duration-500 text-sm md:text-base px-2 md:px-4">
+                Apply
+              </button>
+            </div>
+          </form>
           <div className="flex flex-col border border-red-500 rounded-lg h-full w-full px-2 md:px-10 py-5">
             <div className="w-full text-center">
               <h2 className="text-base md:text-xl font-bold"> Cart Totals </h2>
@@ -892,7 +931,7 @@ const Checkout = () => {
             <div className="flex justify-between py-2 border-b border-gray-200">
               <h3 className="text-sm md:text-base font-semibold">Subtotal</h3>
               <h5 className="text-sm md:text-base text-gray-400">
-                ¥ {parseFloat(TotalPrice).toFixed(2)}
+                ¥ {TotalPrice}
               </h5>
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200 ">
@@ -900,7 +939,7 @@ const Checkout = () => {
                 Shipping Charge
               </h3>
               <h5 className="text-sm md:text-base text-red-500 font-semibold">
-                ¥ {TotalPrice > 8500 ? 0 : 1200}
+                ¥ {cart.length === 0 ? 0 : TotalPrice > 8500 ? 0 : 1200 }
               </h5>
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200 ">
@@ -911,12 +950,12 @@ const Checkout = () => {
                 </span>{" "}
               </h3>
               <h5 className="text-sm md:text-base text-red-500 font-semibold">
-                ¥ {parseFloat(TotalVat).toFixed(2)}
+                ¥ {TotalVat}
               </h5>
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200 font-bold text-lg md:text-xl">
               <h3>Total</h3>
-              <h5>¥ {parseFloat(FinalTotal).toFixed(2)}</h5>
+              <h5>¥ {cart.length === 0 ? 0 : FinalTotalWithCoupon ? FinalTotalWithCoupon : FinalTotal}</h5>
             </div>
             <div className="flex flex-col my-3">
               <label>Note:</label>
@@ -931,8 +970,8 @@ const Checkout = () => {
                 placeholder="write a note"
               ></textarea>
             </div>
-            <ul className="flex flex-col justify-center items-start mt-5">
-              <li>
+            <div className="flex flex-col justify-center items-start mt-5">
+              <div>
                 <input
                   type="radio"
                   name="payment"
@@ -951,8 +990,8 @@ const Checkout = () => {
                 >
                   Cash On Delivery
                 </label>
-              </li>
-              <li>
+              </div>
+              <div className="w-full">
                 <div>
                   <input
                     type="radio"
@@ -971,14 +1010,14 @@ const Checkout = () => {
                   </label>
                 </div>
                 {PaymentMethod === "stripe" ? (
-                  <div className="">
+                  <div className="w-full">
                     <CheckoutForm />
                   </div>
                 ) : (
                   ""
                 )}
-              </li>
-            </ul>
+              </div>
+            </div>
             {PaymentMethod === "cash_on_delivery" ? (
               <div className="w-full mt-10">
                 <button

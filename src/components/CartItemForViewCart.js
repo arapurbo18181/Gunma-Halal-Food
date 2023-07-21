@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useApi } from "../context/ApiContext";
 import SmallLoader from "./SmallLoader";
+import { GrClose } from "react-icons/gr";
 
 const CartItemForViewCart = ({ item }) => {
   const [Quantity, setQuantity] = useState(Number(item.quantity));
@@ -22,6 +23,8 @@ const CartItemForViewCart = ({ item }) => {
     setIsCart,
     SmallLoading,
     setSmallLoading,
+    setShowProduct,
+    setIsCartSidebar
   } = useApi();
   
   const ref = useRef();
@@ -77,50 +80,52 @@ const CartItemForViewCart = ({ item }) => {
   }, [Quantity]);
 
   return (
-    <div className="flex h-full gap-x-4 py-2 lg:px-6 border-b border-gray-200 w-full font-light text-gray-500">
-      <div className="w-full min-h-[150px] flex justify-between items-center gap-x-4">
-        <div className="flex flex-col sm:flex-row gap-x-4 gap-y-2 flex-1">
-          <Link to={`/product/${item.slug}`}>
-            <img
-              className="max-w-[80px]"
-              src={`${LargeImage}/${item.image}`}
-              alt=""
-            />
-          </Link>
-          <div className="flex flex-col gap-y-1 justify-start">
+ 
+    <div className="flex gap-x-4 py-1.5 lg:px-6 border-t border-gray-200 w-full font-light text-gray-500">
+      <div className="w-full min-h-fit flex items-center gap-x-4">
+        <Link
+          to={`/${item.cat_slug}/${item.sub_cat_slug}/${item.slug}`}
+          onClick={() => {
+            setShowProduct(item);
+            setIsCartSidebar(false);
+          }}
+        >
+          <img
+            className="max-w-[30px]"
+            src={`${SmallImage}/${item.image}`}
+            alt=""
+          />
+        </Link>
+        <div className="w-full flex flex-row justify-between">
+          <div className="flex flex-col justify-between mb-2 space-y-2">
             <Link
               to={`/product/${item.slug}`}
-              className="text-sm uppercase hidden sm:block font-medium max-w-[240px] text-primary hover:underline"
+              onClick={() => {
+                setShowProduct(item);
+                setIsCartSidebar(false);
+              }}
+              className="text-sm font-medium  text-primary hover:underline"
             >
               {item.name}
+              {/* <span className="text-black"> x{item.quantity} </span> */}
             </Link>
-            <div className="flex items-start justify-start">¥ {item.price}</div>
 
             <div
-              onClick={remove}
-              className="text-sm text-red-500 underline cursor-pointer"
+              ref={ref}
+              className="flex w-10 items-center h-5 text-primary font-medium"
             >
-              Remove
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-1 justify-center w-full items-center h-full font-medium">
-          {SmallLoading ? (
-            <SmallLoader width={"100%"} height={"100%"} />
-          ) : (
-            <div ref={ref} className="flex w-20 items-center h-10 text-primary font-medium">
               <button
                 onClick={decrease}
-                className="flex-1 flex justify-center items-center cursor-pointer h-full border-l border-t border-b rounded-l-full hover:bg-red-500 hover:text-white transition-all duration-300"
+                className="flex-1 flex text-sm justify-center items-center cursor-pointer h-full border-l border-t border-b rounded-l-full hover:bg-red-500 hover:text-white transition-all duration-300"
               >
                 <IoMdRemove />
               </button>
-              <div className="h-full flex justify-center items-center px-2 border w-6">
+              <div className="h-full flex justify-center items-center px-2 border w-5">
                 <input
                   type="number"
                   name=""
                   id=""
-                  className="w-6 outline-none text-center"
+                  className="w-5 outline-none text-xs text-center h-5 border-b border-t"
                   value={Quantity}
                   onChange={(e) => {
                     setQuantity(e.target.value);
@@ -130,27 +135,27 @@ const CartItemForViewCart = ({ item }) => {
               </div>
               <button
                 onClick={increase}
-                className="flex-1 h-full flex justify-center items-center cursor-pointer border-r border-t border-b rounded-r-full hover:bg-red-500 hover:text-white transition-all duration-300"
+                className="flex-1 h-full text-sm flex justify-center items-center cursor-pointer border-r border-t border-b rounded-r-full hover:bg-red-500 hover:text-white transition-all duration-300"
               >
                 <IoMdAdd />
               </button>
+              <div className="flex justify-start items-start space-x-0 mx-2 h-fit w-full text-sm text-red-500 font-medium">
+                <span>¥</span>{" "}
+                <span>{item.price * Quantity}</span>
+              </div>
             </div>
-          )}
-        </div>
-        <div className="flex flex-col flex-1 justify-between items-end gap-5 text-primary font-medium ">
-          <div className="">
-            {" "}
-            {`¥ ${parseFloat(item.price * item.quantity).toFixed(2)}`}{" "}
           </div>
+          <div className="flex text-sm flex-row xl:flex-col justify-start xl:justify-start items-center xl:items-end gap-5">
+            {/* <div className="flex-1 flex justify-start items-center text-sm text-primary font-medium">
+              {" "}
+              {`¥ ${parseFloat(item.price).toFixed(2)}`}{" "}
+            </div> */}
+            <div className="flex-1 flex justify-start items-start text-sm text-primary font-medium">
+              <GrClose onClick={remove} className="cursor-pointer" />
+            </div>
 
-          {/* {UpdateBtn && (
-            <button
-              onClick={updateCart}
-              className="w-fit  border border-red-500 text-red-500 py-2 px-4 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 text-center flex justify-center items-center space-x-2"
-            >
-              <TbEdit/> <span> update </span>
-            </button>
-          )} */}
+            {/* { UpdateBtn && <button onClick={updateCart} className="w-fit border border-red-500 text-red-500 py-2 px-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 text-center flex justify-center items-center text-lg"> <TbEdit/> </button>} */}
+          </div>
         </div>
       </div>
     </div>

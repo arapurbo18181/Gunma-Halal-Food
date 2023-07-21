@@ -17,6 +17,7 @@ import ProductReviews from "../components/ProductReviews";
 import ProductTopbar from "../components/ProductTopbar";
 import { useApi } from "../context/ApiContext";
 import { useProduct } from "../context/ProductContext";
+import ProductDescription from "../components/ProductDescription"
 
 const ViewProduct = () => {
   const [Quantity, setQuantity] = useState(1);
@@ -407,8 +408,8 @@ const ViewProduct = () => {
                     <ProductTopbar />
                   </div>
                   <div className="w-full">
-                    {/* {ToggleProductTopbar === 0 && <ProductDescription />} */}
-                    {ToggleProductTopbar === 0 && (
+                    {ToggleProductTopbar === 0 && <ProductDescription desc={Product.attribute} />}
+                    {ToggleProductTopbar === 1 && (
                       <ProductReviews product={Product} />
                     )}
                   </div>

@@ -132,7 +132,7 @@ const CartItem = ({ item }) => {
               </button>
               <div className="flex justify-start items-start space-x-0 mx-2 h-fit w-full text-sm text-red-500 font-medium">
                 <span>¥</span>{" "}
-                <span>{` ${parseFloat(item.price * Quantity).toFixed(2)}`}</span>
+                <span>{item.price * Quantity}</span>
               </div>
             </div>
           </div>

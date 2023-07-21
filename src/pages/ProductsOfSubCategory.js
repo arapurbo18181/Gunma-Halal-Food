@@ -1,18 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import CategorySidebar from "../components/CategorySidebar";
-import { useCategory } from "../context/CategoryContext";
-import { BsPlusLg } from "react-icons/bs";
-import { BsSuitHeart } from "react-icons/bs";
-import Footer from "../components/Footer";
-import { motion } from "framer-motion";
-import SubCategoryProducts from "../components/SubCategoryProducts";
-import CartButton from "../components/CartButton";
-import Loaders from "../components/Loaders";
-import { useApi } from "../context/ApiContext";
-import BreadCrumbs from "../components/BreadCrumbs";
 import axios from "axios";
-import Swal from "sweetalert2";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import BreadCrumbs from "../components/BreadCrumbs";
+import CartButton from "../components/CartButton";
+import CategorySidebar from "../components/CategorySidebar";
+import Footer from "../components/Footer";
+import Loaders from "../components/Loaders";
+import SubCategoryProducts from "../components/SubCategoryProducts";
+import { useApi } from "../context/ApiContext";
+import { useCategory } from "../context/CategoryContext";
 
 const ProductsOfSubCategory = () => {
   const [Loader, setLoader] = useState(false);
@@ -67,7 +63,7 @@ const ProductsOfSubCategory = () => {
             setSubCateSlug(res.data.subcategory.slug);  
             setSubCategoryProduct(
               res.data.subcategory.product.map((item) => {
-                return { ...item, quantity: 0, discountedPrice: 0 };
+                return { ...item, quantity: 1, discountedPrice: 0 };
               })
             );
             setLoader(false);

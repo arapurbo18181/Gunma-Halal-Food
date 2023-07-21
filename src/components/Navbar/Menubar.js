@@ -40,8 +40,8 @@ const menuForMobile = [
     page: "/contact",
   },
   {
-    menu: "Privacy Policy",
-    page: "/privacypolicy",
+    menu: "Shipping Policy",
+    page: "/shippingpolicy",
   },
 ];
 

@@ -146,9 +146,9 @@ const UserProfile = () => {
                   required
                 />
                 <div className="w-full h-[200px] bg-white z-10 overflow-y-auto border shadow-md">
-                  {States.map((item) => {
+                  {States.map((item, i) => {
                     return (
-                      <div
+                      <div key={i}
                         onClick={(e) => {
                           setUserProfile({
                             ...UserProfile,

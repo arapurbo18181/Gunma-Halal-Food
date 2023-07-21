@@ -21,6 +21,10 @@ export const ProductProvider = ({children}) => {
     const productTopbar = [
         {
             id: 0,
+            tag: "Description"
+        },
+        {
+            id: 1,
             tag: "Reviews"
         }
     ]

@@ -5,12 +5,10 @@ import { IoMdAdd, IoMdRemove } from "react-icons/io";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useApi } from "../context/ApiContext";
-import { useProduct } from "../context/ProductContext";
 import { UseScrollPosition } from "./Hooks/UseScollPosition";
 import { UseScrollPositionX } from "./Hooks/useScrollPositionX";
 
 const SubCategoryProducts = ({ item, product_slug }) => {
-  const { MyRef, setMyRef, myRefForFlyToCart } = useProduct();
   const {
     BreadCrumbs,
     setBreadCrumbs,
@@ -95,7 +93,7 @@ const SubCategoryProducts = ({ item, product_slug }) => {
     if (SubCategoryProduct) {
       SubCategoryProduct.map((elem) => {
         if (elem.id === id) {
-          if (elem.quantity === 0) {
+          if (elem.quantity === 1) {
           } else {
             elem.quantity = elem.quantity - 1;
             setQuantity(elem.quantity);
@@ -106,7 +104,40 @@ const SubCategoryProducts = ({ item, product_slug }) => {
     if (AllProducts) {
       AllProducts.map((elem) => {
         if (elem.id === id) {
-          if (elem.quantity === 0) {
+          if (elem.quantity === 1) {
+          } else {
+            elem.quantity = elem.quantity - 1;
+            setQuantity(elem.quantity);
+          }
+        }
+      });
+    }
+    if (RatedProducts) {
+      RatedProducts.map((elem) => {
+        if (elem.id === id) {
+          if (elem.quantity === 1) {
+          } else {
+            elem.quantity = elem.quantity - 1;
+            setQuantity(elem.quantity);
+          }
+        }
+      });
+    }
+    if (LatestPro) {
+      LatestPro.map((elem) => {
+        if (elem.id === id) {
+          if (elem.quantity === 1) {
+          } else {
+            elem.quantity = elem.quantity - 1;
+            setQuantity(elem.quantity);
+          }
+        }
+      });
+    }
+    if (SellingProducts) {
+      SellingProducts.map((elem) => {
+        if (elem.id === id) {
+          if (elem.quantity === 1) {
           } else {
             elem.quantity = elem.quantity - 1;
             setQuantity(elem.quantity);
@@ -222,10 +253,10 @@ const SubCategoryProducts = ({ item, product_slug }) => {
           className="shadow-[0_2px_6px_0px_rgb(180,180,180)] rounded-md transition-all duration-500 min-w-[10vw] md:w-full max-w-[220px] max-h-[500px] relative"
         >
           {(item.status === "0" || item.stock === "0") && (
-            <div className="absolute w-full h-full bg-gray-100 z-20 bg-opacity-70">
-              { item.stock === "0" && <div className="absolute -right-4 -top-4 bg-blue-500 text-white py-1 px-2 border border-white rounded-full">
-                <h2> Stock Out </h2>
-              </div>}
+            <div className="absolute w-full h-full bg-gray-100 z-20 bg-opacity-40">
+              <div className="absolute -right-4 -top-2 bg-blue-500 text-white py-1 px-2 border border-white rounded-full">
+                <h2> Out of Stock </h2>
+              </div>
             </div>
           )}
           <div className="relative w-full flex justify-center items-center rounded-t-lg group transition-all duration-500">
