@@ -20,6 +20,7 @@ export default function CheckoutForm() {
     StripeCheckout,
     setStripeCheckout,
     IsChecked,
+    FinalTotalWithCoupon
   } = useApi();
 
   // useEffect(() => {
@@ -62,7 +63,6 @@ export default function CheckoutForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (cart.length !== 0) {
-      console.log(cart);
       if (
         IsChecked &&
         BillingAddress.delivery_date &&
@@ -70,7 +70,6 @@ export default function CheckoutForm() {
         BillingAddress.phone &&
         BillingAddress.delivery_time
       ) {
-        console.log("checked")
         if (!stripe || !elements) {
           // Stripe.js has not yet loaded.
           // Make sure to disable form submission until Stripe.js has loaded.
@@ -78,7 +77,6 @@ export default function CheckoutForm() {
         }
 
         setMessage("Payment is Processing....");
-        console.log(FinalTotal)
 
         const data = await fetch(
           "https://admin.softtech-it.org/api/stripe",
@@ -87,7 +85,7 @@ export default function CheckoutForm() {
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
             },
-            body: JSON.stringify({ items: { amount: Number(FinalTotal) } }),
+            body: JSON.stringify({ items: { amount: Number(FinalTotalWithCoupon ? FinalTotalWithCoupon : FinalTotal) } }),
           }
         )
           .then((res) => res.json())

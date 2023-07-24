@@ -62,17 +62,10 @@ const Checkout = () => {
     setFinalTotal,
     TotalVat,
     applyCoupon,
-    FinalTotalWithCoupon
+    FinalTotalWithCoupon,
+    ShippingCharge,
   } = useApi();
-  const location = useLocation()
-
-  // useEffect(() => {
-  //   if (UserData.coupon_discount !== null) {
-  //     const temp = (FinalTotal/100) * Number(UserData.coupon_discount.discount);
-  //     setFinalTotal(FinalTotal - temp);
-  //   }
-  // }, [UserData])
-  
+  const location = useLocation();
 
   const handleSubmit = (e) => {
     setStripeInput(false);
@@ -86,9 +79,8 @@ const Checkout = () => {
   };
 
   if (!UserData && location.pathname === "/checkout") {
-    window.location.replace('https://gunma.softtech-it.org/');
+    window.location.replace("https://gunma.softtech-it.org/");
   }
-
 
   useEffect(() => {
     setBillingAddress({
@@ -151,7 +143,6 @@ const Checkout = () => {
       }
     });
     if (data) {
-      console.log(data.delivery_time);
       setDeliveryDate(data.delivery_time);
     }
   }, [BillingAddress.state]);
@@ -192,7 +183,6 @@ const Checkout = () => {
   useEffect(() => {
     if (DeliverySchedule) {
       // const temp = DeliverySchedule.split(",");
-      console.log(DeliverySchedule);
     }
     if (ShippingDeliverySchedule) {
     }
@@ -208,7 +198,7 @@ const Checkout = () => {
             <h1>Checkout</h1>
           </div>
           <div className="flex flex-col justify-center items-center h-fit">
-            <CartButton/>
+            <CartButton />
             <div className="flex flex-col space-y-10 md:space-y-0 md:flex-row justify-center items-center md:items-start w-full px-5 space-x-0 md:space-x-4 h-fit pb-10 md:pb-0">
               <div className="flex-1 h-full border rounded-md border-gray-300 shadow-lg px-3 w-full">
                 <div className="flex justify-center my-5 text-lg md:text-xl lg:text-2xl font-bold">
@@ -333,7 +323,7 @@ const Checkout = () => {
                             filterStates(e.target.value);
                           }}
                           autoComplete="off"
-                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-0.5 shadow-inner border-2 border-gray-100"
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-0 shadow-inner border-2 border-gray-100"
                           type="text"
                           name="state"
                           placeholder="Enter Your State"
@@ -382,6 +372,45 @@ const Checkout = () => {
                       placeholder="Enter Your city"
                       id="city"
                       required
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-row justify-start items-center w-full">
+                  <div className="flex flex-col items-start my-4 w-full">
+                    <label htmlFor="street_address">Street Address</label>
+                    <input
+                      onChange={(e) =>
+                        setBillingAddress({
+                          ...BillingAddress,
+                          street_address: e.target.value,
+                        })
+                      }
+                      value={BillingAddress.street_address}
+                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                      type="text"
+                      name="street_address"
+                      placeholder="Road Number, House Number"
+                      id="street_address"
+                    />
+                  </div>
+
+                  <div className="flex flex-col items-start my-4 w-full  ml-2 sm:ml-4">
+                    <label htmlFor="house_name_room_number">
+                      House Name & Room Number
+                    </label>
+                    <input
+                      onChange={(e) =>
+                        setBillingAddress({
+                          ...BillingAddress,
+                          house_name_room_number: e.target.value,
+                        })
+                      }
+                      value={BillingAddress.house_name_room_number}
+                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                      type="text"
+                      name="house_name_room_number"
+                      placeholder="House Name, Room Number"
+                      id="house_name_room_number"
                     />
                   </div>
                 </div>
@@ -473,48 +502,6 @@ const Checkout = () => {
                         ) : (
                           ""
                         )}
-                      </div>
-
-                      <div className="flex flex-col items-start my-4 w-full">
-                        <label htmlFor="street_address">
-                          Street Address{" "}
-                          <span className="text-sm">(Optional)</span>{" "}
-                        </label>
-                        <input
-                          onChange={(e) =>
-                            setBillingAddress({
-                              ...BillingAddress,
-                              street_address: e.target.value,
-                            })
-                          }
-                          value={BillingAddress.street_address}
-                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                          type="text"
-                          name="street_address"
-                          placeholder="Road Number, House Number"
-                          id="street_address"
-                        />
-                      </div>
-
-                      <div className="flex flex-col items-start my-4 w-full">
-                        <label htmlFor="house_name_room_number">
-                          House Name & Room Number{" "}
-                          <span className="text-sm">(Optional)</span>{" "}
-                        </label>
-                        <input
-                          onChange={(e) =>
-                            setBillingAddress({
-                              ...BillingAddress,
-                              house_name_room_number: e.target.value,
-                            })
-                          }
-                          value={BillingAddress.house_name_room_number}
-                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                          type="text"
-                          name="house_name_room_number"
-                          placeholder="House Name, Room Number"
-                          id="house_name_room_number"
-                        />
                       </div>
                     </div>
                   </>
@@ -724,6 +711,45 @@ const Checkout = () => {
                         />
                       </div>
                     </div>
+                    <div className="flex flex-row justify-start items-center w-full">
+                      <div className="flex flex-col items-start my-4 w-full">
+                        <label htmlFor="street_address">Street Address</label>
+                        <input
+                          onChange={(e) =>
+                            setShippingAddress({
+                              ...ShippingAddress,
+                              street_address: e.target.value,
+                            })
+                          }
+                          value={ShippingAddress.street_address}
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          type="text"
+                          name="street_address"
+                          placeholder="Road Number, House Number"
+                          id="street_address"
+                        />
+                      </div>
+
+                      <div className="flex flex-col items-start my-4 w-full ml-2 sm:ml-4">
+                        <label htmlFor="house_name_room_number">
+                          House Name & Room Number
+                        </label>
+                        <input
+                          onChange={(e) =>
+                            setShippingAddress({
+                              ...ShippingAddress,
+                              house_name_room_number: e.target.value,
+                            })
+                          }
+                          value={ShippingAddress.house_name_room_number}
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          type="text"
+                          name="house_name_room_number"
+                          placeholder="House Name, Room Number"
+                          id="house_name_room_number"
+                        />
+                      </div>
+                    </div>
 
                     {ShippingAddress.state ? (
                       <div className="flex flex-col justify-center items-center px-1">
@@ -802,48 +828,6 @@ const Checkout = () => {
                           ) : (
                             ""
                           )}
-                        </div>
-
-                        <div className="flex flex-col items-start my-4 w-full">
-                          <label htmlFor="street_address">
-                            Street Address{" "}
-                            <span className="text-sm">(Optional)</span>{" "}
-                          </label>
-                          <input
-                            onChange={(e) =>
-                              setShippingAddress({
-                                ...ShippingAddress,
-                                street_address: e.target.value,
-                              })
-                            }
-                            value={ShippingAddress.street_address}
-                            className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                            type="text"
-                            name="street_address"
-                            placeholder="Road Number, House Number"
-                            id="street_address"
-                          />
-                        </div>
-
-                        <div className="flex flex-col items-start my-4 w-full">
-                          <label htmlFor="house_name_room_number">
-                            House Name & Room Number{" "}
-                            <span className="text-sm">(Optional)</span>{" "}
-                          </label>
-                          <input
-                            onChange={(e) =>
-                              setShippingAddress({
-                                ...ShippingAddress,
-                                house_name_room_number: e.target.value,
-                              })
-                            }
-                            value={ShippingAddress.house_name_room_number}
-                            className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
-                            type="text"
-                            name="house_name_room_number"
-                            placeholder="House Name, Room Number"
-                            id="house_name_room_number"
-                          />
                         </div>
                       </div>
                     ) : (
@@ -939,7 +923,7 @@ const Checkout = () => {
                 Shipping Charge
               </h3>
               <h5 className="text-sm md:text-base text-red-500 font-semibold">
-                ¥ {cart.length === 0 ? 0 : TotalPrice > 8500 ? 0 : 1200 }
+                ¥ {cart.length === 0 ? 0 : ShippingCharge}
               </h5>
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200 ">
@@ -955,7 +939,14 @@ const Checkout = () => {
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200 font-bold text-lg md:text-xl">
               <h3>Total</h3>
-              <h5>¥ {cart.length === 0 ? 0 : FinalTotalWithCoupon ? FinalTotalWithCoupon : FinalTotal}</h5>
+              <h5>
+                ¥{" "}
+                {cart.length === 0
+                  ? 0
+                  : FinalTotalWithCoupon
+                  ? FinalTotalWithCoupon
+                  : FinalTotal}
+              </h5>
             </div>
             <div className="flex flex-col my-3">
               <label>Note:</label>
@@ -1003,7 +994,7 @@ const Checkout = () => {
                       setCoinInput(false);
                     }}
                     id="stripe"
-                  checked={PaymentMethod === "stripe"}
+                    checked={PaymentMethod === "stripe"}
                   />{" "}
                   <label htmlFor="stripe" className="text-sm md:text-base">
                     Stripe

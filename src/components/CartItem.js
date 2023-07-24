@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { useApi } from "../context/ApiContext";
 
 const CartItem = ({ item }) => {
-  const [Quantity, setQuantity] = useState(Number(item.quantity));
+  const [Quantity, setQuantity] = useState();
   const [UpdateBtn, setUpdateBtn] = useState(false);
   const [Change, setChange] = useState(Number(item.quantity));
   const {
@@ -21,6 +21,11 @@ const CartItem = ({ item }) => {
   } = useApi();
 
   const ref = useRef();
+
+  useEffect(() => {
+    setQuantity(Number(item.quantity));
+  }, [item.quantity])
+  
 
   const increase = () => {
     setQuantity(Quantity + 1);

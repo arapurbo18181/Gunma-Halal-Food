@@ -38,7 +38,7 @@ const Cart = () => {
               </div>
 
               <div className="w-full">
-                <div className="flex flex-col gap-y-2 h-[500px] justify-between overflow-y-auto overflow-x-hidden">
+                <div className="flex flex-col gap-y-2 h-[500px] justify-start overflow-y-auto overflow-x-hidden">
                   {SmallLoading ? (
                     <SmallLoader width={"100%"} height={"100%"} />
                   ) : (

@@ -10,6 +10,7 @@ const ApiContext = createContext();
 export const useApi = () => useContext(ApiContext);
 
 export const ApiProvider = ({ children }) => {
+  const [SpecialDiscount, setSpecialDiscount] = useState();
   const [FinalTotalWithCoupon, setFinalTotalWithCoupon] = useState();
   const [TotalVat, setTotalVat] = useState();
   const [FinalTotal, setFinalTotal] = useState();
@@ -276,6 +277,25 @@ export const ApiProvider = ({ children }) => {
   const [AddToCartClick, setAddToCartClick] = useState(false);
   const [Orders, setOrders] = useState();
   const [DeliveryTime, setDeliveryTime] = useState();
+  const [ShippingCharge, setShippingCharge] = useState();
+
+  useEffect(() => {
+    const temp = cart.filter(item=>{
+      return item.shipping_cost === "1200";
+    }).reduce((accumulator, currItem)=>{
+      return accumulator + Number(currItem.quantity) * Number(currItem.shipping_cost)
+    }, 0)
+    const temp2 = cart.filter(item=>{
+      return item.shipping_cost === "0";
+    }).reduce((accumulator, currItem)=>{
+      return accumulator + Number(currItem.quantity) * Number(currItem.price)
+    }, 0)
+    if (temp2 < 8500 ) {
+      setShippingCharge(1200+temp)
+    }else{
+      setShippingCharge(temp)
+    }
+  }, [cart])
 
   useEffect(() => {
     if (GetCookies("cookies")) {
@@ -321,16 +341,12 @@ export const ApiProvider = ({ children }) => {
     }, 0);
     setTotalVat(Math.round(vat));
   }, [cart]);
-
+ 
   useEffect(() => {
     if (cart.length === 0) {
       setFinalTotal(0);
     } else {
-      if (TotalPrice < 8500) {
-        setFinalTotal(TotalPrice + 1200 + TotalVat);
-      } else {
-        setFinalTotal(TotalPrice + TotalVat);
-      }
+        setFinalTotal(TotalPrice + ShippingCharge + TotalVat);
     }
   }, [TotalPrice, TotalVat, cart]);
 
@@ -907,6 +923,7 @@ export const ApiProvider = ({ children }) => {
                 // cat_slug: item.product[0].sub_category.main_category.slug,
                 total_price: item.total_price,
                 vat: item.product[0].vat,
+                shipping_cost: item.product[0].attribute.shipping_cost,
               };
             });
             setcart(datas);
@@ -917,18 +934,24 @@ export const ApiProvider = ({ children }) => {
               setUser(false);
             }
             setAllReviews(!AllReviews);
-            if (res.data.user.coupon_discount !== null) {
-              const temp =
-                (FinalTotal / 100) *
-                Number(res.data.user.coupon_discount.discount);
-              setFinalTotalWithCoupon(Math.round(FinalTotal - temp));
+            if (res.data.user.coupon_discount !== null && FinalTotal > 1200) {
+              const temp = FinalTotal / 100;
+              const temp2 =
+                temp * Number(res.data.user.coupon_discount.discount);
+              const temp3 = Math.round(FinalTotal - temp2);
+              setFinalTotalWithCoupon(temp3);
             }
-          }
+            if (res.data.user.special_discount !== null && FinalTotal > 1200) {
+              const temp = FinalTotal / 100;
+              const temp2 = temp * Number(res.data.user.special_discount.discount)
+              setFinalTotalWithCoupon( Math.round(FinalTotal - temp2));
+            }
+          }   
         });
       setSmallLoading(false);
     };
     getdata();
-  }, [IsReview, IsCart, User, TotalAmount, TotalWishlist]);
+  }, [IsReview, IsCart, User, TotalAmount, TotalWishlist, FinalTotal]);
 
   // useEffect(() => {
   //   setAllProducts(
@@ -1295,7 +1318,9 @@ export const ApiProvider = ({ children }) => {
         TotalVat,
         setTotalVat,
         FinalTotalWithCoupon,
-        setFinalTotalWithCoupon
+        setFinalTotalWithCoupon,
+        ShippingCharge, 
+        setShippingCharge
       }}
     >
       {children}

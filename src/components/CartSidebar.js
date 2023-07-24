@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoMdArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { useApi } from "../context/ApiContext";
@@ -21,6 +21,7 @@ const CartSidebar = () => {
     SmallLoading,
   } = useApi();
   // console.log(cart)
+  
 
   const ref = useRef();
 
@@ -79,28 +80,31 @@ const CartSidebar = () => {
             >
               Continue Shopping
             </Link>
-            <div className="flex flex-col gap-y-0 h-[55vh] sm:h-[60vh] overflow-y-auto overflow-x-hidden">
+            <div className="flex flex-col gap-y-0 h-[50vh] sm:h-[60vh] overflow-y-auto overflow-x-hidden">
               {SmallLoading ? (
                 <SmallLoader width={"100%"} height={"100%"} />
               ) : (
                 <>
                   {cart.map((item, index) => {
-                    return <CartItem item={item} key={index} />;
+                    return (
+                      <div key={index}>
+                        <CartItem item={item} />
+                      </div>
+                    );
                   })}
                 </>
               )}
             </div>
             <div className="flex flex-col gap-y-3 py-2 lg:mt-0">
               <div className="flex-1 w-full text-end uppercase text-sm font-semibold">
-                <span className="mr-2"> Total: </span> ¥{" "}
-                {TotalPrice}
+                <span className="mr-2"> Total: </span> ¥ {TotalPrice}
               </div>
               <div className="flex justify-between items-center w-full">
-                <div className="flex-1 text-sm">
+                <div className="flex-1 text-sm text-center text-red-500 bg-yellow-300 w-fit px-1 md:px-8 py-1 md:py-3 border-2 border-red-500">
                   {8500 - TotalPrice < 1 ? (
-                    <h2> You will get a free delivery </h2>
+                    <h2 className="font-semibold md:font-bold"> You will get a free delivery <span className="text-xs text-red-500 font-normal"> (Not applicable for wholesale) </span> </h2>
                   ) : (
-                    <h2>Buy more ¥{8500 - TotalPrice} for free delivery </h2>
+                    <h2 className="font-bold">Buy more ¥{8500 - TotalPrice} for free delivery <span className="text-xs text-red-500 font-normal"> (Not applicable for wholesale) </span> </h2>
                   )}
                 </div>
               </div>
