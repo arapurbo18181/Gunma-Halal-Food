@@ -11,7 +11,7 @@ const SetNewPass = () => {
   }, [])
   
   return (
-    <div className="w-full h-[90vh] flex justify-center items-center">
+    <div className="w-full h-[90vh] flex justify-center items-center overflow-hidden">
       <form
         onSubmit={setPasswords}
         className="w-[500px] h-[400px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container -mt-36"

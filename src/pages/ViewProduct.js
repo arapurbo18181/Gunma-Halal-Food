@@ -272,7 +272,7 @@ const ViewProduct = () => {
         <Loaders width={"100%"} height={"80vh"} />
       ) : (
         <>
-          <section className="flex justify-center items-center w-full">
+          <section className="flex justify-center items-center w-full overflow-hidden">
             <div className="flex justify-start items-center xl:items-start w-full">
               <div className="hidden w-[16.5vw] h-full sticky top-0 xl:block">
                 <CategorySidebar />

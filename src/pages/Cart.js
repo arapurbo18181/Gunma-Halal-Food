@@ -29,7 +29,7 @@ const Cart = () => {
           <FreeDel/>
       {cart ? (
         <>
-          <section className="flex flex-col lg:flex-row justify-center items-start px-1 lg:px-20 lg:space-x-5 mb-20">
+          <section className="flex flex-col lg:flex-row justify-center items-start px-1 lg:px-20 lg:space-x-5 mb-20 overflow-hidden">
             <div className="flex-[1.5] h-[100%] w-[100%] flex flex-col justify-center items-center mt-5">
               <div className="underline underline-offset-8 mb-5">
                 <h1 className="text-base xl:text-xl font-bold">

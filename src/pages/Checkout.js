@@ -10,6 +10,7 @@ import BreadCrumbs from "../components/BreadCrumbs";
 import CartButton from "../components/CartButton";
 import CheckoutForm from "../components/CheckoutForm";
 import { useApi } from "../context/ApiContext";
+import CardImage from "../images/cards.png";
 
 const Checkout = () => {
   const [CoinInput, setCoinInput] = useState(false);
@@ -192,7 +193,7 @@ const Checkout = () => {
     <>
       <BreadCrumbs name={"Checkout"} url={"checkout"} />
 
-      <section className="w-[100%] h-[100%] flex flex-col xl:flex-row justify-center items-center xl:items-start px-4 pb-10 pt-5 space-y-8 xl:space-y-0 space-x-0 xl:space-x-8 mb-20 xl:mb-0">
+      <section className="w-[100%] h-[100%] flex flex-col xl:flex-row justify-center items-center xl:items-start px-4 pb-10 pt-5 space-y-8 xl:space-y-0 space-x-0 xl:space-x-8 mb-20 xl:mb-0 overflow-hidden">
         <form className="flex-[2] w-full h-full container">
           <div className="flex justify-center mb-5 text-2xl md:text-3xl xl:text-4xl font-bold">
             <h1>Checkout</h1>
@@ -856,15 +857,6 @@ const Checkout = () => {
             }}
             className="w-full border border-gray-300 bg-blue-500 flex justify-between items-center space-x-2 py-1 px-4 rounded-md text-white"
           >
-            <div>
-              <h2 className="text-sm md:text-base">
-                Your Points :{" "}
-                <span className="text-lg font-bold">
-                  {" "}
-                  {Math.round(UserData.coins)}{" "}
-                </span>{" "}
-              </h2>
-            </div>
             <div className="flex justify-center items-center space-x-3">
               <div className="text-sm md:text-base">Use Points : </div>{" "}
               <input
@@ -961,8 +953,8 @@ const Checkout = () => {
                 placeholder="write a note"
               ></textarea>
             </div>
-            <div className="flex flex-col justify-center items-start mt-5">
-              <div>
+            <div className="flex flex-col justify-center items-start mt-5 space-y-3">
+              <div className="flex flex-1 justify-start items-center space-x-2">
                 <input
                   type="radio"
                   name="payment"
@@ -977,28 +969,33 @@ const Checkout = () => {
                 />{" "}
                 <label
                   htmlFor="cash_on_delivery"
-                  className="text-sm md:text-base"
+                  className="text-sm md:text-base font-semibold"
                 >
                   Cash On Delivery
                 </label>
               </div>
               <div className="w-full">
-                <div>
-                  <input
-                    type="radio"
-                    name="payment"
-                    value={"stripe"}
-                    onChange={(e) => {
-                      setPaymentMethod(e.target.value);
-                      setStripeInput(true);
-                      setCoinInput(false);
-                    }}
-                    id="stripe"
-                    checked={PaymentMethod === "stripe"}
-                  />{" "}
-                  <label htmlFor="stripe" className="text-sm md:text-base">
-                    Stripe
-                  </label>
+                <div className="flex justify-center items-center">
+                  <div className="flex flex-1 justify-start items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="payment"
+                      value={"stripe"}
+                      onChange={(e) => {
+                        setPaymentMethod(e.target.value);
+                        setStripeInput(true);
+                        setCoinInput(false);
+                      }}
+                      id="stripe"
+                      checked={PaymentMethod === "stripe"}
+                    />{" "}
+                    <label htmlFor="stripe" className="text-sm md:text-base font-semibold">
+                      Stripe
+                    </label>
+                  </div>
+                  <div className="flex-1">
+                    <img src={CardImage} alt="card" />
+                  </div>
                 </div>
                 {PaymentMethod === "stripe" ? (
                   <div className="w-full">

@@ -23,7 +23,7 @@ export default function UserAccount() {
   return (
     <>
       <BreadCrumbs name={"User Account"} url={"useraccount"} />
-      <div className="w-full px-2 sm:px-0 flex justify-start items-center">
+      <div className="w-full px-2 sm:px-0 flex justify-start items-center overflow-hidden">
         <div className="flex flex-col xl:flex-row justify-start items-start w-full">
           <div className="w-[20vw] h-full sticky top-[4.6rem]">
             <UserSidebar />

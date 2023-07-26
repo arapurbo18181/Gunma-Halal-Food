@@ -5,7 +5,7 @@ import { useApi } from "../context/ApiContext";
 const Forgot_password = () => {
   const { ForgotPass, setForgotPass, forgotPassword } = useApi();
   return (
-    <div className="w-full h-[90vh] flex justify-center items-center">
+    <div className="w-full h-[90vh] flex justify-center items-center overflow-hidden">
       <form
         onSubmit={forgotPassword}
         className="w-[500px] h-[300px] bg-white drop-shadow-2xl rounded-lg border border-red-300 container -mt-36"

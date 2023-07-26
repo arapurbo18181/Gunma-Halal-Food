@@ -330,7 +330,7 @@ export const ApiProvider = ({ children }) => {
     const amount = cart.reduce((accumulator, currItem) => {
       return accumulator + Number(currItem.total_price);
     }, 0);
-    setTotalPrice(amount);
+    setTotalPrice(Math.round(amount));
   }, [cart]);
 
   useEffect(() => {

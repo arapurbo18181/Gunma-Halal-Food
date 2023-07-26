@@ -5,7 +5,7 @@ import Footer from "../components/Footer"
 const ShippingPolicy = () => {
   return (
     <>
-    <div className='w-full h-full mt-10 flex px-4 space-x-4'>
+    <div className='w-full h-full mt-10 flex px-4 space-x-4 overflow-hidden'>
         <div className='flex-1'>
             <h2 className='text-4xl font-bold mb-10'>Our Shipping Policy</h2>
             <p className='text-gray-600 font-semibold'>Order more than 8500円 & get free delivery all over japan except Okinawa Prefecture.</p>

@@ -22,7 +22,7 @@ const SuccessPage = () => {
   }, [location]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 overflow-hidden">
       <div className="max-w-md w-full p-6 bg-white shadow-md rounded-md">
         <div className="text-center">
           <svg

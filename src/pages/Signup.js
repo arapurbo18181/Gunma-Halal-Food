@@ -45,7 +45,7 @@ const Signup = () => {
             <div>
               <BreadCrumbs name={"Sign Up"} url={"signup"} />
             </div>
-            <section className="w-full h-5/6 flex flex-col justify-center items-center py-5">
+            <section className="w-full h-5/6 flex flex-col justify-center items-center py-5 overflow-hidden">
               <div className="flex justify-center items-center px-2 md:px-0 w-full md:w-1/2 xl:w-1/3 mb-5 space-x-2">
                 <Link
                   to={"/login"}

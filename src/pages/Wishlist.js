@@ -49,7 +49,7 @@ const Wishlist = () => {
     <>
       {Wishlist && (
         <>
-          <section className="flex justify-center items-start w-full">
+          <section className="flex justify-center items-start w-full overflow-hidden">
             <div className="flex justify-start items-center xl:items-start w-full">
               <div className="hidden w-[16.5vw] h-full sticky top-[5.3rem] xl:block ">
                 <CategorySidebar />
