@@ -84,14 +84,20 @@ const Checkout = () => {
   }
 
   useEffect(() => {
+    if (UserData.city && UserData.phone && UserData.zip) {
+      
     setBillingAddress({
       ...BillingAddress,
-      show_date: "",
-      delivery_time: "",
       first_name: UserData.name,
       last_name: UserData.last_name,
       email: UserData.email,
+      phone: UserData.phone,
+      zip_code: UserData.zip,
+      city: UserData.city,
+      show_date: "",
+      delivery_time: "",
     });
+    }
   }, [BillingAddress.state]);
 
   useEffect(() => {
@@ -1012,7 +1018,7 @@ const Checkout = () => {
                   onClick={handleSubmit}
                   className="bg-red-500 text-white w-full py-2 border border-red-500 hover:bg-transparent hover:text-black transition-all duration-500 text-sm md:text-base"
                 >
-                  Order
+                  Place Order
                 </button>
               </div>
             ) : (

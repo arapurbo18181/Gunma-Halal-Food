@@ -10,7 +10,8 @@ const ApiContext = createContext();
 export const useApi = () => useContext(ApiContext);
 
 export const ApiProvider = ({ children }) => {
-  const [SpecialDiscount, setSpecialDiscount] = useState();
+  const [OrderAmount, setOrderAmount] = useState();
+  const [isOpen, setIsOpen] = useState(false);
   const [FinalTotalWithCoupon, setFinalTotalWithCoupon] = useState();
   const [TotalVat, setTotalVat] = useState();
   const [FinalTotal, setFinalTotal] = useState();
@@ -280,22 +281,29 @@ export const ApiProvider = ({ children }) => {
   const [ShippingCharge, setShippingCharge] = useState();
 
   useEffect(() => {
-    const temp = cart.filter(item=>{
-      return item.shipping_cost === "1200";
-    }).reduce((accumulator, currItem)=>{
-      return accumulator + Number(currItem.quantity) * Number(currItem.shipping_cost)
-    }, 0)
-    const temp2 = cart.filter(item=>{
-      return item.shipping_cost === "0";
-    }).reduce((accumulator, currItem)=>{
-      return accumulator + Number(currItem.quantity) * Number(currItem.price)
-    }, 0)
-    if (temp2 < 8500 ) {
-      setShippingCharge(1200+temp)
-    }else{
-      setShippingCharge(temp)
+    const temp = cart
+      .filter((item) => {
+        return item.shipping_cost === "1200";
+      })
+      .reduce((accumulator, currItem) => {
+        return (
+          accumulator +
+          Number(currItem.quantity) * Number(currItem.shipping_cost)
+        );
+      }, 0);
+    const temp2 = cart
+      .filter((item) => {
+        return item.shipping_cost === "0";
+      })
+      .reduce((accumulator, currItem) => {
+        return accumulator + Number(currItem.quantity) * Number(currItem.price);
+      }, 0);
+    if (temp2 < 8500) {
+      setShippingCharge(1200 + temp);
+    } else {
+      setShippingCharge(temp);
     }
-  }, [cart])
+  }, [cart]);
 
   useEffect(() => {
     if (GetCookies("cookies")) {
@@ -341,12 +349,12 @@ export const ApiProvider = ({ children }) => {
     }, 0);
     setTotalVat(Math.round(vat));
   }, [cart]);
- 
+
   useEffect(() => {
     if (cart.length === 0) {
       setFinalTotal(0);
     } else {
-        setFinalTotal(TotalPrice + ShippingCharge + TotalVat);
+      setFinalTotal(TotalPrice + ShippingCharge + TotalVat);
     }
   }, [TotalPrice, TotalVat, cart]);
 
@@ -724,6 +732,9 @@ export const ApiProvider = ({ children }) => {
       note: Note,
       token: JSON.parse(localStorage.getItem("token")),
     };
+
+    setOrderAmount(FinalTotalWithCoupon ? FinalTotalWithCoupon : FinalTotal);
+
     console.log(data);
     await axios.get("/sanctum/csrf-cookie").then((response) => {
       axios
@@ -755,7 +766,8 @@ export const ApiProvider = ({ children }) => {
           }
           if (res.data.status === 200) {
             navigate("/");
-            Swal.fire("success", res.data.message, "success");
+            // Swal.fire("success", res.data.message, "success");
+            openModal();
             setBillingAddress({
               delivery_date: "",
               state: "",
@@ -934,19 +946,25 @@ export const ApiProvider = ({ children }) => {
               setUser(false);
             }
             setAllReviews(!AllReviews);
-            if (res.data.user.coupon_discount !== null && FinalTotal > 1200) {
-              const temp = FinalTotal / 100;
-              const temp2 =
-                temp * Number(res.data.user.coupon_discount.discount);
-              const temp3 = Math.round(FinalTotal - temp2);
-              setFinalTotalWithCoupon(temp3);
+            if (res.data.user) {
+              if (res.data.user.coupon_discount !== null && FinalTotal > 1200) {
+                const temp = FinalTotal / 100;
+                const temp2 =
+                  temp * Number(res.data.user.coupon_discount.discount);
+                const temp3 = Math.round(FinalTotal - temp2);
+                setFinalTotalWithCoupon(temp3);
+              }
+              if (
+                res.data.user.special_discount !== null &&
+                FinalTotal > 1200
+              ) {
+                const temp = FinalTotal / 100;
+                const temp2 =
+                  temp * Number(res.data.user.special_discount.discount);
+                setFinalTotalWithCoupon(Math.round(FinalTotal - temp2));
+              }
             }
-            if (res.data.user.special_discount !== null && FinalTotal > 1200) {
-              const temp = FinalTotal / 100;
-              const temp2 = temp * Number(res.data.user.special_discount.discount)
-              setFinalTotalWithCoupon( Math.round(FinalTotal - temp2));
-            }
-          }   
+          }
         });
       setSmallLoading(false);
     };
@@ -1136,6 +1154,14 @@ export const ApiProvider = ({ children }) => {
     });
   };
 
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
   return (
     <ApiContext.Provider
       value={{
@@ -1319,8 +1345,13 @@ export const ApiProvider = ({ children }) => {
         setTotalVat,
         FinalTotalWithCoupon,
         setFinalTotalWithCoupon,
-        ShippingCharge, 
-        setShippingCharge
+        ShippingCharge,
+        setShippingCharge,
+        isOpen,
+        setIsOpen,
+        closeModal,
+        openModal,
+        OrderAmount,
       }}
     >
       {children}

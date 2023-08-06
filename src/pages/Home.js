@@ -1,18 +1,19 @@
 import React from "react";
+import CartButton from "../components/CartButton";
 import Categories from "../components/Categories";
 import CategorySidebar from "../components/CategorySidebar";
-import Hero from "../components/Hero";
 import Footer from "../components/Footer";
-import Searchbar from "../components/Searchbar";
-import LatestProducts from "../components/LatestProducts";
-import CartButton from "../components/CartButton";
-import TopRatedProducts from "../components/TopRatedProducts";
+import Hero from "../components/Hero";
 import HomeBanner from "../components/HomeBanner";
+import LatestProducts from "../components/LatestProducts";
+import OrderSuccessful from "../components/OrderSuccessful";
+import TopRatedProducts from "../components/TopRatedProducts";
 import TopSellingProducts from "../components/TopSellingProducts";
 
 const Home = () => {
   return (
     <section className="flex flex-col justify-center h-full items-center overflow-hidden">
+      <OrderSuccessful/>
       <div className="flex justify-start h-full items-start">
         <div className="hidden w-[14vw] h-full sticky top-0 xl:block">
           <CategorySidebar />
