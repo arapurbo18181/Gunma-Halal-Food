@@ -100,6 +100,15 @@ const Checkout = () => {
       house_name_room_number: UserData.house_room
     });
     }
+    if (UserData.name && UserData.last_name && UserData.email) {
+    setBillingAddress({
+      ...BillingAddress,
+      first_name: UserData.name,
+      last_name: UserData.last_name,
+      email: UserData.email,
+    });
+    }
+
   }, [BillingAddress.state]);
 
   useEffect(() => {
