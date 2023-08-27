@@ -99,8 +99,7 @@ const Checkout = () => {
       street_address: UserData.road_house,
       house_name_room_number: UserData.house_room
     });
-    }
-    if (UserData.name && UserData.last_name && UserData.email) {
+    }else{
     setBillingAddress({
       ...BillingAddress,
       first_name: UserData.name,
