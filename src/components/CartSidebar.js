@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { IoMdArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { useApi } from "../context/ApiContext";
@@ -80,7 +80,7 @@ const CartSidebar = () => {
             >
               Continue Shopping
             </Link>
-            <div className="flex flex-col gap-y-0 h-[50vh] sm:h-[60vh] overflow-y-auto overflow-x-hidden">
+            <div className="flex flex-col gap-y-0 h-[40vh] sm:h-[50vh] overflow-y-auto overflow-x-hidden scrollbar-hide">
               {SmallLoading ? (
                 <SmallLoader width={"100%"} height={"100%"} />
               ) : (

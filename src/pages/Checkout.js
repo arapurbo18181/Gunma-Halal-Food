@@ -85,7 +85,7 @@ const Checkout = () => {
 
   useEffect(() => {
     if (UserData.city && UserData.phone && UserData.zip) {
-      
+      console.log(UserData);
     setBillingAddress({
       ...BillingAddress,
       first_name: UserData.name,
@@ -96,6 +96,8 @@ const Checkout = () => {
       city: UserData.city,
       show_date: "",
       delivery_time: "",
+      street_address: UserData.road_house,
+      house_name_room_number: UserData.house_room
     });
     }
   }, [BillingAddress.state]);
@@ -206,7 +208,7 @@ const Checkout = () => {
           </div>
           <div className="flex flex-col justify-center items-center h-fit">
             <CartButton />
-            <div className="flex flex-col space-y-10 md:space-y-0 md:flex-row justify-center items-center md:items-start w-full px-5 space-x-0 md:space-x-4 h-fit pb-10 md:pb-0">
+            <div className="flex flex-col space-y-10 md:space-y-0 md:flex-row justify-center items-center md:items-start w-full px-5 space-x-0 md:space-x-4 h-fit pb-10 md:pb-0 xl:mb-40">
               <div className="flex-1 h-full border rounded-md border-gray-300 shadow-lg px-3 w-full">
                 <div className="flex justify-center my-5 text-lg md:text-xl lg:text-2xl font-bold">
                   <h1>Billing Address</h1>
@@ -223,7 +225,7 @@ const Checkout = () => {
                         })
                       }
                       value={BillingAddress.first_name}
-                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-2 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                       type="text"
                       name="name"
                       placeholder="Enter Your Name"
@@ -241,7 +243,7 @@ const Checkout = () => {
                         })
                       }
                       value={BillingAddress.last_name}
-                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-2 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                       type="text"
                       name="name"
                       placeholder="Enter Your Name"
@@ -261,7 +263,7 @@ const Checkout = () => {
                         })
                       }
                       value={BillingAddress.email}
-                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-2 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                       type="email"
                       name="email"
                       placeholder="Enter Your Email"
@@ -280,7 +282,7 @@ const Checkout = () => {
                         })
                       }
                       value={BillingAddress.phone}
-                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-2 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                       type="number"
                       name="phone"
                       placeholder="Enter Your phone number"
@@ -300,7 +302,7 @@ const Checkout = () => {
                       })
                     }
                     value={BillingAddress.zip_code}
-                    className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                    className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outlin2-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                     type="number"
                     name="zipcode"
                     placeholder="Enter Your postcode"
@@ -373,7 +375,7 @@ const Checkout = () => {
                         })
                       }
                       value={BillingAddress.city}
-                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-2 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                       type="text"
                       name="city"
                       placeholder="Enter Your city"
@@ -393,7 +395,7 @@ const Checkout = () => {
                         })
                       }
                       value={BillingAddress.street_address}
-                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-2 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                       type="text"
                       name="street_address"
                       placeholder="Road Number, House Number"
@@ -413,7 +415,7 @@ const Checkout = () => {
                         })
                       }
                       value={BillingAddress.house_name_room_number}
-                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                      className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-2 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                       type="text"
                       name="house_name_room_number"
                       placeholder="House Name, Room Number"
@@ -445,7 +447,7 @@ const Checkout = () => {
                                 : -3
                             }`
                           )}
-                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100 z-20"
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offs2t-0 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100 z-20"
                           placeholderText="Enter Delivery Date"
                           selected={BillingAddress.show_date}
                           onChange={(date) => {
@@ -559,7 +561,7 @@ const Checkout = () => {
                             })
                           }
                           value={ShippingAddress.first_name}
-                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offs2t-0 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                           type="text"
                           name="name"
                           placeholder="Enter Your Name"
@@ -577,7 +579,7 @@ const Checkout = () => {
                             })
                           }
                           value={ShippingAddress.last_name}
-                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offs2t-0 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                           type="text"
                           name="name"
                           placeholder="Enter Your Name"
@@ -597,7 +599,7 @@ const Checkout = () => {
                             })
                           }
                           value={ShippingAddress.email}
-                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offs2t-0 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                           type="email"
                           name="email"
                           placeholder="Enter Your Email"
@@ -615,7 +617,7 @@ const Checkout = () => {
                             })
                           }
                           value={ShippingAddress.phone}
-                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offs2t-0 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                           type="number"
                           name="phone"
                           placeholder="Enter Your phone number"
@@ -634,7 +636,7 @@ const Checkout = () => {
                           })
                         }
                         value={ShippingAddress.zip_code}
-                        className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                        className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offs2t-0 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                         type="number"
                         name="postcode"
                         placeholder="Enter Your postcode"
@@ -709,7 +711,7 @@ const Checkout = () => {
                             })
                           }
                           value={ShippingAddress.city}
-                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offs2t-0 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                           type="text"
                           name="city"
                           placeholder="Enter Your city"
@@ -729,7 +731,7 @@ const Checkout = () => {
                             })
                           }
                           value={ShippingAddress.street_address}
-                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offs2t-0 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                           type="text"
                           name="street_address"
                           placeholder="Road Number, House Number"
@@ -749,7 +751,7 @@ const Checkout = () => {
                             })
                           }
                           value={ShippingAddress.house_name_room_number}
-                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                          className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offs2t-0 focus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                           type="text"
                           name="house_name_room_number"
                           placeholder="House Name, Room Number"
@@ -773,7 +775,7 @@ const Checkout = () => {
                                   : -3
                               }`
                             )}
-                            className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 focus:outline-red-500 my-1 shadow-inner border-2 border-gray-100"
+                            className="w-full rounded-md bg-white px-3 py-2 text-sm md:text-lg outline-none transition-all duration-300 ease-in-out focus:outline-2 focus:outline-offset-0 2ocus:outline-red-500 my-1 shadow-inner border-2 border-red-100"
                             placeholderText="Enter Delivery Date"
                             selected={ShippingAddress.show_date}
                             onChange={(date) => {

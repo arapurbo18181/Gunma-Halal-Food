@@ -10,6 +10,7 @@ const ApiContext = createContext();
 export const useApi = () => useContext(ApiContext);
 
 export const ApiProvider = ({ children }) => {
+  const [OrderId, setOrderId] = useState();
   const [OrderAmount, setOrderAmount] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [FinalTotalWithCoupon, setFinalTotalWithCoupon] = useState();
@@ -767,7 +768,7 @@ export const ApiProvider = ({ children }) => {
           if (res.data.status === 200) {
             navigate("/");
             // Swal.fire("success", res.data.message, "success");
-            openModal();
+            openModal(res.data.order_serial);
             setBillingAddress({
               delivery_date: "",
               state: "",
@@ -1158,8 +1159,9 @@ export const ApiProvider = ({ children }) => {
     setIsOpen(false);
   }
 
-  function openModal() {
+  function openModal(id) {
     setIsOpen(true);
+    setOrderId(id)
   }
 
   return (
@@ -1352,6 +1354,7 @@ export const ApiProvider = ({ children }) => {
         closeModal,
         openModal,
         OrderAmount,
+        OrderId
       }}
     >
       {children}
