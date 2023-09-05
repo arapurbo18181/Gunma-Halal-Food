@@ -67,6 +67,8 @@ const Checkout = () => {
     ShippingCharge,
   } = useApi();
   const location = useLocation();
+  const [PrevTotalAmount, setPrevTotalAmount] = useState(TotalPrice);
+  const [PrevUsedCoin, setPrevUsedCoin] = useState(0);
 
   const handleSubmit = (e) => {
     setStripeInput(false);
@@ -86,28 +88,27 @@ const Checkout = () => {
   useEffect(() => {
     if (UserData.city && UserData.phone && UserData.zip) {
       console.log(UserData);
-    setBillingAddress({
-      ...BillingAddress,
-      first_name: UserData.name,
-      last_name: UserData.last_name,
-      email: UserData.email,
-      phone: UserData.phone,
-      zip_code: UserData.zip,
-      city: UserData.city,
-      show_date: "",
-      delivery_time: "",
-      street_address: UserData.road_house,
-      house_name_room_number: UserData.house_room
-    });
-    }else{
-    setBillingAddress({
-      ...BillingAddress,
-      first_name: UserData.name,
-      last_name: UserData.last_name,
-      email: UserData.email,
-    });
+      setBillingAddress({
+        ...BillingAddress,
+        first_name: UserData.name,
+        last_name: UserData.last_name,
+        email: UserData.email,
+        phone: UserData.phone,
+        zip_code: UserData.zip,
+        city: UserData.city,
+        show_date: "",
+        delivery_time: "",
+        street_address: UserData.road_house,
+        house_name_room_number: UserData.house_room,
+      });
+    } else {
+      setBillingAddress({
+        ...BillingAddress,
+        first_name: UserData.name,
+        last_name: UserData.last_name,
+        email: UserData.email,
+      });
     }
-
   }, [BillingAddress.state]);
 
   useEffect(() => {
@@ -869,7 +870,10 @@ const Checkout = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              setPrevTotalAmount(TotalPrice);
+              setPrevUsedCoin(SelectCoin);
               applyCoin(SelectCoin);
+              setSelectCoin("");
             }}
             className="w-full border border-gray-300 bg-blue-500 flex justify-between items-center space-x-2 py-1 px-4 rounded-md text-white"
           >
@@ -919,6 +923,12 @@ const Checkout = () => {
           <div className="flex flex-col border border-red-500 rounded-lg h-full w-full px-2 md:px-10 py-5">
             <div className="w-full text-center">
               <h2 className="text-base md:text-xl font-bold"> Cart Totals </h2>
+            </div>
+            <div className="flex justify-between py-2 border-b border-gray-200">
+              <h3 className="text-sm md:text-base font-semibold">Coins Used</h3>
+              <h5 className="text-sm md:text-base text-gray-400">
+                ¥ {PrevTotalAmount} - {PrevUsedCoin} Coins
+              </h5>
             </div>
             <div className="flex justify-between py-2 border-b border-gray-200">
               <h3 className="text-sm md:text-base font-semibold">Subtotal</h3>
@@ -1005,7 +1015,10 @@ const Checkout = () => {
                       id="stripe"
                       checked={PaymentMethod === "stripe"}
                     />{" "}
-                    <label htmlFor="stripe" className="text-sm md:text-base font-semibold">
+                    <label
+                      htmlFor="stripe"
+                      className="text-sm md:text-base font-semibold"
+                    >
                       Stripe
                     </label>
                   </div>

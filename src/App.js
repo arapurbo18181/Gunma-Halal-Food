@@ -9,6 +9,7 @@ import { useApi } from "./context/ApiContext";
 import { useProduct } from "./context/ProductContext";
 import About from "./pages/About";
 import Cart from "./pages/Cart";
+import Chat from "./pages/Chat";
 import Checkout from "./pages/Checkout";
 import Contact from "./pages/Contact";
 import ErrorPage from "./pages/ErrorPage";
@@ -76,6 +77,7 @@ function App() {
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/shippingpolicy" element={<ShippingPolicy />} />
             <Route path="/successpage" element={<SuccessPage />} />
+            <Route path="/chat" element={<Chat />} />
             <Route path="/error" element={<ErrorPage/>} />
             <Route path="/*" element={<ErrorPage/>} />
           </Routes>
