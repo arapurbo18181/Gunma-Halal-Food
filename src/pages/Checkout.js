@@ -543,6 +543,7 @@ const Checkout = () => {
                     type="checkbox"
                     value={"first"}
                     id=""
+                    checked={IsChecked}
                     onChange={(e) => handleCheck(e.target.value)}
                   />{" "}
                   <div className="text-xs md:text-base">

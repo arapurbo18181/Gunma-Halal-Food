@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
-import { FiTrash2 } from "react-icons/fi";
-import { Link, useNavigate } from "react-router-dom";
-import CartItemForViewCart from "../components/CartItemForViewCart";
-import { useApi } from "../context/ApiContext";
+import React from "react";
+import { Link } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs";
-import SmallLoader from "../components/SmallLoader";
-import Loaders from "../components/Loaders";
+import CartItemForViewCart from "../components/CartItemForViewCart";
 import FreeDel from "../components/FreeDel";
+import SmallLoader from "../components/SmallLoader";
+import { useApi } from "../context/ApiContext";
 
 const Cart = () => {
   const {
@@ -62,16 +60,16 @@ const Cart = () => {
                   </div>
                   <div>
                   {User ? (
-                  <a
+                  <Link
                     onClick={() => {
                       setToggleSidebar(!ToggleSidebar);
                       setIsCartSidebar(false);
                     }}
-                    href={"/checkout"}
+                    to={"/checkout"}
                     className="w-full border hover:border-red-500 hover:text-red-500 hover:bg-white py-2 rounded-full bg-red-500 text-white transition-all duration-300 text-center px-4"
                   >
                     Checkout
-                  </a>
+                  </Link>
                 ) : (
                   <Link
                     onClick={() => {

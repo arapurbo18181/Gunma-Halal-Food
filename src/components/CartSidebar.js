@@ -120,16 +120,16 @@ const CartSidebar = () => {
                   View Cart
                 </Link>
                 {User ? (
-                  <a
+                  <Link
                     onClick={() => {
                       setToggleSidebar(!ToggleSidebar);
                       setIsCartSidebar(false);
                     }}
-                    href={"/checkout"}
+                    to={"/checkout"}
                     className="w-full border border-red-500 text-red-500 py-2 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 text-center"
                   >
                     Checkout
-                  </a>
+                  </Link>
                 ) : (
                   <Link
                     onClick={() => {
