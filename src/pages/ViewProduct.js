@@ -13,11 +13,11 @@ import Footer from "../components/Footer";
 import { UseScrollPosition } from "../components/Hooks/UseScollPosition";
 import { UseScrollPositionX } from "../components/Hooks/useScrollPositionX";
 import Loaders from "../components/Loaders";
+import ProductDescription from "../components/ProductDescription";
 import ProductReviews from "../components/ProductReviews";
 import ProductTopbar from "../components/ProductTopbar";
 import { useApi } from "../context/ApiContext";
 import { useProduct } from "../context/ProductContext";
-import ProductDescription from "../components/ProductDescription"
 
 const ViewProduct = () => {
   const [Quantity, setQuantity] = useState(1);
@@ -85,7 +85,7 @@ const ViewProduct = () => {
         })
         .catch((error) => {
           console.log(error);
-          navigate("/error");
+          // navigate("/error");
         });
     };
     getdata();

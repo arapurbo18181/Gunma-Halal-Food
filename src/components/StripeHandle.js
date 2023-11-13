@@ -17,7 +17,7 @@ const StripeHandle = () => {
     useEffect(() => {
       // Create PaymentIntent as soon as the page loads
       const getSecrete = async () => {
-        const data = await fetch("https://admin.softtech-it.org/api/stripe", {
+        const data = await fetch("https://gunma.zakattahabil.com/api/stripe", {
           method: "POST",
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

@@ -41,7 +41,7 @@ export const ApiProvider = ({ children }) => {
   //   "https://gunma-admin.getthemeplugin.com/images/banner_images"
   // );
   const [SliderImageRoute] = useState(
-    "https://admin.softtech-it.org/images/banner_images"
+    "https://gunma.zakattahabil.com/images/banner_images"
   );
   // const [CategoryImage] = useState("http://gunma.myesdev.xyz/images/category_image/large")
   // const [CategoryImage] = useState(
@@ -54,10 +54,10 @@ export const ApiProvider = ({ children }) => {
   //   "http://localhost:8000/images/category_image/large"
   // );
   const [CategoryImage1] = useState(
-    "https://admin.softtech-it.org/images/category_image/large"
+    "https://gunma.zakattahabil.com/images/category_image/large"
   );
   const [CategoryImage] = useState(
-    "http://admin.softtech-it.org/images/category_image/medium"
+    "https://gunma.zakattahabil.com/images/category_image/medium"
   );
   // const [LargeImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/large"
@@ -69,7 +69,7 @@ export const ApiProvider = ({ children }) => {
   //   "https://gunma-admin.getthemeplugin.com/images/product_images/large"
   // );
   const [LargeImage] = useState(
-    "https://admin.softtech-it.org/images/product_images/medium"
+    "https://gunma.zakattahabil.com/images/product_images/medium"
   );
   // const [SmallImage] = useState(
   //   "http://gunma.myesdev.xyz/images/product_images/small"
@@ -81,7 +81,7 @@ export const ApiProvider = ({ children }) => {
   //   "https://gunma-admin.getthemeplugin.com/images/product_images/small"
   // );
   const [SmallImage] = useState(
-    "https://admin.softtech-it.org/images/product_images/small"
+    "https://gunma.zakattahabil.com/images/product_images/small"
   );
   const [AllProducts, setAllProducts] = useState([]);
   const [SubProducts, setSubProducts] = useState([]);

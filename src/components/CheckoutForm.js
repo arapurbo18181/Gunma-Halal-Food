@@ -20,7 +20,7 @@ export default function CheckoutForm() {
     StripeCheckout,
     setStripeCheckout,
     IsChecked,
-    FinalTotalWithCoupon
+    FinalTotalWithCoupon,
   } = useApi();
 
   // useEffect(() => {
@@ -78,22 +78,25 @@ export default function CheckoutForm() {
 
         setMessage("Payment is Processing....");
 
-        const data = await fetch(
-          "https://admin.softtech-it.org/api/stripe",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
+        const data = await fetch("https://gunma.zakattahabil.com/api/stripe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: JSON.stringify({
+            items: {
+              amount: Number(
+                FinalTotalWithCoupon ? FinalTotalWithCoupon : FinalTotal
+              ),
             },
-            body: JSON.stringify({ items: { amount: Number(FinalTotalWithCoupon ? FinalTotalWithCoupon : FinalTotal) } }),
-          }
-        )
+          }),
+        })
           .then((res) => res.json())
           .catch((err) => {
             console.log(err);
             Swal.fire("warning", "Server Problem", "warning");
           });
-        
+
         console.log(data);
 
         setMessage("Payment almost done....");
@@ -155,7 +158,7 @@ export default function CheckoutForm() {
         setMessage("Payment is Processing....");
 
         const { error: backendError, clientSecret } = await fetch(
-          "https://admin.softtech-it.org/api/stripe",
+          "https://gunma.zakattahabil.com/api/stripe",
           {
             method: "POST",
             headers: {
